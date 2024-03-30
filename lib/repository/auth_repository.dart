@@ -1,0 +1,114 @@
+import 'dart:ffi';
+
+import 'package:sport_app/data/api_client.dart';
+import 'package:sport_app/model/api_result/api_result.dart';
+import 'package:sport_app/res/api_constants.dart';
+import 'package:sport_app/utils/helper.dart';
+
+class AuthRepository {
+  ApiClient apiClient = ApiClient();
+  Future<ApiResult<bool>> signUp({
+    required String userName,
+    required String password,
+    required String phoneNumber,
+    required String dob,
+    required String iName,
+    required String iId,
+  }) async {
+    try {
+      final response = await apiClient
+          .post<Map<String, dynamic>>(ApiConstants.signUp, data: {
+        "userName": userName,
+        "phoneNumber": "91$phoneNumber",
+        "password": password,
+        "DOB": dob,
+        "institutionName": iName,
+        "institutionId": iId,
+        "role": "user"
+      });
+      // await storeKeyValue(key: "userId", value: response.data!['userId']);
+      return const ApiResult.success(true);
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
+
+  Future<ApiResult<bool>> logIn({
+    required String password,
+    required String phoneNumber,
+  }) async {
+    try {
+      final response =
+          await apiClient.post<Map<String, dynamic>>(ApiConstants.login, data: {
+        "phoneNumber": "91$phoneNumber",
+        "password": password,
+      });
+      String? token = response.data!['token'];
+      await storeKeyValue(key: "token", value: token ?? "");
+      return ApiResult.success(token != "");
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
+
+  Future<ApiResult<bool>> signUpOtpVerify({
+    required String phoneNumber,
+    required String otp,
+  }) async {
+    try {
+      final response = await apiClient.post<Map<String, dynamic>>(
+          ApiConstants.signUpOtpVerify,
+          data: {"phoneNumber": "91$phoneNumber", "otp": otp});
+      await storeKeyValue(key: "token", value: response.data!['token']);
+      return const ApiResult.success(true);
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
+
+  Future<ApiResult<bool>> forgetPasswordSendOtp({
+    required String phoneNumber,
+  }) async {
+    try {
+      await apiClient.post<Map<String, dynamic>>(
+          ApiConstants.sendOtpForgetPassword,
+          data: {
+            "phoneNumber": "91$phoneNumber",
+          });
+      return const ApiResult.success(true);
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
+
+  Future<ApiResult<bool>> verifyForgetPassword({
+    required String phoneNumber,
+    required String newpassword,
+    required String otp,
+  }) async {
+    try {
+      await apiClient
+          .post<Map<String, dynamic>>(ApiConstants.verifyForgetPassword, data: {
+        "phoneNumber": "91$phoneNumber",
+        "newpassword": newpassword,
+        "otp": otp,
+      });
+      return const ApiResult.success(true);
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
+
+  Future<ApiResult<bool>> resendOtp({
+    required String phoneNumber,
+  }) async {
+    try {
+      await apiClient.post<Map<String, dynamic>>(ApiConstants.resendOtp, data: {
+        "phoneNumber": "91$phoneNumber",
+      });
+      return const ApiResult.success(true);
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
+}

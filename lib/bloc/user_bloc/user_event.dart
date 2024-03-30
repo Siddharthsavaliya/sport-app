@@ -1,0 +1,15 @@
+// ignore_for_file: must_be_immutable, camel_case_types
+
+part of 'user_bloc.dart';
+
+abstract class UserEvent extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class GetUserEventRequest extends UserEvent {
+  GetUserEventRequest();
+
+  @override
+  List<Object> get props => [];
+}
