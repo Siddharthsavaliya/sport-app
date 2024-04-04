@@ -12,10 +12,12 @@ class AppButton extends StatelessWidget {
       required this.onTap,
       this.removeOpacity = false,
       this.radius,
+      this.color,
       this.textSize});
   final bool removeOpacity;
   final bool isBorder;
   final String text;
+  final Color? color;
   final double? radius;
   final double? textSize;
   final VoidCallback onTap;
@@ -34,7 +36,7 @@ class AppButton extends StatelessWidget {
             border: isBorder ? Border.all(color: AppColors.red) : null,
             color: isBorder
                 ? Colors.transparent
-                : AppColors.red.withOpacity(removeOpacity ? 1 : 0.6)),
+                : color ?? AppColors.red.withOpacity(removeOpacity ? 1 : 0.6)),
         child: Center(
           child: Text(
             text,

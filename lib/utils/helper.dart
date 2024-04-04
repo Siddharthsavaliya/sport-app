@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:sport_app/data/secure_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sport_app/model/api_result/api_result.dart';
 import 'package:sport_app/model/network_exception/network_exceptions.dart';
+import 'package:sport_app/widget/shimmer_widget.dart';
 
 addVerticalSpacing(double height) {
   return SizedBox(
@@ -41,6 +43,33 @@ ApiResult<T> getErrorMessage<T>(e) {
   } catch (e) {
     return ApiResult.failure(NetworkExceptions.getErrorMessage(e));
   }
+}
+
+Widget loadNetworkImage({
+  required String url,
+}) {
+  return CachedNetworkImage(
+    repeat: ImageRepeat.noRepeat,
+    imageUrl: url,
+    fit: BoxFit.fill,
+    placeholder: (context, url) {
+      return shimmerWidget(
+          child: Container(
+        height: 0.15.sh,
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: Colors.black, borderRadius: BorderRadius.circular(15)),
+      ));
+      // return shimmerWidget(
+      //     child: Container(
+      //   decoration: BoxDecoration(
+      //     borderRadius: BorderRadius.circular(14),
+      //     color: Colors.black,s
+      //   ),
+      // ));
+    },
+    errorWidget: (context, url, error) => const Icon(Icons.error),
+  );
 }
 
 closeKeyboard(context) {
