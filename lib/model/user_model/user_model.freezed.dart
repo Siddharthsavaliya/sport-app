@@ -24,7 +24,7 @@ mixin _$UserModel {
   String? get institutionName => throw _privateConstructorUsedError;
   String? get institutionId => throw _privateConstructorUsedError;
   String? get userName => throw _privateConstructorUsedError;
-  int? get phoneNumber => throw _privateConstructorUsedError;
+  String? get phoneNumber => throw _privateConstructorUsedError;
   @JsonKey(name: 'DOB')
   String? get dob => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -46,7 +46,7 @@ abstract class $UserModelCopyWith<$Res> {
       String? institutionName,
       String? institutionId,
       String? userName,
-      int? phoneNumber,
+      String? phoneNumber,
       @JsonKey(name: 'DOB') String? dob,
       DateTime? createdAt,
       DateTime? updatedAt});
@@ -94,7 +94,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
@@ -124,7 +124,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String? institutionName,
       String? institutionId,
       String? userName,
-      int? phoneNumber,
+      String? phoneNumber,
       @JsonKey(name: 'DOB') String? dob,
       DateTime? createdAt,
       DateTime? updatedAt});
@@ -170,7 +170,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
@@ -212,7 +212,7 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String? userName;
   @override
-  final int? phoneNumber;
+  final String? phoneNumber;
   @override
   @JsonKey(name: 'DOB')
   final String? dob;
@@ -272,7 +272,7 @@ abstract class _UserModel implements UserModel {
       final String? institutionName,
       final String? institutionId,
       final String? userName,
-      final int? phoneNumber,
+      final String? phoneNumber,
       @JsonKey(name: 'DOB') final String? dob,
       final DateTime? createdAt,
       final DateTime? updatedAt}) = _$UserModelImpl;
@@ -289,7 +289,7 @@ abstract class _UserModel implements UserModel {
   @override
   String? get userName;
   @override
-  int? get phoneNumber;
+  String? get phoneNumber;
   @override
   @JsonKey(name: 'DOB')
   String? get dob;

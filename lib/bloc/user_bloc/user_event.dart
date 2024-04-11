@@ -13,3 +13,10 @@ class GetUserEventRequest extends UserEvent {
   @override
   List<Object> get props => [];
 }
+
+class UpdateUserEventRequest extends UserEvent {
+  UpdateUserEventRequest(this.userModel);
+  final UserModel userModel;
+  @override
+  List<Object> get props => [userModel];
+}

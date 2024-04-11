@@ -12,17 +12,39 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<GetUserEventRequest>(
       (event, emit) => _getUserRequest(event, emit),
     );
+    on<UpdateUserEventRequest>(
+      (event, emit) => _updateUserRequest(event, emit),
+    );
   }
   final UserRepository userRepository = UserRepository();
   Future<void> _getUserRequest(
     GetUserEventRequest event,
     Emitter<UserState> emit,
   ) async {
-    emit(state.copyWith(
-      status: Status.inProgress,
-    ));
+    emit(state.copyWith(status: Status.inProgress, isUpdate: false));
     try {
       final apiResult = await userRepository.getUser();
+      apiResult.when(
+        success: (data) {
+          emit(state.copyWith(status: Status.loaded, userModel: data));
+        },
+        failure: (error) {
+          emit(state.copyWith(status: Status.failed, message: error));
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(status: Status.failed, message: e.toString()));
+    }
+  }
+
+  Future<void> _updateUserRequest(
+    UpdateUserEventRequest event,
+    Emitter<UserState> emit,
+  ) async {
+    emit(state.copyWith(status: Status.inProgress, isUpdate: true));
+    try {
+      final apiResult =
+          await userRepository.updateUser(userModel: event.userModel);
       apiResult.when(
         success: (data) {
           emit(state.copyWith(status: Status.loaded, userModel: data));

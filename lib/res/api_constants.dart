@@ -9,4 +9,6 @@ class ApiConstants {
   static const String verifyForgetPassword = "/verify-forgotpassword";
   static const String resendOtp = "/otp/resend-otp";
   static const String getUser = "/user";
+  static const String updateUser = "/update";
+  static const String subscription = "/subscription/getPlan";
 }

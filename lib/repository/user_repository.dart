@@ -17,4 +17,16 @@ class UserRepository {
       return getErrorMessage(e);
     }
   }
+
+  Future<ApiResult<UserModel>> updateUser(
+      {required UserModel userModel}) async {
+    try {
+      final response = await apiClient.post<Map<String, dynamic>>(
+          ApiConstants.updateUser,
+          data: userModel.toJson());
+      return ApiResult.success(UserModel.fromJson(response.data!["data"]));
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
 }

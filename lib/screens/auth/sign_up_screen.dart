@@ -40,7 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isPasswordError = false;
   bool isConfirmPassError = false;
 
-  Future<void> _selectDate(BuildContext context) async {
+  Future<void> selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -174,7 +174,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         child: AppTextfield(
                           onTap: () {
-                            _selectDate(context);
+                            selectDate(context);
                           },
                           readOnly: true,
                           error: isDobError,

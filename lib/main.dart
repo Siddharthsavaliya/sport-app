@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_app/bloc/auth/forget_password_bloc/forget_pass_bloc.dart';
 import 'package:sport_app/bloc/auth/login_bloc/login_bloc.dart';
 import 'package:sport_app/bloc/auth/sign_up_bloc/sign_up_bloc.dart';
+import 'package:sport_app/bloc/membership_bloc/membership_bloc.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/screens/on_boarding/splash_screen.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => UserBloc(),
+        ),
+        BlocProvider(
+          create: (context) => MembershipBloc(),
         ),
       ],
       child: MaterialApp(

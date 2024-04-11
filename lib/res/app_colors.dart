@@ -26,4 +26,5 @@ class AppColors {
   static const Color crimColor = Color(0xffFEF7E5);
   static const Color lightWhite = Color(0xffF7F7F7);
   static const Color blueShade = Color(0xff41A1BF);
+  static Color appBar = Colors.grey.shade400;
 }

@@ -6,6 +6,7 @@ import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_strings.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/come_play_screen/come_play_screen.dart';
 import 'package:sport_app/screens/home/home_screen.dart';
 import 'package:sport_app/screens/profile/profile_screen.dart';
 
@@ -94,7 +95,11 @@ class _AppBottomBarState extends State<AppBottomBar> {
           ),
         ),
       ),
-      body: _index == 0 ? const HomeScreen() : const ProfileScreen(),
+      body: _index == 0
+          ? const HomeScreen()
+          : _index == 2
+              ? const ComePlayScreen()
+              : const ProfileScreen(),
     );
   }
 

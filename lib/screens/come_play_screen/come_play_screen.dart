@@ -25,11 +25,11 @@ class _ComePlayScreenState extends State<ComePlayScreen> {
     {"label": "Badminton", "image": AppAssets.badminton},
     {"label": "Table Tennis", "image": AppAssets.tableTennis},
     {"label": "Lawn Tennis", "image": AppAssets.lawnTennis},
-    {"label": "Box Cricket", "image": AppAssets.boxCricket},
+    {"label": "Box Cricket", "image": AppAssets.cricket},
     {"label": "Basket Ball", "image": AppAssets.basketball},
     {"label": "Skates", "image": AppAssets.skates},
     {"label": "Horse Riding", "image": AppAssets.horseRiding},
-    {"label": "Net Practice", "image": AppAssets.netpractice},
+    {"label": "Net Practice", "image": AppAssets.cricket},
     {"label": "yoga", "image": AppAssets.yoga},
   ];
   @override

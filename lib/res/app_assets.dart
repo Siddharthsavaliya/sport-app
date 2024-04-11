@@ -53,4 +53,6 @@ class AppAssets {
   static const String changeRoom = "assets/images/ChangeRoom.png";
   static const String washRoom = "assets/images/Washroom.png";
   static const String clock = "assets/images/clock.png";
+  static const String king1 = "assets/images/king1.png";
+  static const String dis = "assets/images/discount.png";
 }

@@ -4,10 +4,12 @@ class UserState extends Equatable {
   const UserState({
     this.message = " ",
     this.userModel,
+    this.isUpdate = false,
     this.status = Status.initial,
   });
   final String message;
   final Status status;
+  final bool isUpdate;
   final UserModel? userModel;
 
   @override
@@ -15,6 +17,7 @@ class UserState extends Equatable {
     return [
       status,
       message,
+      isUpdate,
       userModel,
     ];
   }
@@ -23,14 +26,13 @@ class UserState extends Equatable {
     String? message,
     Status? status,
     UserModel? userModel,
-    bool? isResend,
-    bool? isVerifyOto,
-    bool? initial,
+    bool? isUpdate,
   }) {
     return UserState(
       message: message ?? this.message,
       status: status ?? this.status,
       userModel: userModel ?? this.userModel,
+      isUpdate: isUpdate ?? this.isUpdate,
     );
   }
 }
