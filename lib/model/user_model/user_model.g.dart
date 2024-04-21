@@ -12,6 +12,7 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       institutionName: json['institutionName'] as String?,
       institutionId: json['institutionId'] as String?,
       userName: json['userName'] as String?,
+      subscription: json['subscription'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
       dob: json['DOB'] as String?,
       createdAt: json['createdAt'] == null
@@ -28,6 +29,7 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'institutionName': instance.institutionName,
       'institutionId': instance.institutionId,
       'userName': instance.userName,
+      'subscription': instance.subscription,
       'phoneNumber': instance.phoneNumber,
       'DOB': instance.dob,
       'createdAt': instance.createdAt?.toIso8601String(),

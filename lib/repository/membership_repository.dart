@@ -10,10 +10,21 @@ class MembershipRepository {
   Future<ApiResult<List<Membership>>> getPlans() async {
     try {
       final response = await apiClient.get<Map<String, dynamic>>(
-        ApiConstants.getUser,
+        ApiConstants.subscription,
       );
       return ApiResult.success(
           buildPlanListFromResponse(response.data!["data"]));
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
+
+  Future<ApiResult<bool>> purchase(String id) async {
+    try {
+      await apiClient.post<Map<String, dynamic>>(
+          ApiConstants.purchaseSubscription,
+          data: {"planId": id});
+      return const ApiResult.success(true);
     } catch (e) {
       return getErrorMessage(e);
     }

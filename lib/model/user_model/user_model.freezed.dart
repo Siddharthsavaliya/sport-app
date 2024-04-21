@@ -24,6 +24,7 @@ mixin _$UserModel {
   String? get institutionName => throw _privateConstructorUsedError;
   String? get institutionId => throw _privateConstructorUsedError;
   String? get userName => throw _privateConstructorUsedError;
+  String? get subscription => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
   @JsonKey(name: 'DOB')
   String? get dob => throw _privateConstructorUsedError;
@@ -46,6 +47,7 @@ abstract class $UserModelCopyWith<$Res> {
       String? institutionName,
       String? institutionId,
       String? userName,
+      String? subscription,
       String? phoneNumber,
       @JsonKey(name: 'DOB') String? dob,
       DateTime? createdAt,
@@ -69,6 +71,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? institutionName = freezed,
     Object? institutionId = freezed,
     Object? userName = freezed,
+    Object? subscription = freezed,
     Object? phoneNumber = freezed,
     Object? dob = freezed,
     Object? createdAt = freezed,
@@ -90,6 +93,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subscription: freezed == subscription
+          ? _value.subscription
+          : subscription // ignore: cast_nullable_to_non_nullable
               as String?,
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
@@ -124,6 +131,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String? institutionName,
       String? institutionId,
       String? userName,
+      String? subscription,
       String? phoneNumber,
       @JsonKey(name: 'DOB') String? dob,
       DateTime? createdAt,
@@ -145,6 +153,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? institutionName = freezed,
     Object? institutionId = freezed,
     Object? userName = freezed,
+    Object? subscription = freezed,
     Object? phoneNumber = freezed,
     Object? dob = freezed,
     Object? createdAt = freezed,
@@ -166,6 +175,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subscription: freezed == subscription
+          ? _value.subscription
+          : subscription // ignore: cast_nullable_to_non_nullable
               as String?,
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
@@ -195,6 +208,7 @@ class _$UserModelImpl implements _UserModel {
       this.institutionName,
       this.institutionId,
       this.userName,
+      this.subscription,
       this.phoneNumber,
       @JsonKey(name: 'DOB') this.dob,
       this.createdAt,
@@ -212,6 +226,8 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String? userName;
   @override
+  final String? subscription;
+  @override
   final String? phoneNumber;
   @override
   @JsonKey(name: 'DOB')
@@ -223,7 +239,7 @@ class _$UserModelImpl implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(role: $role, institutionName: $institutionName, institutionId: $institutionId, userName: $userName, phoneNumber: $phoneNumber, dob: $dob, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'UserModel(role: $role, institutionName: $institutionName, institutionId: $institutionId, userName: $userName, subscription: $subscription, phoneNumber: $phoneNumber, dob: $dob, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -238,6 +254,8 @@ class _$UserModelImpl implements _UserModel {
                 other.institutionId == institutionId) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
+            (identical(other.subscription, subscription) ||
+                other.subscription == subscription) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
             (identical(other.dob, dob) || other.dob == dob) &&
@@ -249,8 +267,17 @@ class _$UserModelImpl implements _UserModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, role, institutionName,
-      institutionId, userName, phoneNumber, dob, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      role,
+      institutionName,
+      institutionId,
+      userName,
+      subscription,
+      phoneNumber,
+      dob,
+      createdAt,
+      updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -272,6 +299,7 @@ abstract class _UserModel implements UserModel {
       final String? institutionName,
       final String? institutionId,
       final String? userName,
+      final String? subscription,
       final String? phoneNumber,
       @JsonKey(name: 'DOB') final String? dob,
       final DateTime? createdAt,
@@ -288,6 +316,8 @@ abstract class _UserModel implements UserModel {
   String? get institutionId;
   @override
   String? get userName;
+  @override
+  String? get subscription;
   @override
   String? get phoneNumber;
   @override

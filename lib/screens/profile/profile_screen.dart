@@ -8,7 +8,9 @@ import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_strings.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/on_boarding/splash_screen.dart';
+import 'package:sport_app/screens/profile/change_password_screen.dart';
 import 'package:sport_app/screens/profile/edit_profile_screen.dart';
+import 'package:sport_app/screens/profile/wishlist_screen.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/status_dialog.dart';
 import 'package:sport_app/widget/app_button.dart';
@@ -40,7 +42,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         "icon": Icons.bookmark_border_outlined,
         "title": AppStrings.myFavorites,
         "subtitle": null,
-        "onTap": () {}
+        "onTap": () {
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => const BookmarkScreen(),
+              ));
+        }
       },
       {
         "icon": Icons.book_outlined,
@@ -58,7 +66,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         "icon": Icons.lock,
         "title": AppStrings.security,
         "subtitle": AppStrings.securitySub,
-        "onTap": () {}
+        "onTap": () {
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => const ChangePasswordScreen(),
+                
+              ));
+        }
       },
       {
         "icon": Icons.support_agent,

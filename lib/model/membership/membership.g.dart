@@ -9,11 +9,15 @@ part of 'membership.dart';
 _$MembershipImpl _$$MembershipImplFromJson(Map<String, dynamic> json) =>
     _$MembershipImpl(
       planType: json['planType'] as String,
+      id: json['_id'] as String?,
       price: (json['price'] as num).toDouble(),
+      actualPrice: (json['actualPrice'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$$MembershipImplToJson(_$MembershipImpl instance) =>
     <String, dynamic>{
       'planType': instance.planType,
+      '_id': instance.id,
       'price': instance.price,
+      'actualPrice': instance.actualPrice,
     };

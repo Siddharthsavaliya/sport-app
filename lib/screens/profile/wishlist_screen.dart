@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sport_app/bloc/ground_bloc/ground_bloc.dart'; // assuming Ground is your model class
+import 'package:sport_app/bloc/ground_bloc/ground_bloc.dart';
 import 'package:sport_app/bloc/wishlist_bloc/wishlist_bloc.dart';
-import 'package:sport_app/model/ground_model/ground_model.dart';
 import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
+import 'package:sport_app/res/app_strings.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/come_play_screen/come_play_screen.dart';
 import 'package:sport_app/screens/grounds_screen/ground_detail_screen.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/status_dialog.dart';
@@ -16,43 +17,24 @@ import 'package:sport_app/widget/app_text_field.dart';
 import 'package:sport_app/widget/empty_place_holder.dart';
 import 'package:sport_app/widget/shimmer_widget.dart';
 
-class GroundsListScreen extends StatefulWidget {
-  const GroundsListScreen({super.key, required this.name});
-  final String name;
+class BookmarkScreen extends StatefulWidget {
+  const BookmarkScreen({
+    super.key,
+  });
+
   @override
-  State<GroundsListScreen> createState() => _GroundsListScreenState();
+  State<BookmarkScreen> createState() => _BookmarkScreenState();
 }
 
-class _GroundsListScreenState extends State<GroundsListScreen> {
-  late TextEditingController _searchController;
-  List<GroundModel> _filteredGrounds = [];
-
+class _BookmarkScreenState extends State<BookmarkScreen> {
   @override
   void initState() {
     super.initState();
-    _searchController = TextEditingController();
     onRefresh();
   }
 
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
   Future<void> onRefresh() async {
-    BlocProvider.of<GroundBloc>(context).add(GetGroundRequest());
-  }
-
-  void _filterGrounds(String query) {
-    setState(() {
-      _filteredGrounds = BlocProvider.of<GroundBloc>(context)
-          .state
-          .grounds
-          .where((ground) =>
-              ground.name!.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-    });
+    BlocProvider.of<WishlistBloc>(context).add(GetToWishlistRequest());
   }
 
   @override
@@ -62,15 +44,32 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
         foregroundColor: AppColors.black,
         backgroundColor: Colors.grey.shade300,
         title: Text(
-          "${widget.name} Grounds",
+          AppStrings.myFavorites,
           style: AppStyle.mediumText.copyWith(
               fontSize: 20.sp, color: AppColors.black, letterSpacing: 0.8),
         ),
         elevation: 0,
       ),
-      body: BlocBuilder<GroundBloc, GroundState>(
+      body: BlocConsumer<WishlistBloc, WishlistState>(
+        listener: (context, state) {
+          if (state.isRemove) {
+            if (state.status.isInProgress) {
+              showProgressDialogue(context);
+            } else if (state.status.isLoaded) {
+              Navigator.pop(context);
+              showScafoldMessage(
+                  message:
+                      "Ground removed successfully from your favorite list",
+                  context: context);
+            } else if (state.status.isFailed) {
+              Navigator.pop(context);
+              showScafoldMessage(context: context, message: state.message);
+            }
+          }
+        },
         builder: (context, state) {
-          if (state.status.isLoaded) {
+          if (state.status.isLoaded || state.isRemove) {
+            
             return RefreshIndicator(
               onRefresh: onRefresh,
               color: AppColors.black,
@@ -78,45 +77,36 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 0.045.sw, vertical: 20),
-                      child: AppTextfield(
-                        controller: _searchController,
-                        radius: 8,
-                        height: 40,
-                        prefixIcon: Icons.search_rounded,
-                        hint: "Search ground here",
-                        onChanged: _filterGrounds,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    _filteredGrounds.isEmpty &&
-                            _searchController.text.isNotEmpty
-                        ? const EmptyPlaceHolder(
-                            title: "No Ground Found",
-                            subTitle: "Try to search different",
+                    addVerticalSpacing(0.01),
+                    state.grounds.isEmpty
+                        ? EmptyPlaceHolder(
+                            title: "Not have any favorites grounds yet",
+                            buttonText: "Explore Now",
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) =>
+                                        const ComePlayScreen(),
+                                  ));
+                            },
+                            subTitle: "Go and explore",
                             imagePath: AppAssets.error)
                         : ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: _filteredGrounds.isNotEmpty
-                                ? _filteredGrounds.length
-                                : state.grounds.length,
+                            itemCount: state.grounds.length,
                             itemBuilder: (BuildContext context, int index) {
-                              final ground = _filteredGrounds.isNotEmpty
-                                  ? _filteredGrounds[index]
-                                  : state.grounds[index];
                               return GestureDetector(
                                 onTap: () {
                                   Navigator.push(
-                                    context,
-                                    CupertinoPageRoute(
-                                      builder: (context) => GroundDetailScreen(
-                                        groundModel: ground,
-                                      ),
-                                    ),
-                                  );
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) =>
+                                            GroundDetailScreen(
+                                                groundModel:
+                                                    state.grounds[index]),
+                                      ));
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.only(bottom: 6),
@@ -226,76 +216,18 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                                                           addVerticalSpacing(
                                                               0.012),
                                                         ],
-                                                        BlocConsumer<
-                                                            WishlistBloc,
-                                                            WishlistState>(
-                                                          listener:
-                                                              (context, state) {
-                                                            if (state.status
-                                                                .isInProgress) {
-                                                              showProgressDialogue(
-                                                                  context);
-                                                            } else if (state
-                                                                .status
-                                                                .isLoaded) {
-                                                              Navigator.pop(
-                                                                  context);
-                                                              showScafoldMessage(
-                                                                  message: state
-                                                                          .isRemove
-                                                                      ? "Ground removed successfully from your favorite list"
-                                                                      : "Ground added successfully in your favorite list",
-                                                                  context:
-                                                                      context);
-                                                            } else if (state
-                                                                .status
-                                                                .isFailed) {
-                                                              Navigator.pop(
-                                                                  context);
-                                                              showScafoldMessage(
-                                                                  context:
-                                                                      context,
-                                                                  message: state
-                                                                      .message);
-                                                            }
-                                                          },
-                                                          builder: (context,
-                                                                  state1) =>
-                                                              GestureDetector(
+                                                        GestureDetector(
                                                             onTap: () {
-                                                              BlocProvider.of<WishlistBloc>(context).add(state1
-                                                                      .grounds
-                                                                      .contains(
-                                                                          state.grounds[
-                                                                              index])
-                                                                  ? RemoveToWishlistRequest(state
-                                                                      .grounds[
-                                                                          index]
-                                                                      .id!)
-                                                                  : AddToWishlistRequest(state
+                                                              BlocProvider.of<
+                                                                          WishlistBloc>(
+                                                                      context)
+                                                                  .add(RemoveToWishlistRequest(state
                                                                       .grounds[
                                                                           index]
                                                                       .id!));
                                                             },
-                                                            child: Image.asset(
-                                                              state1.grounds.contains(
-                                                                      state.grounds[
-                                                                          index])
-                                                                  ? AppAssets
-                                                                      .bookmark
-                                                                  : AppAssets
-                                                                      .bookmarkWhite,
-                                                              height: state1
-                                                                      .grounds
-                                                                      
-                                                                      .contains(
-                                                                          state.grounds[
-                                                                              index])
-                                                                  ? 0.035.sh
-                                                                  : 0.025.sh,
-                                                            ),
-                                                          ),
-                                                        ),
+                                                            child: const Icon(
+                                                                Icons.close)),
                                                       ],
                                                     ),
                                                   ],
@@ -406,13 +338,12 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                       margin: const EdgeInsets.only(bottom: 15),
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: AppColors.black,
-                        border: Border.all(
-                          width: 1,
-                          color: AppColors.borderColor,
-                        ),
-                      ),
+                          borderRadius: BorderRadius.circular(15),
+                          color: AppColors.black,
+                          border: Border.all(
+                            width: 1,
+                            color: AppColors.borderColor,
+                          )),
                     ),
                   );
                 },
@@ -420,14 +351,13 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
             );
           }
           return EmptyPlaceHolder(
-            title: "Oops",
-            buttonText: "Try Again",
-            onTap: () {
-              onRefresh();
-            },
-            subTitle: "Something went wrong",
-            imagePath: AppAssets.error,
-          );
+              title: "Oops",
+              buttonText: "Try Again",
+              onTap: () {
+                onRefresh();
+              },
+              subTitle: "Something went wrong",
+              imagePath: AppAssets.error);
         },
       ),
     );

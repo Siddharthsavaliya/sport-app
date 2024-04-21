@@ -17,9 +17,11 @@ class AppTextfield extends StatefulWidget {
       this.isPassword,
       this.controller,
       this.validator,
+      
       this.onTap,
       this.maxLength,
-      this.keyboardType});
+      this.keyboardType,
+      this.onChanged});
   final String hint;
   final bool isRound;
   final IconData? prefixIcon;
@@ -33,7 +35,7 @@ class AppTextfield extends StatefulWidget {
   final VoidCallback? onTap;
   final TextInputType? keyboardType;
   String? Function(String?)? validator;
-
+  final void Function(String)? onChanged;
   @override
   State<AppTextfield> createState() => _AppTextfieldState();
 }
@@ -67,6 +69,7 @@ class _AppTextfieldState extends State<AppTextfield> {
       child: TextFormField(
         keyboardType: widget.keyboardType,
         maxLength: widget.maxLength,
+        onChanged: widget.onChanged,
         onTap: widget.onTap,
         readOnly: widget.readOnly,
         validator: widget.validator,

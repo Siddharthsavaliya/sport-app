@@ -21,7 +21,10 @@ Membership _$MembershipFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Membership {
   String get planType => throw _privateConstructorUsedError;
+  @JsonKey(name: '_id')
+  String? get id => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
+  double get actualPrice => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +38,11 @@ abstract class $MembershipCopyWith<$Res> {
           Membership value, $Res Function(Membership) then) =
       _$MembershipCopyWithImpl<$Res, Membership>;
   @useResult
-  $Res call({String planType, double price});
+  $Res call(
+      {String planType,
+      @JsonKey(name: '_id') String? id,
+      double price,
+      double actualPrice});
 }
 
 /// @nodoc
@@ -52,16 +59,26 @@ class _$MembershipCopyWithImpl<$Res, $Val extends Membership>
   @override
   $Res call({
     Object? planType = null,
+    Object? id = freezed,
     Object? price = null,
+    Object? actualPrice = null,
   }) {
     return _then(_value.copyWith(
       planType: null == planType
           ? _value.planType
           : planType // ignore: cast_nullable_to_non_nullable
               as String,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
+              as double,
+      actualPrice: null == actualPrice
+          ? _value.actualPrice
+          : actualPrice // ignore: cast_nullable_to_non_nullable
               as double,
     ) as $Val);
   }
@@ -75,7 +92,11 @@ abstract class _$$MembershipImplCopyWith<$Res>
       __$$MembershipImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String planType, double price});
+  $Res call(
+      {String planType,
+      @JsonKey(name: '_id') String? id,
+      double price,
+      double actualPrice});
 }
 
 /// @nodoc
@@ -90,16 +111,26 @@ class __$$MembershipImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? planType = null,
+    Object? id = freezed,
     Object? price = null,
+    Object? actualPrice = null,
   }) {
     return _then(_$MembershipImpl(
       planType: null == planType
           ? _value.planType
           : planType // ignore: cast_nullable_to_non_nullable
               as String,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
+              as double,
+      actualPrice: null == actualPrice
+          ? _value.actualPrice
+          : actualPrice // ignore: cast_nullable_to_non_nullable
               as double,
     ));
   }
@@ -108,7 +139,11 @@ class __$$MembershipImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$MembershipImpl implements _Membership {
-  const _$MembershipImpl({required this.planType, required this.price});
+  const _$MembershipImpl(
+      {required this.planType,
+      @JsonKey(name: '_id') this.id,
+      required this.price,
+      required this.actualPrice});
 
   factory _$MembershipImpl.fromJson(Map<String, dynamic> json) =>
       _$$MembershipImplFromJson(json);
@@ -116,11 +151,16 @@ class _$MembershipImpl implements _Membership {
   @override
   final String planType;
   @override
+  @JsonKey(name: '_id')
+  final String? id;
+  @override
   final double price;
+  @override
+  final double actualPrice;
 
   @override
   String toString() {
-    return 'Membership(planType: $planType, price: $price)';
+    return 'Membership(planType: $planType, id: $id, price: $price, actualPrice: $actualPrice)';
   }
 
   @override
@@ -130,12 +170,16 @@ class _$MembershipImpl implements _Membership {
             other is _$MembershipImpl &&
             (identical(other.planType, planType) ||
                 other.planType == planType) &&
-            (identical(other.price, price) || other.price == price));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.actualPrice, actualPrice) ||
+                other.actualPrice == actualPrice));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, planType, price);
+  int get hashCode =>
+      Object.hash(runtimeType, planType, id, price, actualPrice);
 
   @JsonKey(ignore: true)
   @override
@@ -154,7 +198,9 @@ class _$MembershipImpl implements _Membership {
 abstract class _Membership implements Membership {
   const factory _Membership(
       {required final String planType,
-      required final double price}) = _$MembershipImpl;
+      @JsonKey(name: '_id') final String? id,
+      required final double price,
+      required final double actualPrice}) = _$MembershipImpl;
 
   factory _Membership.fromJson(Map<String, dynamic> json) =
       _$MembershipImpl.fromJson;
@@ -162,7 +208,12 @@ abstract class _Membership implements Membership {
   @override
   String get planType;
   @override
+  @JsonKey(name: '_id')
+  String? get id;
+  @override
   double get price;
+  @override
+  double get actualPrice;
   @override
   @JsonKey(ignore: true)
   _$$MembershipImplCopyWith<_$MembershipImpl> get copyWith =>

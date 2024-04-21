@@ -10,6 +10,7 @@ class UserModel with _$UserModel {
     String? institutionName,
     String? institutionId,
     String? userName,
+    String? subscription,
     String? phoneNumber,
     @JsonKey(name: 'DOB') String? dob,
     DateTime? createdAt,

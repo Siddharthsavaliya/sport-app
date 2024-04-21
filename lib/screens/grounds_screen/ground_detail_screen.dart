@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sport_app/model/ground_model/ground_model.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
@@ -7,8 +8,8 @@ import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/widget/app_button.dart';
 
 class GroundDetailScreen extends StatefulWidget {
-  const GroundDetailScreen({super.key, required this.name});
-  final String name;
+  const GroundDetailScreen({super.key, required this.groundModel});
+  final GroundModel groundModel;
   @override
   State<GroundDetailScreen> createState() => _GroundDetailScreenState();
 }
@@ -28,7 +29,7 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
         foregroundColor: AppColors.black,
         backgroundColor: Colors.grey.shade300,
         title: Text(
-          widget.name,
+          widget.groundModel.name!,
           style: AppStyle.mediumText.copyWith(
               fontSize: 20.sp, color: AppColors.black, letterSpacing: 0.8),
         ),
@@ -44,8 +45,9 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
               width: 0.8.sw,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                image: const DecorationImage(
-                    image: AssetImage(AppAssets.tt1), fit: BoxFit.fill),
+                image: DecorationImage(
+                    image: NetworkImage(widget.groundModel.image!),
+                    fit: BoxFit.fill),
               ),
             ),
           ),
@@ -89,28 +91,33 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
                       ),
                       addVerticalSpacing(0.01),
                       Text(
-                        "Trinity Global School",
+                        widget.groundModel.name!,
                         style: AppStyle.mediumText.copyWith(
                             fontSize: 15.sp,
                             color: AppColors.black,
                             letterSpacing: 0.8),
                       ),
                       addVerticalSpacing(0.006),
-                      Text(
-                        "New Transport Nagar, Opp.NRL Petrol Pump,\nNear Zero Mile, N.H.-30,Patna-800007",
-                        style: AppStyle.normalText.copyWith(
-                          fontSize: 11.sp,
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w300,
+                      SizedBox(
+                        width: 0.6.sw,
+                        child: Text(
+                          widget.groundModel.address ?? "",
+                          style: AppStyle.normalText.copyWith(
+                            fontSize: 11.sp,
+                            color: AppColors.black,
+                            fontWeight: FontWeight.w300,
+                          ),
                         ),
                       ),
                       addVerticalSpacing(0.002),
                       Text(
-                        "Toll Free : 80 1010 1122",
+                        "Toll Free : ${widget.groundModel.number}",
                         style: AppStyle.normalText.copyWith(
                           fontSize: 11.sp,
+                          letterSpacing: 1,
                           color: AppColors.black,
                           fontWeight: FontWeight.w300,
+                          
                         ),
                       ),
                       addVerticalSpacing(0.015),
@@ -205,7 +212,7 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
                   ),
                   addHorizontalSpacing(0.03),
                   Text(
-                    "Monday to Sunday: 1:00 PM to 11:00 PM",
+                    widget.groundModel.playingHours ?? "",
                     style: AppStyle.mediumBold.copyWith(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w400,

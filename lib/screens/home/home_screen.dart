@@ -161,28 +161,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fontWeight: FontWeight.w500,
                                     letterSpacing: 0.8),
                               ),
-                              addVerticalSpacing(0.001),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    AppAssets.king,
-                                    width: 20,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 0.004.sh),
-                                    child: Text(
-                                      "Member",
-                                      style: AppStyle.normalText.copyWith(
-                                          color:
-                                              AppColors.black.withOpacity(0.8),
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w500,
-                                          letterSpacing: 0.8),
+                              if (state.userModel!.subscription != null) ...[
+                                addVerticalSpacing(0.001),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      AppAssets.king,
+                                      width: 20,
+                                      
                                     ),
-                                  ),
-                                ],
-                              )
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 0.004.sh),
+                                      child: Text(
+                                        "Member",
+                                        style: AppStyle.normalText.copyWith(
+                                            color: AppColors.black
+                                                .withOpacity(0.8),
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 0.8),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ]
                             ],
                           )
                         ],

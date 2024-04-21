@@ -43,6 +43,7 @@ class AppAssets {
   static const String recom = "assets/images/recom.png";
   static const String footballIcon = "assets/images/football_icon.png";
   static const String bookmark = "assets/images/bookmark.png";
+  static const String bookmarkWhite = "assets/images/bookmark-white.png";
   static const String location = "assets/images/location.png";
   static const String star = "assets/images/star.png";
   static const String tt1 = "assets/images/tt1.png";
@@ -55,4 +56,6 @@ class AppAssets {
   static const String clock = "assets/images/clock.png";
   static const String king1 = "assets/images/king1.png";
   static const String dis = "assets/images/discount.png";
+  static const String error = "assets/animation/error.json";
+  
 }

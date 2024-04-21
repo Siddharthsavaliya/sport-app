@@ -18,3 +18,15 @@ class LoginEventRequest extends LoginEvent {
   @override
   List<Object> get props => [password, phone];
 }
+
+class ChangePasswordEventRequest extends LoginEvent {
+  ChangePasswordEventRequest({
+    required this.newPassword,
+    required this.oldPassword,
+  });
+  final String newPassword;
+  final String oldPassword;
+
+  @override
+  List<Object> get props => [newPassword, oldPassword];
+}

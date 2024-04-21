@@ -99,6 +99,23 @@ class AuthRepository {
     }
   }
 
+  Future<ApiResult<bool>> changePassword({
+    required String oldpassword,
+    required String newpassword,
+  }) async {
+    try {
+      await apiClient
+          .post<Map<String, dynamic>>(ApiConstants.changepassword, data: {
+        "newpassword": newpassword,
+        "oldpassword": oldpassword,
+      });
+      return const ApiResult.success(true);
+    } catch (e) {
+      
+      return getErrorMessage(e);
+    }
+  }
+
   Future<ApiResult<bool>> resendOtp({
     required String phoneNumber,
   }) async {

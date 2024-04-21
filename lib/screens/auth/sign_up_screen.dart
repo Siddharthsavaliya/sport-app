@@ -305,6 +305,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             } else if (state.status.isLoaded) {
                               Navigator.pop(context);
                               Navigator.push(
+                                
                                   context,
                                   CupertinoPageRoute(
                                     builder: (context) => VerifyScreen(

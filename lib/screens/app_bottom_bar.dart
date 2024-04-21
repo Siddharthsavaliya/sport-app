@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
+import 'package:sport_app/bloc/wishlist_bloc/wishlist_bloc.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_strings.dart';
@@ -22,6 +23,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
   @override
   void initState() {
     BlocProvider.of<UserBloc>(context).add(GetUserEventRequest());
+    BlocProvider.of<WishlistBloc>(context).add(GetToWishlistRequest());
     super.initState();
   }
 

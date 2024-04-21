@@ -6,7 +6,9 @@ class AppStrings {
   static const String phoneNumber = "Phone Number";
   static const String password = "Password";
   static const String newPassword = "New Password";
+  static const String oldPassword = "Old Password";
   static const String confirmPassword = "Confirm Password";
+  
   static const String getStarted = "Get Started!";
   static const String welcomeBack = "Welcome Back!";
   static const String forgetPassword = "Forgot Password ?";
@@ -14,6 +16,7 @@ class AppStrings {
   static const String signUp = "Sign Up";
   static const String verify = "Verify";
   static const String sendOtp = "Send OTP";
+  static const String submit = "Submit";
   static const String resetPassword = "Reset Password";
   static const String signInHere = "Sign in Here";
   static const String alreadyRegister = "Already Registered?";
@@ -36,6 +39,7 @@ class AppStrings {
   static const String didNotGetOtp = "Didn’t get the OTP? ";
   static const String resend = "Resend";
   static const String forgetPass = "Forget Password";
+  static const String changesPass = "Change Password";
   static const String resetPass = "Reset your password";
   static const String home = "Home";
   static const String sport = "Sport";

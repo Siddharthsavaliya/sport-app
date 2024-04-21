@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sport_app/bloc/membership_bloc/membership_bloc.dart';
+import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
+import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/utils/helper.dart';
+import 'package:sport_app/utils/status_dialog.dart';
+import 'package:sport_app/widget/shimmer_widget.dart';
 
 class MembershipScreen extends StatefulWidget {
   const MembershipScreen({super.key});
@@ -13,6 +19,12 @@ class MembershipScreen extends StatefulWidget {
 }
 
 class _MembershipScreenState extends State<MembershipScreen> {
+  @override
+  void initState() {
+    BlocProvider.of<MembershipBloc>(context).add(GetMembershipRequest());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,82 +41,180 @@ class _MembershipScreenState extends State<MembershipScreen> {
               ], // Change colors as per your choice
             ),
           ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                addVerticalSpacing(0.1),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Membership\nPlans",
-                      style: AppStyle.normalBold.copyWith(
-                        fontSize: 32.sp,
-                        color: AppColors.white,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 0.01.sh),
-                      child: const CircleAvatar(
-                        radius: 18,
-                        backgroundColor: AppColors.white,
-                        child: Center(
-                          child: Icon(
-                            Icons.close_rounded,
-                            color: AppColors.black,
-                            size: 18,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
+              child: BlocConsumer<MembershipBloc, MembershipState>(
+                listener: (context, state) {
+                  if (state.isPurchase) {
+                    if (state.status.isInProgress) {
+                      showProgressDialogue(context);
+                    } else if (state.status.isLoaded) {
+                      BlocProvider.of<UserBloc>(context)
+                          .add(GetUserEventRequest());
+                      Navigator.pop(context);
+                      showScafoldMessage(
+                          message: "Membership purchase completed",
+                          context: context);
+                    } else if (state.status.isFailed) {
+                      Navigator.pop(context);
+                      showScafoldMessage(
+                          context: context, message: state.message);
+                    }
+                  }
+                },
+                builder: (context, state) {
+                  if (state.status.isLoaded || state.isPurchase) {
+                    
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        addVerticalSpacing(0.1),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Membership\nPlans",
+                              style: AppStyle.normalBold.copyWith(
+                                fontSize: 32.sp,
+                                color: AppColors.white,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 0.01.sh),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const CircleAvatar(
+                                  radius: 18,
+                                  backgroundColor: AppColors.white,
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.close_rounded,
+                                      color: AppColors.black,
+                                      size: 18,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Text(
+                          "Select a Membership Option",
+                          style: AppStyle.mediumBold.copyWith(
+                            fontSize: 20.sp,
+                            letterSpacing: 1,
+                            // fontFamily: "Lobster",
+                            color: AppColors.white,
                           ),
                         ),
+                        addVerticalSpacing(0.018),
+                        const AnimatedTextWidget(),
+                        addVerticalSpacing(0.025),
+                        ListView.builder(
+                          padding: const EdgeInsets.all(0),
+                          itemCount: state.plans.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (BuildContext context, int index) {
+                            return _card(
+                                state.plans[index].price.toInt().toString(),
+                                state.plans[index].actualPrice
+                                    .toInt()
+                                    .toString(),
+                                state.plans[index].planType,
+                                state.plans[index].id!);
+                          },
+                        ),
+                      ],
+                    );
+                  }
+                  return Column(
+                    children: [
+                      addVerticalSpacing(0.12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              shimmerWidget(
+                                child: Container(
+                                  height: 0.015.sh,
+                                  width: 0.6.sw,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                              ),
+                              addVerticalSpacing(0.01),
+                              shimmerWidget(
+                                child: Container(
+                                  height: 0.015.sh,
+                                  width: 0.4.sw,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: CircleAvatar(
+                              radius: 18,
+                              backgroundColor: AppColors.white.withOpacity(0.5),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.close_rounded,
+                                  color: AppColors.black,
+                                  size: 18,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    )
-                  ],
-                ),
-                Text(
-                  "Select a Membership Option",
-                  style: AppStyle.mediumBold.copyWith(
-                    fontSize: 20.sp,
-                    letterSpacing: 1,
-                    // fontFamily: "Lobster",
-                    color: AppColors.white,
-                  ),
-                ),
-                addVerticalSpacing(0.01),
-                Row(
-                  children: [
-                    Text(
-                      "INAUGURAL DISCOUNT",
-                      style: AppStyle.mediumBold.copyWith(
-                        fontSize: 20.sp,
-                        letterSpacing: 1,
-                        // fontFamily: "Lobster",
-                        color: AppColors.white,
+                      addVerticalSpacing(0.08),
+                      ListView.builder(
+                        itemCount: 2,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.all(0),
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return shimmerWidget(
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 15),
+                              height: 200,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: AppColors.white.withOpacity(0.5),
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    ),
-                    addHorizontalSpacing(0.005),
-                    Image.asset(
-                      AppAssets.dis,
-                      width: 20,
-                      color: AppColors.white,
-                    )
-                  ],
-                ),
-                addVerticalSpacing(0.035),
-                _card("1,000", "1,500", "Monthly"),
-                addVerticalSpacing(0.03),
-                _card("2,700", "3,000", "3 Months"),
-              ],
+                    ],
+                  );
+                },
+              ),
             ),
           )),
     );
   }
 
-  Widget _card(String price, String crossPrice, String plan) {
+  Widget _card(String price, String crossPrice, String plan, String id) {
     return Container(
-      height: 200,
       width: double.infinity,
+      margin: EdgeInsets.only(bottom: 0.025.sh),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: AppColors.white.withOpacity(0.5),
@@ -188,7 +298,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
                           height: 0,
                           decoration: TextDecoration.lineThrough,
                           fontSize: 25.sp,
-                          fontFamily: "Lobster",
+                          // fontFamily: "Lobster",
                           letterSpacing: 1,
                           fontWeight: FontWeight.bold,
                           color: AppColors.white,
@@ -199,7 +309,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
                         style: AppStyle.mediumBold.copyWith(
                           height: 0,
                           fontSize: 32.sp,
-                          fontFamily: "Lobster",
+                          // fontFamily: "Lobster",
                           letterSpacing: 1,
                           fontWeight: FontWeight.bold,
                           color: AppColors.white,
@@ -221,13 +331,19 @@ class _MembershipScreenState extends State<MembershipScreen> {
                         ], // Change colors as per your choice
                       ),
                     ),
-                    child: Center(
-                      child: Text(
-                        "BUY NOW",
-                        style: AppStyle.normalBold.copyWith(
-                          color: AppColors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.normal,
+                    child: GestureDetector(
+                      onTap: () {
+                        BlocProvider.of<MembershipBloc>(context)
+                            .add(PurchaseMembershipRequest(id));
+                      },
+                      child: Center(
+                        child: Text(
+                          "BUY NOW",
+                          style: AppStyle.normalBold.copyWith(
+                            color: AppColors.white,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
                       ),
                     ),
@@ -235,7 +351,92 @@ class _MembershipScreenState extends State<MembershipScreen> {
                 ],
               ),
             ),
+            addVerticalSpacing(0.0065),
+            Center(
+              child: Text(
+                "*Applicable Taxes May Apply",
+                style: AppStyle.normalBold.copyWith(
+                  color: Colors.black.withOpacity(0.8),
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class AnimatedTextWidget extends StatefulWidget {
+  const AnimatedTextWidget({super.key});
+
+  @override
+  _AnimatedTextWidgetState createState() => _AnimatedTextWidgetState();
+}
+
+class _AnimatedTextWidgetState extends State<AnimatedTextWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Color?> _colorAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2), // Adjust the duration as needed
+    )..repeat(
+        reverse: true); // Makes the animation reverse after reaching its end
+
+    _colorAnimation = ColorTween(
+      begin: const Color.fromARGB(254, 247, 135, 83),
+      end: Colors.red, // You can specify multiple colors if needed
+    ).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        color: Colors.white, // Background color
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        child: Center(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return Text(
+                    "INAUGURAL DISCOUNT",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1,
+                      color: _colorAnimation.value,
+                    ),
+                  );
+                },
+              ),
+              addHorizontalSpacing(0.008),
+              Image.asset(
+                AppAssets.dis,
+                width: 20,
+                color: Colors.red,
+              )
+            ],
+          ),
         ),
       ),
     );

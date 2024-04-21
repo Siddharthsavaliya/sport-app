@@ -2,10 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/otp_text_field.dart';
-import 'package:otp_text_field/style.dart';
 import 'package:sport_app/bloc/auth/forget_password_bloc/forget_pass_bloc.dart';
+import 'package:sport_app/bloc/auth/login_bloc/login_bloc.dart';
 import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_strings.dart';
@@ -17,15 +15,15 @@ import 'package:sport_app/utils/validator.dart';
 import 'package:sport_app/widget/app_button.dart';
 import 'package:sport_app/widget/app_text_field.dart';
 
-class ForgetPasswordScreen extends StatefulWidget {
-  const ForgetPasswordScreen({super.key});
+class ChangePasswordScreen extends StatefulWidget {
+  const ChangePasswordScreen({super.key});
 
   @override
-  State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
+  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
 }
 
-class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
-  TextEditingController phone = TextEditingController();
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+  TextEditingController oldPass = TextEditingController();
   TextEditingController pass = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
@@ -44,7 +42,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppStrings.forgetPass,
+                    AppStrings.changesPass,
                     style: AppStyle.mediumBold.copyWith(
                       fontSize: 28.sp,
                       fontWeight: FontWeight.w500,
@@ -62,52 +60,27 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               addVerticalSpacing(0.03),
-              Center(
-                child: Text(
-                  AppStrings.dontWarry,
-                  style: AppStyle.mediumBold.copyWith(
-                      color: AppColors.orange,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                      fontStyle: FontStyle.italic,
-                      letterSpacing: 0.8),
-                ),
-              ),
-              addVerticalSpacing(0.035),
-              Center(
-                child: Text(
-                  AppStrings.forgetPassDescription,
-                  textAlign: TextAlign.center,
-                  style: AppStyle.mediumBold.copyWith(
-                      color: AppColors.black.withOpacity(0.8),
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 0.8),
-                ),
-              ),
-              addVerticalSpacing(0.03),
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  AppStrings.phoneNumber,
-                  
+                  AppStrings.oldPassword,
                   style: AppStyle.mediumBold.copyWith(
                     color: AppColors.black.withOpacity(0.9),
                     fontSize: 19.sp,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 1,
+                    
                   ),
                 ),
               ),
               addVerticalSpacing(0.005),
               AppTextfield(
-                keyboardType: TextInputType.number,
-                hint: AppStrings.phoneNumber,
+                hint: AppStrings.oldPassword,
+                validator: requiredValidator.call,
                 radius: 4,
+                controller: oldPass,
                 isRound: true,
-                controller: phone,
-                validator: phoneNumberValidator.call,
-                prefixIcon: Icons.phone_android_outlined,
+                isPassword: true,
               ),
               addVerticalSpacing(0.018),
               Align(
@@ -132,21 +105,17 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 isPassword: true,
               ),
               addVerticalSpacing(0.055),
-              BlocConsumer<ForgetPasswordBloc, ForgetPasswordState>(
+              BlocConsumer<LoginBloc, LoginState>(
                 listener: (context, state) {
                   if (state.initial) {
                     if (state.status.isInProgress) {
                       showProgressDialogue(context);
                     } else if (state.status.isLoaded) {
                       Navigator.pop(context);
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => VerifyScreen(
-                                phoneNumber: phone.text,
-                                isForget: true,
-                                password: pass.text),
-                          ));
+                      Navigator.pop(context);
+                      showScafoldMessage(
+                          message: "Password change successfully",
+                          context: context);
                     } else if (state.status.isFailed) {
                       Navigator.pop(context);
                       showScafoldMessage(
@@ -161,11 +130,13 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       radius: 15,
                       textSize: 17.sp,
                       removeOpacity: true,
-                      text: AppStrings.sendOtp,
+                      text: AppStrings.submit,
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
-                          BlocProvider.of<ForgetPasswordBloc>(context)
-                              .add(SendOtpRequest(phone: phone.text));
+                          BlocProvider.of<LoginBloc>(context).add(
+                              ChangePasswordEventRequest(
+                                  newPassword: pass.text,
+                                  oldPassword: oldPass.text));
                         }
                       },
                     ),
@@ -173,32 +144,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 },
               ),
               addVerticalSpacing(0.02),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    AppStrings.notNeedToDoThis,
-                    style: AppStyle.normalText.copyWith(
-                        color: AppColors.black.withOpacity(0.7),
-                        fontSize: 14.sp,
-                        letterSpacing: 0.8),
-                  ),
-                  addHorizontalSpacing(0.005),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      AppStrings.login,
-                      style: AppStyle.normalText.copyWith(
-                          color: AppColors.orange.withOpacity(0.7),
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.8),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
         ),
