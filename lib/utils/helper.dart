@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:sport_app/data/secure_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sport_app/model/api_result/api_result.dart';
@@ -44,7 +45,10 @@ ApiResult<T> getErrorMessage<T>(e) {
     return ApiResult.failure(NetworkExceptions.getErrorMessage(e));
   }
 }
-
+String formatDateTime(DateTime dateTime) {
+  final DateFormat formatter = DateFormat('dd MMM, yyyy hh:mm a');
+  return formatter.format(dateTime);
+}
 Widget loadNetworkImage({
   required String url,
 }) {

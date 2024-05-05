@@ -10,6 +10,8 @@ import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/on_boarding/splash_screen.dart';
 import 'package:sport_app/screens/profile/change_password_screen.dart';
 import 'package:sport_app/screens/profile/edit_profile_screen.dart';
+import 'package:sport_app/screens/profile/faq_screen.dart';
+import 'package:sport_app/screens/profile/payment_history.dart';
 import 'package:sport_app/screens/profile/wishlist_screen.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/status_dialog.dart';
@@ -57,10 +59,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         "onTap": () {}
       },
       {
-        "icon": Icons.payment,
-        "title": AppStrings.paymentMethod,
-        "subtitle": AppStrings.paymentMethodSub,
-        "onTap": () {}
+        "icon": Icons.history,
+        "title": "Membership History",
+        "subtitle": "View your membership history",
+        "onTap": () {
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => const PaymentHistory(),
+              ));
+        }
       },
       {
         "icon": Icons.lock,
@@ -71,7 +79,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               context,
               CupertinoPageRoute(
                 builder: (context) => const ChangePasswordScreen(),
-                
+              ));
+        }
+      },
+      {
+        "icon": Icons.question_answer,
+        "title": AppStrings.faq,
+        "subtitle": null,
+        "onTap": () {
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => const FaqScreen(),
               ));
         }
       },

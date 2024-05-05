@@ -277,9 +277,12 @@ class _EditProfileState extends State<EditProfile> {
                     ],
                   );
                 }
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primaryColor,
+                return SizedBox(
+                  height: 0.8.sh,
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    ),
                   ),
                 );
               },

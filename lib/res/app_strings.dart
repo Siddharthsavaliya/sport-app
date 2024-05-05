@@ -8,7 +8,7 @@ class AppStrings {
   static const String newPassword = "New Password";
   static const String oldPassword = "Old Password";
   static const String confirmPassword = "Confirm Password";
-  
+
   static const String getStarted = "Get Started!";
   static const String welcomeBack = "Welcome Back!";
   static const String forgetPassword = "Forgot Password ?";
@@ -47,8 +47,10 @@ class AppStrings {
   static const String event = "Event";
   static const String personalInfo = "Personnel Information";
   static const String myFavorites = "My Favorites";
+  static const String myPaymentHistory = "My Payment History";
   static const String booking = "My Bookings";
   static const String help = "Help & Support";
+  static const String faq = "FAQ's";
   static const String paymentMethod = "My Payment Methods";
   static const String security = "Security";
   static const String securitySub = "Change your password";

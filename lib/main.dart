@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_app/bloc/auth/forget_password_bloc/forget_pass_bloc.dart';
 import 'package:sport_app/bloc/auth/login_bloc/login_bloc.dart';
 import 'package:sport_app/bloc/auth/sign_up_bloc/sign_up_bloc.dart';
+import 'package:sport_app/bloc/common_bloc/common_bloc.dart';
 import 'package:sport_app/bloc/ground_bloc/ground_bloc.dart';
 import 'package:sport_app/bloc/membership_bloc/membership_bloc.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
@@ -45,11 +46,15 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => WishlistBloc(),
         ),
+        BlocProvider(
+          create: (context) => CommonBloc(),
+        ),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Sport App',
           theme: ThemeData(
+            splashColor: Colors.transparent,
             scaffoldBackgroundColor: AppColors.white,
             useMaterial3: false,
           ),

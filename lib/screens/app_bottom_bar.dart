@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sport_app/bloc/membership_bloc/membership_bloc.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/bloc/wishlist_bloc/wishlist_bloc.dart';
 import 'package:sport_app/res/app_assets.dart';

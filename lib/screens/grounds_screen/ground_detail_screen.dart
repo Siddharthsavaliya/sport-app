@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_app/model/ground_model/ground_model.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/booking/sloat_selection_screen.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/widget/app_button.dart';
 
@@ -117,7 +119,6 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
                           letterSpacing: 1,
                           color: AppColors.black,
                           fontWeight: FontWeight.w300,
-                          
                         ),
                       ),
                       addVerticalSpacing(0.015),
@@ -232,7 +233,13 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
                 color: AppColors.orange,
                 radius: 8,
                 text: "BOOK YOUR SLOT NOW",
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => const SlotSelectionScreen(),
+                      ));
+                },
               ),
             ),
           )

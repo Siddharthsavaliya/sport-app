@@ -14,6 +14,13 @@ class GetMembershipRequest extends MembershipEvent {
   List<Object> get props => [];
 }
 
+class MyPurchaseRequest extends MembershipEvent {
+  MyPurchaseRequest();
+
+  @override
+  List<Object> get props => [];
+}
+
 class PurchaseMembershipRequest extends MembershipEvent {
   PurchaseMembershipRequest(this.id);
   final String id;

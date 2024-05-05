@@ -14,8 +14,10 @@ class ApiConstants {
   static const String subscription = "/subscription/getPlan";
   static const String addWishlist = "/wishlist/add";
   static const String getWishlist = "/wishlist/mywishlist";
+  static const String myPurchases = "/history/mypurchases";
   static const String deleteWishlist = "/wishlist/remove";
-  
+
   static const String purchaseSubscription = "/purchase-subscription";
   static const String changepassword = "/changepassword";
+  static const String faq = "/faq/";
 }

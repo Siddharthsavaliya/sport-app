@@ -367,6 +367,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
       ),
     );
   }
+
 }
 
 class AnimatedTextWidget extends StatefulWidget {
