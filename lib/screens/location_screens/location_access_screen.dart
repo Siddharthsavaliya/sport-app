@@ -1,0 +1,70 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:sport_app/res/app_assets.dart';
+import 'package:sport_app/res/app_colors.dart';
+import 'package:sport_app/res/app_strings.dart';
+import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/location_screens/location_fetching_screen.dart';
+import 'package:sport_app/screens/location_screens/location_search_screen.dart';
+import 'package:sport_app/utils/helper.dart';
+import 'package:sport_app/widget/app_button.dart';
+
+class LocationAccessScreen extends StatelessWidget {
+  const LocationAccessScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      body: Column(
+        children: [
+          addVerticalSpacing(0.11),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
+            child: Column(
+              children: [
+                SvgPicture.asset(AppAssets.locationImage),
+                addVerticalSpacing(0.025),
+                Text(
+                  AppStrings.niceToMeetText,
+                  style: AppStyle.mediumText,
+                ),
+                addVerticalSpacing(0.025),
+                AppButton(
+                  color: AppColors.lightBlueColor,
+                  text: AppStrings.yourLocationText,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => const LocationFetchingScreen(),
+                      ),
+                    );
+                  },
+                ),
+                addVerticalSpacing(0.013),
+                AppButton(
+                  color: AppColors.lightBlueColor,
+                  text: AppStrings.someOtherLocation,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => const LocationSearchScreen(),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

@@ -49,3 +49,11 @@ class ResendOtpRequest extends SignUpEvent {
   @override
   List<Object> get props => [phone];
 }
+
+class GetInstitutionIds extends SignUpEvent {
+  
+  GetInstitutionIds();
+
+  @override
+  List<Object> get props => [];
+}

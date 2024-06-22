@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sport_app/model/school_model/school_model.dart';
 
 import 'slot.dart';
 
@@ -9,18 +10,18 @@ part 'ground_model.g.dart';
 class GroundModel with _$GroundModel {
   factory GroundModel({
     @JsonKey(name: '_id') String? id,
-    String? name,
-    String? image,
+    @JsonKey(name: 'sport_name') List<String>? sportName,
+    List<Map<String, dynamic>>? images,
+    String? amenities,
+    String? address1,
     String? location,
-    
-    String? facility,
-    String? address,
-    String? playingHours,
+    String? address2,
+    School? school,
+    String? institutionName,
     int? price,
-    String? number,
     int? rating,
     bool? recommended,
-    List<Slot>? slots,
+    List<String>? slots,
     @JsonKey(name: '__v') int? v,
   }) = _GroundModel;
 

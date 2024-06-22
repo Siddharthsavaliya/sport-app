@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
@@ -15,6 +17,7 @@ import 'package:sport_app/screens/auth/forget_password.dart';
 import 'package:sport_app/screens/auth/sign_up_screen.dart';
 import 'package:sport_app/screens/auth/verify_screen.dart';
 import 'package:sport_app/screens/home/home_screen.dart';
+import 'package:sport_app/screens/location_screens/location_access_screen.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/status_dialog.dart';
 import 'package:sport_app/utils/validator.dart';
@@ -133,20 +136,32 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: SizedBox(
                           width: 0.5.sw,
                           child: BlocConsumer<LoginBloc, LoginState>(
-                            listener: (context, state) {
+                            listener: (context, state) async {
                               if (state.initial) {
                                 if (state.status.isInProgress) {
                                   showProgressDialogue(context);
                                 } else if (state.status.isLoaded) {
                                   Navigator.pop(context);
-                                  Navigator.push(
-                                      context,
-                                      CupertinoPageRoute(
-                                        builder: (context) => !state.isOtp
-                                            ? VerifyScreen(
-                                                phoneNumber: phoneNumber.text)
-                                            : const AppBottomBar(),
-                                      ));
+                                  String? city = await getKeyValue(key: 'city');
+                                  city == null
+                                      ? Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (context) => !state.isOtp
+                                                ? VerifyScreen(
+                                                    phoneNumber:
+                                                        phoneNumber.text)
+                                                : const LocationAccessScreen(),
+                                          ))
+                                      : Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (context) => !state.isOtp
+                                                ? VerifyScreen(
+                                                    phoneNumber:
+                                                        phoneNumber.text)
+                                                : const AppBottomBar(),
+                                          ));
                                 } else if (state.status.isFailed) {
                                   Navigator.pop(context);
                                   showScafoldMessage(

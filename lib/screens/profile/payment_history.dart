@@ -84,7 +84,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "₹${state.purchase[index].subscriptionPlan!.price.toInt()}",
+                                      "₹${state.purchase[index].subscriptionPlan?.price.toInt()}",
                                       style: AppStyle.mediumBold.copyWith(
                                         color: AppColors.black,
                                         fontSize: 18.sp,

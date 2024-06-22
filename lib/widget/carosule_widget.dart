@@ -6,8 +6,9 @@ import 'package:sport_app/utils/helper.dart';
 class BannerWidget extends StatefulWidget {
   const BannerWidget({
     super.key,
+    required this.data,
   });
-
+  final List data;
   @override
   State<BannerWidget> createState() => _BannerWidgetState();
 }
@@ -32,7 +33,7 @@ class _BannerWidgetState extends State<BannerWidget> {
             _index = index;
           });
         },
-        height: 140,
+        height: 0.2.sh,
         animateToClosest: true,
         autoPlayCurve: Curves.fastOutSlowIn,
         autoPlayInterval: const Duration(seconds: 3),
@@ -44,7 +45,7 @@ class _BannerWidgetState extends State<BannerWidget> {
         pageSnapping: true,
         viewportFraction: 1,
       ),
-      items: data.map((i) {
+      items: widget.data.map((i) {
         return Builder(
           builder: (BuildContext context) {
             return Padding(
@@ -58,7 +59,7 @@ class _BannerWidgetState extends State<BannerWidget> {
                       borderRadius: BorderRadius.circular(8),
                       color: Colors.transparent,
                     ),
-                    child: loadNetworkImage(url: i)),
+                    child: loadNetworkImage(url: i["imageUrl"])),
               ),
             );
           },

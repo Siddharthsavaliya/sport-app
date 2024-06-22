@@ -4,8 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_app/bloc/auth/forget_password_bloc/forget_pass_bloc.dart';
 import 'package:sport_app/bloc/auth/login_bloc/login_bloc.dart';
 import 'package:sport_app/bloc/auth/sign_up_bloc/sign_up_bloc.dart';
+import 'package:sport_app/bloc/booking_history_bloc/booking_history_bloc.dart';
+import 'package:sport_app/bloc/coach_bloc/coach_bloc.dart';
+import 'package:sport_app/bloc/coach_detail_bloc/coach_detail_bloc.dart';
 import 'package:sport_app/bloc/common_bloc/common_bloc.dart';
 import 'package:sport_app/bloc/ground_bloc/ground_bloc.dart';
+import 'package:sport_app/bloc/location_bloc/location_bloc.dart';
 import 'package:sport_app/bloc/membership_bloc/membership_bloc.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/bloc/wishlist_bloc/wishlist_bloc.dart';
@@ -44,15 +48,27 @@ class MyApp extends StatelessWidget {
           create: (context) => GroundBloc(),
         ),
         BlocProvider(
+          create: (context) => CoachBloc(),
+        ),
+        BlocProvider(
           create: (context) => WishlistBloc(),
         ),
         BlocProvider(
           create: (context) => CommonBloc(),
         ),
+        BlocProvider(
+          create: (context) => CoachDetailBloc(),
+        ),
+        BlocProvider(
+          create: (context) => LocationBloc(),
+        ),
+        BlocProvider(
+          create: (context) => BookingHistoryBloc(),
+        ),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Sport App',
+          title: "IT'S MY COURT",
           theme: ThemeData(
             splashColor: Colors.transparent,
             scaffoldBackgroundColor: AppColors.white,

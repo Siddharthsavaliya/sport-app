@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/model/institution_model/institution_model.dart';
 import 'package:sport_app/model/status.dart';
 import 'package:sport_app/repository/auth_repository.dart';
 part 'sign_up_state.dart';
@@ -16,6 +18,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     );
     on<ResendOtpRequest>(
       (event, emit) => _resendOtpRequest(event, emit),
+    );
+    on<GetInstitutionIds>(
+      (event, emit) => _getInstitutionIds(event, emit),
     );
   }
   final AuthRepository authRepository = AuthRepository();
@@ -102,6 +107,34 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           print(data);
           emit(state.copyWith(
             status: Status.loaded,
+          ));
+        },
+        failure: (error) {
+          emit(state.copyWith(status: Status.failed, message: error));
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(status: Status.failed, message: e.toString()));
+    }
+  }
+
+  Future<void> _getInstitutionIds(
+    GetInstitutionIds event,
+    Emitter<SignUpState> emit,
+  ) async {
+    emit(state.copyWith(
+      status: Status.inProgress,
+      initial: false,
+      resendOtp: false,
+      isVerifyOto: true,
+    ));
+    try {
+      final apiResult = await authRepository.getInstitution();
+      apiResult.when(
+        success: (data) {
+          emit(state.copyWith(
+            status: Status.loaded,
+            institutionIds: data.data.validate(),
           ));
         },
         failure: (error) {

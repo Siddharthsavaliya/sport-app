@@ -153,11 +153,16 @@ Future<dynamic> showErrorDialogue(
         ),
         content: Text(errorMessage.split('\$').last.replaceFirst(':', '')),
         actions: [
-          AppButton(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            text: isForLogin ? "Log In" : "OK",
+          Center(
+            child: SizedBox(
+              width: 0.3.sw,
+              child: AppButton(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                text: isForLogin ? "Log In" : "OK",
+              ),
+            ),
           )
         ],
       ),

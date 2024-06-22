@@ -22,17 +22,19 @@ GroundModel _$GroundModelFromJson(Map<String, dynamic> json) {
 mixin _$GroundModel {
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
-  String? get image => throw _privateConstructorUsedError;
+  @JsonKey(name: 'sport_name')
+  List<String>? get sportName => throw _privateConstructorUsedError;
+  List<Map<String, dynamic>>? get images => throw _privateConstructorUsedError;
+  String? get amenities => throw _privateConstructorUsedError;
+  String? get address1 => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
-  String? get facility => throw _privateConstructorUsedError;
-  String? get address => throw _privateConstructorUsedError;
-  String? get playingHours => throw _privateConstructorUsedError;
+  String? get address2 => throw _privateConstructorUsedError;
+  School? get school => throw _privateConstructorUsedError;
+  String? get institutionName => throw _privateConstructorUsedError;
   int? get price => throw _privateConstructorUsedError;
-  String? get number => throw _privateConstructorUsedError;
   int? get rating => throw _privateConstructorUsedError;
   bool? get recommended => throw _privateConstructorUsedError;
-  List<Slot>? get slots => throw _privateConstructorUsedError;
+  List<String>? get slots => throw _privateConstructorUsedError;
   @JsonKey(name: '__v')
   int? get v => throw _privateConstructorUsedError;
 
@@ -50,18 +52,21 @@ abstract class $GroundModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: '_id') String? id,
-      String? name,
-      String? image,
+      @JsonKey(name: 'sport_name') List<String>? sportName,
+      List<Map<String, dynamic>>? images,
+      String? amenities,
+      String? address1,
       String? location,
-      String? facility,
-      String? address,
-      String? playingHours,
+      String? address2,
+      School? school,
+      String? institutionName,
       int? price,
-      String? number,
       int? rating,
       bool? recommended,
-      List<Slot>? slots,
+      List<String>? slots,
       @JsonKey(name: '__v') int? v});
+
+  $SchoolCopyWith<$Res>? get school;
 }
 
 /// @nodoc
@@ -78,14 +83,15 @@ class _$GroundModelCopyWithImpl<$Res, $Val extends GroundModel>
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = freezed,
-    Object? image = freezed,
+    Object? sportName = freezed,
+    Object? images = freezed,
+    Object? amenities = freezed,
+    Object? address1 = freezed,
     Object? location = freezed,
-    Object? facility = freezed,
-    Object? address = freezed,
-    Object? playingHours = freezed,
+    Object? address2 = freezed,
+    Object? school = freezed,
+    Object? institutionName = freezed,
     Object? price = freezed,
-    Object? number = freezed,
     Object? rating = freezed,
     Object? recommended = freezed,
     Object? slots = freezed,
@@ -96,38 +102,42 @@ class _$GroundModelCopyWithImpl<$Res, $Val extends GroundModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      sportName: freezed == sportName
+          ? _value.sportName
+          : sportName // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      images: freezed == images
+          ? _value.images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>?,
+      amenities: freezed == amenities
+          ? _value.amenities
+          : amenities // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
+      address1: freezed == address1
+          ? _value.address1
+          : address1 // ignore: cast_nullable_to_non_nullable
               as String?,
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
-      facility: freezed == facility
-          ? _value.facility
-          : facility // ignore: cast_nullable_to_non_nullable
+      address2: freezed == address2
+          ? _value.address2
+          : address2 // ignore: cast_nullable_to_non_nullable
               as String?,
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as String?,
-      playingHours: freezed == playingHours
-          ? _value.playingHours
-          : playingHours // ignore: cast_nullable_to_non_nullable
+      school: freezed == school
+          ? _value.school
+          : school // ignore: cast_nullable_to_non_nullable
+              as School?,
+      institutionName: freezed == institutionName
+          ? _value.institutionName
+          : institutionName // ignore: cast_nullable_to_non_nullable
               as String?,
       price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as int?,
-      number: freezed == number
-          ? _value.number
-          : number // ignore: cast_nullable_to_non_nullable
-              as String?,
       rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -139,12 +149,24 @@ class _$GroundModelCopyWithImpl<$Res, $Val extends GroundModel>
       slots: freezed == slots
           ? _value.slots
           : slots // ignore: cast_nullable_to_non_nullable
-              as List<Slot>?,
+              as List<String>?,
       v: freezed == v
           ? _value.v
           : v // ignore: cast_nullable_to_non_nullable
               as int?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SchoolCopyWith<$Res>? get school {
+    if (_value.school == null) {
+      return null;
+    }
+
+    return $SchoolCopyWith<$Res>(_value.school!, (value) {
+      return _then(_value.copyWith(school: value) as $Val);
+    });
   }
 }
 
@@ -158,18 +180,22 @@ abstract class _$$GroundModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: '_id') String? id,
-      String? name,
-      String? image,
+      @JsonKey(name: 'sport_name') List<String>? sportName,
+      List<Map<String, dynamic>>? images,
+      String? amenities,
+      String? address1,
       String? location,
-      String? facility,
-      String? address,
-      String? playingHours,
+      String? address2,
+      School? school,
+      String? institutionName,
       int? price,
-      String? number,
       int? rating,
       bool? recommended,
-      List<Slot>? slots,
+      List<String>? slots,
       @JsonKey(name: '__v') int? v});
+
+  @override
+  $SchoolCopyWith<$Res>? get school;
 }
 
 /// @nodoc
@@ -184,14 +210,15 @@ class __$$GroundModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = freezed,
-    Object? image = freezed,
+    Object? sportName = freezed,
+    Object? images = freezed,
+    Object? amenities = freezed,
+    Object? address1 = freezed,
     Object? location = freezed,
-    Object? facility = freezed,
-    Object? address = freezed,
-    Object? playingHours = freezed,
+    Object? address2 = freezed,
+    Object? school = freezed,
+    Object? institutionName = freezed,
     Object? price = freezed,
-    Object? number = freezed,
     Object? rating = freezed,
     Object? recommended = freezed,
     Object? slots = freezed,
@@ -202,38 +229,42 @@ class __$$GroundModelImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      sportName: freezed == sportName
+          ? _value._sportName
+          : sportName // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      images: freezed == images
+          ? _value._images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>?,
+      amenities: freezed == amenities
+          ? _value.amenities
+          : amenities // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
+      address1: freezed == address1
+          ? _value.address1
+          : address1 // ignore: cast_nullable_to_non_nullable
               as String?,
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
-      facility: freezed == facility
-          ? _value.facility
-          : facility // ignore: cast_nullable_to_non_nullable
+      address2: freezed == address2
+          ? _value.address2
+          : address2 // ignore: cast_nullable_to_non_nullable
               as String?,
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as String?,
-      playingHours: freezed == playingHours
-          ? _value.playingHours
-          : playingHours // ignore: cast_nullable_to_non_nullable
+      school: freezed == school
+          ? _value.school
+          : school // ignore: cast_nullable_to_non_nullable
+              as School?,
+      institutionName: freezed == institutionName
+          ? _value.institutionName
+          : institutionName // ignore: cast_nullable_to_non_nullable
               as String?,
       price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as int?,
-      number: freezed == number
-          ? _value.number
-          : number // ignore: cast_nullable_to_non_nullable
-              as String?,
       rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -245,7 +276,7 @@ class __$$GroundModelImplCopyWithImpl<$Res>
       slots: freezed == slots
           ? _value._slots
           : slots // ignore: cast_nullable_to_non_nullable
-              as List<Slot>?,
+              as List<String>?,
       v: freezed == v
           ? _value.v
           : v // ignore: cast_nullable_to_non_nullable
@@ -259,19 +290,22 @@ class __$$GroundModelImplCopyWithImpl<$Res>
 class _$GroundModelImpl implements _GroundModel {
   _$GroundModelImpl(
       {@JsonKey(name: '_id') this.id,
-      this.name,
-      this.image,
+      @JsonKey(name: 'sport_name') final List<String>? sportName,
+      final List<Map<String, dynamic>>? images,
+      this.amenities,
+      this.address1,
       this.location,
-      this.facility,
-      this.address,
-      this.playingHours,
+      this.address2,
+      this.school,
+      this.institutionName,
       this.price,
-      this.number,
       this.rating,
       this.recommended,
-      final List<Slot>? slots,
+      final List<String>? slots,
       @JsonKey(name: '__v') this.v})
-      : _slots = slots;
+      : _sportName = sportName,
+        _images = images,
+        _slots = slots;
 
   factory _$GroundModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$GroundModelImplFromJson(json);
@@ -279,29 +313,48 @@ class _$GroundModelImpl implements _GroundModel {
   @override
   @JsonKey(name: '_id')
   final String? id;
+  final List<String>? _sportName;
   @override
-  final String? name;
+  @JsonKey(name: 'sport_name')
+  List<String>? get sportName {
+    final value = _sportName;
+    if (value == null) return null;
+    if (_sportName is EqualUnmodifiableListView) return _sportName;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<Map<String, dynamic>>? _images;
   @override
-  final String? image;
+  List<Map<String, dynamic>>? get images {
+    final value = _images;
+    if (value == null) return null;
+    if (_images is EqualUnmodifiableListView) return _images;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final String? amenities;
+  @override
+  final String? address1;
   @override
   final String? location;
   @override
-  final String? facility;
+  final String? address2;
   @override
-  final String? address;
+  final School? school;
   @override
-  final String? playingHours;
+  final String? institutionName;
   @override
   final int? price;
-  @override
-  final String? number;
   @override
   final int? rating;
   @override
   final bool? recommended;
-  final List<Slot>? _slots;
+  final List<String>? _slots;
   @override
-  List<Slot>? get slots {
+  List<String>? get slots {
     final value = _slots;
     if (value == null) return null;
     if (_slots is EqualUnmodifiableListView) return _slots;
@@ -315,7 +368,7 @@ class _$GroundModelImpl implements _GroundModel {
 
   @override
   String toString() {
-    return 'GroundModel(id: $id, name: $name, image: $image, location: $location, facility: $facility, address: $address, playingHours: $playingHours, price: $price, number: $number, rating: $rating, recommended: $recommended, slots: $slots, v: $v)';
+    return 'GroundModel(id: $id, sportName: $sportName, images: $images, amenities: $amenities, address1: $address1, location: $location, address2: $address2, school: $school, institutionName: $institutionName, price: $price, rating: $rating, recommended: $recommended, slots: $slots, v: $v)';
   }
 
   @override
@@ -324,17 +377,21 @@ class _$GroundModelImpl implements _GroundModel {
         (other.runtimeType == runtimeType &&
             other is _$GroundModelImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.image, image) || other.image == image) &&
+            const DeepCollectionEquality()
+                .equals(other._sportName, _sportName) &&
+            const DeepCollectionEquality().equals(other._images, _images) &&
+            (identical(other.amenities, amenities) ||
+                other.amenities == amenities) &&
+            (identical(other.address1, address1) ||
+                other.address1 == address1) &&
             (identical(other.location, location) ||
                 other.location == location) &&
-            (identical(other.facility, facility) ||
-                other.facility == facility) &&
-            (identical(other.address, address) || other.address == address) &&
-            (identical(other.playingHours, playingHours) ||
-                other.playingHours == playingHours) &&
+            (identical(other.address2, address2) ||
+                other.address2 == address2) &&
+            (identical(other.school, school) || other.school == school) &&
+            (identical(other.institutionName, institutionName) ||
+                other.institutionName == institutionName) &&
             (identical(other.price, price) || other.price == price) &&
-            (identical(other.number, number) || other.number == number) &&
             (identical(other.rating, rating) || other.rating == rating) &&
             (identical(other.recommended, recommended) ||
                 other.recommended == recommended) &&
@@ -347,14 +404,15 @@ class _$GroundModelImpl implements _GroundModel {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      name,
-      image,
+      const DeepCollectionEquality().hash(_sportName),
+      const DeepCollectionEquality().hash(_images),
+      amenities,
+      address1,
       location,
-      facility,
-      address,
-      playingHours,
+      address2,
+      school,
+      institutionName,
       price,
-      number,
       rating,
       recommended,
       const DeepCollectionEquality().hash(_slots),
@@ -377,17 +435,18 @@ class _$GroundModelImpl implements _GroundModel {
 abstract class _GroundModel implements GroundModel {
   factory _GroundModel(
       {@JsonKey(name: '_id') final String? id,
-      final String? name,
-      final String? image,
+      @JsonKey(name: 'sport_name') final List<String>? sportName,
+      final List<Map<String, dynamic>>? images,
+      final String? amenities,
+      final String? address1,
       final String? location,
-      final String? facility,
-      final String? address,
-      final String? playingHours,
+      final String? address2,
+      final School? school,
+      final String? institutionName,
       final int? price,
-      final String? number,
       final int? rating,
       final bool? recommended,
-      final List<Slot>? slots,
+      final List<String>? slots,
       @JsonKey(name: '__v') final int? v}) = _$GroundModelImpl;
 
   factory _GroundModel.fromJson(Map<String, dynamic> json) =
@@ -397,27 +456,30 @@ abstract class _GroundModel implements GroundModel {
   @JsonKey(name: '_id')
   String? get id;
   @override
-  String? get name;
+  @JsonKey(name: 'sport_name')
+  List<String>? get sportName;
   @override
-  String? get image;
+  List<Map<String, dynamic>>? get images;
+  @override
+  String? get amenities;
+  @override
+  String? get address1;
   @override
   String? get location;
   @override
-  String? get facility;
+  String? get address2;
   @override
-  String? get address;
+  School? get school;
   @override
-  String? get playingHours;
+  String? get institutionName;
   @override
   int? get price;
-  @override
-  String? get number;
   @override
   int? get rating;
   @override
   bool? get recommended;
   @override
-  List<Slot>? get slots;
+  List<String>? get slots;
   @override
   @JsonKey(name: '__v')
   int? get v;

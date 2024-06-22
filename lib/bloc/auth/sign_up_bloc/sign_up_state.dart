@@ -7,12 +7,14 @@ class SignUpState extends Equatable {
     this.resendOtp = false,
     this.initial = false,
     this.status = Status.initial,
+    this.institutionIds = const [],
   });
   final String message;
   final Status status;
   final bool isVerifyOto;
   final bool initial;
   final bool resendOtp;
+  final List<Institution> institutionIds;
 
   @override
   List<Object?> get props {
@@ -22,12 +24,14 @@ class SignUpState extends Equatable {
       resendOtp,
       isVerifyOto,
       resendOtp,
+      institutionIds,
     ];
   }
 
   SignUpState copyWith({
     String? message,
     Status? status,
+    List<Institution>? institutionIds,
     bool? isVerifyOto,
     bool? resendOtp,
     bool? initial,
@@ -38,6 +42,7 @@ class SignUpState extends Equatable {
       resendOtp: resendOtp ?? this.resendOtp,
       isVerifyOto: isVerifyOto ?? this.isVerifyOto,
       initial: initial ?? this.initial,
+      institutionIds: institutionIds ?? this.institutionIds,
     );
   }
 }

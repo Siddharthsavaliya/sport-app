@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +14,7 @@ import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_strings.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/app_bottom_bar.dart';
+import 'package:sport_app/screens/location_screens/location_access_screen.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/status_dialog.dart';
 import 'package:sport_app/widget/app_button.dart';
@@ -153,17 +156,25 @@ class _VerifyScreenState extends State<VerifyScreen> {
             child: MultiBlocListener(
               listeners: [
                 BlocListener<SignUpBloc, SignUpState>(
-                  listener: (context, state) {
+                  listener: (context, state) async {
                     if (state.isVerifyOto) {
                       if (state.status.isInProgress) {
                         showProgressDialogue(context);
                       } else if (state.status.isLoaded) {
                         Navigator.pop(context);
-                        Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => const AppBottomBar(),
-                            ));
+                        String? city = await getKeyValue(key: 'city');
+                        city == null
+                            ? Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) =>
+                                      const LocationAccessScreen(),
+                                ))
+                            : Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => const AppBottomBar(),
+                                ));
                       } else if (state.status.isFailed) {
                         Navigator.pop(context);
                         showScafoldMessage(

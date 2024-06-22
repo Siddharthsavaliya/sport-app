@@ -1,12 +1,24 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:booking_calendar/booking_calendar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/model/ground_model/ground_model.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/booking/booking_slot.dart';
+import 'package:sport_app/screens/booking/service_detail_responce_model.dart';
 
 class SlotSelectionScreen extends StatefulWidget {
-  const SlotSelectionScreen({super.key});
+  final GroundModel? groundData;
+
+  const SlotSelectionScreen({
+    super.key,
+    this.groundData,
+  });
 
   @override
   State<SlotSelectionScreen> createState() => _SlotSelectionScreenState();
@@ -14,11 +26,13 @@ class SlotSelectionScreen extends StatefulWidget {
 
 class _SlotSelectionScreenState extends State<SlotSelectionScreen> {
   final now = DateTime.now();
-  late BookingService mockBookingService;
+  BookingService? mockBookingService;
+  ServiceDetailResponse? serviceDetailResponse;
 
   @override
   void initState() {
     super.initState();
+    getServiceDetail();
     // DateTime.now().startOfDay
     // DateTime.now().endOfDay
     initializeDateFormatting('IN').then((_) {
@@ -82,6 +96,31 @@ class _SlotSelectionScreenState extends State<SlotSelectionScreen> {
     ];
   }
 
+  Future<void> getServiceDetail() async {
+    var headers = {
+      'Authorization': 'Bearer 107|JFBeBsYekda4oVvAO8cvP4DQTcPOKJPRyxB3YztV',
+      // 'Authorization': 'Bearer 44|QAon0Xtq0t4vKhiqIV4jjgxY9B9dEPpN1ltQy8qu',
+      'Content-Type': 'application/json'
+    };
+    var data = json.encode({"service_id": "146"});
+    var dio = Dio();
+    Response response = await dio.request(
+      'https://client2.iqonic.design/service/handyman-ramya/api/service-detail',
+      options: Options(
+        method: 'POST',
+        headers: headers,
+      ),
+      data: data,
+    );
+    if (response.statusCode == 200) {
+      serviceDetailResponse = ServiceDetailResponse.fromJson(response.data);
+      setState(() {});
+      print(json.encode(response.data));
+    } else {
+      print(response.statusMessage);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,21 +135,37 @@ class _SlotSelectionScreenState extends State<SlotSelectionScreen> {
         elevation: 0,
       ),
       body: Center(
-        child: BookingCalendar(
-          bookingService: mockBookingService,
-          convertStreamResultToDateTimeRanges: convertStreamResultMock,
-          getBookingStream: getBookingStreamMock,
-          uploadBooking: uploadBookingMock,
-          pauseSlots: generatePauseSlots(),
-          pauseSlotText: 'LUNCH',
-          hideBreakTime: true,
-          loadingWidget: const Text('Fetching data...'),
-          uploadingWidget: const CircularProgressIndicator(),
-          locale: 'IN',
-          startingDayOfWeek: StartingDayOfWeek.monday,
-          wholeDayIsBookedWidget:
-              const Text('Sorry, for this day everything is booked'),
-        ),
+        child: serviceDetailResponse != null
+            ?
+            // BookingCalendar(
+            //   bookingService: mockBookingService!,
+            //   convertStreamResultToDateTimeRanges: convertStreamResultMock,
+            //   getBookingStream: getBookingStreamMock,
+            //   uploadBooking: uploadBookingMock,
+            //   pauseSlots: generatePauseSlots(),
+            //   pauseSlotText: 'LUNCH',
+            //   hideBreakTime: true,
+            //   loadingWidget: const Text('Fetching data...'),
+            //   uploadingWidget: const CircularProgressIndicator(),
+            //   locale: 'IN',
+            //   startingDayOfWeek: StartingDayOfWeek.monday,
+            //   wholeDayIsBookedWidget:
+            //       const Text('Sorry, for this day everything is booked'),
+            // )
+
+            BookingSlotsComponent(
+                groundData: widget.groundData,
+
+                // data: serviceDetailResponse,
+                showAppbar: true,
+                // scrollController: scrollController,
+                onApplyClick: () {
+                  setState(() {});
+                },
+              )
+            : const CircularProgressIndicator(
+                color: AppColors.primaryColor,
+              ),
       ),
     );
   }

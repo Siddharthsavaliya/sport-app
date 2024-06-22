@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:sport_app/bloc/location_bloc/location_bloc.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_strings.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/coaches/coach_list_screen.dart';
 import 'package:sport_app/screens/come_play_screen/come_play_screen.dart';
+import 'package:sport_app/screens/grounds_screen/grounds_list_screen.dart';
+import 'package:sport_app/screens/location_screens/location_access_screen.dart';
 import 'package:sport_app/screens/membership/membership.dart';
 
 import 'package:sport_app/utils/helper.dart';
@@ -68,6 +73,12 @@ class _HomeScreenState extends State<HomeScreen> {
           "Users can seamlessly access a wide array of ongoing events and tournaments across various sports"
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,7 +131,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Row(
                                         children: [
                                           Text(
-                                            "Home",
+                                            BlocProvider.of<LocationBloc>(
+                                                    context)
+                                                .state
+                                                .city,
                                             style: AppStyle.normalText.copyWith(
                                                 color: AppColors.black
                                                     .withOpacity(0.8),
@@ -128,12 +142,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 fontWeight: FontWeight.w600,
                                                 letterSpacing: 0.8),
                                           ),
-                                          const Icon(
-                                              Icons.keyboard_arrow_down_rounded)
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.pushAndRemoveUntil(
+                                                context,
+                                                CupertinoPageRoute(
+                                                    builder: (context) =>
+                                                        const LocationAccessScreen()),
+                                                (route) => false,
+                                              );
+                                            },
+                                            child: const Icon(Icons
+                                                .keyboard_arrow_down_rounded),
+                                          )
                                         ],
                                       ),
                                       Text(
-                                        "Tilak Nagar, New Delhi",
+                                        BlocProvider.of<LocationBloc>(context)
+                                            .state
+                                            .address,
                                         style: AppStyle.normalText.copyWith(
                                             color: AppColors.black
                                                 .withOpacity(0.8),
@@ -169,7 +196,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Image.asset(
                                       AppAssets.king,
                                       width: 20,
-                                      
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(top: 0.004.sh),
@@ -231,53 +257,64 @@ class _HomeScreenState extends State<HomeScreen> {
                 addVerticalSpacing(0.015),
                 SearchAnchor(builder:
                     (BuildContext context, SearchController controller) {
-                  return Container(
-                    height: 55,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      border: Border.all(
-                        color: AppColors.borderColor,
-                        width: 1,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => const GroundsListScreen(
+                              name: "All Ground",
+                            ),
+                          ));
+                    },
+                    child: Container(
+                      height: 55,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        border: Border.all(
+                          color: AppColors.borderColor,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0.03.sw),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            AppStrings.searchSport,
-                            style: AppStyle.normalText.copyWith(
-                                color: AppColors.gray.withOpacity(0.8),
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                                letterSpacing: 0.8),
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.search,
-                                size: 19,
-                                color: AppColors.gray.withOpacity(0.8),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 16),
-                                child: VerticalDivider(
-                                  thickness: 1,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 0.03.sw),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              AppStrings.searchSport,
+                              style: AppStyle.normalText.copyWith(
+                                  color: AppColors.gray.withOpacity(0.8),
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: 0.8),
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.search,
+                                  size: 19,
                                   color: AppColors.gray.withOpacity(0.8),
                                 ),
-                              ),
-                              Icon(
-                                Icons.mic_none_sharp,
-                                size: 19,
-                                color: AppColors.gray.withOpacity(0.8),
-                              )
-                            ],
-                          )
-                        ],
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 16),
+                                  child: VerticalDivider(
+                                    thickness: 1,
+                                    color: AppColors.gray.withOpacity(0.8),
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.mic_none_sharp,
+                                  size: 19,
+                                  color: AppColors.gray.withOpacity(0.8),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -414,6 +451,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                         CupertinoPageRoute(
                                           builder: (context) =>
                                               const ComePlayScreen(),
+                                        ));
+                                  } else {
+                                    Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (context) =>
+                                              const CoachListScreen(),
+                                          // const CoachScreen(),
                                         ));
                                   }
                                 },

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sport_app/bloc/ground_bloc/ground_bloc.dart';
 import 'package:sport_app/bloc/wishlist_bloc/wishlist_bloc.dart';
 import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/app_assets.dart';
@@ -13,7 +12,6 @@ import 'package:sport_app/screens/come_play_screen/come_play_screen.dart';
 import 'package:sport_app/screens/grounds_screen/ground_detail_screen.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/status_dialog.dart';
-import 'package:sport_app/widget/app_text_field.dart';
 import 'package:sport_app/widget/empty_place_holder.dart';
 import 'package:sport_app/widget/shimmer_widget.dart';
 
@@ -69,7 +67,6 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
         },
         builder: (context, state) {
           if (state.status.isLoaded || state.isRemove) {
-            
             return RefreshIndicator(
               onRefresh: onRefresh,
               color: AppColors.black,
@@ -124,11 +121,16 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                                         children: [
                                           Expanded(
                                             flex: 6,
-                                            child: Image.network(
-                                              state.grounds[index].image!,
-                                              height: 100,
-                                              fit: BoxFit.fill,
-                                            ),
+                                            child: state.grounds[index].images!
+                                                    .isNotEmpty
+                                                ? Image.network(state
+                                                    .grounds[index]
+                                                    .images![0]["imageUrl"])
+                                                : Image.asset(
+                                                    AppAssets.ground,
+                                                    height: 100,
+                                                    fit: BoxFit.fill,
+                                                  ),
                                           ),
                                           addHorizontalSpacing(0.01),
                                           Expanded(
@@ -150,22 +152,25 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                                                       children: [
                                                         addVerticalSpacing(
                                                             0.008),
-                                                        Text(
-                                                          state.grounds[index]
-                                                              .name!,
-                                                          style: AppStyle
-                                                              .mediumBold
-                                                              .copyWith(
-                                                                  fontSize:
-                                                                      13.5.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color:
-                                                                      AppColors
-                                                                          .black,
-                                                                  letterSpacing:
-                                                                      0.8),
+                                                        SizedBox(
+                                                          width: 0.3.sw,
+                                                          child: Text(
+                                                            state.grounds[index]
+                                                                    .institutionName ??
+                                                                "",
+                                                            style: AppStyle
+                                                                .mediumBold
+                                                                .copyWith(
+                                                                    fontSize:
+                                                                        13.5.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    color: AppColors
+                                                                        .black,
+                                                                    letterSpacing:
+                                                                        0.8),
+                                                          ),
                                                         ),
                                                         addVerticalSpacing(
                                                             0.018),
@@ -274,8 +279,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                                                 ),
                                                 addHorizontalSpacing(0.004),
                                                 Text(
-                                                  state
-                                                      .grounds[index].location!,
+                                                  "Surat",
                                                   style: AppStyle.normalText
                                                       .copyWith(
                                                           fontSize: 15.sp,

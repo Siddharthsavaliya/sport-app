@@ -1,3 +1,4 @@
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,31 +8,50 @@ import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/booking/sloat_selection_screen.dart';
 import 'package:sport_app/utils/helper.dart';
+import 'package:sport_app/utils/shimmer_widget.dart';
 import 'package:sport_app/widget/app_button.dart';
+import 'package:sport_app/widget/carosule_widget.dart';
 
 class GroundDetailScreen extends StatefulWidget {
   const GroundDetailScreen({super.key, required this.groundModel});
   final GroundModel groundModel;
+  // final GroundModel groundModel;
   @override
   State<GroundDetailScreen> createState() => _GroundDetailScreenState();
 }
 
 class _GroundDetailScreenState extends State<GroundDetailScreen> {
-  List facilities = [
-    AppAssets.park,
-    AppAssets.cctv,
-    AppAssets.changeRoom,
-    AppAssets.washRoom
-  ];
+  // List facilities = [
+  //   AppAssets.park,
+  //   AppAssets.yesIcon,
+  //   AppAssets.changeRoom,
+  //   AppAssets.washRoom
+  // ];
+  List<String> amenitiesList = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    init();
+  }
+
+  void init() {
+    if (widget.groundModel.amenities != null) {
+      amenitiesList = widget.groundModel.amenities!.split(',');
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         foregroundColor: AppColors.black,
-        backgroundColor: Colors.grey.shade300,
+        backgroundColor: Colors.grey.shade100,
         title: Text(
-          widget.groundModel.name!,
+          widget.groundModel.institutionName!,
           style: AppStyle.mediumText.copyWith(
               fontSize: 20.sp, color: AppColors.black, letterSpacing: 0.8),
         ),
@@ -41,36 +61,40 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           addVerticalSpacing(0.02),
-          Center(
-            child: Container(
-              height: 0.2.sh,
-              width: 0.8.sw,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                    image: NetworkImage(widget.groundModel.image!),
-                    fit: BoxFit.fill),
-              ),
-            ),
+          // Center(
+          //     child: Container(
+          //   height: 0.2.sh,
+          //   width: 0.8.sw,
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(10),
+          //     image: const DecorationImage(
+          //         image: AssetImage(AppAssets.ground),
+          //         // image: NetworkImage(widget.groundModel.image!),
+          //         fit: BoxFit.fill),
+          //   ),
+          // )),
+
+          BannerWidget(
+            data: widget.groundModel.images!,
           ),
-          addVerticalSpacing(0.02),
-          Center(
-            child: Container(
-              height: 0.09.sh,
-              width: 0.85.sw,
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.borderColor),
-                color: AppColors.white.withOpacity(0.9),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Image.asset(
-                  AppAssets.schoolLogo,
-                  width: 0.7.sw,
-                ),
-              ),
-            ),
-          ),
+          // addVerticalSpacing(0.02),
+          // Center(
+          //   child: Container(
+          //     height: 0.09.sh,
+          //     width: 0.85.sw,
+          //     decoration: BoxDecoration(
+          //       border: Border.all(color: AppColors.borderColor),
+          //       color: AppColors.white.withOpacity(0.9),
+          //       borderRadius: BorderRadius.circular(10),
+          //     ),
+          //     child: Center(
+          //       child: Image.network(
+          //      widget.groundModel.school.,
+          //         width: 0.7.sw,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           addVerticalSpacing(0.02),
           Container(
             width: double.infinity,
@@ -92,18 +116,21 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
                             letterSpacing: 0.8),
                       ),
                       addVerticalSpacing(0.01),
-                      Text(
-                        widget.groundModel.name!,
-                        style: AppStyle.mediumText.copyWith(
-                            fontSize: 15.sp,
-                            color: AppColors.black,
-                            letterSpacing: 0.8),
+                      SizedBox(
+                        width: 0.49.sw,
+                        child: Text(
+                          widget.groundModel.institutionName!,
+                          style: AppStyle.mediumText.copyWith(
+                              fontSize: 15.sp,
+                              color: AppColors.black,
+                              letterSpacing: 0.8),
+                        ),
                       ),
                       addVerticalSpacing(0.006),
                       SizedBox(
                         width: 0.6.sw,
                         child: Text(
-                          widget.groundModel.address ?? "",
+                          "${widget.groundModel.school!.address1!} ${widget.groundModel.school!.address2!}",
                           style: AppStyle.normalText.copyWith(
                             fontSize: 11.sp,
                             color: AppColors.black,
@@ -113,7 +140,8 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
                       ),
                       addVerticalSpacing(0.002),
                       Text(
-                        "Toll Free : ${widget.groundModel.number}",
+                        "Toll Free : 90873480384",
+                        // "Toll Free : ${widget.groundModel.number}",
                         style: AppStyle.normalText.copyWith(
                           fontSize: 11.sp,
                           letterSpacing: 1,
@@ -124,22 +152,28 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
                       addVerticalSpacing(0.015),
                     ],
                   ),
-                  Column(
-                    children: [
-                      Image.asset(
-                        AppAssets.map,
-                        height: 0.044.sh,
-                      ),
-                      addVerticalSpacing(0.005),
-                      Text(
-                        "Click Here For Location",
-                        style: AppStyle.mediumBold.copyWith(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.black,
+                  GestureDetector(
+                    onTap: () {
+                      launchUrls(context,
+                          widget.groundModel.school?.googlemaplink ?? "");
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          AppAssets.map,
+                          height: 0.044.sh,
                         ),
-                      ),
-                    ],
+                        addVerticalSpacing(0.005),
+                        Text(
+                          "Click Here For Location",
+                          style: AppStyle.mediumBold.copyWith(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.black,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -161,31 +195,36 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
                         letterSpacing: 0),
                   ),
                   addVerticalSpacing(0.019),
-                  SizedBox(
-                    height: 0.029.sh,
-                    child: Center(
-                      child: ListView.separated(
-                        padding: const EdgeInsets.all(0),
-                        separatorBuilder: (context, index) {
-                          return const VerticalDivider(
-                            color: Color(0xff000000),
-                          );
-                        },
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemCount: facilities.length,
-                        itemBuilder: (context, index) => Image.asset(
-                          facilities[index],
+                  DynamicHeightGridView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    crossAxisSpacing: 0,
+                    crossAxisCount: 2,
+                    itemCount: amenitiesList.length,
+                    builder: (context, index) => Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          AppAssets.yesIcon,
+                          height: 20,
+                          width: 20,
                         ),
-                      ),
+                        addHorizontalSpacing(0.01),
+                        Text(
+                          amenitiesList[index].toString(),
+                          style: AppStyle.mediumBold.copyWith(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.black,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  addVerticalSpacing(0.005),
                 ],
               ),
             ),
           ),
-          addVerticalSpacing(0.025),
           Container(
             width: double.infinity,
             color: AppColors.white,
@@ -212,14 +251,29 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
                     ],
                   ),
                   addHorizontalSpacing(0.03),
-                  Text(
-                    widget.groundModel.playingHours ?? "",
-                    style: AppStyle.mediumBold.copyWith(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.black,
-                      letterSpacing: 0.2,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Monday to Friday: ${widget.groundModel.school!.schoolSchedule!.weekdayfromtime}",
+                        style: AppStyle.mediumBold.copyWith(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.black,
+                          letterSpacing: 0.2,
+                        ),
+                      ),
+                      addVerticalSpacing(0.01),
+                      Text(
+                        "Saturday to Sunday: ${widget.groundModel.school!.schoolSchedule!.weekdaytotime}",
+                        style: AppStyle.mediumBold.copyWith(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.black,
+                          letterSpacing: 0.2,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -237,7 +291,8 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => const SlotSelectionScreen(),
+                        builder: (context) =>
+                            SlotSelectionScreen(groundData: widget.groundModel),
                       ));
                 },
               ),

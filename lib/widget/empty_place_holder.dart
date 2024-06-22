@@ -13,19 +13,23 @@ class EmptyPlaceHolder extends StatelessWidget {
       required this.title,
       required this.subTitle,
       this.onTap,
+      this.pending,
       this.buttonText,
       required this.imagePath});
   final String title;
   final String subTitle;
   final String imagePath;
   final String? buttonText;
+  final double? pending;
   final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment:
+          pending != null ? MainAxisAlignment.start : MainAxisAlignment.center,
       children: [
+        if (pending != null) ...[addVerticalSpacing(pending!)],
         Center(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 0.06.sw),

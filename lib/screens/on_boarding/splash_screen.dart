@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/bloc/location_bloc/location_bloc.dart';
+import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/screens/app_bottom_bar.dart';
+import 'package:sport_app/screens/location_screens/location_access_screen.dart';
 import 'package:sport_app/screens/on_boarding/on_boarding_screens.dart';
 import 'package:sport_app/utils/helper.dart';
 
@@ -13,8 +18,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final bool _animationCompleted = false;
   bool isLogged = false;
+
   @override
   void initState() {
     checkIsLogged();
@@ -23,8 +28,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   checkIsLogged() async {
     String? userId = await getKeyValue(key: 'token');
+    String? city = await getKeyValue(key: 'city');
     isLogged = userId == null ? false : true;
     setState(() {});
+    if (city != null) {
+      BlocProvider.of<LocationBloc>(context).add(InitializeLocationEvent());
+    }
     Future.delayed(
       const Duration(seconds: 3),
       () {
@@ -32,7 +41,9 @@ class _SplashScreenState extends State<SplashScreen> {
             ? Navigator.pushAndRemoveUntil(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) => const AppBottomBar(),
+                  builder: (context) => city == null
+                      ? const LocationAccessScreen()
+                      : const AppBottomBar(),
                 ),
                 (route) => false,
               )
@@ -51,18 +62,17 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Lottie.asset(
-          "assets/animation/loading.json",
-          onLoaded: (composition) {
-            final duration = composition.duration;
-            Future.delayed(duration, () {
-              if (_animationCompleted) {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const SplashScreen()),
-                );
-              }
-            });
+        child: TweenAnimationBuilder<double>(
+          tween: Tween<double>(begin: 0.0, end: 1.0),
+          duration: const Duration(seconds: 2),
+          builder: (context, value, child) {
+            return Transform.scale(
+              scale: value,
+              child: child,
+            );
           },
+          child: Image.asset(AppAssets.splashScreenImage)
+              .paddingSymmetric(horizontal: 0.1.sw),
         ),
       ),
     );

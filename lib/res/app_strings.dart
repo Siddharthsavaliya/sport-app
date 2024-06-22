@@ -8,16 +8,21 @@ class AppStrings {
   static const String newPassword = "New Password";
   static const String oldPassword = "Old Password";
   static const String confirmPassword = "Confirm Password";
-
+  static const String yourLocationText = "Your current Location";
   static const String getStarted = "Get Started!";
   static const String welcomeBack = "Welcome Back!";
   static const String forgetPassword = "Forgot Password ?";
   static const String doNotHaveAccount = "Don’t have an account ?";
   static const String signUp = "Sign Up";
+  static const String niceToMeetText = "Hi, nice to meet you";
+  static const String searchYourLocality = "Search your Locality...";
+  static const String locationExText = "eg. Goregaon East, Hub Mall";
   static const String verify = "Verify";
+  static const String someOtherLocation = "some other location";
   static const String sendOtp = "Send OTP";
   static const String submit = "Submit";
   static const String resetPassword = "Reset Password";
+  static const String fetchingLocation = "Fetching your Location";
   static const String signInHere = "Sign in Here";
   static const String alreadyRegister = "Already Registered?";
   static const String notNeedToDoThis = "Don’t need to do this?";
@@ -51,6 +56,8 @@ class AppStrings {
   static const String booking = "My Bookings";
   static const String help = "Help & Support";
   static const String faq = "FAQ's";
+  static const String termsAndConditions = "Terms & Conditions";
+  static const String privacyPolicy = "Privacy Policy";
   static const String paymentMethod = "My Payment Methods";
   static const String security = "Security";
   static const String securitySub = "Change your password";

@@ -36,14 +36,15 @@ class AppButton extends StatelessWidget {
             border: isBorder ? Border.all(color: AppColors.red) : null,
             color: isBorder
                 ? Colors.transparent
-                : color ?? AppColors.red.withOpacity(removeOpacity ? 1 : 0.6)),
+                : color ??
+                    AppColors.buttonColor.withOpacity(removeOpacity ? 1 : 0.6)),
         child: Center(
           child: Text(
             text,
             style: AppStyle.mediumBold.copyWith(
               color: isBorder ? AppColors.red : AppColors.white,
               fontSize: textSize ?? 16.sp,
-              fontWeight: FontWeight.normal,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),

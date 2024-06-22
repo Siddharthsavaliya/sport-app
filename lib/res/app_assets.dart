@@ -17,10 +17,14 @@ class AppAssets {
   static const String training = "assets/images/training.png";
   static const String profile = "assets/images/profile.png";
   static const String sport1 = "assets/images/sport1.png";
+  static const String locationIcon = "assets/images/location_icon.svg";
   static const String home = "assets/images/home.png";
   static const String dp = "assets/images/dp.png";
   static const String event1 = "assets/images/event1.png";
+  static const String light = "assets/images/light.svg";
+  static const String locationPinIcon = "assets/images/location_pin.svg";
   static const String king = "assets/images/king.png";
+  static const String locationImage = "assets/images/location_image.svg";
   static const String id = "assets/images/id.png";
   static const String gallery1 = "assets/images/gallery1.png";
   static const String closeEye = "assets/images/close_eye.png";
@@ -57,5 +61,12 @@ class AppAssets {
   static const String king1 = "assets/images/king1.png";
   static const String dis = "assets/images/discount.png";
   static const String error = "assets/animation/error.json";
-  
+  static const String qrCode = "assets/images/qr_code.png";
+  static const String payment = "assets/images/payment.png";
+  static const String paymentSuccess = "assets/images/payment_success.png";
+  static const String splashScreenImage =
+      "assets/images/splash_screen_image.png";
+  static const String yesIcon = "assets/images/yes_icon.png";
+  static const String coach = "assets/images/coach.png";
+  static const String sort = "assets/images/sort.png";
 }

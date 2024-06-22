@@ -7,10 +7,13 @@ import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_strings.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/res/constant_data.dart';
+import 'package:sport_app/screens/booking/my_bookings_screen.dart';
 import 'package:sport_app/screens/on_boarding/splash_screen.dart';
 import 'package:sport_app/screens/profile/change_password_screen.dart';
 import 'package:sport_app/screens/profile/edit_profile_screen.dart';
 import 'package:sport_app/screens/profile/faq_screen.dart';
+import 'package:sport_app/screens/profile/htmls_view.dart';
 import 'package:sport_app/screens/profile/payment_history.dart';
 import 'package:sport_app/screens/profile/wishlist_screen.dart';
 import 'package:sport_app/utils/helper.dart';
@@ -56,7 +59,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         "icon": Icons.book_outlined,
         "title": AppStrings.booking,
         "subtitle": AppStrings.bookingSub,
-        "onTap": () {}
+        "onTap": () {
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => const MyBookingsScreen(),
+              ));
+        }
       },
       {
         "icon": Icons.history,
@@ -99,6 +108,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
         "title": AppStrings.help,
         "subtitle": null,
         "onTap": () {}
+      },
+      {
+        "icon": Icons.pages,
+        "title": AppStrings.termsAndConditions,
+        "subtitle": null,
+        "onTap": () {
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => const HtmlViewScreen(
+                    data: terms, title: AppStrings.termsAndConditions),
+              ));
+        }
+      },
+      {
+        "icon": Icons.pages,
+        "title": AppStrings.privacyPolicy,
+        "subtitle": null,
+        "onTap": () {
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => HtmlViewScreen(
+                    data: privacyPolicy, title: AppStrings.privacyPolicy),
+              ));
+        }
       },
     ];
 

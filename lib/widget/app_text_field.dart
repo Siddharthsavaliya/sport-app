@@ -14,10 +14,10 @@ class AppTextfield extends StatefulWidget {
       this.radius,
       this.readOnly = false,
       this.error = false,
+      this.isBlack = false,
       this.isPassword,
       this.controller,
       this.validator,
-      
       this.onTap,
       this.maxLength,
       this.keyboardType,
@@ -30,6 +30,7 @@ class AppTextfield extends StatefulWidget {
   final double? radius;
   final bool? isPassword;
   final bool error;
+  final bool isBlack;
   final bool readOnly;
   final int? maxLength;
   final VoidCallback? onTap;
@@ -59,9 +60,9 @@ class _AppTextfieldState extends State<AppTextfield> {
                     : AppColors.gray.withOpacity(0.4),
                 width: 2),
           )
-        : const UnderlineInputBorder(
+        : UnderlineInputBorder(
             borderSide: BorderSide(
-              color: AppColors.white,
+              color: widget.isBlack ? AppColors.gray : AppColors.white,
             ),
           );
     return SizedBox(
@@ -75,10 +76,18 @@ class _AppTextfieldState extends State<AppTextfield> {
         validator: widget.validator,
         obscureText: isShow,
         controller: widget.controller ?? TextEditingController(),
-        cursorColor: widget.isRound ? AppColors.gray : AppColors.white,
+        cursorColor: widget.isBlack
+            ? AppColors.gray
+            : widget.isRound
+                ? AppColors.gray
+                : AppColors.white,
         cursorHeight: 18,
         style: AppStyle.mediumBold.copyWith(
-            color: widget.isRound ? AppColors.gray : AppColors.white,
+            color: widget.isBlack
+                ? AppColors.gray
+                : widget.isRound
+                    ? AppColors.gray
+                    : AppColors.white,
             letterSpacing: 1,
             fontSize: widget.isRound ? 17.sp : 15.sp),
         decoration: InputDecoration(

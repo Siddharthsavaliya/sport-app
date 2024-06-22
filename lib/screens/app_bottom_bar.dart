@@ -8,6 +8,7 @@ import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_strings.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/booking/sloat_selection_screen.dart';
 import 'package:sport_app/screens/come_play_screen/come_play_screen.dart';
 import 'package:sport_app/screens/home/home_screen.dart';
 import 'package:sport_app/screens/profile/profile_screen.dart';
@@ -59,11 +60,23 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   setState(() {});
                 },
               )),
+              // Expanded(
+              //     child: _bottomBarTile(
+              //   iconPath: AppAssets.event1,
+              //   title: AppStrings.event,
+              //   selectedIconPath: AppAssets.event1,
+              //   index: 1,
+              //   onTap: () {
+              //     _index = 1;
+              //     setState(() {});
+              //   },
+              // )),
               Expanded(
                   child: _bottomBarTile(
-                iconPath: AppAssets.event1,
-                title: AppStrings.event,
-                selectedIconPath: AppAssets.event1,
+                iconPath: AppAssets.sport1,
+                title: AppStrings.sport,
+                selectedIconPath: AppAssets.sport1,
+                // space: 10,
                 index: 1,
                 onTap: () {
                   _index = 1;
@@ -72,25 +85,13 @@ class _AppBottomBarState extends State<AppBottomBar> {
               )),
               Expanded(
                   child: _bottomBarTile(
-                iconPath: AppAssets.sport1,
-                title: AppStrings.sport,
-                selectedIconPath: AppAssets.sport1,
-                // space: 10,
-                index: 2,
-                onTap: () {
-                  _index = 2;
-                  setState(() {});
-                },
-              )),
-              Expanded(
-                  child: _bottomBarTile(
                 iconPath: AppAssets.profile,
                 title: AppStrings.profile,
                 selectedIconPath: AppAssets.profile,
-                index: 3,
+                index: 2,
                 space: 6,
                 onTap: () {
-                  _index = 3;
+                  _index = 2;
                   setState(() {});
                 },
               )),
@@ -100,7 +101,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       ),
       body: _index == 0
           ? const HomeScreen()
-          : _index == 2
+          : _index == 1
               ? const ComePlayScreen()
               : const ProfileScreen(),
     );

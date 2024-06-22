@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:nb_utils/nb_utils.dart' as nb;
 import 'package:sport_app/bloc/auth/sign_up_bloc/sign_up_bloc.dart';
+import 'package:sport_app/model/institution_model/institution_model.dart';
 import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
@@ -31,6 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController institutionId = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  Institution? _selectedInstitution;
 
   bool isUserNameError = false;
   bool isInstitutionIdError = false;
@@ -39,6 +42,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isDobError = false;
   bool isPasswordError = false;
   bool isConfirmPassError = false;
+
+  @override
+  void initState() {
+    BlocProvider.of<SignUpBloc>(context).add(GetInstitutionIds());
+    super.initState();
+  }
 
   Future<void> selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -194,7 +203,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           hint: AppStrings.dateOfBirthHint,
                         ),
                       ),
-                      addVerticalSpacing(0.03),
+                      /* addVerticalSpacing(0.03),
                       Container(
                         clipBehavior: Clip.hardEdge,
                         decoration: BoxDecoration(
@@ -243,6 +252,109 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           isRound: true,
                           hint: AppStrings.institutionODHint,
                         ),
+                      ),
+                      */
+                      addVerticalSpacing(0.03),
+                      BlocBuilder<SignUpBloc, SignUpState>(
+                        builder: (context, state) {
+                          if (state.status.isInProgress) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (state.status.isLoaded) {
+                            InputBorder border = OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: BorderSide(
+                                  color: isInstitutionIdError
+                                      ? AppColors.red
+                                      : AppColors.gray.withOpacity(0.4),
+                                  width: 2),
+                            );
+                            return Container(
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: AppColors.white.withOpacity(0.7),
+                              ),
+                              child: DropdownButtonFormField<Institution>(
+                                validator: (v) {
+                                  if (v == null) {
+                                    isInstitutionIdError = true;
+                                  } else {
+                                    isInstitutionIdError = false;
+                                  }
+                                  setState(() {});
+                                  return null;
+                                },
+                                icon: Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: Icon(
+                                    Icons.arrow_drop_down_sharp,
+                                    color: AppColors.gray.withOpacity(0.8),
+                                    size: 25,
+                                  ),
+                                ),
+                                hint: Center(
+                                  child: Text(
+                                    'Select Institution',
+                                    style: AppStyle.normalText.copyWith(
+                                      color: AppColors.gray.withOpacity(0.8),
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: 1.5,
+                                    ),
+                                  ),
+                                ),
+                                decoration: InputDecoration(
+                                  counterText: "",
+                                  isDense: true,
+                                  contentPadding: const EdgeInsets.only(
+                                      top: 15, bottom: 17),
+                                  prefixIcon: Padding(
+                                    padding: const EdgeInsets.only(bottom: 2),
+                                    child: Icon(
+                                      Icons.person_outline_outlined,
+                                      color: AppColors.gray.withOpacity(0.8),
+                                      size: 25,
+                                    ),
+                                  ),
+                                  border: border,
+                                  focusedBorder: border,
+                                  enabledBorder: border,
+                                ),
+                                value: _selectedInstitution,
+                                onChanged: (Institution? newValue) {
+                                  setState(() {
+                                    _selectedInstitution = newValue;
+                                  });
+                                },
+                                items: state.institutionIds.map((institution) {
+                                  return DropdownMenuItem<Institution>(
+                                    value: institution,
+                                    child: Container(
+                                      // color: Colors.amber,
+                                      width: context.width() * 0.65,
+                                      child: nb.Marquee(
+                                        child: Text(
+                                          institution.institutionName,
+                                          style: AppStyle.mediumBold.copyWith(
+                                              color: AppColors.gray,
+                                              letterSpacing: 1,
+                                              fontSize: 17.sp),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            );
+                          } else if (state.status.isFailed) {
+                            return Center(
+                                child: Text('Error: ${state.message}'));
+                          } else {
+                            return const Center(
+                                child: Text(
+                                    'Press the button to fetch institutions'));
+                          }
+                        },
                       ),
                       addVerticalSpacing(0.03),
                       Container(
@@ -305,7 +417,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             } else if (state.status.isLoaded) {
                               Navigator.pop(context);
                               Navigator.push(
-                                
                                   context,
                                   CupertinoPageRoute(
                                     builder: (context) => VerifyScreen(
@@ -332,12 +443,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       !isPasswordError &&
                                       !isUserNameError &&
                                       !isInstitutionIdError &&
-                                      !isInstitutionNameError &&
+                                      // !isInstitutionNameError &&
                                       !isPhoneError)) {
                                 BlocProvider.of<SignUpBloc>(context).add(
                                     SignUpEventRequest(
-                                        iName: institutionName.text,
-                                        institutionId: institutionId.text,
+                                        iName: _selectedInstitution!
+                                            .institutionName
+                                            .validate(),
+                                        institutionId: _selectedInstitution!
+                                            .institutionId
+                                            .validate(),
+                                        // iName: institutionName.text,
+                                        // institutionId: institutionId.text,
                                         password: password.text,
                                         phone: phoneNumber.text,
                                         userName: username.text,

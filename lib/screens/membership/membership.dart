@@ -37,7 +37,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
               end: Alignment.bottomCenter,
               colors: [
                 Color.fromARGB(255, 255, 122, 118),
-                AppColors.primaryColor,
+                AppColors.primaryRedColor,
               ], // Change colors as per your choice
             ),
           ),
@@ -65,7 +65,6 @@ class _MembershipScreenState extends State<MembershipScreen> {
                 },
                 builder: (context, state) {
                   if (state.status.isLoaded || state.isPurchase) {
-                    
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -327,7 +326,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
                         end: Alignment.topRight,
                         colors: [
                           Color.fromARGB(255, 252, 96, 91),
-                          AppColors.primaryColor,
+                          AppColors.primaryRedColor,
                         ], // Change colors as per your choice
                       ),
                     ),
@@ -367,7 +366,6 @@ class _MembershipScreenState extends State<MembershipScreen> {
       ),
     );
   }
-
 }
 
 class AnimatedTextWidget extends StatefulWidget {

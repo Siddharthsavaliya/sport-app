@@ -22,13 +22,13 @@ class GroundBloc extends Bloc<GroundEvent, GroundState> {
       status: Status.inProgress,
     ));
     try {
-      final apiResult = await groundRepository.getGrounds();
+      final apiResult = await groundRepository.getGrounds(event.sport);
       apiResult.when(
         success: (data) {
           emit(state.copyWith(
-            
             status: Status.loaded,
-            grounds: data,
+            groundsData: data,
+            // grounds: data,
           ));
         },
         failure: (error) {
