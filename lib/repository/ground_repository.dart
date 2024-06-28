@@ -14,9 +14,7 @@ class GroundRepository {
     try {
       String? city = await getKeyValue(key: 'city');
       final response = await apiClient.get<Map<String, dynamic>>(
-          sport != null
-              ? "${ApiConstants.getBySport}/$city"
-              : "${ApiConstants.getGrounds}/$city",
+          sport != null ? ApiConstants.getBySport : ApiConstants.getGrounds,
           queryParameters: {"sportNames": sport ?? ""});
       return ApiResult.success(
           getGroundListFromResponse(response.data!["data"]));

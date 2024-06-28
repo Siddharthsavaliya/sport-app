@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sport_app/bloc/location_bloc/location_bloc.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/model/status.dart';
@@ -13,6 +14,8 @@ import 'package:sport_app/res/app_strings.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/coaches/coach_list_screen.dart';
 import 'package:sport_app/screens/come_play_screen/come_play_screen.dart';
+import 'package:sport_app/screens/grounds_screen/all_ground_banners.dart';
+import 'package:sport_app/screens/grounds_screen/all_ground_component.dart';
 import 'package:sport_app/screens/grounds_screen/grounds_list_screen.dart';
 import 'package:sport_app/screens/location_screens/location_access_screen.dart';
 import 'package:sport_app/screens/membership/membership.dart';
@@ -84,42 +87,38 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 0.045.sw),
-          child: SingleChildScrollView(
-            // physics: const NeverScrollableScrollPhysics(),
-            child: Column(
-              children: [
-                addVerticalSpacing(0.013),
-                BlocConsumer<UserBloc, UserState>(
-                  listener: (context, state) {
-                    if (state.status.isFailed) {
-                      showErrorDialogue(context, state.message);
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state.status.isLoaded) {
-                      return Row(
+        child: SingleChildScrollView(
+          // physics: const NeverScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              addVerticalSpacing(0.013),
+              BlocConsumer<UserBloc, UserState>(
+                listener: (context, state) {
+                  if (state.status.isFailed) {
+                    showErrorDialogue(context, state.message);
+                  }
+                },
+                builder: (context, state) {
+                  if (state.status.isLoaded) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 0.025.sw),
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 0.003.sh),
-                                    child: CircleAvatar(
-                                      radius: 10,
-                                      backgroundColor: AppColors.red,
-                                      child: const Center(
-                                        child: Icon(
-                                          Icons.location_on,
-                                          size: 12,
-                                          color: AppColors.white,
-                                        ),
+                                  CircleAvatar(
+                                    radius: 10,
+                                    backgroundColor: AppColors.red,
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.location_on,
+                                        size: 13,
+                                        color: AppColors.white,
                                       ),
                                     ),
                                   ),
@@ -128,19 +127,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      Text(
+                                        BlocProvider.of<LocationBloc>(context)
+                                            .state
+                                            .city,
+                                        style: AppStyle.normalText.copyWith(
+                                            color: AppColors.black
+                                                .withOpacity(0.8),
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.w600,
+                                            letterSpacing: 0.8),
+                                      ),
                                       Row(
                                         children: [
                                           Text(
-                                            BlocProvider.of<LocationBloc>(
-                                                    context)
-                                                .state
-                                                .city,
+                                            "Change your current location",
                                             style: AppStyle.normalText.copyWith(
                                                 color: AppColors.black
                                                     .withOpacity(0.8),
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600,
-                                                letterSpacing: 0.8),
+                                                fontSize: 11.sp,
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: 0.5),
                                           ),
                                           GestureDetector(
                                             onTap: () {
@@ -157,17 +164,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           )
                                         ],
                                       ),
-                                      Text(
-                                        BlocProvider.of<LocationBloc>(context)
-                                            .state
-                                            .address,
-                                        style: AppStyle.normalText.copyWith(
-                                            color: AppColors.black
-                                                .withOpacity(0.8),
-                                            fontSize: 12.sp,
-                                            fontWeight: FontWeight.w500,
-                                            letterSpacing: 0.5),
-                                      ),
                                     ],
                                   ),
                                 ],
@@ -177,501 +173,368 @@ class _HomeScreenState extends State<HomeScreen> {
                           Column(
                             children: [
                               Image.asset(
-                                AppAssets.person,
-                                height: 35,
+                                AppAssets.dp,
+                                height: 36,
                               ),
+                              addVerticalSpacing(0.005),
                               Text(
-                                state.userModel!.userName ?? "",
-                                style: AppStyle.normalText.copyWith(
-                                    color: AppColors.gray.withOpacity(0.8),
+                                'Hi ${state.userModel!.userName}' ?? "",
+                                style: AppStyle.mediumBold.copyWith(
+                                    color: AppColors.black,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
                                     letterSpacing: 0.8),
                               ),
-                              if (state.userModel!.subscription != null) ...[
-                                addVerticalSpacing(0.001),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      AppAssets.king,
-                                      width: 20,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 0.004.sh),
-                                      child: Text(
-                                        "Member",
-                                        style: AppStyle.normalText.copyWith(
-                                            color: AppColors.black
-                                                .withOpacity(0.8),
-                                            fontSize: 12.sp,
-                                            fontWeight: FontWeight.w500,
-                                            letterSpacing: 0.8),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ]
+                              // if (state.userModel!.subscription != null) ...[
+                              //   addVerticalSpacing(0.001),
+                              //   Row(
+                              //     crossAxisAlignment: CrossAxisAlignment.center,
+                              //     children: [
+                              //       Image.asset(
+                              //         AppAssets.king,
+                              //         width: 20,
+                              //       ),
+                              //       Padding(
+                              //         padding: EdgeInsets.only(top: 0.004.sh),
+                              // child: Text(
+                              //   "Member",
+                              //   style: AppStyle.normalText.copyWith(
+                              //       color: AppColors.black
+                              //           .withOpacity(0.8),
+                              //       fontSize: 12.sp,
+                              //       fontWeight: FontWeight.w500,
+                              //       letterSpacing: 0.8),
+                              // ),
+                              //       ),
+                              //     ],
+                              //   )
+                              // ]
                             ],
                           )
                         ],
-                      );
-                    }
-                    return Row(
-                      children: [
-                        shimmerWidget(
-                            child: const CircleAvatar(
-                          radius: 30,
-                        )),
-                        addHorizontalSpacing(0.012),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            shimmerWidget(
-                              child: Container(
-                                height: 0.015.sh,
-                                width: 0.5.sw,
-                                decoration: BoxDecoration(
-                                  color: AppColors.black,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
+                      ),
+                    );
+                  }
+                  return Row(
+                    children: [
+                      shimmerWidget(
+                          child: const CircleAvatar(
+                        radius: 30,
+                      )),
+                      addHorizontalSpacing(0.012),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          shimmerWidget(
+                            child: Container(
+                              height: 0.015.sh,
+                              width: 0.5.sw,
+                              decoration: BoxDecoration(
+                                color: AppColors.black,
+                                borderRadius: BorderRadius.circular(15),
                               ),
                             ),
-                            addVerticalSpacing(0.01),
-                            shimmerWidget(
-                              child: Container(
-                                height: 0.015.sh,
-                                width: 0.35.sw,
-                                decoration: BoxDecoration(
-                                  color: AppColors.black,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
+                          ),
+                          addVerticalSpacing(0.01),
+                          shimmerWidget(
+                            child: Container(
+                              height: 0.015.sh,
+                              width: 0.35.sw,
+                              decoration: BoxDecoration(
+                                color: AppColors.black,
+                                borderRadius: BorderRadius.circular(15),
                               ),
-                            )
-                          ],
-                        )
-                      ],
-                    );
-                  },
-                ),
-                addVerticalSpacing(0.015),
-                SearchAnchor(builder:
-                    (BuildContext context, SearchController controller) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => const GroundsListScreen(
-                              name: "All Ground",
-                            ),
-                          ));
-                    },
-                    child: Container(
-                      height: 55,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        border: Border.all(
-                          color: AppColors.borderColor,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 0.03.sw),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              AppStrings.searchSport,
-                              style: AppStyle.normalText.copyWith(
-                                  color: AppColors.gray.withOpacity(0.8),
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 0.8),
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.search,
-                                  size: 19,
-                                  color: AppColors.gray.withOpacity(0.8),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 16),
-                                  child: VerticalDivider(
-                                    thickness: 1,
-                                    color: AppColors.gray.withOpacity(0.8),
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.mic_none_sharp,
-                                  size: 19,
-                                  color: AppColors.gray.withOpacity(0.8),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }, suggestionsBuilder:
-                    (BuildContext context, SearchController controller) {
-                  return List<ListTile>.generate(5, (int index) {
-                    final String item = 'item $index';
-                    return ListTile(
-                      title: Text(item),
-                      onTap: () {
-                        setState(() {
-                          controller.closeView(item);
-                        });
-                      },
-                    );
-                  });
-                }),
-                addVerticalSpacing(0.03),
-                MasonryGridView.count(
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 13,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  shrinkWrap: true,
-                  itemCount: 4, // You can adjust this based on your requirement
-                  itemBuilder: (context, index) {
-                    return index == 2
-                        ? SizedBox(
-                            height: 0.12.sh,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        CupertinoPageRoute(
-                                          builder: (context) =>
-                                              const MembershipScreen(),
-                                        ));
-                                  },
-                                  child: Container(
-                                    clipBehavior: Clip.hardEdge,
-                                    decoration: BoxDecoration(
-                                      boxShadow: const [
-                                        BoxShadow(
-                                            offset: Offset.zero,
-                                            blurRadius: 1,
-                                            color: AppColors.borderColor)
-                                      ],
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(15),
-                                      border: Border.all(
-                                        color: AppColors.borderColor,
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 0.01.sw, vertical: 18),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Image.asset(
-                                            AppAssets.id,
-                                            width: 0.1.sw,
-                                          ),
-                                          addHorizontalSpacing(0.001),
-                                          Text(
-                                            "SUBSCRIPTIONS",
-                                            style: AppStyle.normalText.copyWith(
-                                                color: AppColors.black
-                                                    .withOpacity(0.9),
-                                                fontSize: 14.sp,
-                                                fontFamily:
-                                                    "ProzaLibre-Regular",
-                                                letterSpacing: 1,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
                             ),
                           )
-                        : index == 3
-                            ? Container(
-                                clipBehavior: Clip.hardEdge,
-                                decoration: BoxDecoration(
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        offset: Offset.zero,
-                                        blurRadius: 1,
-                                        color: AppColors.borderColor)
-                                  ],
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(
-                                    color: AppColors.borderColor,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 0.01.sw, vertical: 8),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Image.asset(
-                                        AppAssets.gallery,
-                                        width: 0.2.sw,
-                                      ),
-                                      addHorizontalSpacing(0.007),
-                                      Text(
-                                        "GALLERY",
-                                        style: AppStyle.normalText.copyWith(
-                                            color: AppColors.black
-                                                .withOpacity(0.9),
-                                            fontSize: 14.sp,
-                                            fontFamily: "ProzaLibre-Regular",
-                                            letterSpacing: 1,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            : GestureDetector(
-                                onTap: () {
-                                  if (index == 0 || index == 2) {
-                                    Navigator.push(
-                                        context,
-                                        CupertinoPageRoute(
-                                          builder: (context) =>
-                                              const ComePlayScreen(),
-                                        ));
-                                  } else {
-                                    Navigator.push(
-                                        context,
-                                        CupertinoPageRoute(
-                                          builder: (context) =>
-                                              const CoachListScreen(),
-                                          // const CoachScreen(),
-                                        ));
-                                  }
-                                },
-                                child: Container(
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                    boxShadow: const [
-                                      BoxShadow(
-                                          offset: Offset.zero,
-                                          blurRadius: 1,
-                                          color: AppColors.borderColor)
-                                    ],
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(
-                                      color: AppColors.borderColor,
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 0.028.sw, vertical: 4),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        addVerticalSpacing(0.008),
-                                        Text(
-                                          data[index]["text"]!.toUpperCase(),
-                                          style: AppStyle.normalText.copyWith(
-                                              color: AppColors.black
-                                                  .withOpacity(0.8),
-                                              fontSize: 20.sp,
-                                              fontFamily: "ProzaLibre-Regular",
-                                              letterSpacing: 1,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                        addVerticalSpacing(0.005),
-                                        Text(
-                                          data[index]["subText"]!,
-                                          style: AppStyle.normalText.copyWith(
-                                              color: index == 1 || index == 2
-                                                  ? AppColors.black
-                                                      .withOpacity(0.8)
-                                                  : AppColors.black
-                                                      .withOpacity(0.6),
-                                              fontSize: 10.sp,
-                                              letterSpacing:
-                                                  index == 2 ? 0.8 : 0.6,
-                                              fontWeight: FontWeight.w300),
-                                        ),
-                                        if (index == 1) ...[
-                                          addVerticalSpacing(0.01),
-                                          Image.asset(
-                                            data[index]["image"]!,
-                                            height: 0.09.sh,
-                                          ),
-                                          addVerticalSpacing(0.01)
-                                        ],
-                                        if (index == 2) ...[
-                                          addVerticalSpacing(0.01),
-                                        ],
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            if (index == 1) ...[
-                                              SizedBox.fromSize(),
-                                            ],
-                                            if (index == 2) ...[
-                                              Image.asset(
-                                                data[index]["image"]!,
-                                                height: 0.08.sh,
-                                              ),
-                                            ],
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                  bottom: 0.005.sh),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  border: Border.all(
-                                                    color:
-                                                        const Color(0xffFFAC33),
-                                                  )),
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 0.015.sw,
-                                                    vertical: 0.003.sh),
-                                                child: Text(
-                                                  "Play now",
-                                                  style: AppStyle.normalText
-                                                      .copyWith(
-                                                          color: AppColors.black
-                                                              .withOpacity(0.6),
-                                                          fontSize: 10.sp,
-                                                          fontFamily:
-                                                              "Preah_Vihear",
-                                                          letterSpacing: 1,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                ),
-                                              ),
-                                            ),
-                                            if (index == 0) ...[
-                                              Image.asset(
-                                                data[index]["image"]!,
-                                                height: 0.08.sh,
-                                              ),
-                                            ]
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                  },
-                ),
-                addVerticalSpacing(0.015),
-                Container(
-                  width: double.infinity,
-                  constraints: BoxConstraints(minHeight: 0.2.sh),
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    boxShadow: const [
-                      BoxShadow(
-                          offset: Offset.zero,
-                          blurRadius: 1,
-                          color: AppColors.borderColor)
+                        ],
+                      )
                     ],
-                    color: Colors.white,
+                  );
+                },
+              ),
+              addVerticalSpacing(0.025),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 0.025.sw),
+                child: Container(
+                  height: 55,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColors.red,
                     borderRadius: BorderRadius.circular(15),
-                    border: Border.all(
-                      color: AppColors.borderColor,
-                    ),
                   ),
-                  child: Stack(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Positioned(
-                        right: 0.03.sw,
-                        bottom: 0.01.sh,
-                        child: Image.asset(
-                          AppAssets.event,
-                          height: 0.13.sh,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: Image.asset(AppAssets.verified),
+                                ),
+                                addHorizontalSpacing(0.013),
+                                Text(
+                                  "Membership\nSports Super",
+                                  style: AppStyle.normalText.copyWith(
+                                    color: AppColors.white,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 0.028.sw, vertical: 4),
+                      Container(
+                        width: 1,
+                        color: AppColors.white,
+                      ),
+                      Expanded(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            addVerticalSpacing(0.008),
-                            Text(
-                              data[4]["text"]!.toUpperCase(),
-                              style: AppStyle.normalText.copyWith(
-                                  color: AppColors.black.withOpacity(0.8),
-                                  fontSize: 20.sp,
-                                  fontFamily: "ProzaLibre-Regular",
-                                  letterSpacing: 1,
-                                  fontWeight: FontWeight.w600),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: Image.asset(AppAssets.star1),
+                                ),
+                                addHorizontalSpacing(0.013),
+                                Text(
+                                  "1000\nSports Points",
+                                  style: AppStyle.normalText.copyWith(
+                                    color: AppColors.white,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
                             ),
-                            addVerticalSpacing(0.005),
-                            SizedBox(
-                              width: 0.6.sw,
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              addVerticalSpacing(0.03),
+              const AllBannersGroundComponent(),
+              addVerticalSpacing(0.01),
+              Center(
+                child: Text(
+                  "Book Venue with the best offer",
+                  style: AppStyle.mediumBold.copyWith(
+                      color: AppColors.black.withOpacity(0.8),
+                      fontSize: 16.sp,
+                      letterSpacing: 0.1),
+                ),
+              ),
+              addVerticalSpacing(0.03),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 0.02.sw),
+                child: Container(
+                  color: Colors.transparent,
+                  child: StaggeredGrid.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    children: [
+                      // First large container spanning two columns and two rows
+                      StaggeredGridTile.count(
+                        crossAxisCellCount: 1,
+                        mainAxisCellCount: 0.65,
+                        child: buildImageCard(0, AppAssets.come1,
+                            "Come\n& Play"), // Adjust as needed
+                      ),
+                      StaggeredGridTile.count(
+                        crossAxisCellCount: 1,
+                        mainAxisCellCount: 1.4,
+                        child: buildImageCard(
+                            1, AppAssets.train, "Training"), // Adjust as needed
+                      ),
+                      StaggeredGridTile.count(
+                        crossAxisCellCount: 1,
+                        mainAxisCellCount: 0.37,
+                        child: buildImageCard(2, AppAssets.id,
+                            "Subscriptions"), // Adjust as needed
+                      ),
+                      StaggeredGridTile.count(
+                        crossAxisCellCount: 1,
+                        mainAxisCellCount: 0.37,
+                        child: buildImageCard(
+                            3, AppAssets.camera, "Gallery"), // Adjust as needed
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              addVerticalSpacing(0.02),
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.symmetric(horizontal: 0.025.sw),
+                constraints: BoxConstraints(minHeight: 0.2.sh),
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: AppColors.gray.withOpacity(0.4),
+                        blurRadius: 5,
+                        spreadRadius: 1),
+                  ],
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      right: 0.03.sw,
+                      bottom: 0.01.sh,
+                      child: Image.asset(
+                        AppAssets.event,
+                        height: 0.13.sh,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 0.028.sw, vertical: 4),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          addVerticalSpacing(0.008),
+                          Text(
+                            data[4]["text"]!.toUpperCase(),
+                            style: AppStyle.normalText.copyWith(
+                                color: AppColors.black.withOpacity(0.8),
+                                fontSize: 20.sp,
+                                fontFamily: "ProzaLibre-Regular",
+                                letterSpacing: 1,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          addVerticalSpacing(0.005),
+                          SizedBox(
+                            width: 0.6.sw,
+                            child: Text(
+                              data[4]["subText"]!,
+                              style: AppStyle.normalText.copyWith(
+                                  color: AppColors.black.withOpacity(0.6),
+                                  fontSize: 10.sp,
+                                  height: 2,
+                                  letterSpacing: 0.8,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                          ),
+                          // const Spacer(),
+                          addVerticalSpacing(0.04),
+                          Container(
+                            margin:
+                                EdgeInsets.only(bottom: 0.01.sh, left: 0.1.sw),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: const Color(0xffFFAC33),
+                                )),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 0.015.sw, vertical: 0.003.sh),
                               child: Text(
-                                data[4]["subText"]!,
+                                "Play now",
                                 style: AppStyle.normalText.copyWith(
                                     color: AppColors.black.withOpacity(0.6),
                                     fontSize: 10.sp,
-                                    height: 2,
-                                    letterSpacing: 0.8,
-                                    fontWeight: FontWeight.w300),
+                                    fontFamily: "Preah_Vihear",
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
-                            // const Spacer(),
-                            addVerticalSpacing(0.04),
-                            Container(
-                              margin: EdgeInsets.only(
-                                  bottom: 0.01.sh, left: 0.1.sw),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: const Color(0xffFFAC33),
-                                  )),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 0.015.sw, vertical: 0.003.sh),
-                                child: Text(
-                                  "Play now",
-                                  style: AppStyle.normalText.copyWith(
-                                      color: AppColors.black.withOpacity(0.6),
-                                      fontSize: 10.sp,
-                                      fontFamily: "Preah_Vihear",
-                                      letterSpacing: 1,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ),
-                            ),
-                            addVerticalSpacing(0.005),
-                          ],
-                        ),
+                          ),
+                          addVerticalSpacing(0.005),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                addVerticalSpacing(0.015),
-              ],
-            ),
+              ),
+              addVerticalSpacing(0.015),
+            ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildImageCard(int index, String asset, String text) {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: AppColors.white,
+            boxShadow: [
+              BoxShadow(
+                  color: AppColors.gray.withOpacity(0.4),
+                  blurRadius: 5,
+                  spreadRadius: 1),
+            ]),
+        child: index == 0 || index == 2 || index == 3
+            ? Padding(
+                padding: EdgeInsets.symmetric(horizontal: 0.02.sw),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: index == 2 || index == 3 ? 3 : 2,
+                      child: Text(text.toUpperCase(),
+                          style: AppStyle.normalText.copyWith(
+                              color: AppColors.black.withOpacity(0.8),
+                              fontSize: index == 2 ? 13.sp : 16.sp,
+                              fontFamily: "ProzaLibre-Regular",
+                              letterSpacing: 1,
+                              fontWeight: index == 2
+                                  ? FontWeight.bold
+                                  : FontWeight.w600)),
+                    ),
+                    addHorizontalSpacing(0.01),
+                    Expanded(
+                      flex: index == 2 || index == 3 ? 1 : 3,
+                      child: Container(
+                        color: AppColors.black,
+                        child: Image.asset(
+                          asset,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            : Padding(
+                padding: EdgeInsets.symmetric(horizontal: 0.02.sw),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    addVerticalSpacing(0.015),
+                    Text(text.toUpperCase(),
+                        style: AppStyle.normalText.copyWith(
+                            color: AppColors.black.withOpacity(0.8),
+                            fontSize: 18.sp,
+                            fontFamily: "ProzaLibre-Regular",
+                            letterSpacing: 1,
+                            fontWeight: FontWeight.w600)),
+                    addVerticalSpacing(0.03),
+                    Image.asset(
+                      asset,
+                    ),
+                    addVerticalSpacing(0.015),
+                  ],
+                ),
+              ),
       ),
     );
   }

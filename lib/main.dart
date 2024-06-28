@@ -26,7 +26,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, designSize: const Size(428, 926));
+    ScreenUtil.init(context,
+        designSize: Size(MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height));
     return MultiBlocProvider(
       providers: [
         BlocProvider(

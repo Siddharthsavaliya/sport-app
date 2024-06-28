@@ -12,6 +12,9 @@ class GroundBloc extends Bloc<GroundEvent, GroundState> {
     on<GetGroundRequest>(
       (event, emit) => _getRequest(event, emit),
     );
+    on<GetAllGroundRequest>(
+      (event, emit) => _getAllRequest(event, emit),
+    );
   }
   final GroundRepository groundRepository = GroundRepository();
   Future<void> _getRequest(
@@ -28,6 +31,33 @@ class GroundBloc extends Bloc<GroundEvent, GroundState> {
           emit(state.copyWith(
             status: Status.loaded,
             groundsData: data,
+            // grounds: data,
+          ));
+        },
+        failure: (error) {
+          emit(state.copyWith(status: Status.failed, message: error));
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(status: Status.failed, message: e.toString()));
+    }
+  }
+
+  Future<void> _getAllRequest(
+    GetAllGroundRequest event,
+    Emitter<GroundState> emit,
+  ) async {
+    emit(state.copyWith(
+      status: Status.inProgress,
+    ));
+    try {
+      final apiResult = await groundRepository.getGrounds(null);
+      apiResult.when(
+        success: (data) {
+          print(data.length);
+          emit(state.copyWith(
+            status: Status.loaded,
+            allGroundsData: data,
             // grounds: data,
           ));
         },

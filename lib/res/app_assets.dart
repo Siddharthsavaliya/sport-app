@@ -7,9 +7,12 @@ class AppAssets {
   static const String l3 = "assets/images/l3.jpeg";
   static const String l4 = "assets/images/l4.jpeg";
   static const String l5 = "assets/images/l5.jpeg";
+  static const String verified = "assets/images/verified.png";
   static const String person = "assets/images/person.png";
   static const String splashAnimation = "assets/animation/splash.json";
   static const String come = "assets/images/come.png";
+  static const String come1 = "assets/images/come1.png";
+  static const String train = "assets/images/train.png";
   static const String event = "assets/images/event.png";
   static const String gallery = "assets/images/gallery.png";
   static const String merch = "assets/images/merch.png";
@@ -50,6 +53,8 @@ class AppAssets {
   static const String bookmarkWhite = "assets/images/bookmark-white.png";
   static const String location = "assets/images/location.png";
   static const String star = "assets/images/star.png";
+  static const String star1 = "assets/images/star1.png";
+  static const String camera = "assets/images/camera.png";
   static const String tt1 = "assets/images/tt1.png";
   static const String schoolLogo = "assets/images/school_logo.png";
   static const String map = "assets/images/map.png";

@@ -870,7 +870,7 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                                                           );
                                                         },
                                                       ),
-                                                      10.height,
+                                                      13.height,
                                                       Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -881,14 +881,21 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                                                                 CrossAxisAlignment
                                                                     .start,
                                                             children: [
-                                                              Marquee(
-                                                                directionMarguee:
-                                                                    DirectionMarguee
-                                                                        .oneDirection,
-                                                                child: Text(
-                                                                    "${state.groundsData[index].institutionName}",
-                                                                    style:
-                                                                        boldTextStyle()),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        left:
+                                                                            4),
+                                                                child: Marquee(
+                                                                  directionMarguee:
+                                                                      DirectionMarguee
+                                                                          .oneDirection,
+                                                                  child: Text(
+                                                                      "${state.groundsData[index].institutionName}",
+                                                                      style:
+                                                                          boldTextStyle()),
+                                                                ),
                                                               ),
                                                               1.height,
                                                               Row(
@@ -948,7 +955,7 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                                                           ),
                                                         ],
                                                       ),
-                                                      10.height,
+                                                      13.height,
                                                       Row(
                                                         children: [
                                                           GestureDetector(

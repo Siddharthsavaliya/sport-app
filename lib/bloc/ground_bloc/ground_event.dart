@@ -13,3 +13,9 @@ class GetGroundRequest extends GroundEvent {
   @override
   List<Object> get props => [];
 }
+
+class GetAllGroundRequest extends GroundEvent {
+  GetAllGroundRequest();
+  @override
+  List<Object> get props => [];
+}
