@@ -39,7 +39,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
         return AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-          title: Offstage(),
+          title: const Offstage(),
           content: Container(
             child: SingleChildScrollView(
               child: ListBody(
@@ -81,7 +81,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                 style: secondaryTextStyle(size: 26, color: AppColors.black)),
             30.height,
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: boxDecorationDefault(
                   border: Border.all(), color: Colors.grey.withOpacity(0.01)),
               width: context.width(),
@@ -189,9 +189,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                   return Card(
                     color: const Color.fromARGB(255, 226, 225, 225),
                     child: ListTile(
-                      leading: Icon(Icons.person).paddingAll(8),
-                      title: Text(
-                          "${widget.coaches?[index].firstName} ${widget.coaches?[index].lastName}"),
+                      leading: const Icon(Icons.person).paddingAll(8),
+                      title: Text("${widget.coaches?[index].firstName}"),
                       subtitle: Text(widget.coaches![index].contact),
                     ),
                   );

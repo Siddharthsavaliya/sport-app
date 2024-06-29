@@ -462,7 +462,6 @@ User _$UserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$User {
   String get firstName => throw _privateConstructorUsedError;
-  String get lastName => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -475,7 +474,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({String firstName, String lastName, String phoneNumber});
+  $Res call({String firstName, String phoneNumber});
 }
 
 /// @nodoc
@@ -492,17 +491,12 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @override
   $Res call({
     Object? firstName = null,
-    Object? lastName = null,
     Object? phoneNumber = null,
   }) {
     return _then(_value.copyWith(
       firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastName: null == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
               as String,
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
@@ -519,7 +513,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String firstName, String lastName, String phoneNumber});
+  $Res call({String firstName, String phoneNumber});
 }
 
 /// @nodoc
@@ -533,17 +527,12 @@ class __$$UserImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? firstName = null,
-    Object? lastName = null,
     Object? phoneNumber = null,
   }) {
     return _then(_$UserImpl(
       firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastName: null == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
               as String,
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
@@ -556,10 +545,7 @@ class __$$UserImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserImpl implements _User {
-  const _$UserImpl(
-      {required this.firstName,
-      required this.lastName,
-      required this.phoneNumber});
+  const _$UserImpl({required this.firstName, required this.phoneNumber});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -567,13 +553,11 @@ class _$UserImpl implements _User {
   @override
   final String firstName;
   @override
-  final String lastName;
-  @override
   final String phoneNumber;
 
   @override
   String toString() {
-    return 'User(firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber)';
+    return 'User(firstName: $firstName, phoneNumber: $phoneNumber)';
   }
 
   @override
@@ -583,16 +567,13 @@ class _$UserImpl implements _User {
             other is _$UserImpl &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, firstName, lastName, phoneNumber);
+  int get hashCode => Object.hash(runtimeType, firstName, phoneNumber);
 
   @JsonKey(ignore: true)
   @override
@@ -611,15 +592,12 @@ class _$UserImpl implements _User {
 abstract class _User implements User {
   const factory _User(
       {required final String firstName,
-      required final String lastName,
       required final String phoneNumber}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
   @override
   String get firstName;
-  @override
-  String get lastName;
   @override
   String get phoneNumber;
   @override

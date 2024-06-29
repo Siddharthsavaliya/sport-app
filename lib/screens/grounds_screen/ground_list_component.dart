@@ -30,12 +30,7 @@ class _GroundListComponentState extends State<GroundListComponent> {
       width: double.infinity,
       padding:
           EdgeInsetsDirectional.symmetric(horizontal: 0.015.sw, vertical: 5),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            width: 1,
-            color: AppColors.borderColor,
-          )),
+      decoration: boxDecorationDefault(color: Colors.white),
       child: Column(
         children: [
           Row(

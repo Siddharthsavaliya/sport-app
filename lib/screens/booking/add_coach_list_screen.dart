@@ -15,17 +15,17 @@ class AddCoachListScreen extends StatefulWidget {
   final String? selectedSlot;
   final bool is24HourFormat;
   final GroundModel? groundData;
-
   final GroundSlotData? groundSlotData;
 
-  const AddCoachListScreen(
-      {super.key,
-      required this.quantity,
-      this.selectedHorizontalDate,
-      this.groundData,
-      this.groundSlotData,
-      this.is24HourFormat = false,
-      this.selectedSlot});
+  const AddCoachListScreen({
+    super.key,
+    required this.quantity,
+    this.selectedHorizontalDate,
+    this.groundData,
+    this.groundSlotData,
+    this.is24HourFormat = false,
+    this.selectedSlot,
+  });
 
   @override
   State<AddCoachListScreen> createState() => _AddCoachListScreenState();
@@ -34,7 +34,6 @@ class AddCoachListScreen extends StatefulWidget {
 class _AddCoachListScreenState extends State<AddCoachListScreen> {
   final _formKey = GlobalKey<FormState>();
   List<TextEditingController> firstNameControllers = [];
-  List<TextEditingController> lastNameControllers = [];
   List<TextEditingController> numberControllers = [];
 
   @override
@@ -43,7 +42,6 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
     // Initialize the controllers based on the quantity
     for (int i = 0; i < widget.quantity; i++) {
       firstNameControllers.add(TextEditingController());
-      lastNameControllers.add(TextEditingController());
       numberControllers.add(TextEditingController());
     }
   }
@@ -54,7 +52,6 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
       for (int i = 0; i < widget.quantity; i++) {
         coaches.add(CoachListData(
             firstName: firstNameControllers[i].text,
-            lastName: lastNameControllers[i].text,
             contact: numberControllers[i].text));
       }
 
@@ -80,9 +77,6 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
     for (var controller in firstNameControllers) {
       controller.dispose();
     }
-    for (var controller in lastNameControllers) {
-      controller.dispose();
-    }
     for (var controller in numberControllers) {
       controller.dispose();
     }
@@ -94,7 +88,6 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
     return InputDecoration(
       contentPadding:
           const EdgeInsets.only(left: 12, bottom: 10, top: 10, right: 10),
-      labelText: labelText,
       labelStyle: secondaryTextStyle(),
       alignLabelWithHint: true,
       prefixIcon: prefixIcon,
@@ -122,7 +115,7 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
       errorStyle: primaryTextStyle(color: Colors.red, size: 12),
       focusedBorder: OutlineInputBorder(
         borderRadius: radius(borderRadius ?? defaultRadius),
-        borderSide: const BorderSide(color: black, width: 0.0),
+        borderSide: const BorderSide(color: AppColors.primaryColor, width: 0.0),
       ),
       filled: true,
       fillColor: context.cardColor,
@@ -132,99 +125,119 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        foregroundColor: AppColors.black,
-        backgroundColor: Colors.grey.shade300,
+        foregroundColor: AppColors.white,
+        backgroundColor: AppColors.primaryColor,
         title: Text(
-          "Add personal detail",
+          "Add Players Details",
           style: AppStyle.mediumText.copyWith(
-              fontSize: 20.sp, color: AppColors.black, letterSpacing: 0.8),
+              fontSize: 20.sp, color: AppColors.white, letterSpacing: 0.8),
         ),
         elevation: 0,
       ),
       body: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            16.height,
-            Text(
-              'Total slot : ${widget.quantity}',
-              style: boldTextStyle(),
-            ),
-            16.height,
-            Expanded(
-              child: ListView.builder(
-                itemCount: widget.quantity,
-                itemBuilder: (context, index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Slot ${index + 1} :',
-                        style: secondaryTextStyle(size: 16),
-                      ),
-                      16.height,
-                      AppTextField(
-                        textFieldType: TextFieldType.NAME,
-                        controller: firstNameControllers[index],
-                        errorThisFieldRequired: 'This field is required!',
-                        decoration: inputDecoration(
-                          context,
-                        ).copyWith(
-                          hintText: 'Enter first name',
-                          fillColor: Colors.grey.shade300,
-                        ),
-                        suffix: const Icon(Icons.person_outline),
-                      ),
-                      16.height,
-                      AppTextField(
-                        textFieldType: TextFieldType.NAME,
-                        controller: lastNameControllers[index],
-                        errorThisFieldRequired: 'This field is required!',
-                        decoration: inputDecoration(
-                          context,
-                        ).copyWith(
-                          hintText: 'Enter last name',
-                          fillColor: Colors.grey.shade300,
-                        ),
-                        suffix: const Icon(Icons.person_outline),
-                      ),
-                      16.height,
-                      AppTextField(
-                        textFieldType: TextFieldType.PHONE,
-                        controller: numberControllers[index],
-                        errorThisFieldRequired: 'This field is required!',
-                        decoration: inputDecoration(
-                          context,
-                        ).copyWith(
-                          fillColor: Colors.grey.shade300,
-                          hintText: 'ex: 9192019192',
-                        ),
-                        maxLength: 10,
-                        suffix: const Icon(Icons.call_outlined),
-                      ),
-                      8.height,
-                    ],
-                  );
-                },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Total slots: ${widget.quantity}',
+                style: boldTextStyle(size: 16, color: AppColors.primaryColor),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AppButton(
-                  shapeBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                  text: "Next",
-                  color: black,
-                  textColor: AppColors.white,
-                  onTap: submit,
-                ).expand(),
-              ],
-            ).paddingSymmetric(vertical: 16),
-          ],
-        ).paddingSymmetric(horizontal: 16),
+              16.height,
+              Expanded(
+                child: ListView.builder(
+                  itemCount: widget.quantity,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      margin: const EdgeInsets.symmetric(vertical: 8.0),
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Player ${index + 1}:',
+                              style: secondaryTextStyle(size: 16),
+                            ),
+                            16.height,
+                            AppTextField(
+                              textFieldType: TextFieldType.NAME,
+                              controller: firstNameControllers[index],
+                              errorThisFieldRequired: 'This field is required!',
+                              decoration: inputDecoration(
+                                context,
+                                labelText: 'Username',
+                              ).copyWith(
+                                fillColor: Colors.grey.shade200,
+                                hintText: 'Username',
+                              ),
+                              suffix: const Icon(Icons.person_outline,
+                                  color: AppColors.primaryColor),
+                            ),
+                            // 16.height,
+                            // AppTextField(
+                            //   textFieldType: TextFieldType.NAME,
+                            //   controller: lastNameControllers[index],
+                            //   errorThisFieldRequired: 'This field is required!',
+                            //   decoration: inputDecoration(
+                            //     context,
+                            //     labelText: 'Last Name',
+                            //   ).copyWith(
+                            //     fillColor: Colors.grey.shade200,
+                            //     hintText: 'Last Name',
+                            //   ),
+                            //   suffix: const Icon(Icons.person_outline,
+                            //       color: AppColors.primaryColor),
+                            // ),
+                            16.height,
+                            AppTextField(
+                              textFieldType: TextFieldType.PHONE,
+                              controller: numberControllers[index],
+                              errorThisFieldRequired: 'This field is required!',
+                              decoration: inputDecoration(
+                                context,
+                                labelText: 'Contact Number',
+                              ).copyWith(
+                                fillColor: Colors.grey.shade200,
+                                hintText: 'ex: 9192019192',
+                              ),
+                              maxLength: 10,
+                              suffix: const Icon(Icons.call_outlined,
+                                  color: AppColors.primaryColor),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: AppButton(
+                      shapeBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      text: "Next",
+                      color: AppColors.primaryColor,
+                      textColor: AppColors.white,
+                      onTap: submit,
+                    ),
+                  ),
+                ],
+              ).paddingSymmetric(vertical: 16),
+            ],
+          ),
+        ),
       ),
     );
   }

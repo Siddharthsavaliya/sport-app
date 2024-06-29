@@ -31,7 +31,6 @@ class BookingHistory with _$BookingHistory {
 class User with _$User {
   const factory User({
     required String firstName,
-    required String lastName,
     required String phoneNumber,
   }) = _User;
 

@@ -66,12 +66,12 @@ class _CoachListScreenState extends State<CoachListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: AppColors.black,
-        backgroundColor: Colors.grey.shade300,
+        foregroundColor: AppColors.white,
+        backgroundColor: AppColors.primaryColor,
         title: Text(
           "Our Expert Coaches",
           style: AppStyle.mediumText.copyWith(
-              fontSize: 20.sp, color: AppColors.black, letterSpacing: 0.8),
+              fontSize: 20.sp, color: AppColors.white, letterSpacing: 0.8),
         ),
         elevation: 0,
       ),

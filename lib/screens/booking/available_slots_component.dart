@@ -103,6 +103,7 @@ class _AvailableSlotsComponentState extends State<AvailableSlotsComponent> {
 
         return SlotWidget(
           isAvailable: isAvailable,
+          totalCount: value.totalSlots.toString(),
           isSelected: isSelected,
           isNotAvailable: isNotAvailable,
           is24HourFormat: widget.is24HourFormat,

@@ -21,6 +21,7 @@ import 'package:sport_app/screens/booking/model/ground_slot_model.dart';
 import 'package:sport_app/screens/booking/quantity_builder.dart';
 import 'package:sport_app/screens/booking/slot_data.dart';
 import 'package:sport_app/utils/helper.dart';
+import 'package:sport_app/widget/qty_sheet.dart';
 
 class BookingSlotsComponent extends StatefulWidget {
   final GroundModel? groundData;
@@ -225,7 +226,7 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                         endDate: DateTime.now().add(const Duration(days: 6)),
                         selectedDate: selectedHorizontalDate,
                         widgetWidth: context.width(),
-                        selectedColor: AppColors.black,
+                        selectedColor: AppColors.primaryColor,
                         dateItemComponentList: const [
                           DateItem.Month,
                           DateItem.Day,
@@ -298,29 +299,39 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                       shapeBorder: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                       text: "Book Ground",
-                      color: black,
+                      color: AppColors.primaryColor,
                       textColor: AppColors.white,
                       onTap: () async {
                         if (selectedSlot != null) {
-                          final quantity = await showQuantityGetterDialog(
-                              context, selectedSlot!.availableSlots ?? 0);
-                          if (quantity != null) {
-                            Navigator.pushReplacement(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => AddCoachListScreen(
-                                  quantity: quantity,
-                                  groundSlotData: selectedSlot,
-                                  groundData: widget.groundData,
-                                  selectedSlot:
-                                      selectedSlot?.startTime.toString(),
-                                  selectedHorizontalDate:
-                                      selectedHorizontalDate,
-                                  is24HourFormat: is24HourFormat,
-                                ),
-                              ),
-                            );
-                          }
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) => SizeSelectionBottomSheet(
+                              maxQty: selectedSlot!.availableSlots!,
+                              groundData: widget.groundData,
+                              selectedSlot: selectedSlot,
+                              selectedHorizontalDate: selectedHorizontalDate,
+                              is24HourFormat: is24HourFormat,
+                            ),
+                          );
+                          // final quantity = await showQuantityGetterDialog(
+                          //     context, selectedSlot!.availableSlots ?? 0);
+                          // if (quantity != null) {
+                          //   Navigator.pushReplacement(
+                          //     context,
+                          //     CupertinoPageRoute(
+                          //       builder: (context) => AddCoachListScreen(
+                          //         quantity: quantity,
+                          // groundSlotData: selectedSlot,
+                          // groundData: widget.groundData,
+                          // selectedSlot:
+                          //     selectedSlot?.startTime.toString(),
+                          // selectedHorizontalDate:
+                          //     selectedHorizontalDate,
+                          // is24HourFormat: is24HourFormat,
+                          //       ),
+                          //     ),
+                          //   );
+                          // }
                         } else {
                           toast("Please Select Slot!");
                         }

@@ -20,7 +20,6 @@ class BookingSuccessScreen extends StatefulWidget {
   final bool is24HourFormat;
   final GroundSlotData? groundSlotData;
   final GroundBookingResponce? groundBookingResponce;
-
   final List<CoachListData>? coaches;
 
   const BookingSuccessScreen(
@@ -39,6 +38,7 @@ class BookingSuccessScreen extends StatefulWidget {
 class _BookingDetailScreenState extends State<BookingSuccessScreen>
     with TickerProviderStateMixin {
   late final AnimationController controller;
+
   Widget contentBox(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20.0),
@@ -99,55 +99,66 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: AppColors.black,
-        backgroundColor: Colors.grey.shade300,
+        foregroundColor: AppColors.white,
+        backgroundColor: AppColors.primaryColor,
         title: Text(
-          "Booking Status",
+          "Slot Purchased",
           style: AppStyle.mediumText.copyWith(
-              fontSize: 20.sp, color: AppColors.black, letterSpacing: 0.8),
+              fontSize: 20.sp, color: AppColors.white, letterSpacing: 0.8),
         ),
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            /*
-            SizedBox(
-              height: 0.15.sh,
-              child: Lottie.asset(
-                'assets/images/success.json',
-                controller: controller,
-                onLoaded: (composition) {
-                  controller
-                    ..duration = composition.duration
-                    ..forward();
-                },
+      body: Container(
+        // decoration: const BoxDecoration(
+        //   gradient: LinearGradient(
+        //     colors: [AppColors.primaryColor, AppColors.primaryColor],
+        //     begin: Alignment.topCenter,
+        //     end: Alignment.bottomCenter,
+        //   ),
+        // ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              15.height,
+              SizedBox(
+                height: 0.25.sh,
+                child: Image.asset(
+                  'assets/images/calender.png',
+                ),
               ),
-            ),
-            */
-            Text("Booking Successful",
-                style: secondaryTextStyle(size: 26, color: AppColors.black)),
-            Container(
-              padding: const EdgeInsets.all(10.0),
-              child: Image.memory(
-                base64Decode(widget.groundBookingResponce!.data!.qrCode!),
-                width: 150.0,
-                height: 150.0,
-              ),
-            ),
-            30.height,
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
+              // Container(
+              //   padding: const EdgeInsets.all(10.0),
+              //   child: Image.memory(
+              //     base64Decode(widget.groundBookingResponce!.data!.qrCode!),
+              //     width: 150.0,
+              //     height: 150.0,
+              //   ),
+              // ),
+              25.height,
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
                   border: Border.all(
                     width: 1,
                     color: AppColors.lightBlueColor,
-                  )),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 0.02.sw),
+                  ),
+                  // boxShadow: const [
+                  //   BoxShadow(
+                  //     color: Colors.black12,
+                  //     blurRadius: 8.0,
+                  //     offset: Offset(0, 2),
+                  //   ),
+                  // ],
+                  // gradient: const LinearGradient(
+                  //   colors: [Colors.white, AppColors.lightBlueColor],
+                  //   begin: Alignment.topLeft,
+                  //   end: Alignment.bottomRight,
+                  // ),
+                ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 0.02.sw, vertical: 20),
                   child: Column(
                     children: [
                       Row(
@@ -260,30 +271,59 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                   ),
                 ),
               ),
-            ),
-            30.height,
-            AppButton(
-              shapeBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
-              text: "Download invoice",
-              color: AppColors.black,
-              textColor: AppColors.white,
-              onTap: () {
-                // showDialog(
-                //     context: context,
-                //     builder: (context) => Dialog(
-                //           shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.circular(20.0),
-                //           ),
-                //           elevation: 0.0,
-                //           backgroundColor: Colors.transparent,
-                //           child: contentBox(context),
-                //         ));
-              },
-            ),
-            16.height,
-          ],
-        ).paddingAll(16),
+              30.height,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AppButton(
+                    shapeBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    text: "Download Invoice",
+                    color: AppColors.primaryColor,
+                    textColor: AppColors.white,
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => Dialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          elevation: 0.0,
+                          backgroundColor: Colors.transparent,
+                          child: contentBox(context),
+                        ),
+                      );
+                    },
+                  ),
+                  addHorizontalSpacing(0.01),
+                  AppButton(
+                    shapeBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    text: "QR Code",
+                    color: AppColors.primaryColor,
+                    textColor: AppColors.white,
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => Dialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          elevation: 0.0,
+                          backgroundColor: Colors.transparent,
+                          child: contentBox(context),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              16.height,
+            ],
+          ).paddingAll(16),
+        ),
       ),
     );
   }

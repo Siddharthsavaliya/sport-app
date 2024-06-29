@@ -29,32 +29,34 @@ class BookGroundScreen extends StatefulWidget {
   final GroundModel? groundData;
   final List<CoachListData>? coaches;
 
-  const BookGroundScreen(
-      {super.key,
-      this.selectedHorizontalDate,
-      this.groundSlotData,
-      this.groundData,
-      this.is24HourFormat = false,
-      this.coaches,
-      this.selectedSlot});
+  const BookGroundScreen({
+    super.key,
+    this.selectedHorizontalDate,
+    this.groundSlotData,
+    this.groundData,
+    this.is24HourFormat = false,
+    this.coaches,
+    this.selectedSlot,
+  });
 
   @override
   State<BookGroundScreen> createState() => _BookingDetailScreenState();
 }
 
 class _BookingDetailScreenState extends State<BookGroundScreen> {
+  bool c3 = true;
   Future<void> getGroundSlot() async {
     final token = await getKeyValue(key: "token");
     var headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token'
+      'Authorization': 'Bearer $token',
     };
     var data = {
       "groundId": "${widget.groundData?.id}",
       "slotId": "${widget.groundSlotData?.id}",
       "date": formatDate(widget.selectedHorizontalDate!),
       "totalCount": "${widget.coaches?.length}",
-      "users": widget.coaches?.map((user) => user.toJson()).toList()
+      "users": widget.coaches?.map((user) => user.toJson()).toList(),
     };
     print("Request : ${jsonEncode(data)}");
     var dio = Dio();
@@ -95,36 +97,11 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
     }
   }
 
-  // Future<void> getGroundSlot() async {
-  //   final token = await getKeyValue(key: "token");
-  //   var headers = {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': 'Bearer $token'
-  //   };
-  //   var data =
-  //       '''{\n    "groundId": "665da72c791fe532e7fec8c4",\n    "slotId": "665dfd71a6af84040c4ae0e1",\n    "totalCount": "1",\n    "users": [\n    {\n      "firstName": "Siddharth",\n      "lastName": "Savaliya",\n      "phoneNumber": "9714696101"\n    }\n  ]\n}''';
-  //   var dio = Dio();
-  //   var response = await dio.request(
-  //     'https://cg8gkks.srv-01.purezzatechnologies.com/api/booking/book-slot',
-  //     options: Options(
-  //       method: 'POST',
-  //       headers: headers,
-  //     ),
-  //     data: data,
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     print(json.encode(response.data));
-  //   } else {
-  //     print(response.statusMessage);
-  //   }
-  // }
-
   Future<void> _showMyDialog() async {
     print("${widget.groundData?.id} : ${widget.groundSlotData?.id}");
     return showDialog<void>(
       context: context,
-      barrierDismissible: true, // user must tap button!
+      barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
           shape:
@@ -151,30 +128,47 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
   @override
   Widget build(BuildContext context) {
     num price = widget.coaches!.length * widget.groundData!.price!;
+    num gst = price * 0.18;
+    num total = price + gst;
+
     return Scaffold(
+      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        foregroundColor: AppColors.black,
-        backgroundColor: Colors.grey.shade300,
+        foregroundColor: AppColors.white,
+        backgroundColor: AppColors.primaryColor,
         title: Text(
-          "Booking summery",
+          "Booking Summary",
           style: AppStyle.mediumText.copyWith(
-              fontSize: 20.sp, color: AppColors.black, letterSpacing: 0.8),
+              fontSize: 20.sp, color: AppColors.white, letterSpacing: 0.8),
         ),
         elevation: 0,
       ),
       body: Stack(
         children: [
           SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 0.02.sw),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                addVerticalSpacing(0.01),
+                Text(
+                  "Slot summary",
+                  style: AppStyle.mediumText.copyWith(
+                      fontSize: 14.sp,
+                      color: AppColors.black,
+                      letterSpacing: 0.8),
+                ),
+                addVerticalSpacing(0.01),
                 if (widget.groundData != null) ...{
                   GroundListComponent(
                       groundData: widget.groundData!,
                       isFromBookingSummery: true),
+                  addVerticalSpacing(0.005),
                   Container(
                     width: double.infinity,
-                    color: AppColors.white,
+                    decoration: boxDecorationDefault(color: Colors.white),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 0.025.sw, vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -205,7 +199,6 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                         addVerticalSpacing(0.002),
                         Text(
                           "Toll Free : 90873480384",
-                          // "Toll Free : ${widget.groundModel.number}",
                           style: AppStyle.normalText.copyWith(
                             fontSize: 11.sp,
                             letterSpacing: 1,
@@ -213,92 +206,45 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                             fontWeight: FontWeight.w300,
                           ),
                         ),
-                        addVerticalSpacing(0.015),
+                      ],
+                    ),
+                  ),
+                  addVerticalSpacing(0.015),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: boxDecorationDefault(color: Colors.white),
+                    width: context.width(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        buildSummaryRow(
+                            "Date:",
+                            widget.selectedHorizontalDate != null
+                                ? DateFormat('dd MMM, yyyy')
+                                    .format(widget.selectedHorizontalDate!)
+                                : ''),
+                        8.height,
+                        buildSummaryRow(
+                            "Time:",
+                            widget.is24HourFormat
+                                ? widget.selectedSlot
+                                    .validate()
+                                    .splitBefore(':00')
+                                : TimeOfDay(
+                                        hour: widget.selectedSlot
+                                            .validate()
+                                            .split(':')
+                                            .first
+                                            .toInt(),
+                                        minute: 00)
+                                    .format(context)),
+                        8.height,
+                        buildSummaryRow(
+                            "Quantity:", '${widget.coaches?.length}'),
                       ],
                     ),
                   ),
                 },
-                16.height,
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: boxDecorationDefault(
-                      border: Border.all(
-                          color: const Color.fromARGB(255, 147, 146, 146)),
-                      color: Colors.white),
-                  width: context.width(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text("Date: ", style: secondaryTextStyle()),
-                              if (widget.selectedHorizontalDate != null)
-                                Text(
-                                    DateFormat('dd MMM, yyyy')
-                                        .format(widget.selectedHorizontalDate!),
-                                    style: boldTextStyle(size: 14)),
-                            ],
-                          ),
-                          8.height,
-                          Row(
-                            children: [
-                              Text("Time: ", style: secondaryTextStyle()),
-                              Text(
-                                  widget.is24HourFormat
-                                      ? widget.selectedSlot
-                                          .validate()
-                                          .splitBefore(':00')
-                                      : TimeOfDay(
-                                              hour: widget.selectedSlot
-                                                  .validate()
-                                                  .split(':')
-                                                  .first
-                                                  .toInt(),
-                                              minute: 00)
-                                          .format(context),
-                                  style: boldTextStyle(size: 14)),
-                            ],
-                          ),
-                          8.height,
-                          Row(
-                            children: [
-                              Text("Quantity: ", style: secondaryTextStyle()),
-                              if (widget.selectedHorizontalDate != null)
-                                Text('${widget.coaches?.length}',
-                                    style: boldTextStyle(size: 14)),
-                            ],
-                          ),
-                          8.height,
-                          Row(
-                            children: [
-                              Text("Total Price: ",
-                                  style: secondaryTextStyle()),
-                              if (widget.selectedHorizontalDate != null)
-                                Text('$price', style: boldTextStyle(size: 14)),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 100,
-                        width: 100,
-                        child: Image.asset(
-                          AppAssets.qrCode,
-                        ),
-                      ),
-                      // IconButton(
-                      //   icon: ic_edit_square.iconImage(size: 18),
-                      //   visualDensity: VisualDensity.compact,
-                      //   onPressed: () async {
-                      //     handleDateTimePick();
-                      //   },
-                      // ),
-                    ],
-                  ),
-                ),
                 16.height,
                 if (widget.coaches!.isNotEmpty)
                   Text(
@@ -308,46 +254,150 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                         color: AppColors.black,
                         letterSpacing: 0.8),
                   ),
+                addVerticalSpacing(0.005),
                 if (widget.coaches!.isNotEmpty)
                   Column(
                     children: List.generate(
                       widget.coaches!.length,
                       (index) {
-                        return Card(
-                          color: AppColors.white,
+                        return Container(
+                          decoration: boxDecorationDefault(color: Colors.white),
                           child: ListTile(
-                            leading: const Icon(Icons.person).paddingAll(4),
-                            title: Text(
-                                "${widget.coaches?[index].firstName} ${widget.coaches?[index].lastName}"),
-                            subtitle: Text(widget.coaches![index].contact),
+                            leading: Padding(
+                              padding: EdgeInsets.only(left: 0.02.sw),
+                              child: CircleAvatar(
+                                child: ClipOval(
+                                  child: Image.asset(AppAssets.dp),
+                                ),
+                              ),
+                            ),
+                            contentPadding: const EdgeInsets.all(0),
+                            title: Text("${widget.coaches?[index].firstName}",
+                                style: AppStyle.mediumText),
+                            subtitle: Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: Text(widget.coaches![index].contact),
+                            ),
                           ),
                         );
                       },
                     ),
                   ),
-                50.height,
+                16.height,
+                Text(
+                  "Payment summary",
+                  style: AppStyle.mediumText.copyWith(
+                      fontSize: 14.sp,
+                      color: AppColors.black,
+                      letterSpacing: 0.8),
+                ),
+                5.height,
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: boxDecorationDefault(color: Colors.white),
+                  width: context.width(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildSummaryRow("Subtotal:", '$price'),
+                      8.height,
+                      buildSummaryRow("GST (18%):", '$gst'),
+                      8.height,
+                      buildSummaryRow("Total:", '$total'),
+                    ],
+                  ),
+                ),
+                10.height,
+                _checkBox(
+                  "I agree with refund policy",
+                  (v) {
+                    setState(() {
+                      c3 = v!;
+                    });
+                  },
+                  c3,
+                ),
+                90.height,
               ],
-            ).paddingAll(16),
+            ),
           ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Row(
               children: [
-                AppButton(
-                  shapeBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                  text: "Check out",
-                  color: AppColors.black,
-                  textColor: AppColors.white,
-                  onTap: () {
-                    getGroundSlot();
-                  },
-                ).expand(),
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        color: AppColors.white,
+                        boxShadow: [BoxShadow(color: AppColors.gray)]),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: AppButton(
+                        shapeBorder: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
+                        text: "Check Out",
+                        color: AppColors.primaryColor,
+                        textColor: AppColors.white,
+                        onTap: () {
+                          getGroundSlot();
+                        },
+                      ),
+                    ),
+                  ),
+                ),
               ],
-            ).paddingAll(16),
+            ),
           ),
         ],
       ),
     );
   }
+
+  Widget buildSummaryRow(String title, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(title,
+            style: AppStyle.mediumText
+                .copyWith(fontSize: 14.sp, color: AppColors.black)),
+        Text(value,
+            style: AppStyle.normalBold
+                .copyWith(fontSize: 14.sp, color: AppColors.black)),
+      ],
+    );
+  }
+}
+
+Widget _checkBox(String title, void Function(bool?)? onChanged, bool value) {
+  return Container(
+    width: double.infinity,
+    decoration: boxDecorationDefault(color: Colors.white),
+    child: Padding(
+      padding: EdgeInsets.symmetric(horizontal: 0.035.sw, vertical: 0.015.sh),
+      child: Row(
+        children: [
+          SizedBox(
+              height: 20,
+              width: 20,
+              child: Checkbox(
+                checkColor: AppColors.white,
+                activeColor: AppColors.primaryColor,
+                value: value,
+                onChanged: onChanged,
+              )),
+          addHorizontalSpacing(0.015),
+          Flexible(
+            child: Text(
+              title,
+              style: AppStyle.normalText.copyWith(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w400,
+                color: AppColors.darkTextColor,
+              ),
+            ),
+          )
+        ],
+      ),
+    ),
+  );
 }

@@ -40,7 +40,7 @@ class _AllGroundComponentState extends State<AllGroundComponent> {
               : CarouselSlider(
                   options: CarouselOptions(
                     onPageChanged: (index, reason) {},
-                    height: 0.37.sh,
+                    height: 0.29.sh,
                     animateToClosest: true,
                     autoPlayCurve: Curves.fastOutSlowIn,
                     autoPlayInterval: const Duration(seconds: 3),
@@ -336,55 +336,55 @@ class _AllGroundComponentState extends State<AllGroundComponent> {
                                           ),
                                         ],
                                       ),
-                                      12.height,
-                                      Row(
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  CupertinoPageRoute(
-                                                    builder: (context) =>
-                                                        SlotSelectionScreen(
-                                                            groundData: ground),
-                                                  ));
-                                            },
-                                            child: Container(
-                                              padding: const EdgeInsets.all(10),
-                                              decoration:
-                                                  boxDecorationWithShadow(
-                                                      backgroundColor:
-                                                          AppColors.black,
-                                                      borderRadius: radius(20),
-                                                      border: Border.all()),
-                                              child: Center(
-                                                child: Text(
-                                                  'Book now',
-                                                  style: primaryTextStyle(
-                                                      color: white),
-                                                ),
-                                              ),
-                                            ),
-                                          ).flexible(),
-                                          16.width,
-                                          Container(
-                                            padding: const EdgeInsets.all(10),
-                                            decoration: boxDecorationWithShadow(
-                                                backgroundColor: context
-                                                    .cardColor
-                                                    .withOpacity(0.9),
-                                                borderRadius: radius(20),
-                                                border: Border.all()),
-                                            child: Center(
-                                              child: Text(
-                                                'More detail',
-                                                style: primaryTextStyle(),
-                                              ),
-                                            ),
-                                          ).flexible(),
-                                        ],
-                                      ).paddingSymmetric(horizontal: 8),
-                                      8.height,
+                                      // 12.height,
+                                      // Row(
+                                      //   children: [
+                                      //     GestureDetector(
+                                      //       onTap: () {
+                                      //         Navigator.push(
+                                      //             context,
+                                      //             CupertinoPageRoute(
+                                      //               builder: (context) =>
+                                      //                   SlotSelectionScreen(
+                                      //                       groundData: ground),
+                                      //             ));
+                                      //       },
+                                      //       child: Container(
+                                      //         padding: const EdgeInsets.all(10),
+                                      //         decoration:
+                                      //             boxDecorationWithShadow(
+                                      //                 backgroundColor:
+                                      //                     AppColors.black,
+                                      //                 borderRadius: radius(20),
+                                      //                 border: Border.all()),
+                                      //         child: Center(
+                                      //           child: Text(
+                                      //             'Book now',
+                                      //             style: primaryTextStyle(
+                                      //                 color: white),
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //     ).flexible(),
+                                      //     16.width,
+                                      //     Container(
+                                      //       padding: const EdgeInsets.all(10),
+                                      //       decoration: boxDecorationWithShadow(
+                                      //           backgroundColor: context
+                                      //               .cardColor
+                                      //               .withOpacity(0.9),
+                                      //           borderRadius: radius(20),
+                                      //           border: Border.all()),
+                                      //       child: Center(
+                                      //         child: Text(
+                                      //           'More detail',
+                                      //           style: primaryTextStyle(),
+                                      //         ),
+                                      //       ),
+                                      //     ).flexible(),
+                                      //   ],
+                                      // ).paddingSymmetric(horizontal: 8),
+                                      11.height,
                                     ],
                                   ).paddingSymmetric(horizontal: 10),
                                 ],

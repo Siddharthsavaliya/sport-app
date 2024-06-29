@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/res/app_colors.dart';
+import 'package:sport_app/res/app_text_style.dart';
 
 class SlotWidget extends StatelessWidget {
   final bool isAvailable;
@@ -10,6 +12,7 @@ class SlotWidget extends StatelessWidget {
   final bool is24HourFormat;
   final String value;
   final String? slotCount;
+  final String? totalCount;
   final Color activeColor;
   final Color inActiveColor;
   final Function() onTap;
@@ -22,7 +25,8 @@ class SlotWidget extends StatelessWidget {
     this.is24HourFormat = false,
     required this.value,
     this.slotCount,
-    this.activeColor = Colors.green,
+    this.totalCount,
+    this.activeColor = AppColors.primaryColor,
     this.inActiveColor = Colors.grey,
     required this.onTap,
   });
@@ -59,8 +63,8 @@ class SlotWidget extends StatelessWidget {
             width: context.width() / 3 - 30,
             decoration: boxDecorationDefault(
               boxShadow: defaultBoxShadow(blurRadius: 0, spreadRadius: 0),
-              border:
-                  Border.all(color: isNotAvailable ? Colors.grey : activeColor),
+              border: Border.all(
+                  color: isNotAvailable ? Colors.grey : AppColors.primaryColor),
               color: isNotAvailable
                   ? Colors.grey.shade300
                   : _getBackgroundColor(context),
@@ -85,11 +89,12 @@ class SlotWidget extends StatelessWidget {
               child: Container(
                 height: 20.sp,
                 width: 20.sp,
-                decoration:
-                    const BoxDecoration(shape: BoxShape.circle, color: black),
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: AppColors.primaryColor),
                 child: Text(
                   slotCount.validate(),
-                  style: secondaryTextStyle(color: white),
+                  style: AppStyle.mediumBold
+                      .copyWith(color: AppColors.white, fontSize: 9.sp),
                 ).center(),
               ),
             ),

@@ -20,7 +20,7 @@ class BookingHistoryDetailScreen extends StatefulWidget {
 class _BookingHistoryDetailScreenState
     extends State<BookingHistoryDetailScreen> {
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: AppColors.black,
@@ -163,7 +163,7 @@ class _BookingHistoryDetailScreenState
                           child: ListTile(
                             leading: const Icon(Icons.person).paddingAll(4),
                             title: Text(
-                                "${widget.bookingHistory.users[index].firstName} ${widget.bookingHistory.users[index].lastName}"),
+                                widget.bookingHistory.users[index].firstName),
                             subtitle: Text(
                                 widget.bookingHistory.users[index].phoneNumber),
                           ),

@@ -32,51 +32,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List searchData = [
-    {"label": "Football", "image": AppAssets.football},
-    {"label": "Cricket", "image": AppAssets.cricket},
-    {"label": "Volley Ball", "image": AppAssets.volleyBall},
-    {"label": "Hockey", "image": AppAssets.hockey},
-    {"label": "Swimming", "image": AppAssets.swimming},
-    {"label": "Badminton", "image": AppAssets.badminton},
-    {"label": "Table Tennis", "image": AppAssets.tableTennis},
-    {"label": "Lawn Tennis", "image": AppAssets.lawnTennis},
-    {"label": "Box Cricket", "image": AppAssets.cricket},
-    {"label": "Basket Ball", "image": AppAssets.basketball},
-    {"label": "Skates", "image": AppAssets.skates},
-    {"label": "Horse Riding", "image": AppAssets.horseRiding},
-    {"label": "Net Practice", "image": AppAssets.cricket},
-    {"label": "yoga", "image": AppAssets.yoga},
-  ];
-  List<Map<String, String>> data = [
-    // {
-    //   "image": AppAssets.sport,
-    //   "text": "SPORTS",
-    //   "subText":
-    //       "Choose from a variety of sports options, and book your preferred slot."
-    // },
-    {
-      "image": AppAssets.come,
-      "text": "Come & Play",
-      "subText":
-          "Whether creating a team or joining an ongoing match, booking slots has never been easier."
-    },
-    {
-      "image": AppAssets.training,
-      "text": "Training",
-      "subText": "Tailored training sessions to enhance your performance"
-    },
-
-    {"image": AppAssets.gallery, "text": "Gallery"},
-    {"image": AppAssets.gallery, "text": "Gallery"},
-    {
-      "image": AppAssets.event,
-      "text": "Tournaments",
-      "subText":
-          "Users can seamlessly access a wide array of ongoing events and tournaments across various sports"
-    },
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -111,10 +66,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  CircleAvatar(
+                                  const CircleAvatar(
                                     radius: 10,
-                                    backgroundColor: AppColors.red,
-                                    child: const Center(
+                                    backgroundColor: AppColors.primaryColor,
+                                    child: Center(
                                       child: Icon(
                                         Icons.location_on,
                                         size: 13,
@@ -259,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 55,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: AppColors.red,
+                    color: AppColors.primaryColor,
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Row(
@@ -352,26 +307,50 @@ class _HomeScreenState extends State<HomeScreen> {
                       StaggeredGridTile.count(
                         crossAxisCellCount: 1,
                         mainAxisCellCount: 0.65,
-                        child: buildImageCard(0, AppAssets.come1,
-                            "Come\n& Play"), // Adjust as needed
+                        child: buildImageCard(
+                            0, AppAssets.come1, "Come\n& Play", () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) =>
+                                      const ComePlayScreen()));
+                        }), // Adjust as needed
                       ),
                       StaggeredGridTile.count(
                         crossAxisCellCount: 1,
                         mainAxisCellCount: 1.4,
-                        child: buildImageCard(
-                            1, AppAssets.train, "Training"), // Adjust as needed
+                        child:
+                            buildImageCard(1, AppAssets.train, "Training", () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) =>
+                                      const CoachListScreen()));
+                        }), // Adjust as needed
                       ),
                       StaggeredGridTile.count(
                         crossAxisCellCount: 1,
                         mainAxisCellCount: 0.37,
-                        child: buildImageCard(2, AppAssets.id,
-                            "Subscriptions"), // Adjust as needed
+                        child: buildImageCard(2, AppAssets.id, "Subscriptions",
+                            () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) =>
+                                      const MembershipScreen()));
+                        }), // Adjust as needed
                       ),
                       StaggeredGridTile.count(
                         crossAxisCellCount: 1,
                         mainAxisCellCount: 0.37,
-                        child: buildImageCard(
-                            3, AppAssets.camera, "Gallery"), // Adjust as needed
+                        child:
+                            buildImageCard(3, AppAssets.camera, "Gallery", () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) =>
+                                      const ComePlayScreen()));
+                        }), // Adjust as needed
                       ),
                     ],
                   ),
@@ -411,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           addVerticalSpacing(0.008),
                           Text(
-                            data[4]["text"]!.toUpperCase(),
+                            "Tournaments".toUpperCase(),
                             style: AppStyle.normalText.copyWith(
                                 color: AppColors.black.withOpacity(0.8),
                                 fontSize: 20.sp,
@@ -423,7 +402,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(
                             width: 0.6.sw,
                             child: Text(
-                              data[4]["subText"]!,
+                              "Users can seamlessly access a wide array of ongoing events and tournaments across various sports",
                               style: AppStyle.normalText.copyWith(
                                   color: AppColors.black.withOpacity(0.6),
                                   fontSize: 10.sp,
@@ -471,9 +450,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget buildImageCard(int index, String asset, String text) {
+  Widget buildImageCard(
+      int index, String asset, String text, VoidCallback? onTap) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),

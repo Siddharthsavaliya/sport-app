@@ -8,6 +8,7 @@ import 'package:sport_app/model/sport/fetch_sport_model.dart';
 import 'package:sport_app/res/api_constants.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/grounds_screen/all_ground_banners.dart';
 import 'package:sport_app/screens/grounds_screen/grounds_list_screen.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/shimmer_widget.dart';
@@ -79,12 +80,12 @@ class _ComePlayScreenState extends State<ComePlayScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: AppColors.black,
-        backgroundColor: Colors.grey.shade300,
+        foregroundColor: AppColors.white,
+        backgroundColor: AppColors.primaryColor,
         title: Text(
           "Come & Play",
           style: AppStyle.mediumText
-              .copyWith(fontSize: 20.sp, color: AppColors.black),
+              .copyWith(fontSize: 20.sp, color: AppColors.white),
         ),
         elevation: 0,
       ),
@@ -261,6 +262,7 @@ class _ComePlayScreenState extends State<ComePlayScreen> {
                 ],
               ),
             ),
+            16.height,
           ],
         ),
       ),
