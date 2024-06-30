@@ -48,6 +48,16 @@ class GroundRepository {
       return getErrorMessage(e);
     }
   }
+
+  Future<ApiResult<String>> cancelBooking(String id) async {
+    try {
+      final response = await apiClient
+          .post<Map<String, dynamic>>("/booking/bookings/$id/cancel");
+      return ApiResult.success(response.data!["message"]);
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
 }
 
 List<GroundModel> getGroundListFromResponse(

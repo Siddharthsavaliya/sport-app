@@ -52,7 +52,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
         ),
         body: BlocBuilder<BookingHistoryBloc, BookingHistoryState>(
           builder: (context, state) {
-            if (state.status.isLoaded) {
+            if (state.status.isLoaded || state.isCancel) {
               return Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: 0.035.sw, vertical: 15),

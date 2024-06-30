@@ -20,3 +20,10 @@ class GetCoachBookingHistoryEvent extends BookingHistoryEvent {
   @override
   List<Object> get props => [];
 }
+
+class CancelBookingEvent extends BookingHistoryEvent {
+  const CancelBookingEvent(this.id);
+  final String id;
+  @override
+  List<Object> get props => [];
+}

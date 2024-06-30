@@ -14,14 +14,13 @@ class BookingHistoryBloc
   BookingHistoryBloc() : super(const BookingHistoryState()) {
     on<GetBookingHistoryEvent>(_getFaqEvent);
     on<GetCoachBookingHistoryEvent>(_getCoachEvent);
+    on<CancelBookingEvent>(_cancelBookingEvent);
   }
   final GroundRepository groundRepository = GroundRepository();
 
   Future<void> _getFaqEvent(
       GetBookingHistoryEvent event, Emitter<BookingHistoryState> emit) async {
-    emit(state.copyWith(
-      status: Status.inProgress,
-    ));
+    emit(state.copyWith(status: Status.inProgress, isCancel: false));
     final result = await groundRepository.getBookingHistory();
 
     result.when(
@@ -36,14 +35,27 @@ class BookingHistoryBloc
 
   Future<void> _getCoachEvent(GetCoachBookingHistoryEvent event,
       Emitter<BookingHistoryState> emit) async {
-    emit(state.copyWith(
-      status: Status.inProgress,
-    ));
+    emit(state.copyWith(status: Status.inProgress, isCancel: false));
     final result = await groundRepository.getCoachBookingHistory();
 
     result.when(
       success: (data) {
         emit(state.copyWith(status: Status.loaded, coachBookingHistory: data));
+      },
+      failure: (error) {
+        emit(state.copyWith(message: error, status: Status.failed));
+      },
+    );
+  }
+
+  Future<void> _cancelBookingEvent(
+      CancelBookingEvent event, Emitter<BookingHistoryState> emit) async {
+    emit(state.copyWith(status: Status.inProgress, isCancel: true));
+    final result = await groundRepository.cancelBooking(event.id);
+
+    result.when(
+      success: (data) {
+        emit(state.copyWith(status: Status.loaded, message: data));
       },
       failure: (error) {
         emit(state.copyWith(message: error, status: Status.failed));

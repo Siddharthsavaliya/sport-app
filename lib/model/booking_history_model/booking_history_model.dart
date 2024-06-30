@@ -7,7 +7,7 @@ part 'booking_history_model.g.dart';
 @freezed
 class BookingHistory with _$BookingHistory {
   const factory BookingHistory({
-    required String? id,
+    @JsonKey(name: "_id") required String id,
     required String? userId,
     required String? slotId,
     @JsonKey(name: "groundId") required GroundModel ground,

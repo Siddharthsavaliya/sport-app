@@ -14,6 +14,7 @@ class ApiConstants {
   static const String getBySport = "/ground/getBySport";
   static const String bookingHistory = "/booking/slot-details";
   static const String coachBookingHistory = "/booking/coach-slot-details";
+  static const String cancellation = "/booking/cancellation-requests/";
   static const String updateUser = "/update";
   static const String subscription = "/subscription/getPlan";
   static const String addWishlist = "/wishlist/add";

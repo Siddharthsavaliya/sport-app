@@ -5,6 +5,7 @@ class BookingHistoryState extends Equatable {
   const BookingHistoryState({
     this.message = " ",
     this.url = "",
+    this.isCancel = false,
     this.status = Status.initial,
     this.faqList = const [],
     this.coachBookingHistory = const [],
@@ -12,6 +13,7 @@ class BookingHistoryState extends Equatable {
   });
   final String message;
   final String url;
+  final bool isCancel;
   final Status status;
   final List<FaqModel> faqList;
   final List<BookingHistory> bookingHistory;
@@ -19,12 +21,21 @@ class BookingHistoryState extends Equatable {
 
   @override
   List<Object?> get props {
-    return [status, message, url, faqList, bookingHistory, coachBookingHistory];
+    return [
+      status,
+      message,
+      url,
+      faqList,
+      bookingHistory,
+      coachBookingHistory,
+      isCancel
+    ];
   }
 
   BookingHistoryState copyWith({
     String? message,
     Status? status,
+    bool? isCancel,
     List<BookingHistory>? bookingHistory,
     List<CoachBookingHistoryModel>? coachBookingHistory,
     String? url,
@@ -32,6 +43,7 @@ class BookingHistoryState extends Equatable {
   }) {
     return BookingHistoryState(
       message: message ?? this.message,
+      isCancel: isCancel ?? this.isCancel,
       status: status ?? this.status,
       url: url ?? this.url,
       bookingHistory: bookingHistory ?? this.bookingHistory,

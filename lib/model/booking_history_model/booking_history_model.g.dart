@@ -8,7 +8,7 @@ part of 'booking_history_model.dart';
 
 _$BookingImpl _$$BookingImplFromJson(Map<String, dynamic> json) =>
     _$BookingImpl(
-      id: json['id'] as String?,
+      id: json['_id'] as String,
       userId: json['userId'] as String?,
       slotId: json['slotId'] as String?,
       ground: GroundModel.fromJson(json['groundId'] as Map<String, dynamic>),
@@ -30,7 +30,7 @@ _$BookingImpl _$$BookingImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$BookingImplToJson(_$BookingImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      '_id': instance.id,
       'userId': instance.userId,
       'slotId': instance.slotId,
       'groundId': instance.ground,

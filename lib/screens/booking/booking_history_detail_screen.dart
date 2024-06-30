@@ -1,15 +1,19 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/bloc/booking_history_bloc/booking_history_bloc.dart';
 import 'package:sport_app/model/booking_history_model/booking_history_model.dart';
+import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/booking/my_bookings_screen.dart';
 import 'package:sport_app/screens/grounds_screen/ground_list_component.dart';
 import 'package:sport_app/utils/helper.dart';
+import 'package:sport_app/utils/status_dialog.dart';
 
 class BookingHistoryDetailScreen extends StatefulWidget {
   const BookingHistoryDetailScreen({super.key, required this.bookingHistory});
@@ -251,17 +255,57 @@ class _BookingHistoryDetailScreenState
                 ),
               ),
               addVerticalSpacing(0.02),
-              SizedBox(
-                width: double.infinity,
-                child: AppButton(
-                  shapeBorder: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+              Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: AppButton(
+                        shapeBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        text: "Download Invoice",
+                        color: AppColors.primaryColor,
+                        textColor: AppColors.white,
+                        onTap: () {},
+                      ),
+                    ),
                   ),
-                  text: "Download Invoice",
-                  color: AppColors.primaryColor,
-                  textColor: AppColors.white,
-                  onTap: () {},
-                ),
+                  addHorizontalSpacing(0.015),
+                  Expanded(
+                    child:
+                        BlocListener<BookingHistoryBloc, BookingHistoryState>(
+                      listener: (context, state) {
+                        if (state.status.isInProgress) {
+                          showProgressDialogue(context);
+                        } else if (state.status.isFailed) {
+                          Navigator.pop(context);
+                          showErrorDialogue(context, state.message);
+                        } else if (state.status.isLoaded) {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          showScafoldMessage(
+                              context: context, message: state.message);
+                        }
+                      },
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: AppButton(
+                          shapeBorder: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          text: "Cancel Request",
+                          color: AppColors.primaryColor,
+                          textColor: AppColors.white,
+                          onTap: () {
+                            BlocProvider.of<BookingHistoryBloc>(context).add(
+                                CancelBookingEvent(widget.bookingHistory.id));
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               50.height,
             ],

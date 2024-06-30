@@ -20,7 +20,8 @@ BookingHistory _$BookingHistoryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$BookingHistory {
-  String? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: "_id")
+  String get id => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
   String? get slotId => throw _privateConstructorUsedError;
   @JsonKey(name: "groundId")
@@ -51,7 +52,7 @@ abstract class $BookingHistoryCopyWith<$Res> {
       _$BookingHistoryCopyWithImpl<$Res, BookingHistory>;
   @useResult
   $Res call(
-      {String? id,
+      {@JsonKey(name: "_id") String id,
       String? userId,
       String? slotId,
       @JsonKey(name: "groundId") GroundModel ground,
@@ -84,7 +85,7 @@ class _$BookingHistoryCopyWithImpl<$Res, $Val extends BookingHistory>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? userId = freezed,
     Object? slotId = freezed,
     Object? ground = null,
@@ -102,10 +103,10 @@ class _$BookingHistoryCopyWithImpl<$Res, $Val extends BookingHistory>
     Object? v = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -187,7 +188,7 @@ abstract class _$$BookingImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? id,
+      {@JsonKey(name: "_id") String id,
       String? userId,
       String? slotId,
       @JsonKey(name: "groundId") GroundModel ground,
@@ -219,7 +220,7 @@ class __$$BookingImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? userId = freezed,
     Object? slotId = freezed,
     Object? ground = null,
@@ -237,10 +238,10 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? v = freezed,
   }) {
     return _then(_$BookingImpl(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -309,7 +310,7 @@ class __$$BookingImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BookingImpl implements _Booking {
   const _$BookingImpl(
-      {required this.id,
+      {@JsonKey(name: "_id") required this.id,
       required this.userId,
       required this.slotId,
       @JsonKey(name: "groundId") required this.ground,
@@ -331,7 +332,8 @@ class _$BookingImpl implements _Booking {
       _$$BookingImplFromJson(json);
 
   @override
-  final String? id;
+  @JsonKey(name: "_id")
+  final String id;
   @override
   final String? userId;
   @override
@@ -441,7 +443,7 @@ class _$BookingImpl implements _Booking {
 
 abstract class _Booking implements BookingHistory {
   const factory _Booking(
-      {required final String? id,
+      {@JsonKey(name: "_id") required final String id,
       required final String? userId,
       required final String? slotId,
       @JsonKey(name: "groundId") required final GroundModel ground,
@@ -461,7 +463,8 @@ abstract class _Booking implements BookingHistory {
   factory _Booking.fromJson(Map<String, dynamic> json) = _$BookingImpl.fromJson;
 
   @override
-  String? get id;
+  @JsonKey(name: "_id")
+  String get id;
   @override
   String? get userId;
   @override
