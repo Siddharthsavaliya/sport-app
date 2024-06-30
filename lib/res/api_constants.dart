@@ -26,6 +26,7 @@ class ApiConstants {
   static const String getCoachDetail = "/admin/coach/";
   static const String getInstitutionIds = "/school/getInstitutionIds";
   static const String checkOut = "/booking/book-slot";
+  static const String getSummary = "/booking/getBookingDetails";
   static const String getSlot = "/booking/slots/";
   static const String coachBookSlot = "/booking/book-coach-slot/";
 }

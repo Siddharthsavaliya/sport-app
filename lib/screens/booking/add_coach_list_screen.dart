@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +10,13 @@ import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/booking/book_ground_screen.dart';
 import 'package:sport_app/screens/booking/model/coach_list_model.dart';
 import 'package:sport_app/screens/booking/model/ground_slot_model.dart';
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:sport_app/model/booking/ground_booking_response.dart';
+import 'package:sport_app/res/api_constants.dart';
+import 'package:sport_app/screens/booking/booking_success_screen.dart';
+
+import 'package:sport_app/utils/helper.dart';
 
 class AddCoachListScreen extends StatefulWidget {
   final int quantity;
@@ -46,7 +55,7 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
     }
   }
 
-  void submit() {
+  void submit() async {
     if (_formKey.currentState!.validate()) {
       List<CoachListData> coaches = [];
       for (int i = 0; i < widget.quantity; i++) {
@@ -55,19 +64,59 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
             contact: numberControllers[i].text));
       }
 
-      Navigator.pushReplacement(
-        context,
-        CupertinoPageRoute(
-          builder: (context) => BookGroundScreen(
-            selectedSlot: widget.selectedSlot.validate(),
-            is24HourFormat: widget.is24HourFormat,
-            groundData: widget.groundData,
-            groundSlotData: widget.groundSlotData,
-            selectedHorizontalDate: widget.selectedHorizontalDate,
-            coaches: coaches,
+      final token = await getKeyValue(key: "token");
+      var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      var data = {
+        "groundId": "${widget.groundData?.id}",
+        "slotId": "${widget.groundSlotData?.id}",
+        "date": formatDate(widget.selectedHorizontalDate!),
+        "totalCount": "${coaches.length}",
+        "users": coaches.map((user) => user.toJson()).toList(),
+      };
+      print("Request : ${jsonEncode(data)}");
+      var dio = Dio();
+      try {
+        var response = await dio.request(
+          '${ApiConstants.baseUrl}${ApiConstants.getSummary}',
+          options: Options(
+            method: 'POST',
+            headers: headers,
           ),
-        ),
-      );
+          data: jsonEncode(data),
+        );
+        log(response.data.toString());
+        if (response.statusCode == 200) {
+          // Navigator.pushReplacement(
+          //   context,
+          //   CupertinoPageRoute(
+          //     builder: (context) => BookGroundScreen(
+          //       selectedSlot: widget.selectedSlot.validate(),
+          //       is24HourFormat: widget.is24HourFormat,
+          //       groundData: widget.groundData,
+          //       groundSlotData: widget.groundSlotData,
+          //       selectedHorizontalDate: widget.selectedHorizontalDate,
+          //       coaches: coaches,
+          //     ),
+          //   ),
+          // );
+        } else {
+          print(
+              'Request failed with status: ${response.statusCode}, ${response.statusMessage}');
+        }
+      } on DioException catch (e) {
+        if (e.response != null) {
+          toast(e.response?.data['message']);
+          print('Dio error! Response data: ${e.response?.data}');
+        } else {
+          print('Error sending request!');
+          print(e.message);
+        }
+      } catch (e) {
+        print('Unexpected error: $e');
+      }
     }
   }
 
