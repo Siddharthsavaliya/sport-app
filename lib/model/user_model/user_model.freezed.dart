@@ -24,7 +24,7 @@ mixin _$UserModel {
   String? get institutionName => throw _privateConstructorUsedError;
   String? get institutionId => throw _privateConstructorUsedError;
   String? get userName => throw _privateConstructorUsedError;
-  String? get subscription => throw _privateConstructorUsedError;
+  Membership? get subscription => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
   @JsonKey(name: 'DOB')
   String? get dob => throw _privateConstructorUsedError;
@@ -47,11 +47,13 @@ abstract class $UserModelCopyWith<$Res> {
       String? institutionName,
       String? institutionId,
       String? userName,
-      String? subscription,
+      Membership? subscription,
       String? phoneNumber,
       @JsonKey(name: 'DOB') String? dob,
       DateTime? createdAt,
       DateTime? updatedAt});
+
+  $MembershipCopyWith<$Res>? get subscription;
 }
 
 /// @nodoc
@@ -97,7 +99,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
       subscription: freezed == subscription
           ? _value.subscription
           : subscription // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Membership?,
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -116,6 +118,18 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
               as DateTime?,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MembershipCopyWith<$Res>? get subscription {
+    if (_value.subscription == null) {
+      return null;
+    }
+
+    return $MembershipCopyWith<$Res>(_value.subscription!, (value) {
+      return _then(_value.copyWith(subscription: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -131,11 +145,14 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String? institutionName,
       String? institutionId,
       String? userName,
-      String? subscription,
+      Membership? subscription,
       String? phoneNumber,
       @JsonKey(name: 'DOB') String? dob,
       DateTime? createdAt,
       DateTime? updatedAt});
+
+  @override
+  $MembershipCopyWith<$Res>? get subscription;
 }
 
 /// @nodoc
@@ -179,7 +196,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
       subscription: freezed == subscription
           ? _value.subscription
           : subscription // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Membership?,
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -226,7 +243,7 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String? userName;
   @override
-  final String? subscription;
+  final Membership? subscription;
   @override
   final String? phoneNumber;
   @override
@@ -299,7 +316,7 @@ abstract class _UserModel implements UserModel {
       final String? institutionName,
       final String? institutionId,
       final String? userName,
-      final String? subscription,
+      final Membership? subscription,
       final String? phoneNumber,
       @JsonKey(name: 'DOB') final String? dob,
       final DateTime? createdAt,
@@ -317,7 +334,7 @@ abstract class _UserModel implements UserModel {
   @override
   String? get userName;
   @override
-  String? get subscription;
+  Membership? get subscription;
   @override
   String? get phoneNumber;
   @override

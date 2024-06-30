@@ -12,7 +12,9 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       institutionName: json['institutionName'] as String?,
       institutionId: json['institutionId'] as String?,
       userName: json['userName'] as String?,
-      subscription: json['subscription'] as String?,
+      subscription: json['subscription'] == null
+          ? null
+          : Membership.fromJson(json['subscription'] as Map<String, dynamic>),
       phoneNumber: json['phoneNumber'] as String?,
       dob: json['DOB'] as String?,
       createdAt: json['createdAt'] == null

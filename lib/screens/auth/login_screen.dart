@@ -142,26 +142,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                   showProgressDialogue(context);
                                 } else if (state.status.isLoaded) {
                                   Navigator.pop(context);
-                                  String? city = await getKeyValue(key: 'city');
-                                  city == null
-                                      ? Navigator.push(
-                                          context,
-                                          CupertinoPageRoute(
-                                            builder: (context) => !state.isOtp
-                                                ? VerifyScreen(
-                                                    phoneNumber:
-                                                        phoneNumber.text)
-                                                : const LocationAccessScreen(),
-                                          ))
-                                      : Navigator.push(
-                                          context,
-                                          CupertinoPageRoute(
-                                            builder: (context) => !state.isOtp
-                                                ? VerifyScreen(
-                                                    phoneNumber:
-                                                        phoneNumber.text)
-                                                : const AppBottomBar(),
-                                          ));
+                                  Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) => !state.isOtp
+                                            ? VerifyScreen(
+                                                phoneNumber: phoneNumber.text)
+                                            : const AppBottomBar(),
+                                      ));
                                 } else if (state.status.isFailed) {
                                   Navigator.pop(context);
                                   showScafoldMessage(

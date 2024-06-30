@@ -4,22 +4,17 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sport_app/bloc/location_bloc/location_bloc.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
-import 'package:sport_app/res/app_strings.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/coaches/coach_list_screen.dart';
 import 'package:sport_app/screens/come_play_screen/come_play_screen.dart';
 import 'package:sport_app/screens/grounds_screen/all_ground_banners.dart';
-import 'package:sport_app/screens/grounds_screen/all_ground_component.dart';
-import 'package:sport_app/screens/grounds_screen/grounds_list_screen.dart';
 import 'package:sport_app/screens/location_screens/location_access_screen.dart';
 import 'package:sport_app/screens/membership/membership.dart';
-
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/status_dialog.dart';
 import 'package:sport_app/widget/shimmer_widget.dart';
@@ -34,6 +29,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
+    if (BlocProvider.of<LocationBloc>(context).state.isFirst) {
+      BlocProvider.of<LocationBloc>(context).add(
+        const GetLocationEvent(),
+      );
+    }
     super.initState();
   }
 
@@ -47,242 +47,264 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               addVerticalSpacing(0.013),
-              BlocConsumer<UserBloc, UserState>(
-                listener: (context, state) {
-                  if (state.status.isFailed) {
-                    showErrorDialogue(context, state.message);
-                  }
-                },
-                builder: (context, state) {
-                  if (state.status.isLoaded) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0.025.sw),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+              BlocBuilder<LocationBloc, LocationState>(
+                builder: (context, locationState) {
+                  return BlocConsumer<UserBloc, UserState>(
+                    listener: (context, state) {
+                      if (state.status.isFailed) {
+                        showErrorDialogue(context, state.message);
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state.status.isLoaded) {
+                        return Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: 0.025.sw),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const CircleAvatar(
-                                    radius: 10,
-                                    backgroundColor: AppColors.primaryColor,
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.location_on,
-                                        size: 13,
-                                        color: AppColors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  addHorizontalSpacing(0.01),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        BlocProvider.of<LocationBloc>(context)
-                                            .state
-                                            .city,
-                                        style: AppStyle.normalText.copyWith(
-                                            color: AppColors.black
-                                                .withOpacity(0.8),
-                                            fontSize: 15.sp,
-                                            fontWeight: FontWeight.w600,
-                                            letterSpacing: 0.8),
-                                      ),
                                       Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            "Change your current location",
-                                            style: AppStyle.normalText.copyWith(
-                                                color: AppColors.black
-                                                    .withOpacity(0.8),
-                                                fontSize: 11.sp,
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 0.5),
+                                          const CircleAvatar(
+                                            radius: 10,
+                                            backgroundColor:
+                                                AppColors.primaryColor,
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.location_on,
+                                                size: 13,
+                                                color: AppColors.white,
+                                              ),
+                                            ),
                                           ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.pushAndRemoveUntil(
-                                                context,
-                                                CupertinoPageRoute(
-                                                    builder: (context) =>
-                                                        const LocationAccessScreen()),
-                                                (route) => false,
-                                              );
-                                            },
-                                            child: const Icon(Icons
-                                                .keyboard_arrow_down_rounded),
-                                          )
+                                          addHorizontalSpacing(0.01),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                locationState.city,
+                                                style: AppStyle
+                                                    .normalText
+                                                    .copyWith(
+                                                        color: AppColors
+                                                            .black
+                                                            .withOpacity(0.8),
+                                                        fontSize: 15.sp,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        letterSpacing: 0.8),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "Change your current location",
+                                                    style: AppStyle.normalText
+                                                        .copyWith(
+                                                            color: AppColors
+                                                                .black
+                                                                .withOpacity(
+                                                                    0.8),
+                                                            fontSize: 11.sp,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            letterSpacing: 0.5),
+                                                  ),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Navigator
+                                                          .pushAndRemoveUntil(
+                                                        context,
+                                                        CupertinoPageRoute(
+                                                            builder: (context) =>
+                                                                const LocationAccessScreen()),
+                                                        (route) => false,
+                                                      );
+                                                    },
+                                                    child: const Icon(Icons
+                                                        .keyboard_arrow_down_rounded),
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ],
                                       ),
                                     ],
                                   ),
+                                  Column(
+                                    children: [
+                                      Image.asset(
+                                        AppAssets.dp,
+                                        height: 36,
+                                      ),
+                                      addVerticalSpacing(0.005),
+                                      Text(
+                                        'Hi ${state.userModel!.userName}' ?? "",
+                                        style: AppStyle.mediumBold.copyWith(
+                                            color: AppColors.black,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 0.8),
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Image.asset(
-                                AppAssets.dp,
-                                height: 36,
-                              ),
-                              addVerticalSpacing(0.005),
-                              Text(
-                                'Hi ${state.userModel!.userName}' ?? "",
-                                style: AppStyle.mediumBold.copyWith(
-                                    color: AppColors.black,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 0.8),
-                              ),
-                              // if (state.userModel!.subscription != null) ...[
-                              //   addVerticalSpacing(0.001),
-                              //   Row(
-                              //     crossAxisAlignment: CrossAxisAlignment.center,
-                              //     children: [
-                              //       Image.asset(
-                              //         AppAssets.king,
-                              //         width: 20,
-                              //       ),
-                              //       Padding(
-                              //         padding: EdgeInsets.only(top: 0.004.sh),
-                              // child: Text(
-                              //   "Member",
-                              //   style: AppStyle.normalText.copyWith(
-                              //       color: AppColors.black
-                              //           .withOpacity(0.8),
-                              //       fontSize: 12.sp,
-                              //       fontWeight: FontWeight.w500,
-                              //       letterSpacing: 0.8),
-                              // ),
-                              //       ),
-                              //     ],
-                              //   )
-                              // ]
-                            ],
-                          )
-                        ],
-                      ),
-                    );
-                  }
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 0.025.sw),
-                    child: Row(
-                      children: [
-                        shimmerWidget(
-                            child: const CircleAvatar(
-                          radius: 30,
-                        )),
-                        addHorizontalSpacing(0.012),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            shimmerWidget(
+                            ),
+                            addVerticalSpacing(0.025),
+                            Padding(
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: 0.025.sw),
                               child: Container(
-                                height: 0.015.sh,
-                                width: 0.5.sw,
+                                height: 55,
+                                width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: AppColors.black,
+                                  color: AppColors.primaryColor,
                                   borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          if (state.userModel!.subscription ==
+                                              null) {
+                                            Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                    builder: (context) =>
+                                                        const MembershipScreen()));
+                                          }
+                                        },
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  height: 20,
+                                                  width: 20,
+                                                  child: Image.asset(
+                                                      AppAssets.verified),
+                                                ),
+                                                addHorizontalSpacing(0.013),
+                                                Text(
+                                                  state.userModel!
+                                                              .subscription ==
+                                                          null
+                                                      ? "Buy\nMembership"
+                                                      : "Membership\n${state.userModel!.subscription!.planName}",
+                                                  style: AppStyle.normalText
+                                                      .copyWith(
+                                                    color: AppColors.white,
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 1,
+                                      color: AppColors.white,
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                height: 20,
+                                                width: 20,
+                                                child: Image.asset(
+                                                    AppAssets.star1),
+                                              ),
+                                              addHorizontalSpacing(0.013),
+                                              Text(
+                                                "${state.balance}\nSports Points",
+                                                style: AppStyle.normalText
+                                                    .copyWith(
+                                                  color: AppColors.white,
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            addVerticalSpacing(0.01),
+                          ],
+                        );
+                      }
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 0.025.sw),
+                        child: Row(
+                          children: [
                             shimmerWidget(
-                              child: Container(
-                                height: 0.015.sh,
-                                width: 0.35.sw,
-                                decoration: BoxDecoration(
-                                  color: AppColors.black,
-                                  borderRadius: BorderRadius.circular(15),
+                                child: const CircleAvatar(
+                              radius: 30,
+                            )),
+                            addHorizontalSpacing(0.012),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                shimmerWidget(
+                                  child: Container(
+                                    height: 0.015.sh,
+                                    width: 0.5.sw,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.black,
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                addVerticalSpacing(0.01),
+                                shimmerWidget(
+                                  child: Container(
+                                    height: 0.015.sh,
+                                    width: 0.35.sw,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.black,
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                )
+                              ],
                             )
                           ],
-                        )
-                      ],
-                    ),
+                        ),
+                      );
+                    },
                   );
                 },
-              ),
-              addVerticalSpacing(0.025),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 0.025.sw),
-                child: Container(
-                  height: 55,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: Image.asset(AppAssets.verified),
-                                ),
-                                addHorizontalSpacing(0.013),
-                                Text(
-                                  "Membership\nSports Super",
-                                  style: AppStyle.normalText.copyWith(
-                                    color: AppColors.white,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 1,
-                        color: AppColors.white,
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: Image.asset(AppAssets.star1),
-                                ),
-                                addHorizontalSpacing(0.013),
-                                Text(
-                                  "1000\nSports Points",
-                                  style: AppStyle.normalText.copyWith(
-                                    color: AppColors.white,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ),
               addVerticalSpacing(0.03),
               const AllBannersGroundComponent(),

@@ -9,6 +9,7 @@ class ApiConstants {
   static const String verifyForgetPassword = "/verify-forgotpassword";
   static const String resendOtp = "/otp/resend-otp";
   static const String getUser = "/user";
+  static const String getUserWallet = "/getUserWallet";
   static const String getGrounds = "/ground/getall";
   static const String getBySport = "/ground/getBySport";
   static const String bookingHistory = "/booking/slot-details";

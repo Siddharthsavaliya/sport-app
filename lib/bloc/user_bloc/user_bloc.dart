@@ -24,9 +24,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(state.copyWith(status: Status.inProgress, isUpdate: false));
     try {
       final apiResult = await userRepository.getUser();
+      final apiResult1 = await userRepository.getUserWallet();
       apiResult.when(
         success: (data) {
-          emit(state.copyWith(status: Status.loaded, userModel: data));
+          apiResult1.when(failure: (error) {
+            emit(state.copyWith(status: Status.failed, message: error));
+          }, success: (data1) {
+            emit(state.copyWith(
+                status: Status.loaded, userModel: data, balance: data1));
+          });
         },
         failure: (error) {
           emit(state.copyWith(status: Status.failed, message: error));

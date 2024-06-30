@@ -32,6 +32,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
     emit(
       state.copyWith(
+        isFirst: event.city != null ? false : true,
         city: storedCity,
         address: storedStreet,
       ),
@@ -42,9 +43,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     GetLocationEvent event,
     Emitter<LocationState> emit,
   ) async {
-    emit(state.copyWith(
-      locationStatus: Status.inProgress,
-    ));
+    emit(state.copyWith(locationStatus: Status.inProgress, isFirst: false));
     final userCredential = await locationRepository.getCurrentLocation();
 
     await userCredential.when(success: (position) async {

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sport_app/model/membership/membership.dart';
 
 part 'user_model.freezed.dart';
 part 'user_model.g.dart';
@@ -10,7 +11,7 @@ class UserModel with _$UserModel {
     String? institutionName,
     String? institutionId,
     String? userName,
-    String? subscription,
+    Membership? subscription,
     String? phoneNumber,
     @JsonKey(name: 'DOB') String? dob,
     DateTime? createdAt,

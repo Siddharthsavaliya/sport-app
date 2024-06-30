@@ -162,19 +162,11 @@ class _VerifyScreenState extends State<VerifyScreen> {
                         showProgressDialogue(context);
                       } else if (state.status.isLoaded) {
                         Navigator.pop(context);
-                        String? city = await getKeyValue(key: 'city');
-                        city == null
-                            ? Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (context) =>
-                                      const LocationAccessScreen(),
-                                ))
-                            : Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (context) => const AppBottomBar(),
-                                ));
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => const AppBottomBar(),
+                            ));
                       } else if (state.status.isFailed) {
                         Navigator.pop(context);
                         showScafoldMessage(

@@ -8,6 +8,7 @@ class LocationState extends Equatable {
     this.city = '',
     this.address = '',
     this.placeList,
+    this.isFirst = false,
     this.position,
   });
 
@@ -15,13 +16,14 @@ class LocationState extends Equatable {
   final Status searchStatus;
   final String message;
   final String city;
+  final bool isFirst;
   final String address;
   final Position? position;
   final List<PlaceModel>? placeList;
 
   @override
   List<Object?> get props {
-    return [locationStatus, message, searchStatus, city, address];
+    return [locationStatus, message, searchStatus, city, address, isFirst];
   }
 
   LocationState copyWith({
@@ -30,11 +32,13 @@ class LocationState extends Equatable {
     String? message,
     String? city,
     String? address,
+    bool? isFirst,
     Position? position,
     List<PlaceModel>? placeList,
   }) {
     return LocationState(
       locationStatus: locationStatus ?? this.locationStatus,
+      isFirst: isFirst ?? this.isFirst,
       searchStatus: searchStatus ?? this.searchStatus,
       message: message ?? this.message,
       city: city ?? this.city,

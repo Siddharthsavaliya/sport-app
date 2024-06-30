@@ -32,7 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
     isLogged = userId == null ? false : true;
     setState(() {});
     if (city != null) {
-      BlocProvider.of<LocationBloc>(context).add(InitializeLocationEvent());
+      BlocProvider.of<LocationBloc>(context)
+          .add(const InitializeLocationEvent());
     }
     Future.delayed(
       const Duration(seconds: 3),
@@ -41,9 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ? Navigator.pushAndRemoveUntil(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) => city == null
-                      ? const LocationAccessScreen()
-                      : const AppBottomBar(),
+                  builder: (context) => const AppBottomBar(),
                 ),
                 (route) => false,
               )
