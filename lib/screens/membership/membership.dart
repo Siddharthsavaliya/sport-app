@@ -125,7 +125,8 @@ class _MembershipScreenState extends State<MembershipScreen> {
                                     .toInt()
                                     .toString(),
                                 state.plans[index].planType,
-                                state.plans[index].id!);
+                                state.plans[index].id!,
+                                state.plans[index].planName ?? "");
                           },
                         ),
                       ],
@@ -210,7 +211,8 @@ class _MembershipScreenState extends State<MembershipScreen> {
     );
   }
 
-  Widget _card(String price, String crossPrice, String plan, String id) {
+  Widget _card(
+      String price, String crossPrice, String plan, String id, String name) {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(bottom: 0.025.sh),
@@ -244,7 +246,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Elite\nMembership",
+                      "$name\nMembership",
                       style: AppStyle.mediumBold.copyWith(
                         height: 0,
                         fontSize: 20.sp,

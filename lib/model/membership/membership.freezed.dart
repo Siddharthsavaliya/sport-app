@@ -23,6 +23,7 @@ mixin _$Membership {
   String get planType => throw _privateConstructorUsedError;
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
+  String? get planName => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
   double get actualPrice => throw _privateConstructorUsedError;
 
@@ -41,6 +42,7 @@ abstract class $MembershipCopyWith<$Res> {
   $Res call(
       {String planType,
       @JsonKey(name: '_id') String? id,
+      String? planName,
       double price,
       double actualPrice});
 }
@@ -60,6 +62,7 @@ class _$MembershipCopyWithImpl<$Res, $Val extends Membership>
   $Res call({
     Object? planType = null,
     Object? id = freezed,
+    Object? planName = freezed,
     Object? price = null,
     Object? actualPrice = null,
   }) {
@@ -71,6 +74,10 @@ class _$MembershipCopyWithImpl<$Res, $Val extends Membership>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      planName: freezed == planName
+          ? _value.planName
+          : planName // ignore: cast_nullable_to_non_nullable
               as String?,
       price: null == price
           ? _value.price
@@ -95,6 +102,7 @@ abstract class _$$MembershipImplCopyWith<$Res>
   $Res call(
       {String planType,
       @JsonKey(name: '_id') String? id,
+      String? planName,
       double price,
       double actualPrice});
 }
@@ -112,6 +120,7 @@ class __$$MembershipImplCopyWithImpl<$Res>
   $Res call({
     Object? planType = null,
     Object? id = freezed,
+    Object? planName = freezed,
     Object? price = null,
     Object? actualPrice = null,
   }) {
@@ -123,6 +132,10 @@ class __$$MembershipImplCopyWithImpl<$Res>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      planName: freezed == planName
+          ? _value.planName
+          : planName // ignore: cast_nullable_to_non_nullable
               as String?,
       price: null == price
           ? _value.price
@@ -142,6 +155,7 @@ class _$MembershipImpl implements _Membership {
   const _$MembershipImpl(
       {required this.planType,
       @JsonKey(name: '_id') this.id,
+      this.planName,
       required this.price,
       required this.actualPrice});
 
@@ -154,13 +168,15 @@ class _$MembershipImpl implements _Membership {
   @JsonKey(name: '_id')
   final String? id;
   @override
+  final String? planName;
+  @override
   final double price;
   @override
   final double actualPrice;
 
   @override
   String toString() {
-    return 'Membership(planType: $planType, id: $id, price: $price, actualPrice: $actualPrice)';
+    return 'Membership(planType: $planType, id: $id, planName: $planName, price: $price, actualPrice: $actualPrice)';
   }
 
   @override
@@ -171,6 +187,8 @@ class _$MembershipImpl implements _Membership {
             (identical(other.planType, planType) ||
                 other.planType == planType) &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.planName, planName) ||
+                other.planName == planName) &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.actualPrice, actualPrice) ||
                 other.actualPrice == actualPrice));
@@ -179,7 +197,7 @@ class _$MembershipImpl implements _Membership {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, planType, id, price, actualPrice);
+      Object.hash(runtimeType, planType, id, planName, price, actualPrice);
 
   @JsonKey(ignore: true)
   @override
@@ -199,6 +217,7 @@ abstract class _Membership implements Membership {
   const factory _Membership(
       {required final String planType,
       @JsonKey(name: '_id') final String? id,
+      final String? planName,
       required final double price,
       required final double actualPrice}) = _$MembershipImpl;
 
@@ -210,6 +229,8 @@ abstract class _Membership implements Membership {
   @override
   @JsonKey(name: '_id')
   String? get id;
+  @override
+  String? get planName;
   @override
   double get price;
   @override

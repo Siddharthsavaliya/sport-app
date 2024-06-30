@@ -9,6 +9,7 @@ import 'package:sport_app/res/app_strings.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/res/constant_data.dart';
 import 'package:sport_app/screens/booking/my_bookings_screen.dart';
+import 'package:sport_app/screens/coaches/coach_booking_history.dart';
 import 'package:sport_app/screens/on_boarding/splash_screen.dart';
 import 'package:sport_app/screens/profile/change_password_screen.dart';
 import 'package:sport_app/screens/profile/edit_profile_screen.dart';
@@ -64,6 +65,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               context,
               CupertinoPageRoute(
                 builder: (context) => const MyBookingsScreen(),
+              ));
+        }
+      },
+      {
+        "icon": Icons.book_outlined,
+        "title": AppStrings.coachBooking,
+        "subtitle": null,
+        "onTap": () {
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => const MyCoachBookingsScreen(),
               ));
         }
       },

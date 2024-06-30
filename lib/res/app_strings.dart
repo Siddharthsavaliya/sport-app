@@ -53,7 +53,8 @@ class AppStrings {
   static const String personalInfo = "Personnel Information";
   static const String myFavorites = "My Favorites";
   static const String myPaymentHistory = "My Payment History";
-  static const String booking = "My Bookings";
+  static const String booking = "My Ground Bookings";
+  static const String coachBooking = "My Coach Bookings";
   static const String help = "Help & Support";
   static const String faq = "FAQ's";
   static const String termsAndConditions = "Terms & Conditions";

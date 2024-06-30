@@ -82,30 +82,26 @@ class _BookingDetailScreenState extends State<CoachBookingSuccessScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: AppColors.black,
-        backgroundColor: Colors.grey.shade300,
+        foregroundColor: AppColors.white,
+        backgroundColor: AppColors.primaryColor,
         title: Text(
           "Booking Status",
           style: AppStyle.mediumText.copyWith(
-              fontSize: 20.sp, color: AppColors.black, letterSpacing: 0.8),
+              fontSize: 20.sp, color: AppColors.white, letterSpacing: 0.8),
         ),
         elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            15.height,
             SizedBox(
-              height: 0.15.sh,
-              child: Lottie.asset(
-                'assets/images/success.json',
-                controller: controller,
-                onLoaded: (composition) {
-                  controller
-                    ..duration = composition.duration
-                    ..forward();
-                },
+              height: 0.25.sh,
+              child: Image.asset(
+                'assets/images/calender.png',
               ),
             ),
+            addVerticalSpacing(0.015),
             Text("Payment Successful",
                 style: secondaryTextStyle(size: 26, color: AppColors.black)),
             30.height,
@@ -198,24 +194,53 @@ class _BookingDetailScreenState extends State<CoachBookingSuccessScreen>
               ),
             ),
             30.height,
-            AppButton(
-              shapeBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
-              text: "Show QR Code",
-              color: AppColors.black,
-              textColor: AppColors.white,
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => Dialog(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          elevation: 0.0,
-                          backgroundColor: Colors.transparent,
-                          child: contentBox(context),
-                        ));
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AppButton(
+                  shapeBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  text: "Download Invoice",
+                  color: AppColors.primaryColor,
+                  textColor: AppColors.white,
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        elevation: 0.0,
+                        backgroundColor: Colors.transparent,
+                        child: contentBox(context),
+                      ),
+                    );
+                  },
+                ),
+                addHorizontalSpacing(0.01),
+              AppButton(
+                  shapeBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  text: "QR Code",
+                  color: AppColors.primaryColor,
+                  textColor: AppColors.white,
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        elevation: 0.0,
+                        backgroundColor: Colors.transparent,
+                        child: contentBox(context),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
             16.height,
           ],

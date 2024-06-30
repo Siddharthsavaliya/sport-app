@@ -8,6 +8,7 @@ abstract class Membership with _$Membership {
   const factory Membership({
     required String planType,
     @JsonKey(name: '_id') String? id,
+    String? planName,
     required double price,
     required double actualPrice,
   }) = _Membership;

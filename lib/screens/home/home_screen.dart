@@ -170,40 +170,43 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }
-                  return Row(
-                    children: [
-                      shimmerWidget(
-                          child: const CircleAvatar(
-                        radius: 30,
-                      )),
-                      addHorizontalSpacing(0.012),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          shimmerWidget(
-                            child: Container(
-                              height: 0.015.sh,
-                              width: 0.5.sw,
-                              decoration: BoxDecoration(
-                                color: AppColors.black,
-                                borderRadius: BorderRadius.circular(15),
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 0.025.sw),
+                    child: Row(
+                      children: [
+                        shimmerWidget(
+                            child: const CircleAvatar(
+                          radius: 30,
+                        )),
+                        addHorizontalSpacing(0.012),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            shimmerWidget(
+                              child: Container(
+                                height: 0.015.sh,
+                                width: 0.5.sw,
+                                decoration: BoxDecoration(
+                                  color: AppColors.black,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
                               ),
                             ),
-                          ),
-                          addVerticalSpacing(0.01),
-                          shimmerWidget(
-                            child: Container(
-                              height: 0.015.sh,
-                              width: 0.35.sw,
-                              decoration: BoxDecoration(
-                                color: AppColors.black,
-                                borderRadius: BorderRadius.circular(15),
+                            addVerticalSpacing(0.01),
+                            shimmerWidget(
+                              child: Container(
+                                height: 0.015.sh,
+                                width: 0.35.sw,
+                                decoration: BoxDecoration(
+                                  color: AppColors.black,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
                               ),
-                            ),
-                          )
-                        ],
-                      )
-                    ],
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   );
                 },
               ),
