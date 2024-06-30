@@ -11,7 +11,7 @@ import 'package:sport_app/utils/helper.dart';
 class CoachHistoryDetailScreen extends StatefulWidget {
   const CoachHistoryDetailScreen(
       {super.key, required this.coachBookingHistory});
-  final CoachBookingHistory coachBookingHistory;
+  final CoachBookingHistoryModel coachBookingHistory;
 
   @override
   State<CoachHistoryDetailScreen> createState() =>
@@ -111,7 +111,9 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
                         Row(
                           children: [
                             Text("Date: ", style: secondaryTextStyle()),
-                            Text("${widget.coachBookingHistory.expirationDate}",
+                            Text(
+                                formatDateTime(DateTime.parse(
+                                    widget.coachBookingHistory.createdAt!)),
                                 style: boldTextStyle(size: 14)),
                           ],
                         ),
@@ -120,8 +122,7 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
                           children: [
                             Text("Time: ", style: secondaryTextStyle()),
                             Text(
-                                // "${widget.coachBookingHistory.coachId.availabilityAndSchedule!.daysAndTimes[0]} to ${widget.coachBookingHistory.coachId.availabilityAndSchedule!.daysAndTimes[0]}",
-                                "",
+                                "${widget.coachBookingHistory.startTime} to ${widget.coachBookingHistory.endTime}",
                                 style: boldTextStyle(size: 14)),
                           ],
                         ),
@@ -164,12 +165,12 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
                   children: [
                     buildSummaryRow(
                         "Subtotal:",
-                        widget.coachBookingHistory.totalPrice
+                        widget.coachBookingHistory.subtotal!
                             .toStringAsFixed(2)),
                     8.height,
                     buildSummaryRow(
                         "GST (18%):",
-                        widget.coachBookingHistory.totalPrice
+                        widget.coachBookingHistory.gstAmount!
                             .toStringAsFixed(2)),
                     8.height,
                     buildSummaryRow(

@@ -15,7 +15,7 @@ class BookingHistoryState extends Equatable {
   final Status status;
   final List<FaqModel> faqList;
   final List<BookingHistory> bookingHistory;
-  final List<CoachBookingHistory> coachBookingHistory;
+  final List<CoachBookingHistoryModel> coachBookingHistory;
 
   @override
   List<Object?> get props {
@@ -26,7 +26,7 @@ class BookingHistoryState extends Equatable {
     String? message,
     Status? status,
     List<BookingHistory>? bookingHistory,
-    List<CoachBookingHistory>? coachBookingHistory,
+    List<CoachBookingHistoryModel>? coachBookingHistory,
     String? url,
     List<FaqModel>? faqList,
   }) {

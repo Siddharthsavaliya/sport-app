@@ -37,7 +37,8 @@ class GroundRepository {
     }
   }
 
-  Future<ApiResult<List<CoachBookingHistory>>> getCoachBookingHistory() async {
+  Future<ApiResult<List<CoachBookingHistoryModel>>>
+      getCoachBookingHistory() async {
     try {
       final response = await apiClient
           .get<Map<String, dynamic>>(ApiConstants.coachBookingHistory);
