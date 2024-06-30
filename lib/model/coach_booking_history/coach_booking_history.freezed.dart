@@ -24,7 +24,7 @@ mixin _$CoachBookingHistory {
   String get id => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
   Coach get coachId => throw _privateConstructorUsedError;
-  String get schoolId => throw _privateConstructorUsedError;
+  School get schoolId => throw _privateConstructorUsedError;
   String get qrCode => throw _privateConstructorUsedError;
   int get totalPrice => throw _privateConstructorUsedError;
   DateTime get expirationDate => throw _privateConstructorUsedError;
@@ -45,12 +45,13 @@ abstract class $CoachBookingHistoryCopyWith<$Res> {
       {@JsonKey(name: "_id") String id,
       String userId,
       Coach coachId,
-      String schoolId,
+      School schoolId,
       String qrCode,
       int totalPrice,
       DateTime expirationDate});
 
   $CoachCopyWith<$Res> get coachId;
+  $SchoolCopyWith<$Res> get schoolId;
 }
 
 /// @nodoc
@@ -90,7 +91,7 @@ class _$CoachBookingHistoryCopyWithImpl<$Res, $Val extends CoachBookingHistory>
       schoolId: null == schoolId
           ? _value.schoolId
           : schoolId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as School,
       qrCode: null == qrCode
           ? _value.qrCode
           : qrCode // ignore: cast_nullable_to_non_nullable
@@ -113,6 +114,14 @@ class _$CoachBookingHistoryCopyWithImpl<$Res, $Val extends CoachBookingHistory>
       return _then(_value.copyWith(coachId: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SchoolCopyWith<$Res> get schoolId {
+    return $SchoolCopyWith<$Res>(_value.schoolId, (value) {
+      return _then(_value.copyWith(schoolId: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -127,13 +136,15 @@ abstract class _$$CoachBookingHistoryImplCopyWith<$Res>
       {@JsonKey(name: "_id") String id,
       String userId,
       Coach coachId,
-      String schoolId,
+      School schoolId,
       String qrCode,
       int totalPrice,
       DateTime expirationDate});
 
   @override
   $CoachCopyWith<$Res> get coachId;
+  @override
+  $SchoolCopyWith<$Res> get schoolId;
 }
 
 /// @nodoc
@@ -171,7 +182,7 @@ class __$$CoachBookingHistoryImplCopyWithImpl<$Res>
       schoolId: null == schoolId
           ? _value.schoolId
           : schoolId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as School,
       qrCode: null == qrCode
           ? _value.qrCode
           : qrCode // ignore: cast_nullable_to_non_nullable
@@ -213,7 +224,7 @@ class _$CoachBookingHistoryImpl
   @override
   final Coach coachId;
   @override
-  final String schoolId;
+  final School schoolId;
   @override
   final String qrCode;
   @override
@@ -282,7 +293,7 @@ abstract class _CoachBookingHistory implements CoachBookingHistory {
       {@JsonKey(name: "_id") required final String id,
       required final String userId,
       required final Coach coachId,
-      required final String schoolId,
+      required final School schoolId,
       required final String qrCode,
       required final int totalPrice,
       required final DateTime expirationDate}) = _$CoachBookingHistoryImpl;
@@ -298,7 +309,7 @@ abstract class _CoachBookingHistory implements CoachBookingHistory {
   @override
   Coach get coachId;
   @override
-  String get schoolId;
+  School get schoolId;
   @override
   String get qrCode;
   @override

@@ -12,7 +12,7 @@ _$CoachBookingHistoryImpl _$$CoachBookingHistoryImplFromJson(
       id: json['_id'] as String,
       userId: json['userId'] as String,
       coachId: Coach.fromJson(json['coachId'] as Map<String, dynamic>),
-      schoolId: json['schoolId'] as String,
+      schoolId: School.fromJson(json['schoolId'] as Map<String, dynamic>),
       qrCode: json['qrCode'] as String,
       totalPrice: json['totalPrice'] as int,
       expirationDate: DateTime.parse(json['expirationDate'] as String),

@@ -13,6 +13,7 @@ import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/booking/booking_detail_screen.dart';
 import 'package:sport_app/screens/booking/booking_history_detail_screen.dart';
+import 'package:sport_app/screens/coaches/coach_booking_history_detail.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/widget/empty_place_holder.dart';
 import 'package:sport_app/widget/shimmer_widget.dart';
@@ -82,9 +83,9 @@ class _MyCoachBookingsScreenState extends State<MyCoachBookingsScreen> {
                                     context,
                                     CupertinoPageRoute(
                                         builder: (context) =>
-                                            BookingHistoryDetailScreen(
-                                              bookingHistory:
-                                                  state.bookingHistory[index],
+                                            CoachHistoryDetailScreen(
+                                              coachBookingHistory: state
+                                                  .coachBookingHistory[index],
                                             )));
                               },
                               child: Container(

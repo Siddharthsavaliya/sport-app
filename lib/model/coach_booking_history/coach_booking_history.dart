@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sport_app/model/coach_model/coach_model.dart';
+import 'package:sport_app/model/school_model/school_model.dart';
 
 part 'coach_booking_history.freezed.dart';
 part 'coach_booking_history.g.dart';
@@ -11,7 +12,7 @@ abstract class CoachBookingHistory with _$CoachBookingHistory {
     @JsonKey(name: "_id") required String id,
     required String userId,
     required Coach coachId,
-    required String schoolId,
+    required School schoolId,
     required String qrCode,
     required int totalPrice,
     required DateTime expirationDate,

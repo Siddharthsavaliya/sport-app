@@ -68,7 +68,7 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
                     ),
                     addVerticalSpacing(0.01),
                     Text(
-                      "${widget.bookingHistory.ground.institutionName}",
+                      "${widget.coachBookingHistory.schoolId.schoolName}",
                       style: AppStyle.mediumText.copyWith(
                           fontSize: 15.sp,
                           color: AppColors.black,
@@ -76,7 +76,7 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
                     ),
                     addVerticalSpacing(0.006),
                     Text(
-                      "${widget.bookingHistory.ground.school!.address1!} ${widget.bookingHistory.ground.school!.address2!}",
+                      "${widget.coachBookingHistory.schoolId.address1!} ${widget.coachBookingHistory.schoolId.address2!}",
                       style: AppStyle.normalText.copyWith(
                         fontSize: 11.sp,
                         color: AppColors.black,
@@ -111,7 +111,7 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
                         Row(
                           children: [
                             Text("Date: ", style: secondaryTextStyle()),
-                            Text("${widget.bookingHistory.date}",
+                            Text("${widget.coachBookingHistory.expirationDate}",
                                 style: boldTextStyle(size: 14)),
                           ],
                         ),
@@ -120,15 +120,8 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
                           children: [
                             Text("Time: ", style: secondaryTextStyle()),
                             Text(
-                                "${widget.bookingHistory.startTime} to ${widget.bookingHistory.endTime}",
-                                style: boldTextStyle(size: 14)),
-                          ],
-                        ),
-                        8.height,
-                        Row(
-                          children: [
-                            Text("Quantity: ", style: secondaryTextStyle()),
-                            Text('${widget.bookingHistory.users.length}',
+                                // "${widget.coachBookingHistory.coachId.availabilityAndSchedule!.daysAndTimes[0]} to ${widget.coachBookingHistory.coachId.availabilityAndSchedule!.daysAndTimes[0]}",
+                                "",
                                 style: boldTextStyle(size: 14)),
                           ],
                         ),
@@ -136,7 +129,7 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
                         Row(
                           children: [
                             Text("Total Price: ", style: secondaryTextStyle()),
-                            Text('${widget.bookingHistory.totalPrice}',
+                            Text('${widget.coachBookingHistory.totalPrice}',
                                 style: boldTextStyle(size: 14)),
                           ],
                         ),
@@ -146,80 +139,13 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
                       height: 100,
                       width: 100,
                       child: Image.memory(
-                        base64Decode(widget.bookingHistory.qrCode),
+                        base64Decode(widget.coachBookingHistory.qrCode),
                       ),
                     ),
                   ],
                 ),
               ),
               16.height,
-              Text(
-                "Players Information",
-                style: AppStyle.mediumText.copyWith(
-                    fontSize: 14.sp,
-                    color: AppColors.black,
-                    letterSpacing: 0.8),
-              ),
-              addVerticalSpacing(0.01),
-              if (widget.bookingHistory.users.isNotEmpty)
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.all(0),
-                  // scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: widget.bookingHistory.users.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final coach = widget.bookingHistory.users[index];
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 8),
-                      decoration: boxDecorationDefault(color: Colors.white),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 0.02.sw, vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  child: ClipOval(
-                                    child: Image.asset(AppAssets.dp),
-                                  ),
-                                ),
-                                addHorizontalSpacing(0.015),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      coach.firstName ?? '',
-                                      style: AppStyle.mediumText,
-                                    ),
-                                    addVerticalSpacing(0.001),
-                                    Text(
-                                      coach.phoneNumber ?? '',
-                                      style: AppStyle.normalText.copyWith(
-                                        color: Colors
-                                            .grey, // Example to distinguish subtitle text
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            if (coach.isFree) ...[
-                              Text(
-                                "FREE",
-                                style: AppStyle.mediumText
-                                    .copyWith(color: AppColors.green),
-                              ),
-                            ]
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
               addVerticalSpacing(0.01),
               Text(
                 "Payment summary",
@@ -236,14 +162,20 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildSummaryRow("Subtotal:",
-                        widget.bookingHistory.subtotal!.toStringAsFixed(2)),
+                    buildSummaryRow(
+                        "Subtotal:",
+                        widget.coachBookingHistory.totalPrice
+                            .toStringAsFixed(2)),
                     8.height,
-                    buildSummaryRow("GST (18%):",
-                        widget.bookingHistory.gstAmount!.toStringAsFixed(2)),
+                    buildSummaryRow(
+                        "GST (18%):",
+                        widget.coachBookingHistory.totalPrice
+                            .toStringAsFixed(2)),
                     8.height,
-                    buildSummaryRow("Total:",
-                        widget.bookingHistory.totalPrice!.toStringAsFixed(2)),
+                    buildSummaryRow(
+                        "Total:",
+                        widget.coachBookingHistory.totalPrice
+                            .toStringAsFixed(2)),
                   ],
                 ),
               ),
