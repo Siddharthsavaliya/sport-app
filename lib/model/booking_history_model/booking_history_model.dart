@@ -18,7 +18,9 @@ class BookingHistory with _$BookingHistory {
     required int? totalCount,
     required String qrCode,
     required List<User> users,
-    required int? totalPrice,
+    required num? totalPrice,
+    required num? gstAmount,
+    required num? subtotal,
     required String? status,
     required int? v,
   }) = _Booking;
@@ -31,6 +33,7 @@ class BookingHistory with _$BookingHistory {
 class User with _$User {
   const factory User({
     required String firstName,
+    required bool isFree,
     required String phoneNumber,
   }) = _User;
 

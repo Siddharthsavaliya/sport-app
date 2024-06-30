@@ -157,6 +157,7 @@ Future<dynamic> showErrorDialogue(
             child: SizedBox(
               width: 0.3.sw,
               child: AppButton(
+                removeOpacity: true,
                 onTap: () {
                   Navigator.pop(context);
                 },

@@ -32,7 +32,9 @@ mixin _$BookingHistory {
   int? get totalCount => throw _privateConstructorUsedError;
   String get qrCode => throw _privateConstructorUsedError;
   List<User> get users => throw _privateConstructorUsedError;
-  int? get totalPrice => throw _privateConstructorUsedError;
+  num? get totalPrice => throw _privateConstructorUsedError;
+  num? get gstAmount => throw _privateConstructorUsedError;
+  num? get subtotal => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   int? get v => throw _privateConstructorUsedError;
 
@@ -60,7 +62,9 @@ abstract class $BookingHistoryCopyWith<$Res> {
       int? totalCount,
       String qrCode,
       List<User> users,
-      int? totalPrice,
+      num? totalPrice,
+      num? gstAmount,
+      num? subtotal,
       String? status,
       int? v});
 
@@ -92,6 +96,8 @@ class _$BookingHistoryCopyWithImpl<$Res, $Val extends BookingHistory>
     Object? qrCode = null,
     Object? users = null,
     Object? totalPrice = freezed,
+    Object? gstAmount = freezed,
+    Object? subtotal = freezed,
     Object? status = freezed,
     Object? v = freezed,
   }) {
@@ -143,7 +149,15 @@ class _$BookingHistoryCopyWithImpl<$Res, $Val extends BookingHistory>
       totalPrice: freezed == totalPrice
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as num?,
+      gstAmount: freezed == gstAmount
+          ? _value.gstAmount
+          : gstAmount // ignore: cast_nullable_to_non_nullable
+              as num?,
+      subtotal: freezed == subtotal
+          ? _value.subtotal
+          : subtotal // ignore: cast_nullable_to_non_nullable
+              as num?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -184,7 +198,9 @@ abstract class _$$BookingImplCopyWith<$Res>
       int? totalCount,
       String qrCode,
       List<User> users,
-      int? totalPrice,
+      num? totalPrice,
+      num? gstAmount,
+      num? subtotal,
       String? status,
       int? v});
 
@@ -215,6 +231,8 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? qrCode = null,
     Object? users = null,
     Object? totalPrice = freezed,
+    Object? gstAmount = freezed,
+    Object? subtotal = freezed,
     Object? status = freezed,
     Object? v = freezed,
   }) {
@@ -266,7 +284,15 @@ class __$$BookingImplCopyWithImpl<$Res>
       totalPrice: freezed == totalPrice
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as num?,
+      gstAmount: freezed == gstAmount
+          ? _value.gstAmount
+          : gstAmount // ignore: cast_nullable_to_non_nullable
+              as num?,
+      subtotal: freezed == subtotal
+          ? _value.subtotal
+          : subtotal // ignore: cast_nullable_to_non_nullable
+              as num?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -295,6 +321,8 @@ class _$BookingImpl implements _Booking {
       required this.qrCode,
       required final List<User> users,
       required this.totalPrice,
+      required this.gstAmount,
+      required this.subtotal,
       required this.status,
       required this.v})
       : _users = users;
@@ -332,7 +360,11 @@ class _$BookingImpl implements _Booking {
   }
 
   @override
-  final int? totalPrice;
+  final num? totalPrice;
+  @override
+  final num? gstAmount;
+  @override
+  final num? subtotal;
   @override
   final String? status;
   @override
@@ -340,7 +372,7 @@ class _$BookingImpl implements _Booking {
 
   @override
   String toString() {
-    return 'BookingHistory(id: $id, userId: $userId, slotId: $slotId, ground: $ground, date: $date, dayOfWeek: $dayOfWeek, startTime: $startTime, endTime: $endTime, totalCount: $totalCount, qrCode: $qrCode, users: $users, totalPrice: $totalPrice, status: $status, v: $v)';
+    return 'BookingHistory(id: $id, userId: $userId, slotId: $slotId, ground: $ground, date: $date, dayOfWeek: $dayOfWeek, startTime: $startTime, endTime: $endTime, totalCount: $totalCount, qrCode: $qrCode, users: $users, totalPrice: $totalPrice, gstAmount: $gstAmount, subtotal: $subtotal, status: $status, v: $v)';
   }
 
   @override
@@ -364,6 +396,10 @@ class _$BookingImpl implements _Booking {
             const DeepCollectionEquality().equals(other._users, _users) &&
             (identical(other.totalPrice, totalPrice) ||
                 other.totalPrice == totalPrice) &&
+            (identical(other.gstAmount, gstAmount) ||
+                other.gstAmount == gstAmount) &&
+            (identical(other.subtotal, subtotal) ||
+                other.subtotal == subtotal) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.v, v) || other.v == v));
   }
@@ -384,6 +420,8 @@ class _$BookingImpl implements _Booking {
       qrCode,
       const DeepCollectionEquality().hash(_users),
       totalPrice,
+      gstAmount,
+      subtotal,
       status,
       v);
 
@@ -414,7 +452,9 @@ abstract class _Booking implements BookingHistory {
       required final int? totalCount,
       required final String qrCode,
       required final List<User> users,
-      required final int? totalPrice,
+      required final num? totalPrice,
+      required final num? gstAmount,
+      required final num? subtotal,
       required final String? status,
       required final int? v}) = _$BookingImpl;
 
@@ -444,7 +484,11 @@ abstract class _Booking implements BookingHistory {
   @override
   List<User> get users;
   @override
-  int? get totalPrice;
+  num? get totalPrice;
+  @override
+  num? get gstAmount;
+  @override
+  num? get subtotal;
   @override
   String? get status;
   @override
@@ -462,6 +506,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$User {
   String get firstName => throw _privateConstructorUsedError;
+  bool get isFree => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -474,7 +519,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({String firstName, String phoneNumber});
+  $Res call({String firstName, bool isFree, String phoneNumber});
 }
 
 /// @nodoc
@@ -491,6 +536,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @override
   $Res call({
     Object? firstName = null,
+    Object? isFree = null,
     Object? phoneNumber = null,
   }) {
     return _then(_value.copyWith(
@@ -498,6 +544,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String,
+      isFree: null == isFree
+          ? _value.isFree
+          : isFree // ignore: cast_nullable_to_non_nullable
+              as bool,
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -513,7 +563,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String firstName, String phoneNumber});
+  $Res call({String firstName, bool isFree, String phoneNumber});
 }
 
 /// @nodoc
@@ -527,6 +577,7 @@ class __$$UserImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? firstName = null,
+    Object? isFree = null,
     Object? phoneNumber = null,
   }) {
     return _then(_$UserImpl(
@@ -534,6 +585,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String,
+      isFree: null == isFree
+          ? _value.isFree
+          : isFree // ignore: cast_nullable_to_non_nullable
+              as bool,
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -545,7 +600,10 @@ class __$$UserImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserImpl implements _User {
-  const _$UserImpl({required this.firstName, required this.phoneNumber});
+  const _$UserImpl(
+      {required this.firstName,
+      required this.isFree,
+      required this.phoneNumber});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -553,11 +611,13 @@ class _$UserImpl implements _User {
   @override
   final String firstName;
   @override
+  final bool isFree;
+  @override
   final String phoneNumber;
 
   @override
   String toString() {
-    return 'User(firstName: $firstName, phoneNumber: $phoneNumber)';
+    return 'User(firstName: $firstName, isFree: $isFree, phoneNumber: $phoneNumber)';
   }
 
   @override
@@ -567,13 +627,14 @@ class _$UserImpl implements _User {
             other is _$UserImpl &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
+            (identical(other.isFree, isFree) || other.isFree == isFree) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, firstName, phoneNumber);
+  int get hashCode => Object.hash(runtimeType, firstName, isFree, phoneNumber);
 
   @JsonKey(ignore: true)
   @override
@@ -592,12 +653,15 @@ class _$UserImpl implements _User {
 abstract class _User implements User {
   const factory _User(
       {required final String firstName,
+      required final bool isFree,
       required final String phoneNumber}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
   @override
   String get firstName;
+  @override
+  bool get isFree;
   @override
   String get phoneNumber;
   @override

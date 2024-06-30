@@ -17,6 +17,7 @@ import 'package:sport_app/res/api_constants.dart';
 import 'package:sport_app/screens/booking/booking_success_screen.dart';
 
 import 'package:sport_app/utils/helper.dart';
+import 'package:sport_app/utils/status_dialog.dart';
 
 class AddCoachListScreen extends StatefulWidget {
   final int quantity;
@@ -61,7 +62,7 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
       for (int i = 0; i < widget.quantity; i++) {
         coaches.add(CoachListData(
             firstName: firstNameControllers[i].text,
-            contact: numberControllers[i].text));
+            contact: "91${numberControllers[i].text}"));
       }
 
       final token = await getKeyValue(key: "token");
@@ -76,7 +77,6 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
         "totalCount": "${coaches.length}",
         "users": coaches.map((user) => user.toJson()).toList(),
       };
-      print("Request : ${jsonEncode(data)}");
       var dio = Dio();
       try {
         var response = await dio.request(
@@ -89,33 +89,33 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
         );
         log(response.data.toString());
         if (response.statusCode == 200) {
-          // Navigator.pushReplacement(
-          //   context,
-          //   CupertinoPageRoute(
-          //     builder: (context) => BookGroundScreen(
-          //       selectedSlot: widget.selectedSlot.validate(),
-          //       is24HourFormat: widget.is24HourFormat,
-          //       groundData: widget.groundData,
-          //       groundSlotData: widget.groundSlotData,
-          //       selectedHorizontalDate: widget.selectedHorizontalDate,
-          //       coaches: coaches,
-          //     ),
-          //   ),
-          // );
+          GroundBookingResponce groundBookingResponce =
+              GroundBookingResponce.fromJson(response.data);
+          Navigator.pushReplacement(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => BookGroundScreen(
+                groundBookingSummary: groundBookingResponce,
+                selectedSlot: widget.selectedSlot.validate(),
+                is24HourFormat: widget.is24HourFormat,
+                groundData: widget.groundData,
+                groundSlotData: widget.groundSlotData,
+                selectedHorizontalDate: widget.selectedHorizontalDate,
+                coaches: coaches,
+              ),
+            ),
+          );
         } else {
-          print(
-              'Request failed with status: ${response.statusCode}, ${response.statusMessage}');
+          showErrorDialogue(context, "Something went wrong");
         }
       } on DioException catch (e) {
         if (e.response != null) {
-          toast(e.response?.data['message']);
-          print('Dio error! Response data: ${e.response?.data}');
+          showErrorDialogue(context, "Something went wrong");
         } else {
-          print('Error sending request!');
-          print(e.message);
+          showErrorDialogue(context, "Something went wrong");
         }
       } catch (e) {
-        print('Unexpected error: $e');
+        showErrorDialogue(context, e.toString());
       }
     }
   }

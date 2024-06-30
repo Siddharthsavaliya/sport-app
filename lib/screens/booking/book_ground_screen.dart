@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
@@ -26,12 +25,14 @@ class BookGroundScreen extends StatefulWidget {
   final String? selectedSlot;
   final bool is24HourFormat;
   final GroundSlotData? groundSlotData;
+  final GroundBookingResponce groundBookingSummary;
   final GroundModel? groundData;
   final List<CoachListData>? coaches;
 
   const BookGroundScreen({
     super.key,
     this.selectedHorizontalDate,
+    required this.groundBookingSummary,
     this.groundSlotData,
     this.groundData,
     this.is24HourFormat = false,
@@ -255,34 +256,73 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                         letterSpacing: 0.8),
                   ),
                 addVerticalSpacing(0.005),
-                if (widget.coaches!.isNotEmpty)
-                  Column(
-                    children: List.generate(
-                      widget.coaches!.length,
-                      (index) {
-                        return Container(
-                          decoration: boxDecorationDefault(color: Colors.white),
-                          child: ListTile(
-                            leading: Padding(
-                              padding: EdgeInsets.only(left: 0.02.sw),
-                              child: CircleAvatar(
-                                child: ClipOval(
-                                  child: Image.asset(AppAssets.dp),
+                if (widget.groundBookingSummary.data!.users!.isNotEmpty)
+                  widget.groundBookingSummary.data?.users != null
+                      ? ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: const EdgeInsets.all(0),
+                          // scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount:
+                              widget.groundBookingSummary.data!.users!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final coach =
+                                widget.groundBookingSummary.data!.users![index];
+                            return Container(
+                              decoration:
+                                  boxDecorationDefault(color: Colors.white),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 0.02.sw, vertical: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        CircleAvatar(
+                                          child: ClipOval(
+                                            child: Image.asset(AppAssets.dp),
+                                          ),
+                                        ),
+                                        addHorizontalSpacing(0.015),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              coach.firstName ?? '',
+                                              style: AppStyle.mediumText,
+                                            ),
+                                            addVerticalSpacing(0.001),
+                                            Text(
+                                              coach.phoneNumber ?? '',
+                                              style:
+                                                  AppStyle.normalText.copyWith(
+                                                color: Colors
+                                                    .grey, // Example to distinguish subtitle text
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    if (coach.subscriptionPlan != null) ...[
+                                      Text(
+                                        "FREE",
+                                        style: AppStyle.mediumText
+                                            .copyWith(color: AppColors.green),
+                                      ),
+                                    ]
+                                  ],
                                 ),
                               ),
-                            ),
-                            contentPadding: const EdgeInsets.all(0),
-                            title: Text("${widget.coaches?[index].firstName}",
-                                style: AppStyle.mediumText),
-                            subtitle: Padding(
-                              padding: const EdgeInsets.only(top: 5),
-                              child: Text(widget.coaches![index].contact),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                            );
+                          },
+                        )
+                      : const SizedBox.shrink(),
                 16.height,
                 Text(
                   "Payment summary",
@@ -299,11 +339,14 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildSummaryRow("Subtotal:", '$price'),
+                      buildSummaryRow("Subtotal:",
+                          '${widget.groundBookingSummary.data!.subtotal}'),
                       8.height,
-                      buildSummaryRow("GST (18%):", '$gst'),
+                      buildSummaryRow("GST (18%):",
+                          '${widget.groundBookingSummary.data!.gst}'),
                       8.height,
-                      buildSummaryRow("Total:", '$total'),
+                      buildSummaryRow("Total:",
+                          '${widget.groundBookingSummary.data!.totalPrice}'),
                     ],
                   ),
                 ),

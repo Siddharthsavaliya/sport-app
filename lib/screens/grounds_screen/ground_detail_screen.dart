@@ -12,6 +12,7 @@ import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/booking/sloat_selection_screen.dart';
+import 'package:sport_app/screens/grounds_screen/all_ground_banners.dart';
 import 'package:sport_app/screens/grounds_screen/all_ground_component.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/shimmer_widget.dart';
@@ -315,8 +316,16 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
               ),
             ),
             addVerticalSpacing(0.028),
-            const AllGroundComponent(),
-            addVerticalSpacing(0.026),
+            Padding(
+              padding: EdgeInsets.only(left: 0.025.sw),
+              child: Text(
+                "Popular Ground",
+                style: AppStyle.mediumBold.copyWith(fontSize: 15.sp),
+              ),
+            ),
+            addVerticalSpacing(0.01),
+            const AllBannersGroundComponent(),
+            addVerticalSpacing(0.03),
           ],
         ),
       ),

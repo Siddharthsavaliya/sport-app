@@ -21,7 +21,9 @@ _$BookingImpl _$$BookingImplFromJson(Map<String, dynamic> json) =>
       users: (json['users'] as List<dynamic>)
           .map((e) => User.fromJson(e as Map<String, dynamic>))
           .toList(),
-      totalPrice: json['totalPrice'] as int?,
+      totalPrice: json['totalPrice'] as num?,
+      gstAmount: json['gstAmount'] as num?,
+      subtotal: json['subtotal'] as num?,
       status: json['status'] as String?,
       v: json['v'] as int?,
     );
@@ -40,17 +42,21 @@ Map<String, dynamic> _$$BookingImplToJson(_$BookingImpl instance) =>
       'qrCode': instance.qrCode,
       'users': instance.users,
       'totalPrice': instance.totalPrice,
+      'gstAmount': instance.gstAmount,
+      'subtotal': instance.subtotal,
       'status': instance.status,
       'v': instance.v,
     };
 
 _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       firstName: json['firstName'] as String,
+      isFree: json['isFree'] as bool,
       phoneNumber: json['phoneNumber'] as String,
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
     <String, dynamic>{
       'firstName': instance.firstName,
+      'isFree': instance.isFree,
       'phoneNumber': instance.phoneNumber,
     };
