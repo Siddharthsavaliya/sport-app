@@ -492,30 +492,48 @@ class _HomeScreenState extends State<HomeScreen> {
         child: index == 0 || index == 2 || index == 3
             ? Padding(
                 padding: EdgeInsets.symmetric(horizontal: 0.02.sw),
-                child: Row(
+                child: Stack(
                   children: [
-                    Expanded(
-                      flex: index == 2 || index == 3 ? 3 : 2,
-                      child: Text(text.toUpperCase(),
-                          style: AppStyle.normalText.copyWith(
-                              color: AppColors.black.withOpacity(0.8),
-                              fontSize: index == 2 ? 13.sp : 16.sp,
-                              fontFamily: "ProzaLibre-Regular",
-                              letterSpacing: 1,
-                              fontWeight: index == 2
-                                  ? FontWeight.bold
-                                  : FontWeight.w600)),
-                    ),
-                    addHorizontalSpacing(0.01),
-                    Expanded(
-                      flex: index == 2 || index == 3 ? 1 : 3,
-                      child: Container(
-                        color: AppColors.black,
-                        child: Image.asset(
-                          asset,
+                    const Positioned(
+                      top: 5,
+                      child: Tooltip(
+                        triggerMode: TooltipTriggerMode.tap,
+                        message: "Info Text here",
+                        child: Icon(
+                          Icons.info_outline,
+                          color: AppColors.gray,
+                          size: 14,
                         ),
                       ),
-                    )
+                    ),
+                    Center(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: index == 2 || index == 3 ? 3 : 2,
+                            child: Text(text.toUpperCase(),
+                                style: AppStyle.normalText.copyWith(
+                                    color: AppColors.black.withOpacity(0.8),
+                                    fontSize: index == 2 ? 13.sp : 16.sp,
+                                    fontFamily: "ProzaLibre-Regular",
+                                    letterSpacing: 1,
+                                    fontWeight: index == 2
+                                        ? FontWeight.bold
+                                        : FontWeight.w600)),
+                          ),
+                          addHorizontalSpacing(0.01),
+                          Expanded(
+                            flex: index == 2 || index == 3 ? 1 : 3,
+                            child: Container(
+                              color: AppColors.black,
+                              child: Image.asset(
+                                asset,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               )
@@ -525,13 +543,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     addVerticalSpacing(0.015),
-                    Text(text.toUpperCase(),
-                        style: AppStyle.normalText.copyWith(
-                            color: AppColors.black.withOpacity(0.8),
-                            fontSize: 18.sp,
-                            fontFamily: "ProzaLibre-Regular",
-                            letterSpacing: 1,
-                            fontWeight: FontWeight.w600)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(text.toUpperCase(),
+                            style: AppStyle.normalText.copyWith(
+                                color: AppColors.black.withOpacity(0.8),
+                                fontSize: 18.sp,
+                                fontFamily: "ProzaLibre-Regular",
+                                letterSpacing: 1,
+                                fontWeight: FontWeight.w600)),
+                        const Tooltip(
+                          triggerMode: TooltipTriggerMode.tap,
+                          message: "Info Text here",
+                          child: Icon(
+                            Icons.info_outline,
+                            color: AppColors.gray,
+                            size: 15,
+                          ),
+                        ),
+                      ],
+                    ),
                     addVerticalSpacing(0.03),
                     Image.asset(
                       asset,
