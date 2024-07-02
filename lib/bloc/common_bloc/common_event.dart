@@ -13,3 +13,11 @@ class GetFaqEvent extends CommonEvent {
   @override
   List<Object> get props => [];
 }
+
+class HelpEvent extends CommonEvent {
+  const HelpEvent(this.type, this.text);
+  final String type;
+  final String text;
+  @override
+  List<Object> get props => [];
+}

@@ -25,6 +25,7 @@ class AppAssets {
   static const String dp = "assets/images/dp.png";
   static const String event1 = "assets/images/event1.png";
   static const String light = "assets/images/light.svg";
+  static const String help = "assets/images/help.jpg";
   static const String locationPinIcon = "assets/images/location_pin.svg";
   static const String king = "assets/images/king.png";
   static const String locationImage = "assets/images/location_image.svg";

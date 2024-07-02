@@ -25,6 +25,7 @@ class ApiConstants {
   static const String purchaseSubscription = "/purchase-subscription";
   static const String changepassword = "/changepassword";
   static const String faq = "/faq/";
+  static const String help = "/complaintQuery";
   static const String getAllCoach = "/admin/getAllCouch";
   static const String getCoachDetail = "/admin/coach/";
   static const String getInstitutionIds = "/school/getInstitutionIds";

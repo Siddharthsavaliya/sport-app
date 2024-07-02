@@ -18,4 +18,15 @@ class CommonRepository {
       return ApiResult.failure(NetworkExceptions.getErrorMessage(error));
     }
   }
+
+  Future<ApiResult<bool>> help(String type, String text) async {
+    try {
+      final response = await _client.post<Map<String, dynamic>>(
+          ApiConstants.help,
+          data: {"type": type, "content": text});
+      return const ApiResult.success(true);
+    } catch (error) {
+      return ApiResult.failure(NetworkExceptions.getErrorMessage(error));
+    }
+  }
 }

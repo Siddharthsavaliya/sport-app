@@ -31,13 +31,13 @@ class _FaqScreenState extends State<FaqScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.appBar,
+          backgroundColor: AppColors.primaryColor,
           elevation: 0,
-          foregroundColor: AppColors.black,
+          foregroundColor: AppColors.white,
           title: Text(
             "Faq's",
             style: AppStyle.mediumText.copyWith(
-                fontSize: 24.sp, color: AppColors.black, letterSpacing: 0.5),
+                fontSize: 24.sp, color: AppColors.white, letterSpacing: 0.5),
           ),
         ),
         body: BlocConsumer<CommonBloc, CommonState>(

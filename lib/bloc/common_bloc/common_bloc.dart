@@ -10,6 +10,7 @@ part 'common_event.dart';
 class CommonBloc extends Bloc<CommonEvent, CommonState> {
   CommonBloc() : super(const CommonState()) {
     on<GetFaqEvent>(_getFaqEvent);
+    on<HelpEvent>(_helpEvent);
   }
   final CommonRepository _commonRepository = CommonRepository();
 
@@ -25,6 +26,23 @@ class CommonBloc extends Bloc<CommonEvent, CommonState> {
         emit(state.copyWith(
           status: Status.loaded,
           faqList: data,
+        ));
+      },
+      failure: (error) {
+        emit(state.copyWith(message: error, status: Status.failed));
+      },
+    );
+  }
+
+  Future<void> _helpEvent(HelpEvent event, Emitter<CommonState> emit) async {
+    emit(state.copyWith(
+      status: Status.inProgress,
+    ));
+    final result = await _commonRepository.help(event.type, event.text);
+    result.when(
+      success: (data) {
+        emit(state.copyWith(
+          status: Status.loaded,
         ));
       },
       failure: (error) {

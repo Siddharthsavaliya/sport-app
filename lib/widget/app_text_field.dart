@@ -125,7 +125,7 @@ class _AppTextfieldState extends State<AppTextfield> {
                 )
               : null,
           contentPadding: widget.height != null
-              ? const EdgeInsets.only(top: 15, bottom: 17)
+              ? const EdgeInsets.only(top: 15, bottom: 17, left: 22)
               : null,
           hintText: widget.hint,
           border: border,

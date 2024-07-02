@@ -257,9 +257,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       addVerticalSpacing(0.03),
                       BlocBuilder<SignUpBloc, SignUpState>(
                         builder: (context, state) {
-                          if (state.status.isInProgress) {
-                            return Center(child: CircularProgressIndicator());
-                          } else if (state.status.isLoaded) {
+                          if (state.status.isLoaded) {
                             InputBorder border = OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
                               borderSide: BorderSide(
@@ -329,7 +327,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 items: state.institutionIds.map((institution) {
                                   return DropdownMenuItem<Institution>(
                                     value: institution,
-                                    child: Container(
+                                    child: SizedBox(
                                       // color: Colors.amber,
                                       width: context.width() * 0.65,
                                       child: nb.Marquee(
@@ -346,14 +344,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 }).toList(),
                               ),
                             );
-                          } else if (state.status.isFailed) {
-                            return Center(
-                                child: Text('Error: ${state.message}'));
-                          } else {
-                            return const Center(
-                                child: Text(
-                                    'Press the button to fetch institutions'));
                           }
+                          return const SizedBox.shrink();
                         },
                       ),
                       addVerticalSpacing(0.03),

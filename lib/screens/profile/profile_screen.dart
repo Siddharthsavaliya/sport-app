@@ -14,6 +14,7 @@ import 'package:sport_app/screens/on_boarding/splash_screen.dart';
 import 'package:sport_app/screens/profile/change_password_screen.dart';
 import 'package:sport_app/screens/profile/edit_profile_screen.dart';
 import 'package:sport_app/screens/profile/faq_screen.dart';
+import 'package:sport_app/screens/profile/help_support.dart';
 import 'package:sport_app/screens/profile/htmls_view.dart';
 import 'package:sport_app/screens/profile/payment_history.dart';
 import 'package:sport_app/screens/profile/wishlist_screen.dart';
@@ -120,7 +121,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         "icon": Icons.support_agent,
         "title": AppStrings.help,
         "subtitle": null,
-        "onTap": () {}
+        "onTap": () {
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => const HelpScreen(),
+              ));
+        }
       },
       {
         "icon": Icons.pages,
