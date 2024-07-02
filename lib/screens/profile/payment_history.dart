@@ -8,6 +8,7 @@ import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_strings.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/utils/helper.dart';
+import 'package:sport_app/widget/app_button.dart';
 import 'package:sport_app/widget/empty_place_holder.dart';
 import 'package:sport_app/widget/shimmer_widget.dart';
 
@@ -34,12 +35,12 @@ class _PaymentHistoryState extends State<PaymentHistory> {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
-        foregroundColor: AppColors.black,
-        backgroundColor: Colors.grey.shade300,
+        foregroundColor: AppColors.white,
+        backgroundColor: AppColors.primaryColor,
         title: Text(
           AppStrings.myPaymentHistory,
           style: AppStyle.mediumText.copyWith(
-              fontSize: 20.sp, color: AppColors.black, letterSpacing: 0.8),
+              fontSize: 20.sp, color: AppColors.white, letterSpacing: 0.8),
         ),
         elevation: 0,
       ),
@@ -67,14 +68,19 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             addVerticalSpacing(0.01),
-                            Text(
-                              "Plan",
-                              style: AppStyle.normalText.copyWith(
-                                color: AppColors.black.withOpacity(0.8),
-                                fontWeight: FontWeight.w600,
-                                fontSize: 15.sp,
-                                letterSpacing: 0.5,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Plan",
+                                  style: AppStyle.normalText.copyWith(
+                                    color: AppColors.black.withOpacity(0.8),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15.sp,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                              ],
                             ),
                             addVerticalSpacing(0.001),
                             Row(
@@ -108,11 +114,11 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                   children: [
                                     Container(
                                       decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          color: index == 1
-                                              ? AppColors.red
-                                              : Colors.green),
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: index == 1
+                                            ? AppColors.red
+                                            : Colors.green,
+                                      ),
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 5, vertical: 1),
@@ -140,6 +146,23 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                   ],
                                 ),
                               ],
+                            ),
+                            addVerticalSpacing(0.02),
+                            Center(
+                              child: SizedBox(
+                                width: 0.5.sw,
+                                child: AppButton(
+                                  radius: 5,
+                                  text: "Download Invoice",
+                                  color: AppColors.primaryColor,
+                                  onTap: () async {
+                                    await downloadInvoice(
+                                        context,
+                                        state.purchase[index].invoiceUrl!,
+                                        state.purchase[index].id!);
+                                  },
+                                ),
+                              ),
                             ),
                             addVerticalSpacing(0.01),
                           ],

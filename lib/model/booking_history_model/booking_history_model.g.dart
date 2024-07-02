@@ -18,6 +18,7 @@ _$BookingImpl _$$BookingImplFromJson(Map<String, dynamic> json) =>
       endTime: json['endTime'] as String?,
       totalCount: json['totalCount'] as int?,
       qrCode: json['qrCode'] as String,
+      invoiceUrl: json['invoiceUrl'] as String,
       users: (json['users'] as List<dynamic>)
           .map((e) => User.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -40,6 +41,7 @@ Map<String, dynamic> _$$BookingImplToJson(_$BookingImpl instance) =>
       'endTime': instance.endTime,
       'totalCount': instance.totalCount,
       'qrCode': instance.qrCode,
+      'invoiceUrl': instance.invoiceUrl,
       'users': instance.users,
       'totalPrice': instance.totalPrice,
       'gstAmount': instance.gstAmount,

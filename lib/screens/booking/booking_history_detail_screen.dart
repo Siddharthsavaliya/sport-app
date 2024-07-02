@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +13,7 @@ import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/booking/my_bookings_screen.dart';
 import 'package:sport_app/screens/grounds_screen/ground_list_component.dart';
+import 'package:sport_app/screens/profile/invocie.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/status_dialog.dart';
 
@@ -267,7 +269,12 @@ class _BookingHistoryDetailScreenState
                         text: "Download Invoice",
                         color: AppColors.primaryColor,
                         textColor: AppColors.white,
-                        onTap: () {},
+                        onTap: () async {
+                          await downloadInvoice(
+                              context,
+                              widget.bookingHistory.invoiceUrl,
+                              widget.bookingHistory.id);
+                        },
                       ),
                     ),
                   ),

@@ -8,10 +8,11 @@ part 'my_purchase.g.dart';
 @freezed
 abstract class MyPurchase with _$MyPurchase {
   factory MyPurchase({
-    String? id,
+    @JsonKey(name: "_id") String? id,
     Membership? subscriptionPlan,
     DateTime? purchaseDate,
     String? user,
+    String? invoiceUrl,
   }) = _MyPurchase;
 
   factory MyPurchase.fromJson(Map<String, dynamic> json) =>

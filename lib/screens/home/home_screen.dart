@@ -208,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   state.userModel!
                                                               .subscription ==
                                                           null
-                                                      ? "Buy\nMembership"
+                                                      ? "Buy Membership"
                                                       : "Membership\n${state.userModel!.subscription!.planName}",
                                                   style: AppStyle.normalText
                                                       .copyWith(

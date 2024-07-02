@@ -1,5 +1,7 @@
 import 'dart:convert';
-
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -198,4 +200,58 @@ Future<void> clearStorage() async {
   storage.secureDelete("id");
   storage.secureDelete("Phone");
   storage.secureDelete("name");
+}
+
+Future<void> downloadInvoice(context, String url, String fileName) async {
+  try {
+    showProgressDialogue(context);
+    // Request storage permission
+    var status = await Permission.storage.request();
+    if (!status.isGranted) {
+      print('Storage permission denied');
+      return;
+    }
+
+    // Create Dio instance
+    Dio dio = Dio();
+
+    // Get the directory to save the file
+    Directory? directory;
+    if (Platform.isAndroid) {
+      directory = await getExternalStorageDirectory();
+      String newPath = "";
+      List<String> folders = directory!.path.split("/");
+      for (int i = 1; i < folders.length; i++) {
+        String folder = folders[i];
+        if (folder != "Android") {
+          newPath += "/$folder";
+        } else {
+          break;
+        }
+      }
+      newPath = "$newPath/Download";
+      directory = Directory(newPath);
+    } else {
+      directory = await getApplicationDocumentsDirectory();
+    }
+
+    // Create directory if it doesn't exist
+    if (!await directory.exists()) {
+      await directory.create(recursive: true);
+    }
+
+    // Construct the file path
+    String filePath = '${directory.path}/$fileName.pdf';
+
+    // Download the file
+    await dio.download(url, filePath, onReceiveProgress: (received, total) {
+      if (total != -1) {
+        print('Downloading: ${(received / total * 100).toStringAsFixed(0)}%');
+      }
+    });
+    Navigator.pop(context);
+  } catch (e) {
+    Navigator.pop(context);
+    showErrorDialogue(context, "Something went wrong");
+  }
 }

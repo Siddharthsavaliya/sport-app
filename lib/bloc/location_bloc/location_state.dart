@@ -8,7 +8,7 @@ class LocationState extends Equatable {
     this.city = '',
     this.address = '',
     this.placeList,
-    this.isFirst = false,
+    this.isFirst = true,
     this.position,
   });
 

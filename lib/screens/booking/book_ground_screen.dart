@@ -19,6 +19,7 @@ import 'package:sport_app/screens/booking/model/coach_list_model.dart';
 import 'package:sport_app/screens/booking/model/ground_slot_model.dart';
 import 'package:sport_app/screens/grounds_screen/ground_list_component.dart';
 import 'package:sport_app/utils/helper.dart';
+import 'package:sport_app/utils/status_dialog.dart';
 
 class BookGroundScreen extends StatefulWidget {
   final DateTime? selectedHorizontalDate;
@@ -46,7 +47,8 @@ class BookGroundScreen extends StatefulWidget {
 
 class _BookingDetailScreenState extends State<BookGroundScreen> {
   bool c3 = true;
-  Future<void> getGroundSlot() async {
+  Future<void> bookGroundSlot() async {
+    showProgressDialogue(context);
     final token = await getKeyValue(key: "token");
     var headers = {
       'Content-Type': 'application/json',
@@ -72,6 +74,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
       );
 
       if (response.statusCode == 200) {
+        Navigator.pop(context);
         print(json.encode(response.data));
         GroundBookingResponce groundBookingResponce =
             GroundBookingResponce.fromJson(response.data);
@@ -82,19 +85,20 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                       groundBookingResponce: groundBookingResponce,
                     )));
       } else {
-        print(
-            'Request failed with status: ${response.statusCode}, ${response.statusMessage}');
+        Navigator.pop(context);
+        showErrorDialogue(context, "Somthing went wrong");
       }
     } on DioException catch (e) {
       if (e.response != null) {
-        toast(e.response?.data['message']);
-        print('Dio error! Response data: ${e.response?.data}');
+        Navigator.pop(context);
+        showErrorDialogue(context, "Somthing went wrong");
       } else {
-        print('Error sending request!');
-        print(e.message);
+        Navigator.pop(context);
+        showErrorDialogue(context, "Somthing went wrong");
       }
     } catch (e) {
-      print('Unexpected error: $e');
+      Navigator.pop(context);
+      showErrorDialogue(context, "Somthing went wrong");
     }
   }
 
@@ -382,7 +386,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                         color: AppColors.primaryColor,
                         textColor: AppColors.white,
                         onTap: () {
-                          getGroundSlot();
+                          bookGroundSlot();
                         },
                       ),
                     ),
