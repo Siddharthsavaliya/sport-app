@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "220680215885",
+    "project_id": "itsmycourt-f38db",
+    "storage_bucket": "itsmycourt-f38db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220680215885:android:bdcccdc3022b935d73eb04",
+        "android_client_info": {
+          "package_name": "com.example.sport_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAKz_l4uHGL6bO1zQoGc8cacL8Tx6xXYA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
