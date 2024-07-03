@@ -14,8 +14,10 @@ import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/coaches/coach_detail_screen.dart';
 import 'package:sport_app/utils/helper.dart';
+import 'package:sport_app/utils/status_dialog.dart';
 import 'package:sport_app/widget/empty_place_holder.dart';
 import 'package:sport_app/widget/shimmer_widget.dart';
+import 'package:sport_app/widget/app_button.dart' as AppButton;
 
 class CoachListScreen extends StatefulWidget {
   const CoachListScreen({super.key});
@@ -28,6 +30,216 @@ class _CoachListScreenState extends State<CoachListScreen> {
   late TextEditingController _searchController;
 
   List<Coach> _allCoaches = [];
+  String? _selectedCity;
+  String? _selectedSport;
+
+  void _showCitySportFilterBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // To allow custom height
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+      ),
+      builder: (context) {
+        // List of cities and sports (example)
+        List<String> cities = [
+          'Gokalpur',
+          'Surat',
+          'Hyderabad',
+          'Patna',
+          'Gaya',
+          'Muzaffarpur',
+          'Darbhanga',
+          'Munger'
+        ];
+        List<String> sports = [
+          'Football',
+          'Basketball',
+          'Tennis',
+          'Cricket',
+          'Volleyball',
+        ];
+
+        // State variables
+        String citySearchQuery = '';
+        String sportSearchQuery = '';
+        List<String> filteredCities = cities;
+        List<String> filteredSports = sports;
+
+        return StatefulBuilder(
+          builder: (context, setState) {
+            // Function to handle city search query changes
+            void updateCitySearchQuery(String query) {
+              setState(() {
+                citySearchQuery = query;
+                filteredCities = cities
+                    .where((city) =>
+                        city.toLowerCase().contains(query.toLowerCase()))
+                    .toList();
+              });
+            }
+
+            // Function to handle sport search query changes
+            void updateSportSearchQuery(String query) {
+              setState(() {
+                sportSearchQuery = query;
+                filteredSports = sports
+                    .where((sport) =>
+                        sport.toLowerCase().contains(query.toLowerCase()))
+                    .toList();
+              });
+            }
+
+            return Container(
+              decoration: const BoxDecoration(
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(20.0)),
+                  color: AppColors.white),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    addVerticalSpacing(0.01),
+                    Container(
+                      width: 50,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    const SizedBox(height: 16.0),
+                    Text(
+                      'Select Filters',
+                      style: AppStyle.mediumText.copyWith(
+                        fontSize: 18.sp,
+                        color: AppColors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16.0),
+                    // City Section
+                    ExpansionTile(
+                      title: Text(
+                        'Cities',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.black,
+                        ),
+                      ),
+                      initiallyExpanded: false, // Start closed by default
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: TextField(
+                            onChanged: updateCitySearchQuery,
+                            decoration: InputDecoration(
+                              hintText: 'Search city',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                              prefixIcon: const Icon(Icons.search),
+                            ),
+                          ),
+                        ),
+                        ...filteredCities.map((city) {
+                          return CheckboxListTile(
+                            title: Text(
+                              city,
+                              style: const TextStyle(color: AppColors.black),
+                            ),
+                            value: _selectedCity == city,
+                            onChanged: (checked) {
+                              setState(() {
+                                _selectedCity = checked! ? city : null;
+                              });
+                            },
+                            controlAffinity: ListTileControlAffinity.trailing,
+                            activeColor: AppColors.primaryColor,
+                          );
+                        }),
+                      ],
+                    ),
+                    const SizedBox(height: 16.0),
+                    // Sport Section
+                    ExpansionTile(
+                      title: Text(
+                        'Sports',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.black,
+                        ),
+                      ),
+                      initiallyExpanded: false, // Start closed by default
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: TextField(
+                            onChanged: updateSportSearchQuery,
+                            decoration: InputDecoration(
+                              hintText: 'Search sport',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                              prefixIcon: const Icon(Icons.search),
+                            ),
+                          ),
+                        ),
+                        ...filteredSports.map((sport) {
+                          return CheckboxListTile(
+                            title: Text(
+                              sport,
+                              style: const TextStyle(color: AppColors.black),
+                            ),
+                            value: _selectedSport == sport,
+                            onChanged: (checked) {
+                              setState(() {
+                                _selectedSport = checked! ? sport : null;
+                              });
+                            },
+                            controlAffinity: ListTileControlAffinity.trailing,
+                            activeColor: AppColors.primaryColor,
+                          );
+                        }),
+                      ],
+                    ),
+                    addVerticalSpacing(0.01),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: AppButton.AppButton(
+                        removeOpacity: true,
+                        radius: 0,
+                        text: "Apply Filters",
+                        onTap: () {
+                          if (_selectedCity != null && _selectedSport != null) {
+                            Navigator.pop(context); // Close bottom sheet
+                          } else {
+                            showScafoldMessage(
+                              message: "Please select city and sport",
+                              context: context,
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    addVerticalSpacing(0.025)
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 
   @override
   void initState() {
@@ -74,6 +286,12 @@ class _CoachListScreenState extends State<CoachListScreen> {
               fontSize: 20.sp, color: AppColors.white, letterSpacing: 0.8),
         ),
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.filter_list),
+            onPressed: _showCitySportFilterBottomSheet,
+          ),
+        ],
       ),
       body: BlocConsumer<CoachBloc, CoachState>(
         listener: (context, state) {

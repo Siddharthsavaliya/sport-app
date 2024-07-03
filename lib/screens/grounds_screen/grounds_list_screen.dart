@@ -31,7 +31,6 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
   late TextEditingController _searchController;
 
   List<GroundModel> _filteredGrounds = [];
-  String? _selectedCity;
 
   void _showCityFilterBottomSheet() {
     showModalBottomSheet(
