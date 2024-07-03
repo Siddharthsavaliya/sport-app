@@ -23,8 +23,8 @@ _$GroundModelImpl _$$GroundModelImplFromJson(Map<String, dynamic> json) =>
           ? null
           : School.fromJson(json['school'] as Map<String, dynamic>),
       institutionName: json['institutionName'] as String?,
-      price: json['price'] as int?,
-      rating: json['rating'] as int?,
+      price: json['price'] as num?,
+      rating: json['rating'] as num?,
       recommended: json['recommended'] as bool?,
       slots:
           (json['slots'] as List<dynamic>?)?.map((e) => e as String).toList(),

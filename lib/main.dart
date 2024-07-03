@@ -30,7 +30,6 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  Notifications.init();
   runApp(const MyApp());
 }
 

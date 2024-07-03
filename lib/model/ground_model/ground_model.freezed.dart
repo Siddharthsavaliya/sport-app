@@ -31,8 +31,8 @@ mixin _$GroundModel {
   String? get address2 => throw _privateConstructorUsedError;
   School? get school => throw _privateConstructorUsedError;
   String? get institutionName => throw _privateConstructorUsedError;
-  int? get price => throw _privateConstructorUsedError;
-  int? get rating => throw _privateConstructorUsedError;
+  num? get price => throw _privateConstructorUsedError;
+  num? get rating => throw _privateConstructorUsedError;
   bool? get recommended => throw _privateConstructorUsedError;
   List<String>? get slots => throw _privateConstructorUsedError;
   @JsonKey(name: '__v')
@@ -60,8 +60,8 @@ abstract class $GroundModelCopyWith<$Res> {
       String? address2,
       School? school,
       String? institutionName,
-      int? price,
-      int? rating,
+      num? price,
+      num? rating,
       bool? recommended,
       List<String>? slots,
       @JsonKey(name: '__v') int? v});
@@ -137,11 +137,11 @@ class _$GroundModelCopyWithImpl<$Res, $Val extends GroundModel>
       price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as num?,
       rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as num?,
       recommended: freezed == recommended
           ? _value.recommended
           : recommended // ignore: cast_nullable_to_non_nullable
@@ -188,8 +188,8 @@ abstract class _$$GroundModelImplCopyWith<$Res>
       String? address2,
       School? school,
       String? institutionName,
-      int? price,
-      int? rating,
+      num? price,
+      num? rating,
       bool? recommended,
       List<String>? slots,
       @JsonKey(name: '__v') int? v});
@@ -264,11 +264,11 @@ class __$$GroundModelImplCopyWithImpl<$Res>
       price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as num?,
       rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as num?,
       recommended: freezed == recommended
           ? _value.recommended
           : recommended // ignore: cast_nullable_to_non_nullable
@@ -347,9 +347,9 @@ class _$GroundModelImpl implements _GroundModel {
   @override
   final String? institutionName;
   @override
-  final int? price;
+  final num? price;
   @override
-  final int? rating;
+  final num? rating;
   @override
   final bool? recommended;
   final List<String>? _slots;
@@ -443,8 +443,8 @@ abstract class _GroundModel implements GroundModel {
       final String? address2,
       final School? school,
       final String? institutionName,
-      final int? price,
-      final int? rating,
+      final num? price,
+      final num? rating,
       final bool? recommended,
       final List<String>? slots,
       @JsonKey(name: '__v') final int? v}) = _$GroundModelImpl;
@@ -473,9 +473,9 @@ abstract class _GroundModel implements GroundModel {
   @override
   String? get institutionName;
   @override
-  int? get price;
+  num? get price;
   @override
-  int? get rating;
+  num? get rating;
   @override
   bool? get recommended;
   @override

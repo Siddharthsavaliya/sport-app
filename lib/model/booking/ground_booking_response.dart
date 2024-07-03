@@ -28,6 +28,8 @@ class GroundBookingData {
   String? endTime;
   int? totalCount;
   String? qrCode;
+  String? invoiceUrl;
+  String? transactionId;
   List<User>? users;
   num? totalPrice;
   num? subtotal;
@@ -41,6 +43,8 @@ class GroundBookingData {
     this.groundId,
     this.dayOfWeek,
     this.startTime,
+    this.invoiceUrl,
+    this.transactionId,
     this.endTime,
     this.totalCount,
     this.qrCode,
@@ -57,6 +61,8 @@ class GroundBookingData {
       GroundBookingData(
         userId: json["userId"],
         slotId: json["slotId"],
+        transactionId: json["transactionId"],
+        invoiceUrl: json["invoiceUrl"],
         groundId: json["groundId"],
         gst: json["gst"].toString().toDouble(),
         subtotal: json["subtotal"].toString().toDouble(),

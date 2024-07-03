@@ -24,23 +24,23 @@ class GroundBloc extends Bloc<GroundEvent, GroundState> {
     emit(state.copyWith(
       status: Status.inProgress,
     ));
-    try {
-      final apiResult = await groundRepository.getGrounds(event.sport);
-      apiResult.when(
-        success: (data) {
-          emit(state.copyWith(
-            status: Status.loaded,
-            groundsData: data,
-            // grounds: data,
-          ));
-        },
-        failure: (error) {
-          emit(state.copyWith(status: Status.failed, message: error));
-        },
-      );
-    } catch (e) {
-      emit(state.copyWith(status: Status.failed, message: e.toString()));
-    }
+    // try {
+    final apiResult = await groundRepository.getGrounds(event.sport);
+    apiResult.when(
+      success: (data) {
+        emit(state.copyWith(
+          status: Status.loaded,
+          groundsData: data,
+          // grounds: data,
+        ));
+      },
+      failure: (error) {
+        emit(state.copyWith(status: Status.failed, message: error));
+      },
+    );
+    // } catch (e) {
+    //   emit(state.copyWith(status: Status.failed, message: e.toString()));
+    // }
   }
 
   Future<void> _getAllRequest(

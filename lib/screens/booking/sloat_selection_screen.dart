@@ -32,7 +32,7 @@ class _SlotSelectionScreenState extends State<SlotSelectionScreen> {
   @override
   void initState() {
     super.initState();
-    getServiceDetail();
+    // getServiceDetail();
     // DateTime.now().startOfDay
     // DateTime.now().endOfDay
     initializeDateFormatting('IN').then((_) {
@@ -135,38 +135,33 @@ class _SlotSelectionScreenState extends State<SlotSelectionScreen> {
         elevation: 0,
       ),
       body: Center(
-        child: serviceDetailResponse != null
-            ?
-            // BookingCalendar(
-            //   bookingService: mockBookingService!,
-            //   convertStreamResultToDateTimeRanges: convertStreamResultMock,
-            //   getBookingStream: getBookingStreamMock,
-            //   uploadBooking: uploadBookingMock,
-            //   pauseSlots: generatePauseSlots(),
-            //   pauseSlotText: 'LUNCH',
-            //   hideBreakTime: true,
-            //   loadingWidget: const Text('Fetching data...'),
-            //   uploadingWidget: const CircularProgressIndicator(),
-            //   locale: 'IN',
-            //   startingDayOfWeek: StartingDayOfWeek.monday,
-            //   wholeDayIsBookedWidget:
-            //       const Text('Sorry, for this day everything is booked'),
-            // )
+          child:
+              // BookingCalendar(
+              //   bookingService: mockBookingService!,
+              //   convertStreamResultToDateTimeRanges: convertStreamResultMock,
+              //   getBookingStream: getBookingStreamMock,
+              //   uploadBooking: uploadBookingMock,
+              //   pauseSlots: generatePauseSlots(),
+              //   pauseSlotText: 'LUNCH',
+              //   hideBreakTime: true,
+              //   loadingWidget: const Text('Fetching data...'),
+              //   uploadingWidget: const CircularProgressIndicator(),
+              //   locale: 'IN',
+              //   startingDayOfWeek: StartingDayOfWeek.monday,
+              //   wholeDayIsBookedWidget:
+              //       const Text('Sorry, for this day everything is booked'),
+              // )
 
-            BookingSlotsComponent(
-                groundData: widget.groundData,
+              BookingSlotsComponent(
+        groundData: widget.groundData,
 
-                // data: serviceDetailResponse,
-                showAppbar: true,
-                // scrollController: scrollController,
-                onApplyClick: () {
-                  setState(() {});
-                },
-              )
-            : const CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              ),
-      ),
+        // data: serviceDetailResponse,
+        showAppbar: true,
+        // scrollController: scrollController,
+        onApplyClick: () {
+          setState(() {});
+        },
+      )),
     );
   }
 }

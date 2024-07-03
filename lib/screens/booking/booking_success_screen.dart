@@ -10,6 +10,7 @@ import 'package:sport_app/model/booking/ground_booking_response.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/app_bottom_bar.dart';
 import 'package:sport_app/screens/booking/model/coach_list_model.dart';
 import 'package:sport_app/screens/booking/model/ground_slot_model.dart';
 import 'package:sport_app/utils/helper.dart';
@@ -100,6 +101,17 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
     return Scaffold(
       appBar: AppBar(
         foregroundColor: AppColors.white,
+        automaticallyImplyLeading: false,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                CupertinoPageRoute(builder: (context) => const AppBottomBar()));
+          },
+          child: const Icon(
+            Icons.arrow_back,
+            color: AppColors.white,
+          ),
+        ),
         backgroundColor: AppColors.primaryColor,
         title: Text(
           "Slot Purchased",
@@ -218,8 +230,9 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.groundBookingResponce!.data!.slotId ??
-                                    "664505de005ef7f8ea95de19",
+                                widget.groundBookingResponce!.data!
+                                        .transactionId ??
+                                    "TN12345689",
                                 style: AppStyle.mediumBold.copyWith(
                                   color: AppColors.black,
                                   fontWeight: FontWeight.w600,
@@ -282,18 +295,12 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                     text: "Download Invoice",
                     color: AppColors.primaryColor,
                     textColor: AppColors.white,
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => Dialog(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          elevation: 0.0,
-                          backgroundColor: Colors.transparent,
-                          child: contentBox(context),
-                        ),
-                      );
+                    onTap: () async {
+                      print(widget.groundBookingResponce!.data!.invoiceUrl);
+                      await downloadInvoice(
+                          context,
+                          widget.groundBookingResponce!.data!.invoiceUrl!,
+                          widget.groundBookingResponce!.data!.id!);
                     },
                   ),
                   addHorizontalSpacing(0.01),

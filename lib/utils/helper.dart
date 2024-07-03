@@ -205,52 +205,34 @@ Future<void> clearStorage() async {
 Future<void> downloadInvoice(context, String url, String fileName) async {
   try {
     showProgressDialogue(context);
-    // Request storage permission
+
     var status = await Permission.storage.request();
     if (!status.isGranted) {
       print('Storage permission denied');
       return;
     }
 
-    // Create Dio instance
-    Dio dio = Dio();
-
-    // Get the directory to save the file
     Directory? directory;
+
     if (Platform.isAndroid) {
       directory = await getExternalStorageDirectory();
-      String newPath = "";
-      List<String> folders = directory!.path.split("/");
-      for (int i = 1; i < folders.length; i++) {
-        String folder = folders[i];
-        if (folder != "Android") {
-          newPath += "/$folder";
-        } else {
-          break;
-        }
-      }
-      newPath = "$newPath/Download";
-      directory = Directory(newPath);
     } else {
       directory = await getApplicationDocumentsDirectory();
     }
 
-    // Create directory if it doesn't exist
-    if (!await directory.exists()) {
-      await directory.create(recursive: true);
-    }
+    String filePath = '${directory!.path}/$fileName.pdf';
 
-    // Construct the file path
-    String filePath = '${directory.path}/$fileName.pdf';
+    Dio dio = Dio();
 
-    // Download the file
     await dio.download(url, filePath, onReceiveProgress: (received, total) {
       if (total != -1) {
         print('Downloading: ${(received / total * 100).toStringAsFixed(0)}%');
       }
     });
-    Navigator.pop(context);
+
+    Navigator.pop(context); // Close progress dialogue after download completes
   } catch (e) {
+    print('Error downloading file: $e');
     Navigator.pop(context);
     showErrorDialogue(context, "Something went wrong");
   }

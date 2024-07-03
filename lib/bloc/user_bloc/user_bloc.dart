@@ -5,6 +5,7 @@ import 'package:sport_app/model/status.dart';
 import 'package:sport_app/model/user_model/user_model.dart';
 import 'package:sport_app/repository/user_repository.dart';
 import 'package:sport_app/utils/helper.dart';
+import 'package:sport_app/utils/notification_service.dart';
 part 'user_state.dart';
 part 'user_event.dart';
 
@@ -29,6 +30,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await apiResult.when(
         success: (data) async {
           await storeKeyValue(key: "phone", value: data.phoneNumber!);
+          Notifications.init();
           apiResult1.when(failure: (error) {
             emit(state.copyWith(status: Status.failed, message: error));
           }, success: (data1) {

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
@@ -75,7 +77,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
 
       if (response.statusCode == 200) {
         Navigator.pop(context);
-        print(json.encode(response.data));
+        log(json.encode(response.data).toString());
         GroundBookingResponce groundBookingResponce =
             GroundBookingResponce.fromJson(response.data);
         Navigator.pushReplacement(
@@ -90,6 +92,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
       }
     } on DioException catch (e) {
       if (e.response != null) {
+        log(e.response);
         Navigator.pop(context);
         showErrorDialogue(context, "Somthing went wrong");
       } else {
@@ -97,6 +100,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
         showErrorDialogue(context, "Somthing went wrong");
       }
     } catch (e) {
+      print(e);
       Navigator.pop(context);
       showErrorDialogue(context, "Somthing went wrong");
     }

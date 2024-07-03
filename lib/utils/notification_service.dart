@@ -70,7 +70,7 @@ class Notifications {
     await Firebase.initializeApp();
     String? topic = await getKeyValue(key: "phone");
     messaging.subscribeToTopic('all');
-    messaging.subscribeToTopic(topic ?? "");
+    messaging.subscribeToTopic(topic ?? "demo");
     InitializationSettings initializationSettings =
         const InitializationSettings(
       android: _androidInitializationSettings,
