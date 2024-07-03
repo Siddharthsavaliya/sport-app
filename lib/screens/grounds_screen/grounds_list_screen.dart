@@ -43,8 +43,7 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
       builder: (context) {
         // List of cities
         List<String> cities = [
-          'Delhi',
-          'New Delhi',
+          'Gokalpur',
           'Surat',
           'Hyderabad',
           'Patna',
