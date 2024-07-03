@@ -15,6 +15,7 @@ import 'package:sport_app/screens/booking/sloat_selection_screen.dart';
 import 'package:sport_app/screens/grounds_screen/ground_detail_screen.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/status_dialog.dart';
+import 'package:sport_app/widget/app_button.dart' as AppButton;
 import 'package:sport_app/widget/app_text_field.dart';
 import 'package:sport_app/widget/empty_place_holder.dart';
 import 'package:sport_app/widget/shimmer_widget.dart';
@@ -30,6 +31,135 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
   late TextEditingController _searchController;
 
   List<GroundModel> _filteredGrounds = [];
+  String? _selectedCity;
+
+  void _showCityFilterBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // To allow custom height
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+      ),
+      builder: (context) {
+        // List of cities
+        List<String> cities = [
+          'Delhi',
+          'New Delhi',
+          'Surat',
+          'Hyderabad',
+          'Patna',
+          'Gaya',
+          'Muzaffarpur',
+          'Darbhanga',
+          'Munger'
+        ];
+
+        // State variables
+        String searchQuery = '';
+        List<String> filteredCities = cities;
+        String? selectedCity;
+
+        return StatefulBuilder(
+          builder: (context, setState) {
+            // Function to handle search query changes
+            void updateSearchQuery(String query) {
+              setState(() {
+                searchQuery = query;
+                filteredCities = cities
+                    .where((city) =>
+                        city.toLowerCase().contains(query.toLowerCase()))
+                    .toList();
+              });
+            }
+
+            return Container(
+              height: MediaQuery.of(context).size.height *
+                  0.7, // 70% of screen height
+              decoration: const BoxDecoration(
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(20.0)),
+                  color: AppColors.white),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  addVerticalSpacing(0.01),
+                  Container(
+                    width: 50,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  Text(
+                    'Select City',
+                    style: AppStyle.mediumText.copyWith(
+                      fontSize: 18.sp,
+                      color: AppColors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // Search TextField
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: TextField(
+                      onChanged: updateSearchQuery,
+                      decoration: InputDecoration(
+                        hintText: 'Search city',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        prefixIcon: const Icon(Icons.search),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  Expanded(
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: filteredCities.map((city) {
+                        return CheckboxListTile(
+                          title: Text(
+                            city,
+                            style: const TextStyle(color: AppColors.black),
+                          ),
+                          value: selectedCity == city,
+                          onChanged: (checked) {
+                            setState(() {
+                              selectedCity = checked! ? city : null;
+                            });
+                          },
+                          controlAffinity: ListTileControlAffinity.trailing,
+                          activeColor:
+                              AppColors.primaryColor, // Adjusted checkbox color
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  addVerticalSpacing(0.01),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: AppButton.AppButton(
+                      removeOpacity: true,
+                      radius: 0,
+                      text: "Apply Filter",
+                      onTap: () {},
+                    ),
+                  ),
+                  addVerticalSpacing(0.025)
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 
   @override
   void initState() {
@@ -75,6 +205,12 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
               fontSize: 20.sp, color: AppColors.white, letterSpacing: 0.8),
         ),
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.filter_list),
+            onPressed: _showCityFilterBottomSheet,
+          ),
+        ],
       ),
       body: BlocBuilder<GroundBloc, GroundState>(
         builder: (context, state) {
@@ -107,374 +243,6 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          /*
-                          _filteredGrounds.isEmpty &&
-                                  _searchController.text.isNotEmpty
-                              ? const EmptyPlaceHolder(
-                                  title: "No Ground Found",
-                                  subTitle: "Try to search different",
-                                  imagePath: AppAssets.error)
-                              : ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: _filteredGrounds.isNotEmpty
-                                      ? _filteredGrounds.length
-                                      : state.groundsData.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    final ground = _filteredGrounds.isNotEmpty
-                                        ? _filteredGrounds[index]
-                                        : state.groundsData[index];
-
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          CupertinoPageRoute(
-                                            builder: (context) =>
-                                                GroundDetailScreen(
-                                              groundModel: ground,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      // child: GroundListComponent(groundData: ground),
-                                      child: Container(
-                                        clipBehavior: Clip.hardEdge,
-                                        padding: EdgeInsetsDirectional.only(
-                                            start: 0.015.sw,
-                                            top: 5,
-                                            bottom: 5,
-                                            end: 0.01.sw),
-                                        margin: EdgeInsets.only(
-                                            bottom: 6,
-                                            left: 0.02.sw,
-                                            right: 0.02.sw),
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            border: Border.all(
-                                              width: 1,
-                                              color: AppColors.borderColor,
-                                            )),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Expanded(
-                                                  flex: 6,
-                                                  child: state
-                                                          .groundsData[index]
-                                                          .images!
-                                                          .isNotEmpty
-                                                      ? Container(
-                                                          clipBehavior:
-                                                              Clip.hardEdge,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
-                                                          ),
-                                                          child: Image.network(
-                                                            state
-                                                                    .groundsData[
-                                                                        index]
-                                                                    .images![0]
-                                                                ["imageUrl"],
-                                                            height: 100,
-                                                            fit: BoxFit.fill,
-                                                          ),
-                                                        )
-                                                      : Image.asset(
-                                                          AppAssets.ground,
-                                                          height: 100,
-                                                          fit: BoxFit.fill,
-                                                        ),
-                                                ),
-                                                addHorizontalSpacing(0.01),
-                                                Expanded(
-                                                    flex: 6,
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          right: 0.01.sw),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              addVerticalSpacing(
-                                                                  0.008),
-                                                              SizedBox(
-                                                                width: 0.3.sw,
-                                                                child: Text(
-                                                                  state
-                                                                      .groundsData[
-                                                                          index]
-                                                                      .institutionName!,
-                                                                  style: AppStyle.mediumBold.copyWith(
-                                                                      fontSize:
-                                                                          13.5
-                                                                              .sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      color: AppColors
-                                                                          .black,
-                                                                      letterSpacing:
-                                                                          0.8),
-                                                                ),
-                                                              ),
-                                                              addVerticalSpacing(
-                                                                  0.018),
-                                                              Wrap(
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                        top: 0.001
-                                                                            .sh),
-                                                                    child: Image
-                                                                        .asset(
-                                                                      AppAssets
-                                                                          .footballIcon,
-                                                                      height:
-                                                                          16,
-                                                                    ),
-                                                                  ),
-                                                                  addHorizontalSpacing(
-                                                                      0.004),
-                                                                  Text(
-                                                                    "Rs. ${state.groundsData.validate()[index].price} Onwards",
-                                                                    style: AppStyle.mediumBold.copyWith(
-                                                                        fontSize:
-                                                                            13.5
-                                                                                .sp,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w400,
-                                                                        color: AppColors
-                                                                            .black,
-                                                                        letterSpacing:
-                                                                            0.8),
-                                                                  ),
-                                                                ],
-                                                              )
-                                                            ],
-                                                          ),
-                                                          Column(
-                                                            children: [
-                                                              addVerticalSpacing(
-                                                                  0.005),
-                                                              if (state
-                                                                  .groundsData
-                                                                  .validate()[
-                                                                      index]
-                                                                  .recommended!) ...[
-                                                                Image.asset(
-                                                                  AppAssets
-                                                                      .recom,
-                                                                  height:
-                                                                      0.035.sh,
-                                                                ),
-                                                                addVerticalSpacing(
-                                                                    0.012),
-                                                              ],
-                                                              BlocConsumer<
-                                                                  WishlistBloc,
-                                                                  WishlistState>(
-                                                                listener:
-                                                                    (context,
-                                                                        state) {
-                                                                  if (state
-                                                                      .status
-                                                                      .isInProgress) {
-                                                                    showProgressDialogue(
-                                                                        context);
-                                                                  } else if (state
-                                                                      .status
-                                                                      .isLoaded) {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    // showScafoldMessage(
-                                                                    //     message: state
-                                                                    //             .isRemove
-                                                                    //         ? "Ground removed successfully from your favorite list"
-                                                                    //         : "Ground added successfully in your favorite list",
-                                                                    //     context: context);
-                                                                  } else if (state
-                                                                      .status
-                                                                      .isFailed) {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    showScafoldMessage(
-                                                                        context:
-                                                                            context,
-                                                                        message:
-                                                                            state.message);
-                                                                  }
-                                                                },
-                                                                builder: (context,
-                                                                        state1) =>
-                                                                    GestureDetector(
-                                                                  onTap: () {
-                                                                    BlocProvider.of<WishlistBloc>(context).add(state1.grounds.contains(state.groundsData[
-                                                                            index])
-                                                                        ? RemoveToWishlistRequest(state
-                                                                            .groundsData
-                                                                            .validate()[
-                                                                                index]
-                                                                            .id!)
-                                                                        : AddToWishlistRequest(state
-                                                                            .groundsData[index]
-                                                                            .id!));
-                                                                  },
-                                                                  child: Image
-                                                                      .asset(
-                                                                    state1.grounds.contains(state.groundsData[
-                                                                            index])
-                                                                        ? AppAssets
-                                                                            .bookmark
-                                                                        : AppAssets
-                                                                            .bookmarkWhite,
-                                                                    height: state1
-                                                                            .grounds
-                                                                            .contains(state.groundsData.validate()[
-                                                                                index])
-                                                                        ? 0.035
-                                                                            .sh
-                                                                        : 0.025
-                                                                            .sh,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ))
-                                              ],
-                                            ),
-                                            addVerticalSpacing(0.01),
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 0.012.sw),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Image.asset(
-                                                        AppAssets.star,
-                                                        width: 20,
-                                                      ),
-                                                      addHorizontalSpacing(
-                                                          0.004),
-                                                      Text(
-                                                        state.groundsData
-                                                            .validate()[index]
-                                                            .rating
-                                                            .validate()
-                                                            .toInt()
-                                                            .toStringAsFixed(1),
-                                                        style: AppStyle
-                                                            .normalText
-                                                            .copyWith(
-                                                                fontSize: 15.sp,
-                                                                color: AppColors
-                                                                    .black,
-                                                                letterSpacing:
-                                                                    0.8),
-                                                      ),
-                                                      addHorizontalSpacing(
-                                                          0.01),
-                                                      Container(
-                                                        width: 2,
-                                                        height: 20,
-                                                        color: AppColors
-                                                            .borderColor,
-                                                      ),
-                                                      addHorizontalSpacing(
-                                                          0.01),
-                                                      Image.asset(
-                                                        AppAssets.location,
-                                                        width: 12,
-                                                      ),
-                                                      addHorizontalSpacing(
-                                                          0.004),
-                                                      Text(
-                                                        state.groundsData
-                                                                .validate()[
-                                                                    index]
-                                                                .location ??
-                                                            "Surat",
-                                                        style: AppStyle
-                                                            .normalText
-                                                            .copyWith(
-                                                                fontSize: 15.sp,
-                                                                color: AppColors
-                                                                    .black,
-                                                                letterSpacing:
-                                                                    0.8),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
-                                                      color: AppColors.orange,
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 2,
-                                                              horizontal:
-                                                                  0.02.sw),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "BOOK YOUR SLOT NOW",
-                                                          style: AppStyle
-                                                              .mediumText
-                                                              .copyWith(
-                                                                  fontSize:
-                                                                      15.sp,
-                                                                  color: AppColors
-                                                                      .white,
-                                                                  letterSpacing:
-                                                                      0.2,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            addVerticalSpacing(0.009),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                */
                           _filteredGrounds.isEmpty &&
                                   _searchController.text.isNotEmpty
                               ? const EmptyPlaceHolder(
@@ -501,7 +269,6 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                                         allSports.addAll(sports.split(','));
                                       }
                                     }
-
                                     return GestureDetector(
                                       onTap: () {
                                         Navigator.push(
@@ -514,14 +281,8 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                                           ),
                                         );
                                       },
-                                      // child: GroundListComponent(groundData: ground),
                                       child: Container(
                                         clipBehavior: Clip.hardEdge,
-                                        // padding: EdgeInsetsDirectional.only(
-                                        //     start: 0.015.sw,
-                                        //     top: 5,
-                                        //     bottom: 5,
-                                        //     end: 0.01.sw),
                                         margin: EdgeInsets.only(
                                             bottom: 15,
                                             left: 0.03.sw,
@@ -643,49 +404,6 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                                                             ),
                                                           ),
                                                         ),
-                                                        // Positioned(
-                                                        //   top: 12,
-                                                        //   left: 12,
-                                                        //   child: Container(
-                                                        //     padding:
-                                                        //         const EdgeInsets
-                                                        //             .symmetric(
-                                                        //             horizontal:
-                                                        //                 2,
-                                                        //             vertical:
-                                                        //                 2),
-                                                        //     constraints:
-                                                        //         BoxConstraints(
-                                                        //             maxWidth:
-                                                        //                 context.width() *
-                                                        //                     0.3),
-                                                        //     decoration:
-                                                        //         boxDecorationWithShadow(
-                                                        //       backgroundColor:
-                                                        //           context
-                                                        //               .cardColor
-                                                        //               .withOpacity(
-                                                        //                   0.9),
-                                                        //       borderRadius:
-                                                        //           radius(),
-                                                        //     ),
-                                                        //     child: Marquee(
-                                                        //       directionMarguee:
-                                                        //           DirectionMarguee
-                                                        //               .oneDirection,
-                                                        //       child: Text(
-                                                        //         "% Upto 10% off"
-                                                        //             .toUpperCase(),
-                                                        //         style: boldTextStyle(
-                                                        //             color: AppColors
-                                                        //                 .black,
-                                                        //             size: 12),
-                                                        //       ).paddingSymmetric(
-                                                        //           horizontal: 8,
-                                                        //           vertical: 4),
-                                                        //     ),
-                                                        //   ),
-                                                        // ),
                                                         Positioned(
                                                           top: 0,
                                                           right: 5,
