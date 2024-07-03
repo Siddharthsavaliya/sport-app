@@ -1,4 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_app/bloc/auth/forget_password_bloc/forget_pass_bloc.dart';
@@ -13,11 +15,22 @@ import 'package:sport_app/bloc/location_bloc/location_bloc.dart';
 import 'package:sport_app/bloc/membership_bloc/membership_bloc.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/bloc/wishlist_bloc/wishlist_bloc.dart';
+import 'package:sport_app/firebase_options.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/screens/on_boarding/splash_screen.dart';
+import 'package:sport_app/utils/notification_service.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  Notifications.init();
   runApp(const MyApp());
 }
 

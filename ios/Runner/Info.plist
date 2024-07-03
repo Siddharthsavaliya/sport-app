@@ -57,5 +57,7 @@
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
+	<key>PermissionGroupNotification</key>
+	<string>for notification</string>
 </dict>
 </plist>

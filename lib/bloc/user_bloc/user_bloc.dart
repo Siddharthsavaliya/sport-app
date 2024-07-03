@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sport_app/model/status.dart';
 import 'package:sport_app/model/user_model/user_model.dart';
 import 'package:sport_app/repository/user_repository.dart';
+import 'package:sport_app/utils/helper.dart';
 part 'user_state.dart';
 part 'user_event.dart';
 
@@ -25,8 +26,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       final apiResult = await userRepository.getUser();
       final apiResult1 = await userRepository.getUserWallet();
-      apiResult.when(
-        success: (data) {
+      await apiResult.when(
+        success: (data) async {
+          await storeKeyValue(key: "phone", value: data.phoneNumber!);
           apiResult1.when(failure: (error) {
             emit(state.copyWith(status: Status.failed, message: error));
           }, success: (data1) {
