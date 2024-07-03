@@ -29,6 +29,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController dob = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
+  TextEditingController email = TextEditingController();
   TextEditingController institutionName = TextEditingController();
   TextEditingController institutionId = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
@@ -40,6 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isInstitutionNameError = false;
   bool isPhoneError = false;
   bool isDobError = false;
+  bool isEmailError = false;
   bool isPasswordError = false;
   bool isConfirmPassError = false;
 
@@ -182,6 +184,42 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           color: AppColors.white.withOpacity(0.7),
                         ),
                         child: AppTextfield(
+                          keyboardType: TextInputType.emailAddress,
+                          controller: email,
+                          error: isEmailError,
+                          validator: (v) {
+                            // Regular expression for email validation
+                            Pattern pattern =
+                                r'^([a-zA-Z0-9_\.\-])+\@([a-zA-Z0-9\-]+\.)+([a-zA-Z0-9]{2,4})+$';
+                            RegExp regex = RegExp(pattern.toString());
+
+                            // Check if the email is empty or doesn't match the pattern
+                            if (v!.isEmpty || !regex.hasMatch(v)) {
+                              setState(() {
+                                isEmailError = true;
+                              });
+                              return null;
+                            } else {
+                              setState(() {
+                                isEmailError = false;
+                              });
+                              return null;
+                            }
+                          },
+                          height: 55,
+                          prefixIcon: Icons.mail,
+                          isRound: true,
+                          hint: "Email Address",
+                        ),
+                      ),
+                      addVerticalSpacing(0.03),
+                      Container(
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: AppColors.white.withOpacity(0.7),
+                        ),
+                        child: AppTextfield(
                           onTap: () {
                             selectDate(context);
                           },
@@ -203,57 +241,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           hint: AppStrings.dateOfBirthHint,
                         ),
                       ),
-                      /* addVerticalSpacing(0.03),
-                      Container(
-                        clipBehavior: Clip.hardEdge,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: AppColors.white.withOpacity(0.7),
-                        ),
-                        child: AppTextfield(
-                          controller: institutionName,
-                          error: isInstitutionNameError,
-                          validator: (v) {
-                            if (v!.isEmpty || v == "") {
-                              isInstitutionNameError = true;
-                            } else {
-                              isInstitutionNameError = false;
-                            }
-                            setState(() {});
-                            return null;
-                          },
-                          height: 55,
-                          prefixIcon: Icons.person_outline_outlined,
-                          isRound: true,
-                          hint: AppStrings.institutionNameHint,
-                        ),
-                      ),
-                      addVerticalSpacing(0.03),
-                      Container(
-                        clipBehavior: Clip.hardEdge,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: AppColors.white.withOpacity(0.7),
-                        ),
-                        child: AppTextfield(
-                          controller: institutionId,
-                          error: isInstitutionIdError,
-                          validator: (v) {
-                            if (v!.isEmpty || v == "") {
-                              isInstitutionIdError = true;
-                            } else {
-                              isInstitutionIdError = false;
-                            }
-                            setState(() {});
-                            return null;
-                          },
-                          height: 55,
-                          prefixIcon: Icons.person_outline_outlined,
-                          isRound: true,
-                          hint: AppStrings.institutionODHint,
-                        ),
-                      ),
-                      */
                       addVerticalSpacing(0.03),
                       BlocBuilder<SignUpBloc, SignUpState>(
                         builder: (context, state) {
@@ -435,18 +422,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       !isPasswordError &&
                                       !isUserNameError &&
                                       !isInstitutionIdError &&
-                                      // !isInstitutionNameError &&
+                                      !isEmailError &&
                                       !isPhoneError)) {
                                 BlocProvider.of<SignUpBloc>(context).add(
                                     SignUpEventRequest(
+                                        email: email.text,
                                         iName: _selectedInstitution!
                                             .institutionName
                                             .validate(),
                                         institutionId: _selectedInstitution!
                                             .institutionId
                                             .validate(),
-                                        // iName: institutionName.text,
-                                        // institutionId: institutionId.text,
                                         password: password.text,
                                         phone: phoneNumber.text,
                                         userName: username.text,

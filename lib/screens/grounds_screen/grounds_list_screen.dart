@@ -131,12 +131,11 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                           value: selectedCity == city,
                           onChanged: (checked) {
                             setState(() {
-                              selectedCity = checked! ? city : null;
+                              selectedCity = city;
                             });
                           },
                           controlAffinity: ListTileControlAffinity.trailing,
-                          activeColor:
-                              AppColors.primaryColor, // Adjusted checkbox color
+                          activeColor: AppColors.primaryColor,
                         );
                       }).toList(),
                     ),
@@ -148,7 +147,17 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                       removeOpacity: true,
                       radius: 0,
                       text: "Apply Filter",
-                      onTap: () {},
+                      onTap: () {
+                        if (selectedCity != null) {
+                          BlocProvider.of<GroundBloc>(context).add(
+                              GetGroundRequest(
+                                  city: selectedCity, sport: widget.name));
+                          Navigator.pop(context);
+                        } else {
+                          showScafoldMessage(
+                              message: "Please select city", context: context);
+                        }
+                      },
                     ),
                   ),
                   addVerticalSpacing(0.025)
@@ -175,9 +184,8 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
   }
 
   Future<void> onRefresh() async {
-    String? sport;
-    BlocProvider.of<GroundBloc>(context).add(
-        GetGroundRequest(widget.name == "All Ground" ? sport : widget.name));
+    BlocProvider.of<GroundBloc>(context)
+        .add(GetGroundRequest(sport: widget.name));
   }
 
   void _filterGrounds(String query) {

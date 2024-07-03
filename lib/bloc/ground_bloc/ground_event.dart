@@ -8,8 +8,9 @@ abstract class GroundEvent extends Equatable {
 }
 
 class GetGroundRequest extends GroundEvent {
-  GetGroundRequest(this.sport);
+  GetGroundRequest({this.sport, this.city});
   final String? sport;
+  final String? city;
   @override
   List<Object> get props => [];
 }

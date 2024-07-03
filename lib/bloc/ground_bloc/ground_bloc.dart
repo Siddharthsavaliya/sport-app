@@ -25,7 +25,8 @@ class GroundBloc extends Bloc<GroundEvent, GroundState> {
       status: Status.inProgress,
     ));
     // try {
-    final apiResult = await groundRepository.getGrounds(event.sport);
+    final apiResult =
+        await groundRepository.getGrounds(event.sport, event.city);
     apiResult.when(
       success: (data) {
         emit(state.copyWith(
@@ -51,7 +52,7 @@ class GroundBloc extends Bloc<GroundEvent, GroundState> {
       status: Status.inProgress,
     ));
     try {
-      final apiResult = await groundRepository.getGrounds(null);
+      final apiResult = await groundRepository.getGrounds(null, null);
       apiResult.when(
         success: (data) {
           print(data.length);

@@ -11,11 +11,13 @@ import 'package:sport_app/utils/helper.dart';
 class GroundRepository {
   ApiClient apiClient = ApiClient();
 
-  Future<ApiResult<List<GroundModel>>> getGrounds(String? sport) async {
+  Future<ApiResult<List<GroundModel>>> getGrounds(
+      String? sport, String? city) async {
     try {
-      String? city = await getKeyValue(key: 'city');
       final response = await apiClient.get<Map<String, dynamic>>(
-          sport != null ? ApiConstants.getBySport : ApiConstants.getGrounds,
+          sport != null
+              ? "${ApiConstants.getBySport}/$city"
+              : ApiConstants.getGrounds,
           queryParameters: {"sportNames": sport ?? ""});
       return ApiResult.success(
           getGroundListFromResponse(response.data!["data"]));

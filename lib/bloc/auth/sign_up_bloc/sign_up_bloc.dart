@@ -40,6 +40,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           iName: event.iName,
           userName: event.userName,
           dob: event.dob,
+          email:event.email,
           password: event.password,
           phoneNumber: event.phone);
       apiResult.when(

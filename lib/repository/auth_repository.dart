@@ -1,4 +1,3 @@
-
 import 'package:sport_app/data/api_client.dart';
 import 'package:sport_app/model/api_result/api_result.dart';
 import 'package:sport_app/model/institution_model/institution_model.dart';
@@ -14,6 +13,7 @@ class AuthRepository {
     required String dob,
     required String iName,
     required String iId,
+    required String email,
   }) async {
     try {
       final response = await apiClient
@@ -22,6 +22,7 @@ class AuthRepository {
         "phoneNumber": "91$phoneNumber",
         "password": password,
         "DOB": dob,
+        "email": email,
         "institutionName": iName,
         "institutionId": iId,
         "role": "user"
