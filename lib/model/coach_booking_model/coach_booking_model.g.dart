@@ -13,6 +13,8 @@ _$CoachBookingModelImpl _$$CoachBookingModelImplFromJson(
           CoachBooking.fromJson(json['coachBooking'] as Map<String, dynamic>),
       starttime: json['starttime'] as String,
       endtime: json['endtime'] as String,
+      transactionId: json['transactionId'] as String,
+      url: json['url'] as String,
       userName: json['userName'] as String,
       phoneNumber: json['phoneNumber'] as String,
     );
@@ -23,6 +25,8 @@ Map<String, dynamic> _$$CoachBookingModelImplToJson(
       'coachBooking': instance.coachBooking,
       'starttime': instance.starttime,
       'endtime': instance.endtime,
+      'transactionId': instance.transactionId,
+      'url': instance.url,
       'userName': instance.userName,
       'phoneNumber': instance.phoneNumber,
     };

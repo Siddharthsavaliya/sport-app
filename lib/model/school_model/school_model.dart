@@ -13,6 +13,7 @@ class School with _$School {
     String? city,
     String? state,
     String? institutionemailId,
+    String? institutionName,
     String? contactpersonname,
     String? contactpersonemailId,
     String? contactpersonphoneNumber,

@@ -14,6 +14,7 @@ abstract class CoachBookingHistoryModel with _$CoachBookingHistoryModel {
     required Coach coachId,
     required School schoolId,
     required String qrCode,
+    required String url,
     required int totalPrice,
     required num? gstAmount,
     required String? startTime,

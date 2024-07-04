@@ -27,6 +27,7 @@ mixin _$CoachBookingHistoryModel {
   Coach get coachId => throw _privateConstructorUsedError;
   School get schoolId => throw _privateConstructorUsedError;
   String get qrCode => throw _privateConstructorUsedError;
+  String get url => throw _privateConstructorUsedError;
   int get totalPrice => throw _privateConstructorUsedError;
   num? get gstAmount => throw _privateConstructorUsedError;
   String? get startTime => throw _privateConstructorUsedError;
@@ -53,6 +54,7 @@ abstract class $CoachBookingHistoryModelCopyWith<$Res> {
       Coach coachId,
       School schoolId,
       String qrCode,
+      String url,
       int totalPrice,
       num? gstAmount,
       String? startTime,
@@ -84,6 +86,7 @@ class _$CoachBookingHistoryModelCopyWithImpl<$Res,
     Object? coachId = null,
     Object? schoolId = null,
     Object? qrCode = null,
+    Object? url = null,
     Object? totalPrice = null,
     Object? gstAmount = freezed,
     Object? startTime = freezed,
@@ -112,6 +115,10 @@ class _$CoachBookingHistoryModelCopyWithImpl<$Res,
       qrCode: null == qrCode
           ? _value.qrCode
           : qrCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
               as String,
       totalPrice: null == totalPrice
           ? _value.totalPrice
@@ -175,6 +182,7 @@ abstract class _$$CoachBookingHistoryImplCopyWith<$Res>
       Coach coachId,
       School schoolId,
       String qrCode,
+      String url,
       int totalPrice,
       num? gstAmount,
       String? startTime,
@@ -206,6 +214,7 @@ class __$$CoachBookingHistoryImplCopyWithImpl<$Res>
     Object? coachId = null,
     Object? schoolId = null,
     Object? qrCode = null,
+    Object? url = null,
     Object? totalPrice = null,
     Object? gstAmount = freezed,
     Object? startTime = freezed,
@@ -234,6 +243,10 @@ class __$$CoachBookingHistoryImplCopyWithImpl<$Res>
       qrCode: null == qrCode
           ? _value.qrCode
           : qrCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
               as String,
       totalPrice: null == totalPrice
           ? _value.totalPrice
@@ -278,6 +291,7 @@ class _$CoachBookingHistoryImpl
       required this.coachId,
       required this.schoolId,
       required this.qrCode,
+      required this.url,
       required this.totalPrice,
       required this.gstAmount,
       required this.startTime,
@@ -301,6 +315,8 @@ class _$CoachBookingHistoryImpl
   @override
   final String qrCode;
   @override
+  final String url;
+  @override
   final int totalPrice;
   @override
   final num? gstAmount;
@@ -317,7 +333,7 @@ class _$CoachBookingHistoryImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CoachBookingHistoryModel(id: $id, userId: $userId, coachId: $coachId, schoolId: $schoolId, qrCode: $qrCode, totalPrice: $totalPrice, gstAmount: $gstAmount, startTime: $startTime, createdAt: $createdAt, endTime: $endTime, subtotal: $subtotal, expirationDate: $expirationDate)';
+    return 'CoachBookingHistoryModel(id: $id, userId: $userId, coachId: $coachId, schoolId: $schoolId, qrCode: $qrCode, url: $url, totalPrice: $totalPrice, gstAmount: $gstAmount, startTime: $startTime, createdAt: $createdAt, endTime: $endTime, subtotal: $subtotal, expirationDate: $expirationDate)';
   }
 
   @override
@@ -330,6 +346,7 @@ class _$CoachBookingHistoryImpl
       ..add(DiagnosticsProperty('coachId', coachId))
       ..add(DiagnosticsProperty('schoolId', schoolId))
       ..add(DiagnosticsProperty('qrCode', qrCode))
+      ..add(DiagnosticsProperty('url', url))
       ..add(DiagnosticsProperty('totalPrice', totalPrice))
       ..add(DiagnosticsProperty('gstAmount', gstAmount))
       ..add(DiagnosticsProperty('startTime', startTime))
@@ -350,6 +367,7 @@ class _$CoachBookingHistoryImpl
             (identical(other.schoolId, schoolId) ||
                 other.schoolId == schoolId) &&
             (identical(other.qrCode, qrCode) || other.qrCode == qrCode) &&
+            (identical(other.url, url) || other.url == url) &&
             (identical(other.totalPrice, totalPrice) ||
                 other.totalPrice == totalPrice) &&
             (identical(other.gstAmount, gstAmount) ||
@@ -374,6 +392,7 @@ class _$CoachBookingHistoryImpl
       coachId,
       schoolId,
       qrCode,
+      url,
       totalPrice,
       gstAmount,
       startTime,
@@ -404,6 +423,7 @@ abstract class _CoachBookingHistory implements CoachBookingHistoryModel {
       required final Coach coachId,
       required final School schoolId,
       required final String qrCode,
+      required final String url,
       required final int totalPrice,
       required final num? gstAmount,
       required final String? startTime,
@@ -426,6 +446,8 @@ abstract class _CoachBookingHistory implements CoachBookingHistoryModel {
   School get schoolId;
   @override
   String get qrCode;
+  @override
+  String get url;
   @override
   int get totalPrice;
   @override

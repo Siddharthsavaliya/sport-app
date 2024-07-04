@@ -158,7 +158,7 @@ class _BookingDetailScreenState extends State<CoachBookingSuccessScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.coachBookingModel.coachBooking.id,
+                                widget.coachBookingModel.transactionId,
                                 style: AppStyle.mediumBold.copyWith(
                                   color: AppColors.black,
                                   fontWeight: FontWeight.w600,
@@ -204,22 +204,13 @@ class _BookingDetailScreenState extends State<CoachBookingSuccessScreen>
                   text: "Download Invoice",
                   color: AppColors.primaryColor,
                   textColor: AppColors.white,
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => Dialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        elevation: 0.0,
-                        backgroundColor: Colors.transparent,
-                        child: contentBox(context),
-                      ),
-                    );
+                  onTap: () async {
+                    await downloadInvoice(context, widget.coachBookingModel.url,
+                        widget.coachBookingModel.transactionId);
                   },
                 ),
                 addHorizontalSpacing(0.01),
-              AppButton(
+                AppButton(
                   shapeBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

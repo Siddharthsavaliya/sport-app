@@ -68,7 +68,7 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
                     ),
                     addVerticalSpacing(0.01),
                     Text(
-                      "${widget.coachBookingHistory.schoolId.schoolName}",
+                      "${widget.coachBookingHistory.schoolId.institutionName}",
                       style: AppStyle.mediumText.copyWith(
                           fontSize: 15.sp,
                           color: AppColors.black,
@@ -190,7 +190,12 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
                   text: "Download Invoice",
                   color: AppColors.primaryColor,
                   textColor: AppColors.white,
-                  onTap: () {},
+                  onTap: () async {
+                    await downloadInvoice(
+                        context,
+                        widget.coachBookingHistory.url,
+                        widget.coachBookingHistory.id);
+                  },
                 ),
               ),
               50.height,

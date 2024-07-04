@@ -9,6 +9,8 @@ class CoachBookingModel with _$CoachBookingModel {
     required CoachBooking coachBooking,
     required String starttime,
     required String endtime,
+    required String transactionId,
+    required String url,
     required String userName,
     required String phoneNumber,
   }) = _CoachBookingModel;

@@ -27,6 +27,7 @@ mixin _$School {
   String? get city => throw _privateConstructorUsedError;
   String? get state => throw _privateConstructorUsedError;
   String? get institutionemailId => throw _privateConstructorUsedError;
+  String? get institutionName => throw _privateConstructorUsedError;
   String? get contactpersonname => throw _privateConstructorUsedError;
   String? get contactpersonemailId => throw _privateConstructorUsedError;
   String? get contactpersonphoneNumber => throw _privateConstructorUsedError;
@@ -54,6 +55,7 @@ abstract class $SchoolCopyWith<$Res> {
       String? city,
       String? state,
       String? institutionemailId,
+      String? institutionName,
       String? contactpersonname,
       String? contactpersonemailId,
       String? contactpersonphoneNumber,
@@ -85,6 +87,7 @@ class _$SchoolCopyWithImpl<$Res, $Val extends School>
     Object? city = freezed,
     Object? state = freezed,
     Object? institutionemailId = freezed,
+    Object? institutionName = freezed,
     Object? contactpersonname = freezed,
     Object? contactpersonemailId = freezed,
     Object? contactpersonphoneNumber = freezed,
@@ -121,6 +124,10 @@ class _$SchoolCopyWithImpl<$Res, $Val extends School>
       institutionemailId: freezed == institutionemailId
           ? _value.institutionemailId
           : institutionemailId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      institutionName: freezed == institutionName
+          ? _value.institutionName
+          : institutionName // ignore: cast_nullable_to_non_nullable
               as String?,
       contactpersonname: freezed == contactpersonname
           ? _value.contactpersonname
@@ -181,6 +188,7 @@ abstract class _$$SchoolImplCopyWith<$Res> implements $SchoolCopyWith<$Res> {
       String? city,
       String? state,
       String? institutionemailId,
+      String? institutionName,
       String? contactpersonname,
       String? contactpersonemailId,
       String? contactpersonphoneNumber,
@@ -211,6 +219,7 @@ class __$$SchoolImplCopyWithImpl<$Res>
     Object? city = freezed,
     Object? state = freezed,
     Object? institutionemailId = freezed,
+    Object? institutionName = freezed,
     Object? contactpersonname = freezed,
     Object? contactpersonemailId = freezed,
     Object? contactpersonphoneNumber = freezed,
@@ -247,6 +256,10 @@ class __$$SchoolImplCopyWithImpl<$Res>
       institutionemailId: freezed == institutionemailId
           ? _value.institutionemailId
           : institutionemailId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      institutionName: freezed == institutionName
+          ? _value.institutionName
+          : institutionName // ignore: cast_nullable_to_non_nullable
               as String?,
       contactpersonname: freezed == contactpersonname
           ? _value.contactpersonname
@@ -291,6 +304,7 @@ class _$SchoolImpl implements _School {
       this.city,
       this.state,
       this.institutionemailId,
+      this.institutionName,
       this.contactpersonname,
       this.contactpersonemailId,
       this.contactpersonphoneNumber,
@@ -318,6 +332,8 @@ class _$SchoolImpl implements _School {
   @override
   final String? institutionemailId;
   @override
+  final String? institutionName;
+  @override
   final String? contactpersonname;
   @override
   final String? contactpersonemailId;
@@ -343,7 +359,7 @@ class _$SchoolImpl implements _School {
 
   @override
   String toString() {
-    return 'School(schoolId: $schoolId, schoolName: $schoolName, address1: $address1, address2: $address2, city: $city, state: $state, institutionemailId: $institutionemailId, contactpersonname: $contactpersonname, contactpersonemailId: $contactpersonemailId, contactpersonphoneNumber: $contactpersonphoneNumber, googlemaplink: $googlemaplink, institutionId: $institutionId, sportsgrounds: $sportsgrounds, schoolSchedule: $schoolSchedule)';
+    return 'School(schoolId: $schoolId, schoolName: $schoolName, address1: $address1, address2: $address2, city: $city, state: $state, institutionemailId: $institutionemailId, institutionName: $institutionName, contactpersonname: $contactpersonname, contactpersonemailId: $contactpersonemailId, contactpersonphoneNumber: $contactpersonphoneNumber, googlemaplink: $googlemaplink, institutionId: $institutionId, sportsgrounds: $sportsgrounds, schoolSchedule: $schoolSchedule)';
   }
 
   @override
@@ -363,6 +379,8 @@ class _$SchoolImpl implements _School {
             (identical(other.state, state) || other.state == state) &&
             (identical(other.institutionemailId, institutionemailId) ||
                 other.institutionemailId == institutionemailId) &&
+            (identical(other.institutionName, institutionName) ||
+                other.institutionName == institutionName) &&
             (identical(other.contactpersonname, contactpersonname) ||
                 other.contactpersonname == contactpersonname) &&
             (identical(other.contactpersonemailId, contactpersonemailId) ||
@@ -391,6 +409,7 @@ class _$SchoolImpl implements _School {
       city,
       state,
       institutionemailId,
+      institutionName,
       contactpersonname,
       contactpersonemailId,
       contactpersonphoneNumber,
@@ -422,6 +441,7 @@ abstract class _School implements School {
       final String? city,
       final String? state,
       final String? institutionemailId,
+      final String? institutionName,
       final String? contactpersonname,
       final String? contactpersonemailId,
       final String? contactpersonphoneNumber,
@@ -447,6 +467,8 @@ abstract class _School implements School {
   String? get state;
   @override
   String? get institutionemailId;
+  @override
+  String? get institutionName;
   @override
   String? get contactpersonname;
   @override

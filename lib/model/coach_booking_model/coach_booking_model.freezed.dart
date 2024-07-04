@@ -23,6 +23,8 @@ mixin _$CoachBookingModel {
   CoachBooking get coachBooking => throw _privateConstructorUsedError;
   String get starttime => throw _privateConstructorUsedError;
   String get endtime => throw _privateConstructorUsedError;
+  String get transactionId => throw _privateConstructorUsedError;
+  String get url => throw _privateConstructorUsedError;
   String get userName => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
 
@@ -42,6 +44,8 @@ abstract class $CoachBookingModelCopyWith<$Res> {
       {CoachBooking coachBooking,
       String starttime,
       String endtime,
+      String transactionId,
+      String url,
       String userName,
       String phoneNumber});
 
@@ -64,6 +68,8 @@ class _$CoachBookingModelCopyWithImpl<$Res, $Val extends CoachBookingModel>
     Object? coachBooking = null,
     Object? starttime = null,
     Object? endtime = null,
+    Object? transactionId = null,
+    Object? url = null,
     Object? userName = null,
     Object? phoneNumber = null,
   }) {
@@ -79,6 +85,14 @@ class _$CoachBookingModelCopyWithImpl<$Res, $Val extends CoachBookingModel>
       endtime: null == endtime
           ? _value.endtime
           : endtime // ignore: cast_nullable_to_non_nullable
+              as String,
+      transactionId: null == transactionId
+          ? _value.transactionId
+          : transactionId // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
               as String,
       userName: null == userName
           ? _value.userName
@@ -112,6 +126,8 @@ abstract class _$$CoachBookingModelImplCopyWith<$Res>
       {CoachBooking coachBooking,
       String starttime,
       String endtime,
+      String transactionId,
+      String url,
       String userName,
       String phoneNumber});
 
@@ -133,6 +149,8 @@ class __$$CoachBookingModelImplCopyWithImpl<$Res>
     Object? coachBooking = null,
     Object? starttime = null,
     Object? endtime = null,
+    Object? transactionId = null,
+    Object? url = null,
     Object? userName = null,
     Object? phoneNumber = null,
   }) {
@@ -148,6 +166,14 @@ class __$$CoachBookingModelImplCopyWithImpl<$Res>
       endtime: null == endtime
           ? _value.endtime
           : endtime // ignore: cast_nullable_to_non_nullable
+              as String,
+      transactionId: null == transactionId
+          ? _value.transactionId
+          : transactionId // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
               as String,
       userName: null == userName
           ? _value.userName
@@ -168,6 +194,8 @@ class _$CoachBookingModelImpl implements _CoachBookingModel {
       {required this.coachBooking,
       required this.starttime,
       required this.endtime,
+      required this.transactionId,
+      required this.url,
       required this.userName,
       required this.phoneNumber});
 
@@ -181,13 +209,17 @@ class _$CoachBookingModelImpl implements _CoachBookingModel {
   @override
   final String endtime;
   @override
+  final String transactionId;
+  @override
+  final String url;
+  @override
   final String userName;
   @override
   final String phoneNumber;
 
   @override
   String toString() {
-    return 'CoachBookingModel(coachBooking: $coachBooking, starttime: $starttime, endtime: $endtime, userName: $userName, phoneNumber: $phoneNumber)';
+    return 'CoachBookingModel(coachBooking: $coachBooking, starttime: $starttime, endtime: $endtime, transactionId: $transactionId, url: $url, userName: $userName, phoneNumber: $phoneNumber)';
   }
 
   @override
@@ -200,6 +232,9 @@ class _$CoachBookingModelImpl implements _CoachBookingModel {
             (identical(other.starttime, starttime) ||
                 other.starttime == starttime) &&
             (identical(other.endtime, endtime) || other.endtime == endtime) &&
+            (identical(other.transactionId, transactionId) ||
+                other.transactionId == transactionId) &&
+            (identical(other.url, url) || other.url == url) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
             (identical(other.phoneNumber, phoneNumber) ||
@@ -208,8 +243,8 @@ class _$CoachBookingModelImpl implements _CoachBookingModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, coachBooking, starttime, endtime, userName, phoneNumber);
+  int get hashCode => Object.hash(runtimeType, coachBooking, starttime, endtime,
+      transactionId, url, userName, phoneNumber);
 
   @JsonKey(ignore: true)
   @override
@@ -231,6 +266,8 @@ abstract class _CoachBookingModel implements CoachBookingModel {
       {required final CoachBooking coachBooking,
       required final String starttime,
       required final String endtime,
+      required final String transactionId,
+      required final String url,
       required final String userName,
       required final String phoneNumber}) = _$CoachBookingModelImpl;
 
@@ -243,6 +280,10 @@ abstract class _CoachBookingModel implements CoachBookingModel {
   String get starttime;
   @override
   String get endtime;
+  @override
+  String get transactionId;
+  @override
+  String get url;
   @override
   String get userName;
   @override
