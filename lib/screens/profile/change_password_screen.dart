@@ -30,8 +30,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: AppColors.black,
-        backgroundColor: AppColors.lightGrey,
+        foregroundColor: AppColors.white,
+        backgroundColor: AppColors.primaryColor,
         elevation: 0,
         automaticallyImplyLeading: true,
         bottom: PreferredSize(
@@ -45,6 +45,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     AppStrings.changesPass,
                     style: AppStyle.mediumBold.copyWith(
                       fontSize: 28.sp,
+                      color: AppColors.white,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -69,7 +70,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     fontSize: 19.sp,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 1,
-                    
                   ),
                 ),
               ),

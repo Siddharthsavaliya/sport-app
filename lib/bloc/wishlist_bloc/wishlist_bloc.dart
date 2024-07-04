@@ -61,7 +61,6 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
           emit(state.copyWith(status: Status.failed, message: error));
         },
       );
-      
     } catch (e) {
       emit(state.copyWith(status: Status.failed, message: e.toString()));
     }

@@ -27,12 +27,12 @@ class _HtmlViewScreenState extends State<HtmlViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          foregroundColor: AppColors.black,
-          backgroundColor: Colors.grey.shade300,
+          foregroundColor: AppColors.white,
+          backgroundColor: AppColors.primaryColor,
           title: Text(
             widget.title,
             style: AppStyle.mediumText.copyWith(
-                fontSize: 20.sp, color: AppColors.black, letterSpacing: 0.8),
+                fontSize: 20.sp, color: AppColors.white, letterSpacing: 0.8),
           ),
           elevation: 0,
         ),
