@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     },
                     builder: (context, state) {
-                      if (state.status.isLoaded) {
+                      if (state.status.isLoaded || state.isUpdate) {
                         return Column(
                           children: [
                             Padding(
@@ -143,9 +143,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   Column(
                                     children: [
-                                      Image.asset(
-                                        AppAssets.dp,
-                                        height: 36,
+                                      Center(
+                                        child: ClipOval(
+                                          child: CircleAvatar(
+                                            radius: 20,
+                                            backgroundImage: state
+                                                        .userModel!.dpUrl !=
+                                                    null
+                                                ? NetworkImage(
+                                                        state.userModel!.dpUrl!)
+                                                    as ImageProvider
+                                                : const AssetImage(
+                                                    AppAssets.dp),
+                                          ),
+                                        ),
                                       ),
                                       addVerticalSpacing(0.005),
                                       Text(

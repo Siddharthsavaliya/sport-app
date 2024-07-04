@@ -12,17 +12,14 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       institutionName: json['institutionName'] as String?,
       institutionId: json['institutionId'] as String?,
       userName: json['userName'] as String?,
+      email: json['email'] as String?,
       subscription: json['subscription'] == null
           ? null
           : Membership.fromJson(json['subscription'] as Map<String, dynamic>),
       phoneNumber: json['phoneNumber'] as String?,
+      dpUrl: json['dpUrl'] as String?,
+      path: json['path'] as String?,
       dob: json['DOB'] as String?,
-      createdAt: json['createdAt'] == null
-          ? null
-          : DateTime.parse(json['createdAt'] as String),
-      updatedAt: json['updatedAt'] == null
-          ? null
-          : DateTime.parse(json['updatedAt'] as String),
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -31,9 +28,10 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'institutionName': instance.institutionName,
       'institutionId': instance.institutionId,
       'userName': instance.userName,
+      'email': instance.email,
       'subscription': instance.subscription,
       'phoneNumber': instance.phoneNumber,
+      'dpUrl': instance.dpUrl,
+      'path': instance.path,
       'DOB': instance.dob,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String(),
     };

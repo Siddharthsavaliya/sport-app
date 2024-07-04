@@ -11,11 +11,12 @@ class UserModel with _$UserModel {
     String? institutionName,
     String? institutionId,
     String? userName,
+    String? email,
     Membership? subscription,
     String? phoneNumber,
+    String? dpUrl,
+    String? path,
     @JsonKey(name: 'DOB') String? dob,
-    DateTime? createdAt,
-    DateTime? updatedAt,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

@@ -2,7 +2,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_strings.dart';
@@ -166,15 +168,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 addVerticalSpacing(0.05),
-                Center(
-                  child: CircleAvatar(
-                    radius: 70,
-                    child: Center(
-                      child: Image.asset(
-                        AppAssets.dp,
+                BlocBuilder<UserBloc, UserState>(
+                  builder: (context, state) {
+                    return Center(
+                      child: ClipOval(
+                        child: CircleAvatar(
+                          radius: 70,
+                          backgroundImage: state.userModel!.dpUrl != null
+                              ? NetworkImage(state.userModel!.dpUrl!)
+                                  as ImageProvider
+                              : const AssetImage(AppAssets.dp),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
                 addVerticalSpacing(0.05),
                 ListView.builder(

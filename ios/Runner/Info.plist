@@ -59,5 +59,7 @@
 	<true/>
 	<key>PermissionGroupNotification</key>
 	<string>for notification</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to take profile pictures.</string>
 </dict>
 </plist>

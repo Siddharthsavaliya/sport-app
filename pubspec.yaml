@@ -74,6 +74,8 @@ dependencies:
   firebase_core: ^2.27.0
   flutter_local_notifications: ^17.2.1
   firebase_messaging: ^14.7.19
+  image_picker: ^1.0.8
+  mime: ^1.0.5
 
 dev_dependencies:
   flutter_test:

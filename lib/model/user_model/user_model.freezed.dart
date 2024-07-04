@@ -24,12 +24,13 @@ mixin _$UserModel {
   String? get institutionName => throw _privateConstructorUsedError;
   String? get institutionId => throw _privateConstructorUsedError;
   String? get userName => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   Membership? get subscription => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
+  String? get dpUrl => throw _privateConstructorUsedError;
+  String? get path => throw _privateConstructorUsedError;
   @JsonKey(name: 'DOB')
   String? get dob => throw _privateConstructorUsedError;
-  DateTime? get createdAt => throw _privateConstructorUsedError;
-  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,11 +48,12 @@ abstract class $UserModelCopyWith<$Res> {
       String? institutionName,
       String? institutionId,
       String? userName,
+      String? email,
       Membership? subscription,
       String? phoneNumber,
-      @JsonKey(name: 'DOB') String? dob,
-      DateTime? createdAt,
-      DateTime? updatedAt});
+      String? dpUrl,
+      String? path,
+      @JsonKey(name: 'DOB') String? dob});
 
   $MembershipCopyWith<$Res>? get subscription;
 }
@@ -73,11 +75,12 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? institutionName = freezed,
     Object? institutionId = freezed,
     Object? userName = freezed,
+    Object? email = freezed,
     Object? subscription = freezed,
     Object? phoneNumber = freezed,
+    Object? dpUrl = freezed,
+    Object? path = freezed,
     Object? dob = freezed,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       role: freezed == role
@@ -96,6 +99,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       subscription: freezed == subscription
           ? _value.subscription
           : subscription // ignore: cast_nullable_to_non_nullable
@@ -104,18 +111,18 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String?,
+      dpUrl: freezed == dpUrl
+          ? _value.dpUrl
+          : dpUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      path: freezed == path
+          ? _value.path
+          : path // ignore: cast_nullable_to_non_nullable
+              as String?,
       dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
     ) as $Val);
   }
 
@@ -145,11 +152,12 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String? institutionName,
       String? institutionId,
       String? userName,
+      String? email,
       Membership? subscription,
       String? phoneNumber,
-      @JsonKey(name: 'DOB') String? dob,
-      DateTime? createdAt,
-      DateTime? updatedAt});
+      String? dpUrl,
+      String? path,
+      @JsonKey(name: 'DOB') String? dob});
 
   @override
   $MembershipCopyWith<$Res>? get subscription;
@@ -170,11 +178,12 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? institutionName = freezed,
     Object? institutionId = freezed,
     Object? userName = freezed,
+    Object? email = freezed,
     Object? subscription = freezed,
     Object? phoneNumber = freezed,
+    Object? dpUrl = freezed,
+    Object? path = freezed,
     Object? dob = freezed,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
   }) {
     return _then(_$UserModelImpl(
       role: freezed == role
@@ -193,6 +202,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       subscription: freezed == subscription
           ? _value.subscription
           : subscription // ignore: cast_nullable_to_non_nullable
@@ -201,18 +214,18 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String?,
+      dpUrl: freezed == dpUrl
+          ? _value.dpUrl
+          : dpUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      path: freezed == path
+          ? _value.path
+          : path // ignore: cast_nullable_to_non_nullable
+              as String?,
       dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
     ));
   }
 }
@@ -225,11 +238,12 @@ class _$UserModelImpl implements _UserModel {
       this.institutionName,
       this.institutionId,
       this.userName,
+      this.email,
       this.subscription,
       this.phoneNumber,
-      @JsonKey(name: 'DOB') this.dob,
-      this.createdAt,
-      this.updatedAt});
+      this.dpUrl,
+      this.path,
+      @JsonKey(name: 'DOB') this.dob});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -243,20 +257,22 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String? userName;
   @override
+  final String? email;
+  @override
   final Membership? subscription;
   @override
   final String? phoneNumber;
   @override
+  final String? dpUrl;
+  @override
+  final String? path;
+  @override
   @JsonKey(name: 'DOB')
   final String? dob;
-  @override
-  final DateTime? createdAt;
-  @override
-  final DateTime? updatedAt;
 
   @override
   String toString() {
-    return 'UserModel(role: $role, institutionName: $institutionName, institutionId: $institutionId, userName: $userName, subscription: $subscription, phoneNumber: $phoneNumber, dob: $dob, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'UserModel(role: $role, institutionName: $institutionName, institutionId: $institutionId, userName: $userName, email: $email, subscription: $subscription, phoneNumber: $phoneNumber, dpUrl: $dpUrl, path: $path, dob: $dob)';
   }
 
   @override
@@ -271,15 +287,14 @@ class _$UserModelImpl implements _UserModel {
                 other.institutionId == institutionId) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.subscription, subscription) ||
                 other.subscription == subscription) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
-            (identical(other.dob, dob) || other.dob == dob) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.dpUrl, dpUrl) || other.dpUrl == dpUrl) &&
+            (identical(other.path, path) || other.path == path) &&
+            (identical(other.dob, dob) || other.dob == dob));
   }
 
   @JsonKey(ignore: true)
@@ -290,11 +305,12 @@ class _$UserModelImpl implements _UserModel {
       institutionName,
       institutionId,
       userName,
+      email,
       subscription,
       phoneNumber,
-      dob,
-      createdAt,
-      updatedAt);
+      dpUrl,
+      path,
+      dob);
 
   @JsonKey(ignore: true)
   @override
@@ -316,11 +332,12 @@ abstract class _UserModel implements UserModel {
       final String? institutionName,
       final String? institutionId,
       final String? userName,
+      final String? email,
       final Membership? subscription,
       final String? phoneNumber,
-      @JsonKey(name: 'DOB') final String? dob,
-      final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$UserModelImpl;
+      final String? dpUrl,
+      final String? path,
+      @JsonKey(name: 'DOB') final String? dob}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -334,16 +351,18 @@ abstract class _UserModel implements UserModel {
   @override
   String? get userName;
   @override
+  String? get email;
+  @override
   Membership? get subscription;
   @override
   String? get phoneNumber;
   @override
+  String? get dpUrl;
+  @override
+  String? get path;
+  @override
   @JsonKey(name: 'DOB')
   String? get dob;
-  @override
-  DateTime? get createdAt;
-  @override
-  DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>
