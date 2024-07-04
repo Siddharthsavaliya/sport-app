@@ -319,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               addVerticalSpacing(0.03),
               const AllBannersGroundComponent(),
-              addVerticalSpacing(0.01),
+              addVerticalSpacing(0.017),
               Center(
                 child: Text(
                   "Book Venue with the best offer",
@@ -329,7 +329,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       letterSpacing: 0.1),
                 ),
               ),
-              addVerticalSpacing(0.03),
+              addVerticalSpacing(0.02),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 0.02.sw),
                 child: Container(
