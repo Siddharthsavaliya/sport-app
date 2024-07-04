@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,9 @@ import 'package:sport_app/bloc/coach_bloc/coach_bloc.dart';
 import 'package:sport_app/bloc/coach_bloc/coach_event.dart';
 import 'package:sport_app/bloc/coach_bloc/coach_state.dart';
 import 'package:sport_app/model/coach_model/coach_model.dart';
+import 'package:sport_app/model/sport/fetch_sport_model.dart';
 import 'package:sport_app/model/status.dart';
+import 'package:sport_app/res/api_constants.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
@@ -28,12 +31,12 @@ class CoachListScreen extends StatefulWidget {
 
 class _CoachListScreenState extends State<CoachListScreen> {
   late TextEditingController _searchController;
-
-  List<Coach> _allCoaches = [];
   String? _selectedCity;
   String? _selectedSport;
-
-  void _showCitySportFilterBottomSheet() {
+  bool isLoading = true;
+  List<FetchSportResponse> sportList = [];
+  void _showCitySportFilterBottomSheet(
+      {required List<FetchSportResponse> sports}) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // To allow custom height
@@ -49,22 +52,16 @@ class _CoachListScreenState extends State<CoachListScreen> {
           'Patna',
           'Gaya',
           'Muzaffarpur',
+          'Ahmedabad',
           'Darbhanga',
           'Munger'
-        ];
-        List<String> sports = [
-          'Football',
-          'Basketball',
-          'Tennis',
-          'Cricket',
-          'Volleyball',
         ];
 
         // State variables
         String citySearchQuery = '';
         String sportSearchQuery = '';
         List<String> filteredCities = cities;
-        List<String> filteredSports = sports;
+        List<FetchSportResponse> filteredSports = sports;
 
         return StatefulBuilder(
           builder: (context, setState) {
@@ -85,7 +82,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
                 sportSearchQuery = query;
                 filteredSports = sports
                     .where((sport) =>
-                        sport.toLowerCase().contains(query.toLowerCase()))
+                        sport.name!.toLowerCase().contains(query.toLowerCase()))
                     .toList();
               });
             }
@@ -146,25 +143,36 @@ class _CoachListScreenState extends State<CoachListScreen> {
                             ),
                           ),
                         ),
-                        ...filteredCities.map((city) {
-                          return CheckboxListTile(
-                            title: Text(
-                              city,
-                              style: const TextStyle(color: AppColors.black),
+                        addVerticalSpacing(0.01),
+                        SizedBox(
+                          height: 0.3.sh,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: filteredCities.map((city) {
+                                return CheckboxListTile(
+                                  title: Text(
+                                    city,
+                                    style:
+                                        const TextStyle(color: AppColors.black),
+                                  ),
+                                  value: _selectedCity == city,
+                                  onChanged: (checked) {
+                                    setState(() {
+                                      _selectedCity = checked! ? city : null;
+                                    });
+                                  },
+                                  controlAffinity:
+                                      ListTileControlAffinity.trailing,
+                                  activeColor: AppColors.primaryColor,
+                                );
+                              }).toList(),
                             ),
-                            value: _selectedCity == city,
-                            onChanged: (checked) {
-                              setState(() {
-                                _selectedCity = checked! ? city : null;
-                              });
-                            },
-                            controlAffinity: ListTileControlAffinity.trailing,
-                            activeColor: AppColors.primaryColor,
-                          );
-                        }),
+                          ),
+                        )
                       ],
                     ),
-                    const SizedBox(height: 16.0),
+
+                    const Divider(),
                     // Sport Section
                     ExpansionTile(
                       title: Text(
@@ -193,25 +201,47 @@ class _CoachListScreenState extends State<CoachListScreen> {
                             ),
                           ),
                         ),
-                        ...filteredSports.map((sport) {
-                          return CheckboxListTile(
-                            title: Text(
-                              sport,
-                              style: const TextStyle(color: AppColors.black),
+                        addVerticalSpacing(0.01),
+                        SizedBox(
+                          height: 0.3.sh,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: filteredSports.map((sport) {
+                                return CheckboxListTile(
+                                  title: Row(
+                                    children: [
+                                      SizedBox(
+                                        height: 40,
+                                        width: 40,
+                                        child: loadNetworkImage(
+                                            url: sport.imageUrl!),
+                                      ),
+                                      addHorizontalSpacing(0.01),
+                                      Text(
+                                        sport.name ?? "",
+                                        style: const TextStyle(
+                                            color: AppColors.black),
+                                      ),
+                                    ],
+                                  ),
+                                  value: _selectedSport == sport.name,
+                                  onChanged: (checked) {
+                                    setState(() {
+                                      _selectedSport =
+                                          checked! ? sport.name : null;
+                                    });
+                                  },
+                                  controlAffinity:
+                                      ListTileControlAffinity.trailing,
+                                  activeColor: AppColors.primaryColor,
+                                );
+                              }).toList(),
                             ),
-                            value: _selectedSport == sport,
-                            onChanged: (checked) {
-                              setState(() {
-                                _selectedSport = checked! ? sport : null;
-                              });
-                            },
-                            controlAffinity: ListTileControlAffinity.trailing,
-                            activeColor: AppColors.primaryColor,
-                          );
-                        }),
+                          ),
+                        )
                       ],
                     ),
-                    addVerticalSpacing(0.01),
+                    addVerticalSpacing(0.012),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: AppButton.AppButton(
@@ -219,13 +249,17 @@ class _CoachListScreenState extends State<CoachListScreen> {
                         radius: 0,
                         text: "Apply Filters",
                         onTap: () {
-                          if (_selectedCity != null && _selectedSport != null) {
-                            Navigator.pop(context); // Close bottom sheet
+                          if (_selectedCity != null || _selectedSport != null) {
+                            BlocProvider.of<CoachBloc>(context)
+                                .add(GetCoachRequest(
+                              city: _selectedCity,
+                              sport: _selectedSport,
+                            ));
+                            Navigator.pop(context);
                           } else {
-                            showScafoldMessage(
-                              message: "Please select city and sport",
-                              context: context,
-                            );
+                            BlocProvider.of<CoachBloc>(context)
+                                .add(GetCoachRequest());
+                            Navigator.pop(context);
                           }
                         },
                       ),
@@ -241,9 +275,39 @@ class _CoachListScreenState extends State<CoachListScreen> {
     );
   }
 
+  Future<void> getSportSlot() async {
+    setState(() {
+      isLoading = true;
+    });
+    var dio = Dio();
+    try {
+      var response = await dio.get(
+        '${ApiConstants.baseUrl}/sport/getll',
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = response.data;
+        sportList = responseData
+            .map((json) => FetchSportResponse.fromJson(json))
+            .toList();
+      } else {
+        print('Request failed with status: ${response.statusCode}');
+      }
+      setState(() {
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('Error: $e');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    getSportSlot();
     _searchController = TextEditingController();
     BlocProvider.of<CoachBloc>(context).add(GetCoachRequest());
   }
@@ -255,23 +319,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
   }
 
   Future<void> onRefresh() async {
-    setState(() {
-      _allCoaches =
-          BlocProvider.of<CoachBloc>(context).state.coachsData.validate();
-    });
-
     BlocProvider.of<CoachBloc>(context).add(GetCoachRequest());
-    print("object : ${_allCoaches.length}");
-  }
-
-  void _filterGrounds(String query) {
-    setState(() {
-      _allCoaches = BlocProvider.of<CoachBloc>(context)
-          .state
-          .coachsData
-          .validate()
-          .toList();
-    });
   }
 
   @override
@@ -287,21 +335,21 @@ class _CoachListScreenState extends State<CoachListScreen> {
         ),
         elevation: 0,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.filter_list),
-            onPressed: _showCitySportFilterBottomSheet,
-          ),
+          if (!isLoading) ...[
+            IconButton(
+              icon: const Icon(Icons.filter_list),
+              onPressed: () {
+                _showCitySportFilterBottomSheet(sports: sportList);
+              },
+            ),
+          ]
         ],
       ),
       body: BlocConsumer<CoachBloc, CoachState>(
-        listener: (context, state) {
-          if (state.status.isLoaded) {
-            _allCoaches = state.coachsData ?? [];
-          }
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           if (state.status.isLoaded || state.isBooking) {
-            return _allCoaches.isEmpty
+            return state.coachsData!.isEmpty
                 ? const EmptyPlaceHolder(
                     pending: 0.1,
                     title: "No coach available as of now",
@@ -318,12 +366,12 @@ class _CoachListScreenState extends State<CoachListScreen> {
                               DynamicHeightGridView(
                                 physics: const NeverScrollableScrollPhysics(),
                                 crossAxisCount: 2,
-                                itemCount: _allCoaches.length,
+                                itemCount: state.coachsData!.length,
                                 crossAxisSpacing: 10,
                                 mainAxisSpacing: 15,
                                 shrinkWrap: true,
                                 builder: (BuildContext context, int index) {
-                                  Coach data = _allCoaches[index];
+                                  Coach data = state.coachsData![index];
                                   print(data.sportsgrounds);
 
                                   return GestureDetector(
@@ -359,6 +407,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
                                               Container(
                                                 height: 120,
                                                 decoration: const BoxDecoration(
+                                                  color: AppColors.primaryColor,
                                                   borderRadius:
                                                       BorderRadius.only(
                                                           topLeft:
@@ -469,45 +518,6 @@ class _CoachListScreenState extends State<CoachListScreen> {
                             ],
                           ).paddingSymmetric(horizontal: 10, vertical: 16),
                         ),
-                        // Positioned(
-                        //   bottom: 1,
-                        //   left: 0,
-                        //   right: 0,
-                        //   child: Container(
-                        //     padding: EdgeInsets.all(16),
-                        //     color: const Color.fromARGB(255, 245, 245, 245),
-                        //     child: Container(
-                        //       height: 54.sp,
-                        //       decoration: BoxDecoration(
-                        //         border: Border.all(color: gray),
-                        //         borderRadius: BorderRadius.circular(20),
-                        //         color: const Color.fromARGB(255, 245, 245, 245),
-                        //       ),
-                        //       child: Row(
-                        //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //         children: [
-                        //           Text(
-                        //             "Sort by",
-                        //             style: TextStyle(fontSize: 16.sp),
-                        //           ),
-                        //           Image.asset(
-                        //             AppAssets.sort,
-                        //           ).paddingAll(8),
-                        //           Container(
-                        //             height: 54.sp,
-                        //             width: 1.sp,
-                        //             color: grey,
-                        //           ),
-                        //           Text(
-                        //             "Filter by sports",
-                        //             style: TextStyle(fontSize: 16.sp),
-                        //           ),
-                        //           Icon(Icons.filter_alt_outlined),
-                        //         ],
-                        //       ).paddingSymmetric(horizontal: 10, vertical: 2),
-                        //     ),
-                        //   ),
-                        // )
                       ],
                     ),
                   );

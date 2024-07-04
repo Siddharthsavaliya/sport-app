@@ -21,7 +21,8 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
   ) async {
     emit(state.copyWith(status: Status.inProgress, isBooking: false));
     try {
-      final apiResult = await coachRepository.getCoachs();
+      final apiResult =
+          await coachRepository.getCoachs(event.sport, event.city);
       apiResult.when(
         success: (data) {
           emit(state.copyWith(

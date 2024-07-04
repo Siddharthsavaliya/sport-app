@@ -152,8 +152,9 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                                   city: selectedCity, sport: widget.name));
                           Navigator.pop(context);
                         } else {
-                          showScafoldMessage(
-                              message: "Please select city", context: context);
+                          BlocProvider.of<GroundBloc>(context)
+                              .add(GetGroundRequest());
+                          Navigator.pop(context);
                         }
                       },
                     ),

@@ -10,12 +10,10 @@ import 'package:sport_app/utils/helper.dart';
 class CoachRepository {
   ApiClient apiClient = ApiClient();
 
-  Future<ApiResult<List<Coach>>> getCoachs() async {
+  Future<ApiResult<List<Coach>>> getCoachs(String? sport, String? city) async {
     try {
-      String? city = await getKeyValue(key: 'city');
-      final response = await apiClient.get(
-        "${ApiConstants.getAllCoach}/$city",
-      );
+      final response = await apiClient.get("${ApiConstants.getAllCoach}/$city",
+          queryParameters: {"sportNames": sport});
       return ApiResult.success(getCoachListFromResponse(response.data!));
     } catch (e) {
       return getErrorMessage(e);
