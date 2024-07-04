@@ -79,7 +79,7 @@ class EmptyPlaceHolder extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 0.13.sw),
             child: AppButton(
               removeOpacity: true,
-              color: Colors.grey,
+              color: AppColors.primaryColor,
               text: buttonText!,
               onTap: onTap!,
             ),

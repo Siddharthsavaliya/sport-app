@@ -24,7 +24,8 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     AddToWishlistRequest event,
     Emitter<WishlistState> emit,
   ) async {
-    emit(state.copyWith(status: Status.inProgress, isRemove: false));
+    emit(state.copyWith(
+        status: Status.inProgress, isRemove: false, isAdd: true));
     try {
       final apiResult = await wishlistRepository.addWishlist(event.id);
       apiResult.when(
@@ -47,7 +48,8 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     RemoveToWishlistRequest event,
     Emitter<WishlistState> emit,
   ) async {
-    emit(state.copyWith(status: Status.inProgress, isRemove: true));
+    emit(state.copyWith(
+        status: Status.inProgress, isRemove: true, isAdd: false));
     try {
       final apiResult = await wishlistRepository.deleteWishlist(event.id);
       apiResult.when(
@@ -70,7 +72,8 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     GetToWishlistRequest event,
     Emitter<WishlistState> emit,
   ) async {
-    emit(state.copyWith(status: Status.inProgress, isRemove: false));
+    emit(state.copyWith(
+        status: Status.inProgress, isRemove: false, isAdd: false));
     try {
       final apiResult = await wishlistRepository.getWishlist();
       apiResult.when(
