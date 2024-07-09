@@ -1,7 +1,7 @@
 class ApiConstants {
-  // static const String baseUrl =
-  //     "https://cg8gkks.srv-01.purezzatechnologies.com/api";
-  static const String baseUrl = "http://localhost:8800/api";
+  static const String baseUrl =
+      "https://cg8gkks.srv-01.purezzatechnologies.com/api";
+  // static const String baseUrl = "http://localhost:8800/api";
   static const String signUp = "/signup";
   static const String signUpOtpVerify = "/signup/verify-otp";
   static const String login = "/login";

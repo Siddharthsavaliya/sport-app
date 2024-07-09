@@ -20,14 +20,12 @@ class CoachRepository {
     }
   }
 
-  Future<ApiResult<CoachBookingModel>> buyCoach(
-      String coachId, String schoolId) async {
+  Future<ApiResult<String>> buyCoach(String coachId, String schoolId) async {
     try {
       final response = await apiClient.post(ApiConstants.coachBookSlot,
           data: {"coachId": coachId, "schoolId": schoolId});
       log(response.data.toString());
-      return ApiResult.success(
-          CoachBookingModel.fromJson(response.data!["data"]));
+      return ApiResult.success(response.data!["data"]["redirectUrl"]);
     } catch (e) {
       return getErrorMessage(e);
     }

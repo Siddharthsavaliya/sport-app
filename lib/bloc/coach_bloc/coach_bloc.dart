@@ -49,7 +49,7 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
           await coachRepository.buyCoach(event.coachId, event.schoolId);
       apiResult.when(
         success: (data) {
-          emit(state.copyWith(status: Status.loaded, coachBookingModel: data));
+          emit(state.copyWith(status: Status.loaded, redirectUrl: data));
         },
         failure: (error) {
           emit(state.copyWith(status: Status.failed, message: error));

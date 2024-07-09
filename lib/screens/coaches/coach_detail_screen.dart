@@ -12,6 +12,7 @@ import 'package:sport_app/bloc/coach_detail_bloc/coach_detail_event.dart';
 import 'package:sport_app/bloc/coach_detail_bloc/coach_detail_state.dart';
 import 'package:sport_app/model/coach_model/coach_model.dart';
 import 'package:sport_app/model/status.dart';
+import 'package:sport_app/payment_web_view_screen.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
@@ -461,11 +462,21 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
                                                           context,
                                                           CupertinoPageRoute(
                                                               builder: (context) =>
-                                                                  CoachBookingSuccessScreen(
-                                                                    coachBookingModel:
-                                                                        state
-                                                                            .coachBookingModel!,
+                                                                  PaymentWebViewScreen(
+                                                                    type:
+                                                                        "coach",
+                                                                    url: state
+                                                                        .redirectUrl,
                                                                   )));
+                                                      // Navigator.push(
+                                                      //     context,
+                                                      //     CupertinoPageRoute(
+                                                      //         builder: (context) =>
+                                                      //             CoachBookingSuccessScreen(
+                                                      //               coachBookingModel:
+                                                      //                   state
+                                                      //                       .coachBookingModel!,
+                                                      //             )));
                                                     } else if (state
                                                         .status.isFailed) {
                                                       Navigator.pop(context);

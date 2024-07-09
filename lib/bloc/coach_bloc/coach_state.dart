@@ -6,6 +6,7 @@ import 'package:sport_app/model/status.dart';
 class CoachState extends Equatable {
   const CoachState({
     this.message = " ",
+    this.redirectUrl = "",
     this.isBooking = false,
     this.coachBookingModel,
     this.status = Status.initial,
@@ -13,6 +14,7 @@ class CoachState extends Equatable {
   });
   final List<Coach>? coachsData;
   final String message;
+  final String redirectUrl;
   final bool isBooking;
   final CoachBookingModel? coachBookingModel;
   final Status status;
@@ -22,6 +24,7 @@ class CoachState extends Equatable {
     return [
       status,
       isBooking,
+      redirectUrl,
       coachBookingModel,
       message,
       coachsData,
@@ -30,6 +33,7 @@ class CoachState extends Equatable {
 
   CoachState copyWith({
     String? message,
+    String? redirectUrl,
     bool? isBooking,
     Status? status,
     CoachBookingModel? coachBookingModel,
@@ -37,6 +41,7 @@ class CoachState extends Equatable {
   }) {
     return CoachState(
       message: message ?? this.message,
+      redirectUrl: redirectUrl ?? this.redirectUrl,
       coachBookingModel: coachBookingModel ?? this.coachBookingModel,
       isBooking: isBooking ?? this.isBooking,
       status: status ?? this.status,

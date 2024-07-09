@@ -67,6 +67,11 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
                       message: "Membership purchase completed",
                       context: context);
                 }
+                if (widget.type == "coach") {
+                  showScafoldMessage(
+                      message: "Coach booking successfully done",
+                      context: context);
+                }
                 Navigator.pop(context);
               }
             } else if (status == 'false') {
