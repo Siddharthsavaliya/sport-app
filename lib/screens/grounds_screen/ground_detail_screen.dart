@@ -144,8 +144,8 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
                           ),
                           addVerticalSpacing(0.002),
                           Text(
-                            "Toll Free : 90873480384",
-                            // "Toll Free : ${widget.groundModel.number}",
+                            "Help Desk : 90873480384",
+                            // "Help Desk : ${widget.groundModel.number}",
                             style: AppStyle.normalText.copyWith(
                               fontSize: 11.sp,
                               letterSpacing: 1,
@@ -315,16 +315,16 @@ class _GroundDetailScreenState extends State<GroundDetailScreen> {
                 ),
               ),
             ),
-            addVerticalSpacing(0.028),
-            Padding(
-              padding: EdgeInsets.only(left: 0.025.sw),
-              child: Text(
-                "Popular Ground",
-                style: AppStyle.mediumBold.copyWith(fontSize: 15.sp),
-              ),
-            ),
-            addVerticalSpacing(0.01),
-            const AllBannersGroundComponent(),
+            // addVerticalSpacing(0.028),
+            // Padding(
+            //   padding: EdgeInsets.only(left: 0.025.sw),
+            //   child: Text(
+            //     "Popular Ground",
+            //     style: AppStyle.mediumBold.copyWith(fontSize: 15.sp),
+            //   ),
+            // ),
+            // addVerticalSpacing(0.01),
+            // const AllBannersGroundComponent(),
             addVerticalSpacing(0.03),
           ],
         ),

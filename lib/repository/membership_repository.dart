@@ -22,12 +22,12 @@ class MembershipRepository {
     }
   }
 
-  Future<ApiResult<bool>> purchase(String id) async {
+  Future<ApiResult<String>> purchase(String id) async {
     try {
-      await apiClient.post<Map<String, dynamic>>(
+      final response = await apiClient.post<Map<String, dynamic>>(
           ApiConstants.purchaseSubscription,
           data: {"planId": id});
-      return const ApiResult.success(true);
+      return ApiResult.success(response.data!["redirectUrl"]);
     } catch (e) {
       return getErrorMessage(e);
     }

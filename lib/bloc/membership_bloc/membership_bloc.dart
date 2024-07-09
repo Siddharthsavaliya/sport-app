@@ -53,9 +53,7 @@ class MembershipBloc extends Bloc<MembershipEvent, MembershipState> {
       final apiResult = await membershipRepository.purchase(event.id);
       apiResult.when(
         success: (data) {
-          emit(state.copyWith(
-            status: Status.loaded,
-          ));
+          emit(state.copyWith(status: Status.loaded, redirectUrl: data));
         },
         failure: (error) {
           emit(state.copyWith(status: Status.failed, message: error));

@@ -3,6 +3,7 @@ part of 'membership_bloc.dart';
 class MembershipState extends Equatable {
   const MembershipState({
     this.message = " ",
+    this.redirectUrl = "",
     this.isPurchase = false,
     this.plans = const [],
     this.purchase = const [],
@@ -11,6 +12,7 @@ class MembershipState extends Equatable {
   final String message;
   final Status status;
   final bool isPurchase;
+  final String redirectUrl;
   final List<Membership> plans;
   final List<MyPurchase> purchase;
 
@@ -20,6 +22,7 @@ class MembershipState extends Equatable {
       status,
       message,
       plans,
+      redirectUrl,
       isPurchase,
       purchase,
     ];
@@ -27,12 +30,14 @@ class MembershipState extends Equatable {
 
   MembershipState copyWith(
       {String? message,
+      String? redirectUrl,
       Status? status,
       List<Membership>? plans,
       List<MyPurchase>? purchase,
       bool? isPurchase}) {
     return MembershipState(
       message: message ?? this.message,
+      redirectUrl: redirectUrl ?? this.redirectUrl,
       purchase: purchase ?? this.purchase,
       isPurchase: isPurchase ?? this.isPurchase,
       status: status ?? this.status,

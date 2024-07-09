@@ -207,7 +207,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                         ),
                         addVerticalSpacing(0.002),
                         Text(
-                          "Toll Free : 90873480384",
+                          "Help Desk : 90873480384",
                           style: AppStyle.normalText.copyWith(
                             fontSize: 11.sp,
                             letterSpacing: 1,
@@ -390,7 +390,13 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                         color: AppColors.primaryColor,
                         textColor: AppColors.white,
                         onTap: () {
-                          bookGroundSlot();
+                          if (c3) {
+                            bookGroundSlot();
+                          } else {
+                            showScafoldMessage(
+                                message: "Please agree with policy",
+                                context: context);
+                          }
                         },
                       ),
                     ),

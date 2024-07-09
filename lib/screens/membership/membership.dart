@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_app/bloc/membership_bloc/membership_bloc.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/model/status.dart';
+import 'package:sport_app/payment_web_view_screen.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
@@ -50,12 +52,14 @@ class _MembershipScreenState extends State<MembershipScreen> {
                     if (state.status.isInProgress) {
                       showProgressDialogue(context);
                     } else if (state.status.isLoaded) {
-                      BlocProvider.of<UserBloc>(context)
-                          .add(GetUserEventRequest());
                       Navigator.pop(context);
-                      showScafoldMessage(
-                          message: "Membership purchase completed",
-                          context: context);
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => PaymentWebViewScreen(
+                                    type: "membership",
+                                    url: state.redirectUrl,
+                                  )));
                     } else if (state.status.isFailed) {
                       Navigator.pop(context);
                       showScafoldMessage(

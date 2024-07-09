@@ -94,7 +94,7 @@ class _BookingHistoryDetailScreenState
                     ),
                     addVerticalSpacing(0.002),
                     Text(
-                      "Toll Free : 90873480384",
+                      "Help Desk : 90873480384",
                       style: AppStyle.normalText.copyWith(
                         fontSize: 11.sp,
                         letterSpacing: 1,
