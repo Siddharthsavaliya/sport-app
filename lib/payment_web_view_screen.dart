@@ -72,6 +72,11 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
                       message: "Coach booking successfully done",
                       context: context);
                 }
+                if (widget.type == "ground") {
+                  showScafoldMessage(
+                      message: "Ground booking successfully done",
+                      context: context);
+                }
                 Navigator.pop(context);
               }
             } else if (status == 'false') {

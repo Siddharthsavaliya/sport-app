@@ -12,6 +12,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/data/api_client.dart';
 import 'package:sport_app/model/booking/ground_booking_response.dart';
 import 'package:sport_app/model/ground_model/ground_model.dart';
+import 'package:sport_app/payment_web_view_screen.dart';
 import 'package:sport_app/res/api_constants.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
@@ -58,7 +59,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
     };
     var data = {
       "groundId": "${widget.groundData?.id}",
-      "slotId": "${widget.groundSlotData?.id}",
+      "slotIds": [widget.groundSlotData?.id],
       "date": formatDate(widget.selectedHorizontalDate!),
       "totalCount": "${widget.coaches?.length}",
       "users": widget.coaches?.map((user) => user.toJson()).toList(),
@@ -78,13 +79,20 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
       if (response.statusCode == 200) {
         Navigator.pop(context);
         log(json.encode(response.data).toString());
-        GroundBookingResponce groundBookingResponce =
-            GroundBookingResponce.fromJson(response.data);
-        Navigator.pushReplacement(
+        // GroundBookingResponce groundBookingResponce =
+        //     GroundBookingResponce.fromJson(response.data);
+        // Navigator.pushReplacement(
+        //     context,
+        //     CupertinoPageRoute(
+        //         builder: (context) => BookingSuccessScreen(
+        //               groundBookingResponce: groundBookingResponce,
+        //             )));
+        Navigator.push(
             context,
             CupertinoPageRoute(
-                builder: (context) => BookingSuccessScreen(
-                      groundBookingResponce: groundBookingResponce,
+                builder: (context) => PaymentWebViewScreen(
+                      type: "ground",
+                      url: response.data["data"]["redirectUrl"],
                     )));
       } else {
         Navigator.pop(context);

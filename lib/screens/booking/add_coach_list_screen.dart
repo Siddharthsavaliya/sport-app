@@ -72,13 +72,14 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
       };
       var data = {
         "groundId": "${widget.groundData?.id}",
-        "slotId": "${widget.groundSlotData?.id}",
+        "slotIds": [widget.groundSlotData?.id],
         "date": formatDate(widget.selectedHorizontalDate!),
         "totalCount": "${coaches.length}",
         "users": coaches.map((user) => user.toJson()).toList(),
       };
       var dio = Dio();
       try {
+        showProgressDialogue(context);
         var response = await dio.request(
           '${ApiConstants.baseUrl}${ApiConstants.getSummary}',
           options: Options(
@@ -89,6 +90,7 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
         );
         log(response.data.toString());
         if (response.statusCode == 200) {
+          Navigator.pop(context);
           GroundBookingResponce groundBookingResponce =
               GroundBookingResponce.fromJson(response.data);
           Navigator.pushReplacement(
@@ -106,15 +108,20 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
             ),
           );
         } else {
+          Navigator.pop(context);
           showErrorDialogue(context, "Something went wrong");
         }
       } on DioException catch (e) {
+        print(e);
+        Navigator.pop(context);
         if (e.response != null) {
           showErrorDialogue(context, "Something went wrong");
         } else {
           showErrorDialogue(context, "Something went wrong");
         }
       } catch (e) {
+        print(e);
+        Navigator.pop(context);
         showErrorDialogue(context, e.toString());
       }
     }
