@@ -22,8 +22,8 @@ CoachBookingModel _$CoachBookingModelFromJson(Map<String, dynamic> json) {
 mixin _$CoachBookingModel {
   String get startTime => throw _privateConstructorUsedError;
   String get endTime => throw _privateConstructorUsedError;
-  String get transactionId => throw _privateConstructorUsedError;
-  String get url => throw _privateConstructorUsedError;
+  String get transactionId =>
+      throw _privateConstructorUsedError; // required String url,
   String get qrCode => throw _privateConstructorUsedError;
   num get totalPrice => throw _privateConstructorUsedError;
   DateTime get expirationDate => throw _privateConstructorUsedError;
@@ -44,7 +44,6 @@ abstract class $CoachBookingModelCopyWith<$Res> {
       {String startTime,
       String endTime,
       String transactionId,
-      String url,
       String qrCode,
       num totalPrice,
       DateTime expirationDate});
@@ -66,7 +65,6 @@ class _$CoachBookingModelCopyWithImpl<$Res, $Val extends CoachBookingModel>
     Object? startTime = null,
     Object? endTime = null,
     Object? transactionId = null,
-    Object? url = null,
     Object? qrCode = null,
     Object? totalPrice = null,
     Object? expirationDate = null,
@@ -83,10 +81,6 @@ class _$CoachBookingModelCopyWithImpl<$Res, $Val extends CoachBookingModel>
       transactionId: null == transactionId
           ? _value.transactionId
           : transactionId // ignore: cast_nullable_to_non_nullable
-              as String,
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
               as String,
       qrCode: null == qrCode
           ? _value.qrCode
@@ -116,7 +110,6 @@ abstract class _$$CoachBookingModelImplCopyWith<$Res>
       {String startTime,
       String endTime,
       String transactionId,
-      String url,
       String qrCode,
       num totalPrice,
       DateTime expirationDate});
@@ -136,7 +129,6 @@ class __$$CoachBookingModelImplCopyWithImpl<$Res>
     Object? startTime = null,
     Object? endTime = null,
     Object? transactionId = null,
-    Object? url = null,
     Object? qrCode = null,
     Object? totalPrice = null,
     Object? expirationDate = null,
@@ -153,10 +145,6 @@ class __$$CoachBookingModelImplCopyWithImpl<$Res>
       transactionId: null == transactionId
           ? _value.transactionId
           : transactionId // ignore: cast_nullable_to_non_nullable
-              as String,
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
               as String,
       qrCode: null == qrCode
           ? _value.qrCode
@@ -181,7 +169,6 @@ class _$CoachBookingModelImpl implements _CoachBookingModel {
       {required this.startTime,
       required this.endTime,
       required this.transactionId,
-      required this.url,
       required this.qrCode,
       required this.totalPrice,
       required this.expirationDate});
@@ -195,8 +182,7 @@ class _$CoachBookingModelImpl implements _CoachBookingModel {
   final String endTime;
   @override
   final String transactionId;
-  @override
-  final String url;
+// required String url,
   @override
   final String qrCode;
   @override
@@ -206,7 +192,7 @@ class _$CoachBookingModelImpl implements _CoachBookingModel {
 
   @override
   String toString() {
-    return 'CoachBookingModel(startTime: $startTime, endTime: $endTime, transactionId: $transactionId, url: $url, qrCode: $qrCode, totalPrice: $totalPrice, expirationDate: $expirationDate)';
+    return 'CoachBookingModel(startTime: $startTime, endTime: $endTime, transactionId: $transactionId, qrCode: $qrCode, totalPrice: $totalPrice, expirationDate: $expirationDate)';
   }
 
   @override
@@ -219,7 +205,6 @@ class _$CoachBookingModelImpl implements _CoachBookingModel {
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
             (identical(other.transactionId, transactionId) ||
                 other.transactionId == transactionId) &&
-            (identical(other.url, url) || other.url == url) &&
             (identical(other.qrCode, qrCode) || other.qrCode == qrCode) &&
             (identical(other.totalPrice, totalPrice) ||
                 other.totalPrice == totalPrice) &&
@@ -230,7 +215,7 @@ class _$CoachBookingModelImpl implements _CoachBookingModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, startTime, endTime,
-      transactionId, url, qrCode, totalPrice, expirationDate);
+      transactionId, qrCode, totalPrice, expirationDate);
 
   @JsonKey(ignore: true)
   @override
@@ -252,7 +237,6 @@ abstract class _CoachBookingModel implements CoachBookingModel {
       {required final String startTime,
       required final String endTime,
       required final String transactionId,
-      required final String url,
       required final String qrCode,
       required final num totalPrice,
       required final DateTime expirationDate}) = _$CoachBookingModelImpl;
@@ -266,9 +250,7 @@ abstract class _CoachBookingModel implements CoachBookingModel {
   String get endTime;
   @override
   String get transactionId;
-  @override
-  String get url;
-  @override
+  @override // required String url,
   String get qrCode;
   @override
   num get totalPrice;

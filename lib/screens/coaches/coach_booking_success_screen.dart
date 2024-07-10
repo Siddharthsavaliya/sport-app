@@ -113,7 +113,7 @@ class _BookingDetailScreenState extends State<CoachBookingSuccessScreen>
       ),
       body: BlocBuilder<CoachBloc, CoachState>(
         builder: (context, state) {
-          if (state.status.isLoaded && state.isBookingSuccess) {
+          if (state.status.isLoaded) {
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -218,47 +218,51 @@ class _BookingDetailScreenState extends State<CoachBookingSuccessScreen>
                     ),
                   ),
                   30.height,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AppButton(
-                        shapeBorder: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        text: "Download Invoice",
-                        color: AppColors.primaryColor,
-                        textColor: AppColors.white,
-                        onTap: () async {
-                          await downloadInvoice(
-                              context,
-                              state.coachBookingModel!.url,
-                              state.coachBookingModel!.transactionId);
-                        },
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     // AppButton(
+                  //     //   shapeBorder: RoundedRectangleBorder(
+                  //     //     borderRadius: BorderRadius.circular(8),
+                  //     //   ),
+                  //     //   text: "Download Invoice",
+                  //     //   color: AppColors.primaryColor,
+                  //     //   textColor: AppColors.white,
+                  //     //   onTap: () async {
+                  //     //     await downloadInvoice(
+                  //     //         context,
+                  //     //         state.coachBookingModel!.url,
+                  //     //         state.coachBookingModel!.transactionId);
+                  //     //   },
+                  //     // ),
+                  //     // addHorizontalSpacing(0.01),
+
+                  //   ],
+                  // ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: AppButton(
+                      shapeBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      addHorizontalSpacing(0.01),
-                      AppButton(
-                        shapeBorder: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        text: "QR Code",
-                        color: AppColors.primaryColor,
-                        textColor: AppColors.white,
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => Dialog(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              elevation: 0.0,
-                              backgroundColor: Colors.transparent,
-                              child: contentBox(
-                                  context, state.coachBookingModel!.qrCode),
+                      text: "QR Code",
+                      color: AppColors.primaryColor,
+                      textColor: AppColors.white,
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
                             ),
-                          );
-                        },
-                      ),
-                    ],
+                            elevation: 0.0,
+                            backgroundColor: Colors.transparent,
+                            child: contentBox(
+                                context, state.coachBookingModel!.qrCode),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                   16.height,
                 ],
@@ -273,16 +277,19 @@ class _BookingDetailScreenState extends State<CoachBookingSuccessScreen>
               ),
             );
           }
-          return EmptyPlaceHolder(
-            buttonText: "Try Again",
-            title: "Opps",
-            subTitle: "Something went wrong",
-            imagePath: AppAssets.error,
-            onTap: () {
-              BlocProvider.of<CoachBloc>(context)
-                  .add(GetCoachSingleHistoryRequest(widget.id));
-            },
-          );
+          if (state.status.isFailed) {
+            return EmptyPlaceHolder(
+              buttonText: "Try Again",
+              title: "Opps",
+              subTitle: "Something went wrong",
+              imagePath: AppAssets.error,
+              onTap: () {
+                BlocProvider.of<CoachBloc>(context)
+                    .add(GetCoachSingleHistoryRequest(widget.id));
+              },
+            );
+          }
+          return const SizedBox.shrink();
         },
       ),
     );

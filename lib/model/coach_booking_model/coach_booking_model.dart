@@ -9,7 +9,7 @@ class CoachBookingModel with _$CoachBookingModel {
     required String startTime,
     required String endTime,
     required String transactionId,
-    required String url,
+    // required String url,
     required String qrCode,
     required num totalPrice,
     required DateTime expirationDate,

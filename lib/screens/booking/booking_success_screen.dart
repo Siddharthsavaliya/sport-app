@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:convert';
+import 'dart:developer' as dev;
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,6 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
   GroundBookingResponce? groundBookingResponce;
   bool isError = false;
   Future<void> getBookHistory() async {
-    showProgressDialogue(context);
     final token = await getKeyValue(key: "token");
     var headers = {
       'Content-Type': 'application/json',
@@ -48,17 +48,11 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
           headers: headers,
         ),
       );
-      Navigator.pop(context);
-      log(json.encode(response.data).toString());
-      Navigator.push(
-          context,
-          CupertinoPageRoute(
-              builder: (context) => PaymentWebViewScreen(
-                    type: "ground",
-                    url: response.data["data"]["redirectUrl"],
-                    id: response.data["data"]["id"],
-                  )));
+      dev.log(response.data.toString());
+      groundBookingResponce = GroundBookingResponce.fromJson(response.data!);
+      setState(() {});
     } catch (e) {
+      print(e);
       isError = true;
       setState(() {});
     }
