@@ -20,12 +20,12 @@ class GroundBookingResponce {
 
 class GroundBookingData {
   String? userId;
-  List<String>? slotId;
+  List<dynamic>? slotId;
   String? groundId;
   String? dayOfWeek;
-  List<String>? startTime;
+  List<dynamic>? startTime;
   String? date;
-  List<String>? endTime;
+  List<dynamic>? endTime;
   int? totalCount;
   String? qrCode;
   String? invoiceUrl;

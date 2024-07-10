@@ -81,6 +81,15 @@ class _BookingDetailScreenState extends State<CoachBookingSuccessScreen>
     );
   }
 
+  Future<bool> _onWillPop() async {
+    Navigator.pushAndRemoveUntil(
+      context,
+      CupertinoPageRoute(builder: (context) => const AppBottomBar()),
+      (Route<dynamic> route) => false,
+    );
+    return false;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -89,208 +98,218 @@ class _BookingDetailScreenState extends State<CoachBookingSuccessScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        foregroundColor: AppColors.white,
-        backgroundColor: AppColors.primaryColor,
-        automaticallyImplyLeading: false,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.push(context,
-                CupertinoPageRoute(builder: (context) => const AppBottomBar()));
-          },
-          child: const Icon(
-            Icons.arrow_back,
-            color: AppColors.white,
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          foregroundColor: AppColors.white,
+          backgroundColor: AppColors.primaryColor,
+          automaticallyImplyLeading: false,
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                      builder: (context) => const AppBottomBar()));
+            },
+            child: const Icon(
+              Icons.arrow_back,
+              color: AppColors.white,
+            ),
           ),
+          title: Text(
+            "Booking Status",
+            style: AppStyle.mediumText.copyWith(
+                fontSize: 20.sp, color: AppColors.white, letterSpacing: 0.8),
+          ),
+          elevation: 0,
         ),
-        title: Text(
-          "Booking Status",
-          style: AppStyle.mediumText.copyWith(
-              fontSize: 20.sp, color: AppColors.white, letterSpacing: 0.8),
-        ),
-        elevation: 0,
-      ),
-      body: BlocBuilder<CoachBloc, CoachState>(
-        builder: (context, state) {
-          if (state.status.isLoaded) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  15.height,
-                  SizedBox(
-                    height: 0.25.sh,
-                    child: Image.asset(
-                      'assets/images/calender.png',
+        body: BlocBuilder<CoachBloc, CoachState>(
+          builder: (context, state) {
+            if (state.status.isLoaded) {
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    15.height,
+                    SizedBox(
+                      height: 0.25.sh,
+                      child: Image.asset(
+                        'assets/images/calender.png',
+                      ),
                     ),
-                  ),
-                  addVerticalSpacing(0.015),
-                  Text("Payment Successful",
-                      style:
-                          secondaryTextStyle(size: 26, color: AppColors.black)),
-                  30.height,
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(
-                          width: 1,
-                          color: AppColors.lightBlueColor,
-                        )),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0.02.sw),
+                    addVerticalSpacing(0.015),
+                    Text("Payment Successful",
+                        style: secondaryTextStyle(
+                            size: 26, color: AppColors.black)),
+                    30.height,
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(
+                            width: 1,
+                            color: AppColors.lightBlueColor,
+                          )),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "TXN ID",
-                                      style: AppStyle.mediumBold.copyWith(
-                                        color: AppColors.black.withOpacity(0.7),
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.sp,
+                        padding: EdgeInsets.symmetric(horizontal: 0.02.sw),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "TXN ID",
+                                        style: AppStyle.mediumBold.copyWith(
+                                          color:
+                                              AppColors.black.withOpacity(0.7),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14.sp,
+                                        ),
                                       ),
-                                    ),
-                                    addVerticalSpacing(0.02),
-                                    Text(
-                                      "Amount",
-                                      style: AppStyle.mediumBold.copyWith(
-                                        color: AppColors.black.withOpacity(0.7),
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.sp,
+                                      addVerticalSpacing(0.02),
+                                      Text(
+                                        "Amount",
+                                        style: AppStyle.mediumBold.copyWith(
+                                          color:
+                                              AppColors.black.withOpacity(0.7),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14.sp,
+                                        ),
                                       ),
-                                    ),
-                                    addVerticalSpacing(0.02),
-                                    Text(
-                                      "Date",
-                                      style: AppStyle.mediumBold.copyWith(
-                                        color: AppColors.black.withOpacity(0.7),
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.sp,
+                                      addVerticalSpacing(0.02),
+                                      Text(
+                                        "Date",
+                                        style: AppStyle.mediumBold.copyWith(
+                                          color:
+                                              AppColors.black.withOpacity(0.7),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14.sp,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                addHorizontalSpacing(0.015),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      state.coachBookingModel!.transactionId,
-                                      style: AppStyle.mediumBold.copyWith(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14.sp,
+                                    ],
+                                  ),
+                                  addHorizontalSpacing(0.015),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        state.coachBookingModel!.transactionId,
+                                        style: AppStyle.mediumBold.copyWith(
+                                          color: AppColors.black,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14.sp,
+                                        ),
                                       ),
-                                    ),
-                                    addVerticalSpacing(0.02),
-                                    Text(
-                                      state.coachBookingModel!.totalPrice
-                                          .toString(),
-                                      style: AppStyle.mediumBold.copyWith(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14.sp,
+                                      addVerticalSpacing(0.02),
+                                      Text(
+                                        state.coachBookingModel!.totalPrice
+                                            .toString(),
+                                        style: AppStyle.mediumBold.copyWith(
+                                          color: AppColors.black,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14.sp,
+                                        ),
                                       ),
-                                    ),
-                                    addVerticalSpacing(0.02),
-                                    Text(
-                                      formatDateTime(DateTime.now()),
-                                      style: AppStyle.mediumBold.copyWith(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14.sp,
+                                      addVerticalSpacing(0.02),
+                                      Text(
+                                        formatDateTime(DateTime.now()),
+                                        style: AppStyle.mediumBold.copyWith(
+                                          color: AppColors.black,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14.sp,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  30.height,
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     // AppButton(
-                  //     //   shapeBorder: RoundedRectangleBorder(
-                  //     //     borderRadius: BorderRadius.circular(8),
-                  //     //   ),
-                  //     //   text: "Download Invoice",
-                  //     //   color: AppColors.primaryColor,
-                  //     //   textColor: AppColors.white,
-                  //     //   onTap: () async {
-                  //     //     await downloadInvoice(
-                  //     //         context,
-                  //     //         state.coachBookingModel!.url,
-                  //     //         state.coachBookingModel!.transactionId);
-                  //     //   },
-                  //     // ),
-                  //     // addHorizontalSpacing(0.01),
+                    30.height,
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     // AppButton(
+                    //     //   shapeBorder: RoundedRectangleBorder(
+                    //     //     borderRadius: BorderRadius.circular(8),
+                    //     //   ),
+                    //     //   text: "Download Invoice",
+                    //     //   color: AppColors.primaryColor,
+                    //     //   textColor: AppColors.white,
+                    //     //   onTap: () async {
+                    //     //     await downloadInvoice(
+                    //     //         context,
+                    //     //         state.coachBookingModel!.url,
+                    //     //         state.coachBookingModel!.transactionId);
+                    //     //   },
+                    //     // ),
+                    //     // addHorizontalSpacing(0.01),
 
-                  //   ],
-                  // ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: AppButton(
-                      shapeBorder: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      text: "QR Code",
-                      color: AppColors.primaryColor,
-                      textColor: AppColors.white,
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => Dialog(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
+                    //   ],
+                    // ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: AppButton(
+                        shapeBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        text: "QR Code",
+                        color: AppColors.primaryColor,
+                        textColor: AppColors.white,
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              elevation: 0.0,
+                              backgroundColor: Colors.transparent,
+                              child: contentBox(
+                                  context, state.coachBookingModel!.qrCode),
                             ),
-                            elevation: 0.0,
-                            backgroundColor: Colors.transparent,
-                            child: contentBox(
-                                context, state.coachBookingModel!.qrCode),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                  16.height,
-                ],
-              ).paddingAll(16),
-            );
-          }
-          if (state.status.isInProgress) {
-            return Padding(
-              padding: EdgeInsets.only(bottom: 0.1.sh),
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
-          if (state.status.isFailed) {
-            return EmptyPlaceHolder(
-              buttonText: "Try Again",
-              title: "Opps",
-              subTitle: "Something went wrong",
-              imagePath: AppAssets.error,
-              onTap: () {
-                BlocProvider.of<CoachBloc>(context)
-                    .add(GetCoachSingleHistoryRequest(widget.id));
-              },
-            );
-          }
-          return const SizedBox.shrink();
-        },
+                    16.height,
+                  ],
+                ).paddingAll(16),
+              );
+            }
+            if (state.status.isInProgress) {
+              return Padding(
+                padding: EdgeInsets.only(bottom: 0.1.sh),
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+            if (state.status.isFailed) {
+              return EmptyPlaceHolder(
+                buttonText: "Try Again",
+                title: "Opps",
+                subTitle: "Something went wrong",
+                imagePath: AppAssets.error,
+                onTap: () {
+                  BlocProvider.of<CoachBloc>(context)
+                      .add(GetCoachSingleHistoryRequest(widget.id));
+                },
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        ),
       ),
     );
   }
