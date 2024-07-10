@@ -1,36 +1,25 @@
+// ignore_for_file: use_build_context_synchronously
 import 'dart:convert';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/model/booking/ground_booking_response.dart';
-import 'package:sport_app/res/app_assets.dart';
+import 'package:sport_app/payment_web_view_screen.dart';
+import 'package:sport_app/res/api_constants.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/app_bottom_bar.dart';
-import 'package:sport_app/screens/booking/model/coach_list_model.dart';
-import 'package:sport_app/screens/booking/model/ground_slot_model.dart';
 import 'package:sport_app/utils/helper.dart';
+import 'package:sport_app/utils/status_dialog.dart';
 
 class BookingSuccessScreen extends StatefulWidget {
-  final DateTime? selectedHorizontalDate;
-  final String? selectedSlot;
-  final bool is24HourFormat;
-  final GroundSlotData? groundSlotData;
-  final GroundBookingResponce? groundBookingResponce;
-  final List<CoachListData>? coaches;
-
-  const BookingSuccessScreen(
-      {super.key,
-      this.selectedHorizontalDate,
-      this.groundBookingResponce,
-      this.groundSlotData,
-      this.is24HourFormat = false,
-      this.coaches,
-      this.selectedSlot});
+  final String id;
+  const BookingSuccessScreen({
+    super.key,
+    required this.id,
+  });
 
   @override
   State<BookingSuccessScreen> createState() => _BookingDetailScreenState();
@@ -39,8 +28,38 @@ class BookingSuccessScreen extends StatefulWidget {
 class _BookingDetailScreenState extends State<BookingSuccessScreen>
     with TickerProviderStateMixin {
   late final AnimationController controller;
+  GroundBookingResponce? groundBookingResponce;
 
-  Widget contentBox(BuildContext context) {
+  Future<void> getBookHistory() async {
+    showProgressDialogue(context);
+    final token = await getKeyValue(key: "token");
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var dio = Dio();
+    try {
+      var response = await dio.request(
+        '${ApiConstants.baseUrl}${ApiConstants.checkOut}',
+        options: Options(
+          method: 'POST',
+          headers: headers,
+        ),
+      );
+      Navigator.pop(context);
+      log(json.encode(response.data).toString());
+      Navigator.push(
+          context,
+          CupertinoPageRoute(
+              builder: (context) => PaymentWebViewScreen(
+                    type: "ground",
+                    url: response.data["data"]["redirectUrl"],
+                    id: response.data["data"]["id"],
+                  )));
+    } catch (e) {}
+  }
+
+  Widget contentBox(BuildContext context, qr) {
     return Container(
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
@@ -64,7 +83,7 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
             ),
             padding: const EdgeInsets.all(10.0),
             child: Image.memory(
-              base64Decode(widget.groundBookingResponce!.data!.qrCode!),
+              base64Decode(qr),
               width: 150.0,
               height: 150.0,
             ),
@@ -120,218 +139,213 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
         ),
         elevation: 0,
       ),
-      body: Container(
-        // decoration: const BoxDecoration(
-        //   gradient: LinearGradient(
-        //     colors: [AppColors.primaryColor, AppColors.primaryColor],
-        //     begin: Alignment.topCenter,
-        //     end: Alignment.bottomCenter,
-        //   ),
-        // ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              15.height,
-              SizedBox(
-                height: 0.25.sh,
-                child: Image.asset(
-                  'assets/images/calender.png',
-                ),
-              ),
-              // Container(
-              //   padding: const EdgeInsets.all(10.0),
-              //   child: Image.memory(
-              //     base64Decode(widget.groundBookingResponce!.data!.qrCode!),
-              //     width: 150.0,
-              //     height: 150.0,
-              //   ),
-              // ),
-              25.height,
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  border: Border.all(
-                    width: 1,
-                    color: AppColors.lightBlueColor,
+      body: groundBookingResponce == null
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  15.height,
+                  SizedBox(
+                    height: 0.25.sh,
+                    child: Image.asset(
+                      'assets/images/calender.png',
+                    ),
                   ),
-                  // boxShadow: const [
-                  //   BoxShadow(
-                  //     color: Colors.black12,
-                  //     blurRadius: 8.0,
-                  //     offset: Offset(0, 2),
+                  // Container(
+                  //   padding: const EdgeInsets.all(10.0),
+                  //   child: Image.memory(
+                  //     base64Decode(widget.groundBookingResponce!.data!.qrCode!),
+                  //     width: 150.0,
+                  //     height: 150.0,
                   //   ),
-                  // ],
-                  // gradient: const LinearGradient(
-                  //   colors: [Colors.white, AppColors.lightBlueColor],
-                  //   begin: Alignment.topLeft,
-                  //   end: Alignment.bottomRight,
                   // ),
-                ),
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 0.02.sw, vertical: 20),
-                  child: Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  25.height,
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(
+                        width: 1,
+                        color: AppColors.lightBlueColor,
+                      ),
+                      // boxShadow: const [
+                      //   BoxShadow(
+                      //     color: Colors.black12,
+                      //     blurRadius: 8.0,
+                      //     offset: Offset(0, 2),
+                      //   ),
+                      // ],
+                      // gradient: const LinearGradient(
+                      //   colors: [Colors.white, AppColors.lightBlueColor],
+                      //   begin: Alignment.topLeft,
+                      //   end: Alignment.bottomRight,
+                      // ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 0.02.sw, vertical: 20),
+                      child: Column(
                         children: [
-                          Column(
+                          Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "TXN ID",
-                                style: AppStyle.mediumBold.copyWith(
-                                  color: AppColors.black.withOpacity(0.7),
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.sp,
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "TXN ID",
+                                    style: AppStyle.mediumBold.copyWith(
+                                      color: AppColors.black.withOpacity(0.7),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                  addVerticalSpacing(0.02),
+                                  Text(
+                                    "Amount",
+                                    style: AppStyle.mediumBold.copyWith(
+                                      color: AppColors.black.withOpacity(0.7),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                  addVerticalSpacing(0.02),
+                                  Text(
+                                    "Date",
+                                    style: AppStyle.mediumBold.copyWith(
+                                      color: AppColors.black.withOpacity(0.7),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                  addVerticalSpacing(0.02),
+                                  Text(
+                                    "Slot Time",
+                                    style: AppStyle.mediumBold.copyWith(
+                                      color: AppColors.black.withOpacity(0.7),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                  addVerticalSpacing(0.02),
+                                  Text(
+                                    "Total Slots",
+                                    style: AppStyle.mediumBold.copyWith(
+                                      color: AppColors.black.withOpacity(0.7),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              addVerticalSpacing(0.02),
-                              Text(
-                                "Amount",
-                                style: AppStyle.mediumBold.copyWith(
-                                  color: AppColors.black.withOpacity(0.7),
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                              addVerticalSpacing(0.02),
-                              Text(
-                                "Date",
-                                style: AppStyle.mediumBold.copyWith(
-                                  color: AppColors.black.withOpacity(0.7),
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                              addVerticalSpacing(0.02),
-                              Text(
-                                "Slot Time",
-                                style: AppStyle.mediumBold.copyWith(
-                                  color: AppColors.black.withOpacity(0.7),
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                              addVerticalSpacing(0.02),
-                              Text(
-                                "Total Slots",
-                                style: AppStyle.mediumBold.copyWith(
-                                  color: AppColors.black.withOpacity(0.7),
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                            ],
-                          ),
-                          addHorizontalSpacing(0.015),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.groundBookingResponce!.data!
-                                        .transactionId ??
-                                    "TN12345689",
-                                style: AppStyle.mediumBold.copyWith(
-                                  color: AppColors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                              addVerticalSpacing(0.02),
-                              Text(
-                                widget.groundBookingResponce!.data!.totalPrice
-                                    .toString(),
-                                style: AppStyle.mediumBold.copyWith(
-                                  color: AppColors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                              addVerticalSpacing(0.02),
-                              Text(
-                                formatDateTime(DateTime.now()),
-                                style: AppStyle.mediumBold.copyWith(
-                                  color: AppColors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                              addVerticalSpacing(0.02),
-                              Text(
-                                "${widget.groundBookingResponce!.data!.date} ${widget.groundBookingResponce!.data!.startTime} to ${widget.groundBookingResponce!.data!.endTime}",
-                                style: AppStyle.mediumBold.copyWith(
-                                  color: AppColors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                              addVerticalSpacing(0.02),
-                              Text(
-                                "${widget.groundBookingResponce!.data!.users!.length}",
-                                style: AppStyle.mediumBold.copyWith(
-                                  color: AppColors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14.sp,
-                                ),
+                              addHorizontalSpacing(0.015),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    groundBookingResponce!
+                                            .data!.transactionId ??
+                                        "TN12345689",
+                                    style: AppStyle.mediumBold.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                  addVerticalSpacing(0.02),
+                                  Text(
+                                    groundBookingResponce!.data!.totalPrice
+                                        .toString(),
+                                    style: AppStyle.mediumBold.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                  addVerticalSpacing(0.02),
+                                  Text(
+                                    formatDateTime(DateTime.now()),
+                                    style: AppStyle.mediumBold.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                  addVerticalSpacing(0.02),
+                                  Text(
+                                    "${groundBookingResponce!.data!.date} ${groundBookingResponce!.data!.startTime} to ${groundBookingResponce!.data!.endTime}",
+                                    style: AppStyle.mediumBold.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                  addVerticalSpacing(0.02),
+                                  Text(
+                                    "${groundBookingResponce!.data!.users!.length}",
+                                    style: AppStyle.mediumBold.copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                         ],
                       ),
+                    ),
+                  ),
+                  30.height,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AppButton(
+                        shapeBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        text: "Download Invoice",
+                        color: AppColors.primaryColor,
+                        textColor: AppColors.white,
+                        onTap: () async {
+                          await downloadInvoice(
+                              context,
+                              groundBookingResponce!.data!.invoiceUrl!,
+                              groundBookingResponce!.data!.id!);
+                        },
+                      ),
+                      addHorizontalSpacing(0.01),
+                      AppButton(
+                        shapeBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        text: "QR Code",
+                        color: AppColors.primaryColor,
+                        textColor: AppColors.white,
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              elevation: 0.0,
+                              backgroundColor: Colors.transparent,
+                              child: contentBox(
+                                  context, groundBookingResponce!.data!.qrCode),
+                            ),
+                          );
+                        },
+                      ),
                     ],
                   ),
-                ),
-              ),
-              30.height,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  AppButton(
-                    shapeBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    text: "Download Invoice",
-                    color: AppColors.primaryColor,
-                    textColor: AppColors.white,
-                    onTap: () async {
-                      print(widget.groundBookingResponce!.data!.invoiceUrl);
-                      await downloadInvoice(
-                          context,
-                          widget.groundBookingResponce!.data!.invoiceUrl!,
-                          widget.groundBookingResponce!.data!.id!);
-                    },
-                  ),
-                  addHorizontalSpacing(0.01),
-                  AppButton(
-                    shapeBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    text: "QR Code",
-                    color: AppColors.primaryColor,
-                    textColor: AppColors.white,
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => Dialog(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          elevation: 0.0,
-                          backgroundColor: Colors.transparent,
-                          child: contentBox(context),
-                        ),
-                      );
-                    },
-                  ),
+                  16.height,
                 ],
-              ),
-              16.height,
-            ],
-          ).paddingAll(16),
-        ),
-      ),
+              ).paddingAll(16),
+            ),
     );
   }
 }

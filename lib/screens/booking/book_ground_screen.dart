@@ -93,6 +93,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                 builder: (context) => PaymentWebViewScreen(
                       type: "ground",
                       url: response.data["data"]["redirectUrl"],
+                      id: response.data["data"]["id"],
                     )));
       } else {
         Navigator.pop(context);
