@@ -336,7 +336,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                                     ],
                                     if (coach.subscriptionPlan == null) ...[
                                       Text(
-                                        "${(widget.groundBookingSummary.data!.totalPrice! / widget.groundBookingSummary.data!.users!.length)}",
+                                        "${(widget.groundBookingSummary.data!.totalPrice! / widget.groundBookingSummary.data!.users!.where((element) => element.subscriptionPlan == null).length)}",
                                         style: AppStyle.mediumText
                                             .copyWith(color: AppColors.black),
                                       ),
