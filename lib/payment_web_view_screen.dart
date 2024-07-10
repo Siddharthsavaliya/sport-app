@@ -9,6 +9,7 @@ import 'package:sport_app/bloc/coach_bloc/coach_event.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/booking/booking_success_screen.dart';
 import 'package:sport_app/screens/coaches/coach_booking_success_screen.dart';
 import 'package:sport_app/utils/status_dialog.dart';
 
@@ -84,10 +85,11 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
                               CoachBookingSuccessScreen(id: widget.id!)));
                 }
                 if (widget.type == "ground") {
-                  showScafoldMessage(
-                      message: "Ground booking successfully done",
-                      context: context);
-                  Navigator.pop(context);
+                  Navigator.pushReplacement(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) =>
+                              BookingSuccessScreen(id: widget.id!)));
                 }
               }
             } else if (status == 'false') {
