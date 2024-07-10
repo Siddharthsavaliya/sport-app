@@ -60,23 +60,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            // Customize colors here
             primaryColor: AppColors.primaryColor, // Header background color
             colorScheme: const ColorScheme.light(
-                primary: AppColors.primaryColor), // Selected day color
+              primary: AppColors.primaryColor, // Selected day color
+              onPrimary: Colors.white, // Text color for selected day
+              onSurface: Colors.black, // Text color for other days
+            ),
             dialogBackgroundColor: Colors.white, // Dialog background color
-            // textTheme: const TextTheme(
-            //   bodyLarge: TextStyle(color: Colors.black), // Text color
-            //   bodySmall: TextStyle(color: Colors.black), // Date text color
-            // ),
+            textTheme: const TextTheme(
+              bodyLarge: TextStyle(color: Colors.black), // Text color
+              bodySmall: TextStyle(color: Colors.black), // Date text color
+              labelLarge:
+                  TextStyle(color: Colors.black), // Year selector text color
+            ),
           ),
           child: child ?? Container(),
         );
       },
     );
-    if (picked != DateTime.now()) {
+    if (picked != null && picked != DateTime.now()) {
       setState(() {
-        dob.text = DateFormat('dd/MM/yyyy').format(picked ?? DateTime.now());
+        dob.text = DateFormat('dd/MM/yyyy').format(picked);
       });
     }
   }
