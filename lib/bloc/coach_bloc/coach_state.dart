@@ -7,6 +7,7 @@ class CoachState extends Equatable {
   const CoachState({
     this.message = " ",
     this.redirectUrl = "",
+    this.id = "",
     this.isBooking = false,
     this.coachBookingModel,
     this.status = Status.initial,
@@ -15,6 +16,7 @@ class CoachState extends Equatable {
   final List<Coach>? coachsData;
   final String message;
   final String redirectUrl;
+  final String id;
   final bool isBooking;
   final CoachBookingModel? coachBookingModel;
   final Status status;
@@ -23,6 +25,7 @@ class CoachState extends Equatable {
   List<Object?> get props {
     return [
       status,
+      id,
       isBooking,
       redirectUrl,
       coachBookingModel,
@@ -33,6 +36,7 @@ class CoachState extends Equatable {
 
   CoachState copyWith({
     String? message,
+    String? id,
     String? redirectUrl,
     bool? isBooking,
     Status? status,
@@ -42,6 +46,7 @@ class CoachState extends Equatable {
     return CoachState(
       message: message ?? this.message,
       redirectUrl: redirectUrl ?? this.redirectUrl,
+      id: id ?? this.id,
       coachBookingModel: coachBookingModel ?? this.coachBookingModel,
       isBooking: isBooking ?? this.isBooking,
       status: status ?? this.status,

@@ -13,6 +13,9 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
     on<BuyCoachRequest>(
       (event, emit) => _buyRequest(event, emit),
     );
+    on<GetCoachSingleHistoryRequest>(
+      (event, emit) => _getSingleHistoryRequest(event, emit),
+    );
   }
   final CoachRepository coachRepository = CoachRepository();
   Future<void> _getRequest(
@@ -49,7 +52,30 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
           await coachRepository.buyCoach(event.coachId, event.schoolId);
       apiResult.when(
         success: (data) {
-          emit(state.copyWith(status: Status.loaded, redirectUrl: data));
+          emit(state.copyWith(
+              status: Status.loaded,
+              redirectUrl: data["redirectUrl"],
+              id: data["id"]));
+        },
+        failure: (error) {
+          emit(state.copyWith(status: Status.failed, message: error));
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(status: Status.failed, message: e.toString()));
+    }
+  }
+
+  Future<void> _getSingleHistoryRequest(
+    GetCoachSingleHistoryRequest event,
+    Emitter<CoachState> emit,
+  ) async {
+    emit(state.copyWith(status: Status.inProgress, isBooking: true));
+    try {
+      final apiResult = await coachRepository.getSingleHistory(event.id);
+      apiResult.when(
+        success: (data) {
+          emit(state.copyWith(status: Status.loaded, coachBookingModel: data));
         },
         failure: (error) {
           emit(state.copyWith(status: Status.failed, message: error));

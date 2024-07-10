@@ -20,12 +20,25 @@ class CoachRepository {
     }
   }
 
-  Future<ApiResult<String>> buyCoach(String coachId, String schoolId) async {
+  Future<ApiResult<Map<String, dynamic>>> buyCoach(
+      String coachId, String schoolId) async {
     try {
       final response = await apiClient.post(ApiConstants.coachBookSlot,
           data: {"coachId": coachId, "schoolId": schoolId});
       log(response.data.toString());
-      return ApiResult.success(response.data!["data"]["redirectUrl"]);
+      return ApiResult.success(response.data!["data"]);
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
+
+  Future<ApiResult<CoachBookingModel>> getSingleHistory(String id) async {
+    try {
+      final response = await apiClient.get(
+        "${ApiConstants.getSingleCoachBookSlot}$id",
+      );
+      log(response.data.toString());
+      return ApiResult.success(response.data!["data"]);
     } catch (e) {
       return getErrorMessage(e);
     }

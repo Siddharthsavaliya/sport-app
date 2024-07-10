@@ -463,11 +463,12 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
                                                           CupertinoPageRoute(
                                                               builder: (context) =>
                                                                   PaymentWebViewScreen(
-                                                                    type:
-                                                                        "coach",
-                                                                    url: state
-                                                                        .redirectUrl,
-                                                                  )));
+                                                                      type:
+                                                                          "coach",
+                                                                      url: state
+                                                                          .redirectUrl,
+                                                                      id: state
+                                                                          .id)));
                                                       // Navigator.push(
                                                       //     context,
                                                       //     CupertinoPageRoute(

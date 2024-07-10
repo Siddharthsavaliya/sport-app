@@ -20,3 +20,10 @@ class BuyCoachRequest extends CoachEvent {
   @override
   List<Object> get props => [];
 }
+
+class GetCoachSingleHistoryRequest extends CoachEvent {
+  GetCoachSingleHistoryRequest(this.id);
+  final String id;
+  @override
+  List<Object> get props => [];
+}

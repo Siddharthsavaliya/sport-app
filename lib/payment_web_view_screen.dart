@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/coaches/coach_booking_success_screen.dart';
 import 'package:sport_app/utils/status_dialog.dart';
 
 class PaymentWebViewScreen extends StatefulWidget {
@@ -14,8 +15,10 @@ class PaymentWebViewScreen extends StatefulWidget {
     super.key,
     required this.url,
     required this.type,
+    this.id,
   });
   final String url;
+  final String? id;
   final String type;
 
   @override
@@ -68,9 +71,11 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
                       context: context);
                 }
                 if (widget.type == "coach") {
-                  showScafoldMessage(
-                      message: "Coach booking successfully done",
-                      context: context);
+                  Navigator.pushReplacement(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) =>
+                              CoachBookingSuccessScreen(id: widget.id!)));
                 }
                 if (widget.type == "ground") {
                   showScafoldMessage(
