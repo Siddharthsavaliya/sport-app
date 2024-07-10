@@ -286,6 +286,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                             final coach =
                                 widget.groundBookingSummary.data!.users![index];
                             return Container(
+                              margin: const EdgeInsets.only(bottom: 10),
                               decoration:
                                   boxDecorationDefault(color: Colors.white),
                               child: Padding(
