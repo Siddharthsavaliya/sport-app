@@ -134,10 +134,11 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
           automaticallyImplyLeading: false,
           leading: GestureDetector(
             onTap: () {
-              Navigator.push(
+              Navigator.pushAndRemoveUntil(
                   context,
                   CupertinoPageRoute(
-                      builder: (context) => const AppBottomBar()));
+                      builder: (context) => const AppBottomBar()),
+                  (route) => false);
             },
             child: const Icon(
               Icons.arrow_back,
