@@ -522,15 +522,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Expanded(
                             flex: index == 2 || index == 3 ? 3 : 2,
-                            child: Text(text.toUpperCase(),
-                                style: AppStyle.normalText.copyWith(
-                                    color: AppColors.black.withOpacity(0.8),
-                                    fontSize: index == 2 ? 13.sp : 16.sp,
-                                    fontFamily: "ProzaLibre-Regular",
-                                    letterSpacing: 1,
-                                    fontWeight: index == 2
-                                        ? FontWeight.bold
-                                        : FontWeight.w600)),
+                            child: Padding(
+                              padding: EdgeInsets.only(top: index == 3 ? 4 : 6),
+                              child: Text(text.toUpperCase(),
+                                  style: AppStyle.normalText.copyWith(
+                                      color: AppColors.black.withOpacity(0.8),
+                                      fontSize: index == 2 ? 13.sp : 16.sp,
+                                      fontFamily: "ProzaLibre-Regular",
+                                      letterSpacing: 1,
+                                      fontWeight: index == 2
+                                          ? FontWeight.bold
+                                          : FontWeight.w600)),
+                            ),
                           ),
                           addHorizontalSpacing(0.01),
                           Expanded(
