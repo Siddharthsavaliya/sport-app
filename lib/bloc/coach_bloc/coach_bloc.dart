@@ -22,7 +22,8 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
     GetCoachRequest event,
     Emitter<CoachState> emit,
   ) async {
-    emit(state.copyWith(status: Status.inProgress, isBooking: false));
+    emit(state.copyWith(
+        status: Status.inProgress, isBooking: false, isBookingSuccess: false));
     try {
       final apiResult =
           await coachRepository.getCoachs(event.sport, event.city);
@@ -46,7 +47,8 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
     BuyCoachRequest event,
     Emitter<CoachState> emit,
   ) async {
-    emit(state.copyWith(status: Status.inProgress, isBooking: true));
+    emit(state.copyWith(
+        status: Status.inProgress, isBooking: true, isBookingSuccess: false));
     try {
       final apiResult =
           await coachRepository.buyCoach(event.coachId, event.schoolId);
@@ -70,7 +72,8 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
     GetCoachSingleHistoryRequest event,
     Emitter<CoachState> emit,
   ) async {
-    emit(state.copyWith(status: Status.inProgress, isBooking: true));
+    emit(state.copyWith(
+        status: Status.inProgress, isBooking: false, isBookingSuccess: true));
     try {
       final apiResult = await coachRepository.getSingleHistory(event.id);
       apiResult.when(

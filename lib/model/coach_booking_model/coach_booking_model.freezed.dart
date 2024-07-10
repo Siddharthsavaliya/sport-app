@@ -20,15 +20,13 @@ CoachBookingModel _$CoachBookingModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CoachBookingModel {
-  String get starttime => throw _privateConstructorUsedError;
-  String get endtime => throw _privateConstructorUsedError;
+  String get startTime => throw _privateConstructorUsedError;
+  String get endTime => throw _privateConstructorUsedError;
   String get transactionId => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
   String get qrCode => throw _privateConstructorUsedError;
-  int get totalPrice => throw _privateConstructorUsedError;
-  String get userName => throw _privateConstructorUsedError;
+  num get totalPrice => throw _privateConstructorUsedError;
   DateTime get expirationDate => throw _privateConstructorUsedError;
-  String get phoneNumber => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,15 +41,13 @@ abstract class $CoachBookingModelCopyWith<$Res> {
       _$CoachBookingModelCopyWithImpl<$Res, CoachBookingModel>;
   @useResult
   $Res call(
-      {String starttime,
-      String endtime,
+      {String startTime,
+      String endTime,
       String transactionId,
       String url,
       String qrCode,
-      int totalPrice,
-      String userName,
-      DateTime expirationDate,
-      String phoneNumber});
+      num totalPrice,
+      DateTime expirationDate});
 }
 
 /// @nodoc
@@ -67,24 +63,22 @@ class _$CoachBookingModelCopyWithImpl<$Res, $Val extends CoachBookingModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? starttime = null,
-    Object? endtime = null,
+    Object? startTime = null,
+    Object? endTime = null,
     Object? transactionId = null,
     Object? url = null,
     Object? qrCode = null,
     Object? totalPrice = null,
-    Object? userName = null,
     Object? expirationDate = null,
-    Object? phoneNumber = null,
   }) {
     return _then(_value.copyWith(
-      starttime: null == starttime
-          ? _value.starttime
-          : starttime // ignore: cast_nullable_to_non_nullable
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
               as String,
-      endtime: null == endtime
-          ? _value.endtime
-          : endtime // ignore: cast_nullable_to_non_nullable
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
               as String,
       transactionId: null == transactionId
           ? _value.transactionId
@@ -101,19 +95,11 @@ class _$CoachBookingModelCopyWithImpl<$Res, $Val extends CoachBookingModel>
       totalPrice: null == totalPrice
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
-              as int,
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as num,
       expirationDate: null == expirationDate
           ? _value.expirationDate
           : expirationDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      phoneNumber: null == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
@@ -127,15 +113,13 @@ abstract class _$$CoachBookingModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String starttime,
-      String endtime,
+      {String startTime,
+      String endTime,
       String transactionId,
       String url,
       String qrCode,
-      int totalPrice,
-      String userName,
-      DateTime expirationDate,
-      String phoneNumber});
+      num totalPrice,
+      DateTime expirationDate});
 }
 
 /// @nodoc
@@ -149,24 +133,22 @@ class __$$CoachBookingModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? starttime = null,
-    Object? endtime = null,
+    Object? startTime = null,
+    Object? endTime = null,
     Object? transactionId = null,
     Object? url = null,
     Object? qrCode = null,
     Object? totalPrice = null,
-    Object? userName = null,
     Object? expirationDate = null,
-    Object? phoneNumber = null,
   }) {
     return _then(_$CoachBookingModelImpl(
-      starttime: null == starttime
-          ? _value.starttime
-          : starttime // ignore: cast_nullable_to_non_nullable
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
               as String,
-      endtime: null == endtime
-          ? _value.endtime
-          : endtime // ignore: cast_nullable_to_non_nullable
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
               as String,
       transactionId: null == transactionId
           ? _value.transactionId
@@ -183,19 +165,11 @@ class __$$CoachBookingModelImplCopyWithImpl<$Res>
       totalPrice: null == totalPrice
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
-              as int,
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as num,
       expirationDate: null == expirationDate
           ? _value.expirationDate
           : expirationDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      phoneNumber: null == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -204,23 +178,21 @@ class __$$CoachBookingModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CoachBookingModelImpl implements _CoachBookingModel {
   const _$CoachBookingModelImpl(
-      {required this.starttime,
-      required this.endtime,
+      {required this.startTime,
+      required this.endTime,
       required this.transactionId,
       required this.url,
       required this.qrCode,
       required this.totalPrice,
-      required this.userName,
-      required this.expirationDate,
-      required this.phoneNumber});
+      required this.expirationDate});
 
   factory _$CoachBookingModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CoachBookingModelImplFromJson(json);
 
   @override
-  final String starttime;
+  final String startTime;
   @override
-  final String endtime;
+  final String endTime;
   @override
   final String transactionId;
   @override
@@ -228,17 +200,13 @@ class _$CoachBookingModelImpl implements _CoachBookingModel {
   @override
   final String qrCode;
   @override
-  final int totalPrice;
-  @override
-  final String userName;
+  final num totalPrice;
   @override
   final DateTime expirationDate;
-  @override
-  final String phoneNumber;
 
   @override
   String toString() {
-    return 'CoachBookingModel(starttime: $starttime, endtime: $endtime, transactionId: $transactionId, url: $url, qrCode: $qrCode, totalPrice: $totalPrice, userName: $userName, expirationDate: $expirationDate, phoneNumber: $phoneNumber)';
+    return 'CoachBookingModel(startTime: $startTime, endTime: $endTime, transactionId: $transactionId, url: $url, qrCode: $qrCode, totalPrice: $totalPrice, expirationDate: $expirationDate)';
   }
 
   @override
@@ -246,36 +214,23 @@ class _$CoachBookingModelImpl implements _CoachBookingModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CoachBookingModelImpl &&
-            (identical(other.starttime, starttime) ||
-                other.starttime == starttime) &&
-            (identical(other.endtime, endtime) || other.endtime == endtime) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
             (identical(other.transactionId, transactionId) ||
                 other.transactionId == transactionId) &&
             (identical(other.url, url) || other.url == url) &&
             (identical(other.qrCode, qrCode) || other.qrCode == qrCode) &&
             (identical(other.totalPrice, totalPrice) ||
                 other.totalPrice == totalPrice) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
             (identical(other.expirationDate, expirationDate) ||
-                other.expirationDate == expirationDate) &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber));
+                other.expirationDate == expirationDate));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      starttime,
-      endtime,
-      transactionId,
-      url,
-      qrCode,
-      totalPrice,
-      userName,
-      expirationDate,
-      phoneNumber);
+  int get hashCode => Object.hash(runtimeType, startTime, endTime,
+      transactionId, url, qrCode, totalPrice, expirationDate);
 
   @JsonKey(ignore: true)
   @override
@@ -294,23 +249,21 @@ class _$CoachBookingModelImpl implements _CoachBookingModel {
 
 abstract class _CoachBookingModel implements CoachBookingModel {
   const factory _CoachBookingModel(
-      {required final String starttime,
-      required final String endtime,
+      {required final String startTime,
+      required final String endTime,
       required final String transactionId,
       required final String url,
       required final String qrCode,
-      required final int totalPrice,
-      required final String userName,
-      required final DateTime expirationDate,
-      required final String phoneNumber}) = _$CoachBookingModelImpl;
+      required final num totalPrice,
+      required final DateTime expirationDate}) = _$CoachBookingModelImpl;
 
   factory _CoachBookingModel.fromJson(Map<String, dynamic> json) =
       _$CoachBookingModelImpl.fromJson;
 
   @override
-  String get starttime;
+  String get startTime;
   @override
-  String get endtime;
+  String get endTime;
   @override
   String get transactionId;
   @override
@@ -318,13 +271,9 @@ abstract class _CoachBookingModel implements CoachBookingModel {
   @override
   String get qrCode;
   @override
-  int get totalPrice;
-  @override
-  String get userName;
+  num get totalPrice;
   @override
   DateTime get expirationDate;
-  @override
-  String get phoneNumber;
   @override
   @JsonKey(ignore: true)
   _$$CoachBookingModelImplCopyWith<_$CoachBookingModelImpl> get copyWith =>

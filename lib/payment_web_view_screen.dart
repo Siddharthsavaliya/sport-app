@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sport_app/bloc/coach_bloc/coach_bloc.dart';
+import 'package:sport_app/bloc/coach_bloc/coach_event.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
@@ -42,6 +44,7 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.id);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -69,8 +72,11 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
                   showScafoldMessage(
                       message: "Membership purchase completed",
                       context: context);
+                  Navigator.pop(context);
                 }
                 if (widget.type == "coach") {
+                  BlocProvider.of<CoachBloc>(context)
+                      .add(GetCoachSingleHistoryRequest(widget.id!));
                   Navigator.pushReplacement(
                       context,
                       CupertinoPageRoute(
@@ -81,8 +87,8 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
                   showScafoldMessage(
                       message: "Ground booking successfully done",
                       context: context);
+                  Navigator.pop(context);
                 }
-                Navigator.pop(context);
               }
             } else if (status == 'false') {
               if (mounted) {

@@ -451,38 +451,31 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
                                                 child: BlocListener<CoachBloc,
                                                     CoachState>(
                                                   listener: (context, state) {
-                                                    if (state
-                                                        .status.isInProgress) {
-                                                      showProgressDialogue(
-                                                          context);
-                                                    } else if (state
-                                                        .status.isLoaded) {
-                                                      Navigator.pop(context);
-                                                      Navigator.push(
-                                                          context,
-                                                          CupertinoPageRoute(
-                                                              builder: (context) =>
-                                                                  PaymentWebViewScreen(
-                                                                      type:
-                                                                          "coach",
-                                                                      url: state
-                                                                          .redirectUrl,
-                                                                      id: state
-                                                                          .id)));
-                                                      // Navigator.push(
-                                                      //     context,
-                                                      //     CupertinoPageRoute(
-                                                      //         builder: (context) =>
-                                                      //             CoachBookingSuccessScreen(
-                                                      //               coachBookingModel:
-                                                      //                   state
-                                                      //                       .coachBookingModel!,
-                                                      //             )));
-                                                    } else if (state
-                                                        .status.isFailed) {
-                                                      Navigator.pop(context);
-                                                      showErrorDialogue(context,
-                                                          state.message);
+                                                    if (state.isBooking) {
+                                                      if (state.status
+                                                          .isInProgress) {
+                                                        showProgressDialogue(
+                                                            context);
+                                                      } else if (state
+                                                          .status.isLoaded) {
+                                                        Navigator.pop(context);
+                                                        Navigator.push(
+                                                            context,
+                                                            CupertinoPageRoute(
+                                                                builder: (context) => PaymentWebViewScreen(
+                                                                    type:
+                                                                        "coach",
+                                                                    url: state
+                                                                        .redirectUrl,
+                                                                    id: state
+                                                                        .id)));
+                                                      } else if (state
+                                                          .status.isFailed) {
+                                                        Navigator.pop(context);
+                                                        showErrorDialogue(
+                                                            context,
+                                                            state.message);
+                                                      }
                                                     }
                                                   },
                                                   child: SizedBox(

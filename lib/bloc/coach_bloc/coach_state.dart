@@ -9,6 +9,7 @@ class CoachState extends Equatable {
     this.redirectUrl = "",
     this.id = "",
     this.isBooking = false,
+    this.isBookingSuccess = false,
     this.coachBookingModel,
     this.status = Status.initial,
     this.coachsData = const [],
@@ -18,6 +19,7 @@ class CoachState extends Equatable {
   final String redirectUrl;
   final String id;
   final bool isBooking;
+  final bool isBookingSuccess;
   final CoachBookingModel? coachBookingModel;
   final Status status;
 
@@ -28,6 +30,7 @@ class CoachState extends Equatable {
       id,
       isBooking,
       redirectUrl,
+      isBookingSuccess,
       coachBookingModel,
       message,
       coachsData,
@@ -39,6 +42,7 @@ class CoachState extends Equatable {
     String? id,
     String? redirectUrl,
     bool? isBooking,
+    bool? isBookingSuccess,
     Status? status,
     CoachBookingModel? coachBookingModel,
     List<Coach>? coachsData,
@@ -46,6 +50,7 @@ class CoachState extends Equatable {
     return CoachState(
       message: message ?? this.message,
       redirectUrl: redirectUrl ?? this.redirectUrl,
+      isBookingSuccess: isBookingSuccess ?? this.isBookingSuccess,
       id: id ?? this.id,
       coachBookingModel: coachBookingModel ?? this.coachBookingModel,
       isBooking: isBooking ?? this.isBooking,

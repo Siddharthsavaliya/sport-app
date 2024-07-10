@@ -37,8 +37,9 @@ class CoachRepository {
       final response = await apiClient.get(
         "${ApiConstants.getSingleCoachBookSlot}$id",
       );
-      log(response.data.toString());
-      return ApiResult.success(response.data!["data"]);
+
+      return ApiResult.success(
+          CoachBookingModel.fromJson(response.data!["data"]));
     } catch (e) {
       return getErrorMessage(e);
     }

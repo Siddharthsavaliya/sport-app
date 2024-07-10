@@ -13,6 +13,7 @@ import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/app_bottom_bar.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/widget/empty_place_holder.dart';
 
@@ -83,8 +84,6 @@ class _BookingDetailScreenState extends State<CoachBookingSuccessScreen>
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<CoachBloc>(context)
-        .add(GetCoachSingleHistoryRequest(widget.id));
     controller = AnimationController(vsync: this);
   }
 
@@ -94,6 +93,17 @@ class _BookingDetailScreenState extends State<CoachBookingSuccessScreen>
       appBar: AppBar(
         foregroundColor: AppColors.white,
         backgroundColor: AppColors.primaryColor,
+        automaticallyImplyLeading: false,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                CupertinoPageRoute(builder: (context) => const AppBottomBar()));
+          },
+          child: const Icon(
+            Icons.arrow_back,
+            color: AppColors.white,
+          ),
+        ),
         title: Text(
           "Booking Status",
           style: AppStyle.mediumText.copyWith(
@@ -103,7 +113,7 @@ class _BookingDetailScreenState extends State<CoachBookingSuccessScreen>
       ),
       body: BlocBuilder<CoachBloc, CoachState>(
         builder: (context, state) {
-          if (state.status.isLoaded) {
+          if (state.status.isLoaded && state.isBookingSuccess) {
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -256,15 +266,15 @@ class _BookingDetailScreenState extends State<CoachBookingSuccessScreen>
             );
           }
           if (state.status.isInProgress) {
-            return Center(
-              child: CircularProgressGradient(radius: 20, colors: const [
-                AppColors.primaryColor,
-                Color.fromARGB(255, 58, 124, 144),
-                Color.fromARGB(255, 42, 91, 105)
-              ]),
+            return Padding(
+              padding: EdgeInsets.only(bottom: 0.1.sh),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
             );
           }
           return EmptyPlaceHolder(
+            buttonText: "Try Again",
             title: "Opps",
             subTitle: "Something went wrong",
             imagePath: AppAssets.error,
