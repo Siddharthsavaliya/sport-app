@@ -173,6 +173,26 @@ Future<String?> getKeyValue({required String key}) async {
   return await storage.secureRead(key);
 }
 
+bool isPlanExpired(String planType, DateTime purchaseDate) {
+  // Extract the number of months from the planType
+  final RegExp regex = RegExp(r'(\d+) Months');
+  final Match? match = regex.firstMatch(planType);
+
+  if (match == null) {
+    // If the plan type does not match the expected format, consider it expired
+    return true;
+  }
+
+  final int months = int.parse(match.group(1)!);
+
+  // Calculate the expiration date by adding the number of months to the purchase date
+  final DateTime expirationDate = DateTime(
+      purchaseDate.year, purchaseDate.month + months, purchaseDate.day);
+
+  // Check if the current date is after the expiration date
+  return DateTime.now().isAfter(expirationDate);
+}
+
 Future<void> deleteAll() async {
   const FlutterSecureStorage storage = FlutterSecureStorage();
   await storage.deleteAll();

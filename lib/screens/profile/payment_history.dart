@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +8,7 @@ import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_strings.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/membership/membership.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/widget/app_button.dart';
 import 'package:sport_app/widget/empty_place_holder.dart';
@@ -51,126 +53,165 @@ class _PaymentHistoryState extends State<PaymentHistory> {
             if (state.status.isLoaded) {
               return RefreshIndicator(
                 onRefresh: onRefresh,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: state.purchase.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: AppColors.white,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 0.03.sw),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            addVerticalSpacing(0.01),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Plan",
-                                  style: AppStyle.normalText.copyWith(
-                                    color: AppColors.black.withOpacity(0.8),
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 15.sp,
-                                    letterSpacing: 0.5,
-                                  ),
-                                ),
-                              ],
+                child: state.purchase.isEmpty
+                    ? EmptyPlaceHolder(
+                        title: "Not have any subscriptions yet",
+                        buttonText: "Subscribe Now",
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => const MembershipScreen(),
+                              ));
+                        },
+                        subTitle: "Go and explore",
+                        imagePath: AppAssets.error)
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: state.purchase.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColors.white,
                             ),
-                            addVerticalSpacing(0.001),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "₹${state.purchase[index].subscriptionPlan?.price.toInt()}",
-                                      style: AppStyle.mediumBold.copyWith(
-                                        color: AppColors.black,
-                                        fontSize: 18.sp,
-                                        letterSpacing: 0.5,
-                                      ),
-                                    ),
-                                    addVerticalSpacing(0.005),
-                                    Text(
-                                      "Purchased on",
-                                      style: AppStyle.normalText.copyWith(
-                                        color: AppColors.black.withOpacity(0.8),
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13.sp,
-                                        letterSpacing: 0.5,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: index == 1
-                                            ? AppColors.red
-                                            : Colors.green,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 5, vertical: 1),
-                                        child: Text(
-                                          index == 1 ? "EXPIRED" : "ACTIVE",
-                                          style: AppStyle.mediumBold.copyWith(
-                                            fontSize: 12.sp,
-                                            color: AppColors.white,
-                                            letterSpacing: 0.1,
-                                          ),
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: 0.03.sw),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  addVerticalSpacing(0.01),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Plan",
+                                        style: AppStyle.normalText.copyWith(
+                                          color:
+                                              AppColors.black.withOpacity(0.8),
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15.sp,
+                                          letterSpacing: 0.5,
                                         ),
                                       ),
-                                    ),
-                                    addVerticalSpacing(0.008),
-                                    Text(
-                                      formatDateTime(
-                                          state.purchase[index].purchaseDate!),
-                                      style: AppStyle.normalText.copyWith(
-                                        color: AppColors.black.withOpacity(0.8),
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13.sp,
-                                        letterSpacing: 0.1,
+                                    ],
+                                  ),
+                                  addVerticalSpacing(0.001),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "₹${state.purchase[index].subscriptionPlan?.price.toInt()}",
+                                            style: AppStyle.mediumBold.copyWith(
+                                              color: AppColors.black,
+                                              fontSize: 18.sp,
+                                              letterSpacing: 0.5,
+                                            ),
+                                          ),
+                                          addVerticalSpacing(0.005),
+                                          Text(
+                                            "Purchased on",
+                                            style: AppStyle.normalText.copyWith(
+                                              color: AppColors.black
+                                                  .withOpacity(0.8),
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 13.sp,
+                                              letterSpacing: 0.5,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: isPlanExpired(
+                                                      state
+                                                          .purchase[index]
+                                                          .subscriptionPlan!
+                                                          .planType,
+                                                      state.purchase[index]
+                                                          .purchaseDate!)
+                                                  ? AppColors.red
+                                                  : Colors.green,
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 5,
+                                                      vertical: 1),
+                                              child: Text(
+                                                isPlanExpired(
+                                                        state
+                                                            .purchase[index]
+                                                            .subscriptionPlan!
+                                                            .planType,
+                                                        state.purchase[index]
+                                                            .purchaseDate!)
+                                                    ? "EXPIRED"
+                                                    : "ACTIVE",
+                                                style: AppStyle.mediumBold
+                                                    .copyWith(
+                                                  fontSize: 12.sp,
+                                                  color: AppColors.white,
+                                                  letterSpacing: 0.1,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          addVerticalSpacing(0.008),
+                                          Text(
+                                            formatDateTime(state
+                                                .purchase[index].purchaseDate!),
+                                            style: AppStyle.normalText.copyWith(
+                                              color: AppColors.black
+                                                  .withOpacity(0.8),
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 13.sp,
+                                              letterSpacing: 0.1,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  addVerticalSpacing(0.02),
+                                  Center(
+                                    child: SizedBox(
+                                      width: 0.5.sw,
+                                      child: AppButton(
+                                        radius: 5,
+                                        text: "Download Invoice",
+                                        color: AppColors.primaryColor,
+                                        onTap: () async {
+                                          await downloadInvoice(
+                                              context,
+                                              state.purchase[index].invoiceUrl!,
+                                              state.purchase[index].id!);
+                                        },
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            addVerticalSpacing(0.02),
-                            Center(
-                              child: SizedBox(
-                                width: 0.5.sw,
-                                child: AppButton(
-                                  radius: 5,
-                                  text: "Download Invoice",
-                                  color: AppColors.primaryColor,
-                                  onTap: () async {
-                                    await downloadInvoice(
-                                        context,
-                                        state.purchase[index].invoiceUrl!,
-                                        state.purchase[index].id!);
-                                  },
-                                ),
+                                  ),
+                                  addVerticalSpacing(0.01),
+                                ],
                               ),
                             ),
-                            addVerticalSpacing(0.01),
-                          ],
-                        ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
               );
             }
             if (state.status.isInProgress) {

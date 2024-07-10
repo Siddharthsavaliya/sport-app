@@ -332,47 +332,51 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                           ),
                         ),
                         30.height,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            AppButton(
-                              shapeBorder: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              text: "Download Invoice",
-                              color: AppColors.primaryColor,
-                              textColor: AppColors.white,
-                              onTap: () async {
-                                await downloadInvoice(
-                                    context,
-                                    groundBookingResponce!.data!.invoiceUrl!,
-                                    groundBookingResponce!.data!.id!);
-                              },
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     // AppButton(
+                        //     //   shapeBorder: RoundedRectangleBorder(
+                        //     //     borderRadius: BorderRadius.circular(8),
+                        //     //   ),
+                        //     //   text: "Download Invoice",
+                        //     //   color: AppColors.primaryColor,
+                        //     //   textColor: AppColors.white,
+                        //     //   onTap: () async {
+                        //     //     await downloadInvoice(
+                        //     //         context,
+                        //     //         groundBookingResponce!.data!.invoiceUrl!,
+                        //     //         groundBookingResponce!.data!.id!);
+                        //     //   },
+                        //     // ),
+                        //     // addHorizontalSpacing(0.01),
+
+                        //   ],
+                        // ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: AppButton(
+                            shapeBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            addHorizontalSpacing(0.01),
-                            AppButton(
-                              shapeBorder: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              text: "QR Code",
-                              color: AppColors.primaryColor,
-                              textColor: AppColors.white,
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => Dialog(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    elevation: 0.0,
-                                    backgroundColor: Colors.transparent,
-                                    child: contentBox(context,
-                                        groundBookingResponce!.data!.qrCode),
+                            text: "QR Code",
+                            color: AppColors.primaryColor,
+                            textColor: AppColors.white,
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => Dialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
                                   ),
-                                );
-                              },
-                            ),
-                          ],
+                                  elevation: 0.0,
+                                  backgroundColor: Colors.transparent,
+                                  child: contentBox(context,
+                                      groundBookingResponce!.data!.qrCode),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                         16.height,
                       ],
