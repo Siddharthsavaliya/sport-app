@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/utils/helper.dart';
@@ -31,27 +32,32 @@ class _DashboardScreenState extends State<DashboardScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
         title: Row(
           children: [
-            const CircleAvatar(
-              backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+            const Center(
+              child: ClipOval(
+                child: CircleAvatar(
+                    radius: 20, backgroundImage: AssetImage(AppAssets.dp)),
+              ),
             ),
             addHorizontalSpacing(0.01),
             Text(
               'Hi Siddharth' ?? "",
               style: AppStyle.mediumBold.copyWith(
-                  color: AppColors.black,
-                  fontSize: 12.sp,
+                  color: AppColors.white,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
                   letterSpacing: 0.8),
             ),
           ],
         ),
         bottom: TabBar(
+          labelStyle: AppStyle.mediumBold,
           controller: _tabController,
           tabs: const [
-            Tab(text: 'Booked History'),
-            Tab(text: 'Active Booked'),
+            Tab(text: 'Active Booking'),
+            Tab(text: 'Booking History'),
           ],
         ),
       ),
@@ -77,8 +83,18 @@ class BookedHistoryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Booked History'),
+    return ListView.builder(
+      itemCount: 10, // Example item count
+      itemBuilder: (context, index) {
+        return const ListTile(
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(
+                "https://itsmycourt.s3.ap-south-1.amazonaws.com/IMG-20231209-WA0006.jpg"),
+          ),
+          title: Text("John"),
+          subtitle: Text("919714696101"),
+        );
+      },
     );
   }
 }
@@ -88,8 +104,18 @@ class ActiveBookedTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Active Booked'),
+    return ListView.builder(
+      itemCount: 10, // Example item count
+      itemBuilder: (context, index) {
+        return const ListTile(
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(
+                "https://itsmycourt.s3.ap-south-1.amazonaws.com/IMG-20231209-WA0006.jpg"),
+          ),
+          title: Text("John"),
+          subtitle: Text("919714696101"),
+        );
+      },
     );
   }
 }
@@ -111,7 +137,7 @@ class EarningsSection extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.blueAccent,
+            color: AppColors.primaryColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: const Row(
