@@ -50,7 +50,7 @@ class CoachRepository {
       final response = await apiClient.get(
         ApiConstants.getOneCoachBookings,
       );
-      log(response.data);
+      log(response.data.toString());
       return const ApiResult.success(true);
     } catch (e) {
       return getErrorMessage(e);

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sport_app/bloc/coach_bloc/coach_bloc.dart';
+import 'package:sport_app/bloc/coach_bloc/coach_event.dart';
+import 'package:sport_app/bloc/coach_bloc/coach_state.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/app_assets.dart';
@@ -117,16 +120,40 @@ class BookedHistoryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 10, // Example item count
-      itemBuilder: (context, index) {
-        return const ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(
-                "https://itsmycourt.s3.ap-south-1.amazonaws.com/IMG-20231209-WA0006.jpg"),
-          ),
-          title: Text("John"),
-          subtitle: Text("919714696101"),
+    Future<void> onRefresh() async {
+      BlocProvider.of<CoachBloc>(context).add(GetCoachHistoryRequest());
+    }
+
+    return BlocBuilder<CoachBloc, CoachState>(
+      builder: (context, state) {
+        if (state.status.isLoaded) {
+          return ListView.builder(
+            itemCount: 10, // Example item count
+            itemBuilder: (context, index) {
+              return const ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      "https://itsmycourt.s3.ap-south-1.amazonaws.com/IMG-20231209-WA0006.jpg"),
+                ),
+                title: Text("John"),
+                subtitle: Text("919714696101"),
+              );
+            },
+          );
+        }
+        if (state.status.isInProgress) {
+          return Center(
+            child: Lottie.asset('assets/animation/loading.json'),
+          );
+        }
+        return EmptyPlaceHolder(
+          title: "Oops",
+          buttonText: "Try Again",
+          onTap: () {
+            onRefresh();
+          },
+          subTitle: "Something went wrong",
+          imagePath: AppAssets.error,
         );
       },
     );
