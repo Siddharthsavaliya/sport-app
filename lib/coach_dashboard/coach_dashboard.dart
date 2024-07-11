@@ -91,11 +91,19 @@ class _DashboardScreenState extends State<DashboardScreen>
                   ActiveBookedTab(),
                 ],
               ),
-              bottomNavigationBar: BottomAppBar(
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  child: const EarningsSection(),
-                ),
+              bottomNavigationBar: BlocBuilder<CoachBloc, CoachState>(
+                builder: (context, state) {
+                  if (state.status.isLoaded) {
+                    return BottomAppBar(
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        child:
+                            EarningsSection(bookings: state.coachHistoryList),
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
               ),
             );
           }
@@ -263,6 +271,10 @@ class InfoRow extends StatelessWidget {
   }
 }
 
+double calculateTotalPayment(List<CoachHistoryModel> bookings) {
+  return bookings.fold(0, (sum, booking) => sum + booking.totalPrice);
+}
+
 class ActiveBookedTab extends StatelessWidget {
   const ActiveBookedTab({super.key});
 
@@ -377,8 +389,8 @@ class ActiveBookedTab extends StatelessWidget {
 }
 
 class EarningsSection extends StatelessWidget {
-  const EarningsSection({super.key});
-
+  const EarningsSection({super.key, required this.bookings});
+  final List<CoachHistoryModel> bookings;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -396,30 +408,25 @@ class EarningsSection extends StatelessWidget {
             color: AppColors.primaryColor,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Total Earnings',
                     style: TextStyle(color: Colors.white),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Text(
-                    '\$1500',
-                    style: TextStyle(
+                    '₹ ${calculateTotalPayment(bookings)}',
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24,
                         fontWeight: FontWeight.bold),
                   ),
                 ],
-              ),
-              Icon(
-                Icons.attach_money,
-                color: Colors.white,
-                size: 40,
               ),
             ],
           ),
