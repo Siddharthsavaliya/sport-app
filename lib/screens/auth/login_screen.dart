@@ -144,17 +144,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                   String? role =
                                       await getKeyValue(key: 'coach');
                                   Navigator.pop(context);
-                                  Navigator.push(
-                                      context,
-                                      CupertinoPageRoute(
-                                        builder: (context) => role == "coach"
-                                            ? const DashboardScreen()
-                                            : !state.isOtp
-                                                ? VerifyScreen(
-                                                    phoneNumber:
-                                                        phoneNumber.text)
-                                                : const AppBottomBar(),
-                                      ));
+                                  if (role == "coach") {
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (context) =>
+                                              const DashboardScreen(),
+                                        ),
+                                        (context) => false);
+                                  } else {
+                                    Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (context) => !state.isOtp
+                                              ? VerifyScreen(
+                                                  phoneNumber: phoneNumber.text)
+                                              : const AppBottomBar(),
+                                        ));
+                                  }
                                 } else if (state.status.isFailed) {
                                   Navigator.pop(context);
                                   showScafoldMessage(
