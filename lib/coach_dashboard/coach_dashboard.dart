@@ -58,7 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     ),
                     addHorizontalSpacing(0.01),
                     Text(
-                      'Hi ${state.userModel!.userName}' ?? "",
+                      'Hi ${state.userModel!.firstname} ${state.userModel!.lastname}',
                       style: AppStyle.mediumBold.copyWith(
                           color: AppColors.white,
                           fontSize: 16.sp,
