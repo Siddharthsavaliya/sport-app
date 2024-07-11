@@ -45,7 +45,9 @@ class AuthRepository {
         "password": password,
       });
       String? token = response.data!['token'];
+      print(response.data!['role']);
       await storeKeyValue(key: "token", value: token ?? "");
+      await storeKeyValue(key: "coach", value: response.data!['role']);
       return ApiResult.success(token != "");
     } catch (e) {
       return getErrorMessage(e);

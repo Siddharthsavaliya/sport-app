@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/bloc/location_bloc/location_bloc.dart';
+import 'package:sport_app/coach_dashboard/coach_dashboard.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/screens/app_bottom_bar.dart';
 import 'package:sport_app/screens/location_screens/location_access_screen.dart';
@@ -28,6 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   checkIsLogged() async {
     String? userId = await getKeyValue(key: 'token');
+    String? role = await getKeyValue(key: 'coach');
     String? city = await getKeyValue(key: 'city');
     isLogged = userId == null ? false : true;
     setState(() {});
@@ -42,7 +44,9 @@ class _SplashScreenState extends State<SplashScreen> {
             ? Navigator.pushAndRemoveUntil(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) => const AppBottomBar(),
+                  builder: (context) => role == "coach"
+                      ? const DashboardScreen()
+                      : const AppBottomBar(),
                 ),
                 (route) => false,
               )

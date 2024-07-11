@@ -16,13 +16,13 @@ import 'package:sport_app/screens/app_bottom_bar.dart';
 import 'package:sport_app/screens/auth/forget_password.dart';
 import 'package:sport_app/screens/auth/sign_up_screen.dart';
 import 'package:sport_app/screens/auth/verify_screen.dart';
-import 'package:sport_app/screens/home/home_screen.dart';
-import 'package:sport_app/screens/location_screens/location_access_screen.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/status_dialog.dart';
 import 'package:sport_app/utils/validator.dart';
 import 'package:sport_app/widget/app_button.dart';
 import 'package:sport_app/widget/app_text_field.dart';
+
+import '../../coach_dashboard/coach_dashboard.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -141,14 +141,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (state.status.isInProgress) {
                                   showProgressDialogue(context);
                                 } else if (state.status.isLoaded) {
+                                  String? role =
+                                      await getKeyValue(key: 'coach');
                                   Navigator.pop(context);
                                   Navigator.push(
                                       context,
                                       CupertinoPageRoute(
-                                        builder: (context) => !state.isOtp
-                                            ? VerifyScreen(
-                                                phoneNumber: phoneNumber.text)
-                                            : const AppBottomBar(),
+                                        builder: (context) => role == "coach"
+                                            ? const DashboardScreen()
+                                            : !state.isOtp
+                                                ? VerifyScreen(
+                                                    phoneNumber:
+                                                        phoneNumber.text)
+                                                : const AppBottomBar(),
                                       ));
                                 } else if (state.status.isFailed) {
                                   Navigator.pop(context);
