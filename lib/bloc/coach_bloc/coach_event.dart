@@ -27,3 +27,10 @@ class GetCoachSingleHistoryRequest extends CoachEvent {
   @override
   List<Object> get props => [];
 }
+
+class GetCoachHistoryRequest extends CoachEvent {
+  GetCoachHistoryRequest();
+
+  @override
+  List<Object> get props => [];
+}

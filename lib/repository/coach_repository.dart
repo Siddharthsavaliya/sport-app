@@ -44,6 +44,18 @@ class CoachRepository {
       return getErrorMessage(e);
     }
   }
+
+  Future<ApiResult<bool>> getOneCoachBookings() async {
+    try {
+      final response = await apiClient.get(
+        ApiConstants.getOneCoachBookings,
+      );
+      log(response.data);
+      return const ApiResult.success(true);
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
 }
 
 List<Coach> getCoachListFromResponse(

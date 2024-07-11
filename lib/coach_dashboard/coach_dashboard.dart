@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
+import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
+import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/utils/helper.dart';
+import 'package:sport_app/widget/empty_place_holder.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -18,6 +23,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   @override
   void initState() {
+    onRefresh();
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
   }
@@ -28,51 +34,79 @@ class _DashboardScreenState extends State<DashboardScreen>
     super.dispose();
   }
 
+  Future<void> onRefresh() async {
+    BlocProvider.of<UserBloc>(context).add(GetUserEventRequest(isCoach: true));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
-        title: Row(
-          children: [
-            const Center(
-              child: ClipOval(
-                child: CircleAvatar(
-                    radius: 20, backgroundImage: AssetImage(AppAssets.dp)),
+      body: BlocBuilder<UserBloc, UserState>(
+        builder: (context, state) {
+          if (state.status.isLoaded) {
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: AppColors.primaryColor,
+                title: Row(
+                  children: [
+                    const Center(
+                      child: ClipOval(
+                        child: CircleAvatar(
+                            radius: 20,
+                            backgroundImage: AssetImage(AppAssets.dp)),
+                      ),
+                    ),
+                    addHorizontalSpacing(0.01),
+                    Text(
+                      'Hi ${state.userModel!.userName}' ?? "",
+                      style: AppStyle.mediumBold.copyWith(
+                          color: AppColors.white,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 0.8),
+                    ),
+                  ],
+                ),
+                bottom: TabBar(
+                  indicatorColor: Colors.white,
+                  labelStyle: AppStyle.mediumBold,
+                  controller: _tabController,
+                  tabs: const [
+                    Tab(text: 'Active Booking'),
+                    Tab(text: 'Booking History'),
+                  ],
+                ),
               ),
-            ),
-            addHorizontalSpacing(0.01),
-            Text(
-              'Hi Siddharth' ?? "",
-              style: AppStyle.mediumBold.copyWith(
-                  color: AppColors.white,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.8),
-            ),
-          ],
-        ),
-        bottom: TabBar(
-          labelStyle: AppStyle.mediumBold,
-          controller: _tabController,
-          tabs: const [
-            Tab(text: 'Active Booking'),
-            Tab(text: 'Booking History'),
-          ],
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          BookedHistoryTab(),
-          ActiveBookedTab(),
-        ],
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: const EarningsSection(),
-        ),
+              body: TabBarView(
+                controller: _tabController,
+                children: const [
+                  BookedHistoryTab(),
+                  ActiveBookedTab(),
+                ],
+              ),
+              bottomNavigationBar: BottomAppBar(
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  child: const EarningsSection(),
+                ),
+              ),
+            );
+          }
+          if (state.status.isInProgress) {
+            return Center(
+              child: Lottie.asset('assets/animation/loading.json'),
+            );
+          }
+          return EmptyPlaceHolder(
+            title: "Oops",
+            buttonText: "Try Again",
+            onTap: () {
+              onRefresh();
+            },
+            subTitle: "Something went wrong",
+            imagePath: AppAssets.error,
+          );
+        },
       ),
     );
   }

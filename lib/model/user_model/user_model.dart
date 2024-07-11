@@ -11,6 +11,8 @@ class UserModel with _$UserModel {
     String? institutionName,
     String? institutionId,
     String? userName,
+    String? firstname,
+    String? lastname,
     String? email,
     Membership? subscription,
     String? phoneNumber,

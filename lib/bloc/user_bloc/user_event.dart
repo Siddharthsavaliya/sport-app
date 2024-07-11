@@ -8,8 +8,8 @@ abstract class UserEvent extends Equatable {
 }
 
 class GetUserEventRequest extends UserEvent {
-  GetUserEventRequest();
-
+  GetUserEventRequest({this.isCoach = false});
+  final bool isCoach;
   @override
   List<Object> get props => [];
 }

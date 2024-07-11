@@ -26,22 +26,35 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(state.copyWith(status: Status.inProgress, isUpdate: false));
     try {
       final apiResult = await userRepository.getUser();
-      final apiResult1 = await userRepository.getUserWallet();
-      await apiResult.when(
-        success: (data) async {
-          await storeKeyValue(key: "phone", value: data.phoneNumber!);
-          Notifications.init();
-          apiResult1.when(failure: (error) {
+      if (!event.isCoach) {
+        final apiResult1 = await userRepository.getUserWallet();
+        await apiResult.when(
+          success: (data) async {
+            await storeKeyValue(key: "phone", value: data.phoneNumber!);
+            Notifications.init();
+            apiResult1.when(failure: (error) {
+              emit(state.copyWith(status: Status.failed, message: error));
+            }, success: (data1) {
+              emit(state.copyWith(
+                  status: Status.loaded, userModel: data, balance: data1));
+            });
+          },
+          failure: (error) {
             emit(state.copyWith(status: Status.failed, message: error));
-          }, success: (data1) {
-            emit(state.copyWith(
-                status: Status.loaded, userModel: data, balance: data1));
-          });
-        },
-        failure: (error) {
-          emit(state.copyWith(status: Status.failed, message: error));
-        },
-      );
+          },
+        );
+      } else {
+        await apiResult.when(
+          success: (data) async {
+            await storeKeyValue(key: "phone", value: data.phoneNumber!);
+            Notifications.init();
+            emit(state.copyWith(status: Status.loaded, userModel: data));
+          },
+          failure: (error) {
+            emit(state.copyWith(status: Status.failed, message: error));
+          },
+        );
+      }
     } catch (e) {
       emit(state.copyWith(status: Status.failed, message: e.toString()));
     }

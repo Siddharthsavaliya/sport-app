@@ -16,6 +16,9 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
     on<GetCoachSingleHistoryRequest>(
       (event, emit) => _getSingleHistoryRequest(event, emit),
     );
+    on<GetCoachHistoryRequest>(
+      (event, emit) => _getCoachHistoryRequest(event, emit),
+    );
   }
   final CoachRepository coachRepository = CoachRepository();
   Future<void> _getRequest(
@@ -79,6 +82,27 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
       apiResult.when(
         success: (data) {
           emit(state.copyWith(status: Status.loaded, coachBookingModel: data));
+        },
+        failure: (error) {
+          emit(state.copyWith(status: Status.failed, message: error));
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(status: Status.failed, message: e.toString()));
+    }
+  }
+
+  Future<void> _getCoachHistoryRequest(
+    GetCoachHistoryRequest event,
+    Emitter<CoachState> emit,
+  ) async {
+    emit(state.copyWith(
+        status: Status.inProgress, isBooking: false, isBookingSuccess: true));
+    try {
+      final apiResult = await coachRepository.getOneCoachBookings();
+      apiResult.when(
+        success: (data) {
+          emit(state.copyWith(status: Status.loaded));
         },
         failure: (error) {
           emit(state.copyWith(status: Status.failed, message: error));

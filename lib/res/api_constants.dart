@@ -35,6 +35,6 @@ class ApiConstants {
   static const String coachBookSlot = "/booking/book-coach-slot/";
   static const String getSingleCoachBookSlot =
       "/booking/getSingleCoachBookingHistory/";
-  static const String getSingleBookSlot =
-      "/booking/getSingleBookingHistory/";
+  static const String getOneCoachBookings = "/booking/getOneCoachBookings/";
+  static const String getSingleBookSlot = "/booking/getSingleBookingHistory/";
 }

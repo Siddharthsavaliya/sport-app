@@ -24,6 +24,8 @@ mixin _$UserModel {
   String? get institutionName => throw _privateConstructorUsedError;
   String? get institutionId => throw _privateConstructorUsedError;
   String? get userName => throw _privateConstructorUsedError;
+  String? get firstname => throw _privateConstructorUsedError;
+  String? get lastname => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   Membership? get subscription => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
@@ -48,6 +50,8 @@ abstract class $UserModelCopyWith<$Res> {
       String? institutionName,
       String? institutionId,
       String? userName,
+      String? firstname,
+      String? lastname,
       String? email,
       Membership? subscription,
       String? phoneNumber,
@@ -75,6 +79,8 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? institutionName = freezed,
     Object? institutionId = freezed,
     Object? userName = freezed,
+    Object? firstname = freezed,
+    Object? lastname = freezed,
     Object? email = freezed,
     Object? subscription = freezed,
     Object? phoneNumber = freezed,
@@ -98,6 +104,14 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      firstname: freezed == firstname
+          ? _value.firstname
+          : firstname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastname: freezed == lastname
+          ? _value.lastname
+          : lastname // ignore: cast_nullable_to_non_nullable
               as String?,
       email: freezed == email
           ? _value.email
@@ -152,6 +166,8 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String? institutionName,
       String? institutionId,
       String? userName,
+      String? firstname,
+      String? lastname,
       String? email,
       Membership? subscription,
       String? phoneNumber,
@@ -178,6 +194,8 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? institutionName = freezed,
     Object? institutionId = freezed,
     Object? userName = freezed,
+    Object? firstname = freezed,
+    Object? lastname = freezed,
     Object? email = freezed,
     Object? subscription = freezed,
     Object? phoneNumber = freezed,
@@ -201,6 +219,14 @@ class __$$UserModelImplCopyWithImpl<$Res>
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      firstname: freezed == firstname
+          ? _value.firstname
+          : firstname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastname: freezed == lastname
+          ? _value.lastname
+          : lastname // ignore: cast_nullable_to_non_nullable
               as String?,
       email: freezed == email
           ? _value.email
@@ -238,6 +264,8 @@ class _$UserModelImpl implements _UserModel {
       this.institutionName,
       this.institutionId,
       this.userName,
+      this.firstname,
+      this.lastname,
       this.email,
       this.subscription,
       this.phoneNumber,
@@ -257,6 +285,10 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String? userName;
   @override
+  final String? firstname;
+  @override
+  final String? lastname;
+  @override
   final String? email;
   @override
   final Membership? subscription;
@@ -272,7 +304,7 @@ class _$UserModelImpl implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(role: $role, institutionName: $institutionName, institutionId: $institutionId, userName: $userName, email: $email, subscription: $subscription, phoneNumber: $phoneNumber, dpUrl: $dpUrl, path: $path, dob: $dob)';
+    return 'UserModel(role: $role, institutionName: $institutionName, institutionId: $institutionId, userName: $userName, firstname: $firstname, lastname: $lastname, email: $email, subscription: $subscription, phoneNumber: $phoneNumber, dpUrl: $dpUrl, path: $path, dob: $dob)';
   }
 
   @override
@@ -287,6 +319,10 @@ class _$UserModelImpl implements _UserModel {
                 other.institutionId == institutionId) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
+            (identical(other.firstname, firstname) ||
+                other.firstname == firstname) &&
+            (identical(other.lastname, lastname) ||
+                other.lastname == lastname) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.subscription, subscription) ||
                 other.subscription == subscription) &&
@@ -305,6 +341,8 @@ class _$UserModelImpl implements _UserModel {
       institutionName,
       institutionId,
       userName,
+      firstname,
+      lastname,
       email,
       subscription,
       phoneNumber,
@@ -332,6 +370,8 @@ abstract class _UserModel implements UserModel {
       final String? institutionName,
       final String? institutionId,
       final String? userName,
+      final String? firstname,
+      final String? lastname,
       final String? email,
       final Membership? subscription,
       final String? phoneNumber,
@@ -350,6 +390,10 @@ abstract class _UserModel implements UserModel {
   String? get institutionId;
   @override
   String? get userName;
+  @override
+  String? get firstname;
+  @override
+  String? get lastname;
   @override
   String? get email;
   @override
