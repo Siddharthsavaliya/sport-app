@@ -6,14 +6,13 @@ part 'coach_history_model.g.dart';
 @freezed
 class CoachHistoryModel with _$CoachHistoryModel {
   const factory CoachHistoryModel({
-    required String id,
+    @JsonKey(name: "_id") required String id,
     required User userId,
     required Coach coachId,
     required School schoolId,
     required String startTime,
     required String endTime,
     required String qrCode,
-    required List<User> users,
     required String transactionId,
     required double totalPrice,
     required double subtotal,
@@ -22,18 +21,17 @@ class CoachHistoryModel with _$CoachHistoryModel {
     required String payment,
     required DateTime createdAt,
     required DateTime updatedAt,
-    required int v,
     required String url,
     required String bookingDateTime,
   }) = _CoachHistoryModel;
 
-  factory CoachHistoryModel.fromJson(Map<String, dynamic> json) => _$CoachHistoryModelFromJson(json);
+  factory CoachHistoryModel.fromJson(Map<String, dynamic> json) =>
+      _$CoachHistoryModelFromJson(json);
 }
 
 @freezed
 class User with _$User {
   const factory User({
-    required String id,
     required String userName,
     required String phoneNumber,
   }) = _User;
@@ -44,7 +42,6 @@ class User with _$User {
 @freezed
 class Coach with _$Coach {
   const factory Coach({
-    required String id,
     required List<String> sportsgrounds,
   }) = _Coach;
 
@@ -54,7 +51,6 @@ class Coach with _$Coach {
 @freezed
 class School with _$School {
   const factory School({
-    required String id,
     required String institutionName,
     required String institutionId,
   }) = _School;

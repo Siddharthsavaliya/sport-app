@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sport_app/bloc/coach_bloc/coach_bloc.dart';
 import 'package:sport_app/bloc/coach_bloc/coach_event.dart';
 import 'package:sport_app/bloc/coach_bloc/coach_state.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
+import 'package:sport_app/model/coach_history_model/coach_history_model.dart';
 import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
@@ -27,6 +29,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   void initState() {
     onRefresh();
+    BlocProvider.of<CoachBloc>(context).add(GetCoachHistoryRequest());
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
   }
@@ -48,6 +51,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         builder: (context, state) {
           if (state.status.isLoaded) {
             return Scaffold(
+              backgroundColor: Colors.grey.shade100,
               appBar: AppBar(
                 backgroundColor: AppColors.primaryColor,
                 title: Row(
@@ -127,18 +131,86 @@ class BookedHistoryTab extends StatelessWidget {
     return BlocBuilder<CoachBloc, CoachState>(
       builder: (context, state) {
         if (state.status.isLoaded) {
-          return ListView.builder(
-            itemCount: 10, // Example item count
-            itemBuilder: (context, index) {
-              return const ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "https://itsmycourt.s3.ap-south-1.amazonaws.com/IMG-20231209-WA0006.jpg"),
-                ),
-                title: Text("John"),
-                subtitle: Text("919714696101"),
-              );
-            },
+          return Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: ListView.builder(
+              itemCount: state.coachHistoryList.length, // Example item count
+              itemBuilder: (context, index) {
+                CoachHistoryModel booking = state.coachHistoryList[index];
+                return booking.bookingDateTime != "Valid"
+                    ? SizedBox.fromSize()
+                    : Card(
+                        elevation: 5,
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      booking.userId.userName,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      booking.schoolId.institutionName,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey[700],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    InfoRow(
+                                      icon: Icons.phone,
+                                      text: booking.userId.phoneNumber,
+                                    ),
+                                    InfoRow(
+                                      icon: Icons.calendar_today,
+                                      text:
+                                          "Booking Date: ${DateFormat.yMMMd().format(booking.createdAt)}",
+                                    ),
+                                    // InfoRow(
+                                    //   icon: Icons.access_time,
+                                    //   text:
+                                    //       "Time: ${booking.startTime} - ${booking.endTime}",
+                                    // ),
+                                    // InfoRow(
+                                    //   icon: Icons.inventory,
+                                    //   text:
+                                    //       "Total Price: ₹${booking.totalPrice.toStringAsFixed(2)}",
+                                    // ),
+                                    // InfoRow(
+                                    //   icon: Icons.receipt,
+                                    //   text:
+                                    //       "Transaction ID: ${booking.transactionId}",
+                                    // ),
+                                  ],
+                                ),
+                              ),
+                              const CircleAvatar(
+                                radius: 30,
+                                backgroundImage: NetworkImage(
+                                    "https://itsmycourt.s3.ap-south-1.amazonaws.com/IMG-20231209-WA0006.jpg"), // Placeholder image
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+              },
+            ),
           );
         }
         if (state.status.isInProgress) {
@@ -160,21 +232,144 @@ class BookedHistoryTab extends StatelessWidget {
   }
 }
 
+class InfoRow extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const InfoRow({
+    super.key,
+    required this.icon,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: Row(
+        children: [
+          Icon(icon, size: 20, color: Colors.grey[700]),
+          const SizedBox(width: 8),
+          Text(
+            text,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class ActiveBookedTab extends StatelessWidget {
   const ActiveBookedTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 10, // Example item count
-      itemBuilder: (context, index) {
-        return const ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(
-                "https://itsmycourt.s3.ap-south-1.amazonaws.com/IMG-20231209-WA0006.jpg"),
-          ),
-          title: Text("John"),
-          subtitle: Text("919714696101"),
+    Future<void> onRefresh() async {
+      BlocProvider.of<CoachBloc>(context).add(GetCoachHistoryRequest());
+    }
+
+    return BlocBuilder<CoachBloc, CoachState>(
+      builder: (context, state) {
+        if (state.status.isLoaded) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: ListView.builder(
+              itemCount: state.coachHistoryList.length, // Example item count
+              itemBuilder: (context, index) {
+                CoachHistoryModel booking = state.coachHistoryList[index];
+                return booking.bookingDateTime == "Valid"
+                    ? SizedBox.fromSize()
+                    : Card(
+                        elevation: 5,
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      booking.userId.userName,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      booking.schoolId.institutionName,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey[700],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    InfoRow(
+                                      icon: Icons.phone,
+                                      text: booking.userId.phoneNumber,
+                                    ),
+                                    InfoRow(
+                                      icon: Icons.calendar_today,
+                                      text:
+                                          "Booking Date: ${DateFormat.yMMMd().format(booking.createdAt)}",
+                                    ),
+                                    // InfoRow(
+                                    //   icon: Icons.access_time,
+                                    //   text:
+                                    //       "Time: ${booking.startTime} - ${booking.endTime}",
+                                    // ),
+                                    // InfoRow(
+                                    //   icon: Icons.inventory,
+                                    //   text:
+                                    //       "Total Price: ₹${booking.totalPrice.toStringAsFixed(2)}",
+                                    // ),
+                                    // InfoRow(
+                                    //   icon: Icons.receipt,
+                                    //   text:
+                                    //       "Transaction ID: ${booking.transactionId}",
+                                    // ),
+                                  ],
+                                ),
+                              ),
+                              const CircleAvatar(
+                                radius: 30,
+                                backgroundImage: NetworkImage(
+                                    "https://itsmycourt.s3.ap-south-1.amazonaws.com/IMG-20231209-WA0006.jpg"), // Placeholder image
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+              },
+            ),
+          );
+        }
+        if (state.status.isInProgress) {
+          return Center(
+            child: Lottie.asset('assets/animation/loading.json'),
+          );
+        }
+        return EmptyPlaceHolder(
+          title: "Oops",
+          buttonText: "Try Again",
+          onTap: () {
+            onRefresh();
+          },
+          subTitle: "Something went wrong",
+          imagePath: AppAssets.error,
         );
       },
     );

@@ -20,6 +20,7 @@ CoachHistoryModel _$CoachHistoryModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CoachHistoryModel {
+  @JsonKey(name: "_id")
   String get id => throw _privateConstructorUsedError;
   User get userId => throw _privateConstructorUsedError;
   Coach get coachId => throw _privateConstructorUsedError;
@@ -27,7 +28,6 @@ mixin _$CoachHistoryModel {
   String get startTime => throw _privateConstructorUsedError;
   String get endTime => throw _privateConstructorUsedError;
   String get qrCode => throw _privateConstructorUsedError;
-  List<User> get users => throw _privateConstructorUsedError;
   String get transactionId => throw _privateConstructorUsedError;
   double get totalPrice => throw _privateConstructorUsedError;
   double get subtotal => throw _privateConstructorUsedError;
@@ -36,7 +36,6 @@ mixin _$CoachHistoryModel {
   String get payment => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  int get v => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
   String get bookingDateTime => throw _privateConstructorUsedError;
 
@@ -53,14 +52,13 @@ abstract class $CoachHistoryModelCopyWith<$Res> {
       _$CoachHistoryModelCopyWithImpl<$Res, CoachHistoryModel>;
   @useResult
   $Res call(
-      {String id,
+      {@JsonKey(name: "_id") String id,
       User userId,
       Coach coachId,
       School schoolId,
       String startTime,
       String endTime,
       String qrCode,
-      List<User> users,
       String transactionId,
       double totalPrice,
       double subtotal,
@@ -69,7 +67,6 @@ abstract class $CoachHistoryModelCopyWith<$Res> {
       String payment,
       DateTime createdAt,
       DateTime updatedAt,
-      int v,
       String url,
       String bookingDateTime});
 
@@ -98,7 +95,6 @@ class _$CoachHistoryModelCopyWithImpl<$Res, $Val extends CoachHistoryModel>
     Object? startTime = null,
     Object? endTime = null,
     Object? qrCode = null,
-    Object? users = null,
     Object? transactionId = null,
     Object? totalPrice = null,
     Object? subtotal = null,
@@ -107,7 +103,6 @@ class _$CoachHistoryModelCopyWithImpl<$Res, $Val extends CoachHistoryModel>
     Object? payment = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? v = null,
     Object? url = null,
     Object? bookingDateTime = null,
   }) {
@@ -140,10 +135,6 @@ class _$CoachHistoryModelCopyWithImpl<$Res, $Val extends CoachHistoryModel>
           ? _value.qrCode
           : qrCode // ignore: cast_nullable_to_non_nullable
               as String,
-      users: null == users
-          ? _value.users
-          : users // ignore: cast_nullable_to_non_nullable
-              as List<User>,
       transactionId: null == transactionId
           ? _value.transactionId
           : transactionId // ignore: cast_nullable_to_non_nullable
@@ -176,10 +167,6 @@ class _$CoachHistoryModelCopyWithImpl<$Res, $Val extends CoachHistoryModel>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      v: null == v
-          ? _value.v
-          : v // ignore: cast_nullable_to_non_nullable
-              as int,
       url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -225,14 +212,13 @@ abstract class _$$CoachHistoryModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {@JsonKey(name: "_id") String id,
       User userId,
       Coach coachId,
       School schoolId,
       String startTime,
       String endTime,
       String qrCode,
-      List<User> users,
       String transactionId,
       double totalPrice,
       double subtotal,
@@ -241,7 +227,6 @@ abstract class _$$CoachHistoryModelImplCopyWith<$Res>
       String payment,
       DateTime createdAt,
       DateTime updatedAt,
-      int v,
       String url,
       String bookingDateTime});
 
@@ -271,7 +256,6 @@ class __$$CoachHistoryModelImplCopyWithImpl<$Res>
     Object? startTime = null,
     Object? endTime = null,
     Object? qrCode = null,
-    Object? users = null,
     Object? transactionId = null,
     Object? totalPrice = null,
     Object? subtotal = null,
@@ -280,7 +264,6 @@ class __$$CoachHistoryModelImplCopyWithImpl<$Res>
     Object? payment = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? v = null,
     Object? url = null,
     Object? bookingDateTime = null,
   }) {
@@ -313,10 +296,6 @@ class __$$CoachHistoryModelImplCopyWithImpl<$Res>
           ? _value.qrCode
           : qrCode // ignore: cast_nullable_to_non_nullable
               as String,
-      users: null == users
-          ? _value._users
-          : users // ignore: cast_nullable_to_non_nullable
-              as List<User>,
       transactionId: null == transactionId
           ? _value.transactionId
           : transactionId // ignore: cast_nullable_to_non_nullable
@@ -349,10 +328,6 @@ class __$$CoachHistoryModelImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      v: null == v
-          ? _value.v
-          : v // ignore: cast_nullable_to_non_nullable
-              as int,
       url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -369,14 +344,13 @@ class __$$CoachHistoryModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CoachHistoryModelImpl implements _CoachHistoryModel {
   const _$CoachHistoryModelImpl(
-      {required this.id,
+      {@JsonKey(name: "_id") required this.id,
       required this.userId,
       required this.coachId,
       required this.schoolId,
       required this.startTime,
       required this.endTime,
       required this.qrCode,
-      required final List<User> users,
       required this.transactionId,
       required this.totalPrice,
       required this.subtotal,
@@ -385,15 +359,14 @@ class _$CoachHistoryModelImpl implements _CoachHistoryModel {
       required this.payment,
       required this.createdAt,
       required this.updatedAt,
-      required this.v,
       required this.url,
-      required this.bookingDateTime})
-      : _users = users;
+      required this.bookingDateTime});
 
   factory _$CoachHistoryModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CoachHistoryModelImplFromJson(json);
 
   @override
+  @JsonKey(name: "_id")
   final String id;
   @override
   final User userId;
@@ -407,14 +380,6 @@ class _$CoachHistoryModelImpl implements _CoachHistoryModel {
   final String endTime;
   @override
   final String qrCode;
-  final List<User> _users;
-  @override
-  List<User> get users {
-    if (_users is EqualUnmodifiableListView) return _users;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_users);
-  }
-
   @override
   final String transactionId;
   @override
@@ -432,15 +397,13 @@ class _$CoachHistoryModelImpl implements _CoachHistoryModel {
   @override
   final DateTime updatedAt;
   @override
-  final int v;
-  @override
   final String url;
   @override
   final String bookingDateTime;
 
   @override
   String toString() {
-    return 'CoachHistoryModel(id: $id, userId: $userId, coachId: $coachId, schoolId: $schoolId, startTime: $startTime, endTime: $endTime, qrCode: $qrCode, users: $users, transactionId: $transactionId, totalPrice: $totalPrice, subtotal: $subtotal, gstAmount: $gstAmount, expirationDate: $expirationDate, payment: $payment, createdAt: $createdAt, updatedAt: $updatedAt, v: $v, url: $url, bookingDateTime: $bookingDateTime)';
+    return 'CoachHistoryModel(id: $id, userId: $userId, coachId: $coachId, schoolId: $schoolId, startTime: $startTime, endTime: $endTime, qrCode: $qrCode, transactionId: $transactionId, totalPrice: $totalPrice, subtotal: $subtotal, gstAmount: $gstAmount, expirationDate: $expirationDate, payment: $payment, createdAt: $createdAt, updatedAt: $updatedAt, url: $url, bookingDateTime: $bookingDateTime)';
   }
 
   @override
@@ -457,7 +420,6 @@ class _$CoachHistoryModelImpl implements _CoachHistoryModel {
                 other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
             (identical(other.qrCode, qrCode) || other.qrCode == qrCode) &&
-            const DeepCollectionEquality().equals(other._users, _users) &&
             (identical(other.transactionId, transactionId) ||
                 other.transactionId == transactionId) &&
             (identical(other.totalPrice, totalPrice) ||
@@ -473,7 +435,6 @@ class _$CoachHistoryModelImpl implements _CoachHistoryModel {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            (identical(other.v, v) || other.v == v) &&
             (identical(other.url, url) || other.url == url) &&
             (identical(other.bookingDateTime, bookingDateTime) ||
                 other.bookingDateTime == bookingDateTime));
@@ -481,28 +442,25 @@ class _$CoachHistoryModelImpl implements _CoachHistoryModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        userId,
-        coachId,
-        schoolId,
-        startTime,
-        endTime,
-        qrCode,
-        const DeepCollectionEquality().hash(_users),
-        transactionId,
-        totalPrice,
-        subtotal,
-        gstAmount,
-        expirationDate,
-        payment,
-        createdAt,
-        updatedAt,
-        v,
-        url,
-        bookingDateTime
-      ]);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      userId,
+      coachId,
+      schoolId,
+      startTime,
+      endTime,
+      qrCode,
+      transactionId,
+      totalPrice,
+      subtotal,
+      gstAmount,
+      expirationDate,
+      payment,
+      createdAt,
+      updatedAt,
+      url,
+      bookingDateTime);
 
   @JsonKey(ignore: true)
   @override
@@ -521,14 +479,13 @@ class _$CoachHistoryModelImpl implements _CoachHistoryModel {
 
 abstract class _CoachHistoryModel implements CoachHistoryModel {
   const factory _CoachHistoryModel(
-      {required final String id,
+      {@JsonKey(name: "_id") required final String id,
       required final User userId,
       required final Coach coachId,
       required final School schoolId,
       required final String startTime,
       required final String endTime,
       required final String qrCode,
-      required final List<User> users,
       required final String transactionId,
       required final double totalPrice,
       required final double subtotal,
@@ -537,7 +494,6 @@ abstract class _CoachHistoryModel implements CoachHistoryModel {
       required final String payment,
       required final DateTime createdAt,
       required final DateTime updatedAt,
-      required final int v,
       required final String url,
       required final String bookingDateTime}) = _$CoachHistoryModelImpl;
 
@@ -545,6 +501,7 @@ abstract class _CoachHistoryModel implements CoachHistoryModel {
       _$CoachHistoryModelImpl.fromJson;
 
   @override
+  @JsonKey(name: "_id")
   String get id;
   @override
   User get userId;
@@ -558,8 +515,6 @@ abstract class _CoachHistoryModel implements CoachHistoryModel {
   String get endTime;
   @override
   String get qrCode;
-  @override
-  List<User> get users;
   @override
   String get transactionId;
   @override
@@ -577,8 +532,6 @@ abstract class _CoachHistoryModel implements CoachHistoryModel {
   @override
   DateTime get updatedAt;
   @override
-  int get v;
-  @override
   String get url;
   @override
   String get bookingDateTime;
@@ -594,7 +547,6 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$User {
-  String get id => throw _privateConstructorUsedError;
   String get userName => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
 
@@ -608,7 +560,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({String id, String userName, String phoneNumber});
+  $Res call({String userName, String phoneNumber});
 }
 
 /// @nodoc
@@ -624,15 +576,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? userName = null,
     Object? phoneNumber = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       userName: null == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -652,7 +599,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String userName, String phoneNumber});
+  $Res call({String userName, String phoneNumber});
 }
 
 /// @nodoc
@@ -665,15 +612,10 @@ class __$$UserImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? userName = null,
     Object? phoneNumber = null,
   }) {
     return _then(_$UserImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       userName: null == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -689,14 +631,11 @@ class __$$UserImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserImpl implements _User {
-  const _$UserImpl(
-      {required this.id, required this.userName, required this.phoneNumber});
+  const _$UserImpl({required this.userName, required this.phoneNumber});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
 
-  @override
-  final String id;
   @override
   final String userName;
   @override
@@ -704,7 +643,7 @@ class _$UserImpl implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, userName: $userName, phoneNumber: $phoneNumber)';
+    return 'User(userName: $userName, phoneNumber: $phoneNumber)';
   }
 
   @override
@@ -712,7 +651,6 @@ class _$UserImpl implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
             (identical(other.phoneNumber, phoneNumber) ||
@@ -721,7 +659,7 @@ class _$UserImpl implements _User {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, userName, phoneNumber);
+  int get hashCode => Object.hash(runtimeType, userName, phoneNumber);
 
   @JsonKey(ignore: true)
   @override
@@ -739,14 +677,11 @@ class _$UserImpl implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {required final String id,
-      required final String userName,
+      {required final String userName,
       required final String phoneNumber}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
-  @override
-  String get id;
   @override
   String get userName;
   @override
@@ -763,7 +698,6 @@ Coach _$CoachFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Coach {
-  String get id => throw _privateConstructorUsedError;
   List<String> get sportsgrounds => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -776,7 +710,7 @@ abstract class $CoachCopyWith<$Res> {
   factory $CoachCopyWith(Coach value, $Res Function(Coach) then) =
       _$CoachCopyWithImpl<$Res, Coach>;
   @useResult
-  $Res call({String id, List<String> sportsgrounds});
+  $Res call({List<String> sportsgrounds});
 }
 
 /// @nodoc
@@ -792,14 +726,9 @@ class _$CoachCopyWithImpl<$Res, $Val extends Coach>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? sportsgrounds = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       sportsgrounds: null == sportsgrounds
           ? _value.sportsgrounds
           : sportsgrounds // ignore: cast_nullable_to_non_nullable
@@ -815,7 +744,7 @@ abstract class _$$CoachImplCopyWith<$Res> implements $CoachCopyWith<$Res> {
       __$$CoachImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, List<String> sportsgrounds});
+  $Res call({List<String> sportsgrounds});
 }
 
 /// @nodoc
@@ -829,14 +758,9 @@ class __$$CoachImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? sportsgrounds = null,
   }) {
     return _then(_$CoachImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       sportsgrounds: null == sportsgrounds
           ? _value._sportsgrounds
           : sportsgrounds // ignore: cast_nullable_to_non_nullable
@@ -848,15 +772,12 @@ class __$$CoachImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CoachImpl implements _Coach {
-  const _$CoachImpl(
-      {required this.id, required final List<String> sportsgrounds})
+  const _$CoachImpl({required final List<String> sportsgrounds})
       : _sportsgrounds = sportsgrounds;
 
   factory _$CoachImpl.fromJson(Map<String, dynamic> json) =>
       _$$CoachImplFromJson(json);
 
-  @override
-  final String id;
   final List<String> _sportsgrounds;
   @override
   List<String> get sportsgrounds {
@@ -867,7 +788,7 @@ class _$CoachImpl implements _Coach {
 
   @override
   String toString() {
-    return 'Coach(id: $id, sportsgrounds: $sportsgrounds)';
+    return 'Coach(sportsgrounds: $sportsgrounds)';
   }
 
   @override
@@ -875,7 +796,6 @@ class _$CoachImpl implements _Coach {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CoachImpl &&
-            (identical(other.id, id) || other.id == id) &&
             const DeepCollectionEquality()
                 .equals(other._sportsgrounds, _sportsgrounds));
   }
@@ -883,7 +803,7 @@ class _$CoachImpl implements _Coach {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, const DeepCollectionEquality().hash(_sportsgrounds));
+      runtimeType, const DeepCollectionEquality().hash(_sportsgrounds));
 
   @JsonKey(ignore: true)
   @override
@@ -900,14 +820,11 @@ class _$CoachImpl implements _Coach {
 }
 
 abstract class _Coach implements Coach {
-  const factory _Coach(
-      {required final String id,
-      required final List<String> sportsgrounds}) = _$CoachImpl;
+  const factory _Coach({required final List<String> sportsgrounds}) =
+      _$CoachImpl;
 
   factory _Coach.fromJson(Map<String, dynamic> json) = _$CoachImpl.fromJson;
 
-  @override
-  String get id;
   @override
   List<String> get sportsgrounds;
   @override
@@ -922,7 +839,6 @@ School _$SchoolFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$School {
-  String get id => throw _privateConstructorUsedError;
   String get institutionName => throw _privateConstructorUsedError;
   String get institutionId => throw _privateConstructorUsedError;
 
@@ -936,7 +852,7 @@ abstract class $SchoolCopyWith<$Res> {
   factory $SchoolCopyWith(School value, $Res Function(School) then) =
       _$SchoolCopyWithImpl<$Res, School>;
   @useResult
-  $Res call({String id, String institutionName, String institutionId});
+  $Res call({String institutionName, String institutionId});
 }
 
 /// @nodoc
@@ -952,15 +868,10 @@ class _$SchoolCopyWithImpl<$Res, $Val extends School>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? institutionName = null,
     Object? institutionId = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       institutionName: null == institutionName
           ? _value.institutionName
           : institutionName // ignore: cast_nullable_to_non_nullable
@@ -980,7 +891,7 @@ abstract class _$$SchoolImplCopyWith<$Res> implements $SchoolCopyWith<$Res> {
       __$$SchoolImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String institutionName, String institutionId});
+  $Res call({String institutionName, String institutionId});
 }
 
 /// @nodoc
@@ -994,15 +905,10 @@ class __$$SchoolImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? institutionName = null,
     Object? institutionId = null,
   }) {
     return _then(_$SchoolImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       institutionName: null == institutionName
           ? _value.institutionName
           : institutionName // ignore: cast_nullable_to_non_nullable
@@ -1019,15 +925,11 @@ class __$$SchoolImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SchoolImpl implements _School {
   const _$SchoolImpl(
-      {required this.id,
-      required this.institutionName,
-      required this.institutionId});
+      {required this.institutionName, required this.institutionId});
 
   factory _$SchoolImpl.fromJson(Map<String, dynamic> json) =>
       _$$SchoolImplFromJson(json);
 
-  @override
-  final String id;
   @override
   final String institutionName;
   @override
@@ -1035,7 +937,7 @@ class _$SchoolImpl implements _School {
 
   @override
   String toString() {
-    return 'School(id: $id, institutionName: $institutionName, institutionId: $institutionId)';
+    return 'School(institutionName: $institutionName, institutionId: $institutionId)';
   }
 
   @override
@@ -1043,7 +945,6 @@ class _$SchoolImpl implements _School {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SchoolImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.institutionName, institutionName) ||
                 other.institutionName == institutionName) &&
             (identical(other.institutionId, institutionId) ||
@@ -1052,8 +953,7 @@ class _$SchoolImpl implements _School {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, institutionName, institutionId);
+  int get hashCode => Object.hash(runtimeType, institutionName, institutionId);
 
   @JsonKey(ignore: true)
   @override
@@ -1071,14 +971,11 @@ class _$SchoolImpl implements _School {
 
 abstract class _School implements School {
   const factory _School(
-      {required final String id,
-      required final String institutionName,
+      {required final String institutionName,
       required final String institutionId}) = _$SchoolImpl;
 
   factory _School.fromJson(Map<String, dynamic> json) = _$SchoolImpl.fromJson;
 
-  @override
-  String get id;
   @override
   String get institutionName;
   @override
