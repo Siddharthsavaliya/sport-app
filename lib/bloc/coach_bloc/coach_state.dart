@@ -2,6 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:sport_app/model/coach_booking_model/coach_booking_model.dart';
 import 'package:sport_app/model/coach_model/coach_model.dart';
 import 'package:sport_app/model/status.dart';
+import 'package:sport_app/model/coach_history_model/coach_history_model.dart'
+    as coach_history_model;
 
 class CoachState extends Equatable {
   const CoachState({
@@ -13,6 +15,7 @@ class CoachState extends Equatable {
     this.coachBookingModel,
     this.status = Status.initial,
     this.coachsData = const [],
+    this.coachHistoryList = const [],
   });
   final List<Coach>? coachsData;
   final String message;
@@ -21,6 +24,7 @@ class CoachState extends Equatable {
   final bool isBooking;
   final bool isBookingSuccess;
   final CoachBookingModel? coachBookingModel;
+  final List<coach_history_model.CoachHistoryModel> coachHistoryList;
   final Status status;
 
   @override
@@ -29,6 +33,7 @@ class CoachState extends Equatable {
       status,
       id,
       isBooking,
+      coachHistoryList,
       redirectUrl,
       isBookingSuccess,
       coachBookingModel,
@@ -39,6 +44,7 @@ class CoachState extends Equatable {
 
   CoachState copyWith({
     String? message,
+    List<coach_history_model.CoachHistoryModel>? coachHistoryList,
     String? id,
     String? redirectUrl,
     bool? isBooking,
@@ -49,6 +55,7 @@ class CoachState extends Equatable {
   }) {
     return CoachState(
       message: message ?? this.message,
+      coachHistoryList: coachHistoryList ?? this.coachHistoryList,
       redirectUrl: redirectUrl ?? this.redirectUrl,
       isBookingSuccess: isBookingSuccess ?? this.isBookingSuccess,
       id: id ?? this.id,
