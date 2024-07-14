@@ -71,9 +71,6 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
   @override
   void initState() {
     super.initState();
-    if (widget.groundSlotData != null) {
-      selectedSlot.add(widget.groundSlotData!);
-    }
     getGroundSlot();
   }
 
@@ -297,7 +294,7 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                                   selectedHorizontalDate,
                               onChanged: (List<GroundSlotData> selectedSlots) {
                                 isSlotSelected = selectedSlots.isNotEmpty;
-                                if (isSlotSelected) {
+                                if (isSlotSelected && selectedSlot.isEmpty) {
                                   selectedSlot.add(selectedSlots.first);
                                 } else {
                                   selectedSlot = [];
