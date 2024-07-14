@@ -98,18 +98,18 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
   ) async {
     emit(state.copyWith(
         status: Status.inProgress, isBooking: false, isBookingSuccess: true));
-    try {
-      final apiResult = await coachRepository.getOneCoachBookings();
-      apiResult.when(
-        success: (data) {
-          emit(state.copyWith(status: Status.loaded, coachHistoryList: data));
-        },
-        failure: (error) {
-          emit(state.copyWith(status: Status.failed, message: error));
-        },
-      );
-    } catch (e) {
-      emit(state.copyWith(status: Status.failed, message: e.toString()));
-    }
+    // try {
+    final apiResult = await coachRepository.getOneCoachBookings();
+    apiResult.when(
+      success: (data) {
+        emit(state.copyWith(status: Status.loaded, coachHistoryList: data));
+      },
+      failure: (error) {
+        emit(state.copyWith(status: Status.failed, message: error));
+      },
+    );
+    // } catch (e) {
+    //   emit(state.copyWith(status: Status.failed, message: e.toString()));
+    // }
   }
 }

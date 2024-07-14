@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +15,7 @@ import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/on_boarding/splash_screen.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/widget/empty_place_holder.dart';
 
@@ -54,6 +58,23 @@ class _DashboardScreenState extends State<DashboardScreen>
               backgroundColor: Colors.grey.shade100,
               appBar: AppBar(
                 backgroundColor: AppColors.primaryColor,
+                actions: [
+                  IconButton(
+                      onPressed: () async {
+                        await deleteAll();
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => const SplashScreen(),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.login,
+                        color: AppColors.white,
+                      ))
+                ],
                 title: Row(
                   children: [
                     const Center(

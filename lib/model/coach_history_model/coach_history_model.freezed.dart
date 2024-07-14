@@ -25,9 +25,10 @@ mixin _$CoachHistoryModel {
   User get userId => throw _privateConstructorUsedError;
   Coach get coachId => throw _privateConstructorUsedError;
   School get schoolId => throw _privateConstructorUsedError;
-  String get startTime => throw _privateConstructorUsedError;
-  String get endTime => throw _privateConstructorUsedError;
+  String? get startTime => throw _privateConstructorUsedError;
+  String? get endTime => throw _privateConstructorUsedError;
   String get qrCode => throw _privateConstructorUsedError;
+  List<String> get days => throw _privateConstructorUsedError;
   String get transactionId => throw _privateConstructorUsedError;
   double get totalPrice => throw _privateConstructorUsedError;
   double get subtotal => throw _privateConstructorUsedError;
@@ -56,9 +57,10 @@ abstract class $CoachHistoryModelCopyWith<$Res> {
       User userId,
       Coach coachId,
       School schoolId,
-      String startTime,
-      String endTime,
+      String? startTime,
+      String? endTime,
       String qrCode,
+      List<String> days,
       String transactionId,
       double totalPrice,
       double subtotal,
@@ -92,9 +94,10 @@ class _$CoachHistoryModelCopyWithImpl<$Res, $Val extends CoachHistoryModel>
     Object? userId = null,
     Object? coachId = null,
     Object? schoolId = null,
-    Object? startTime = null,
-    Object? endTime = null,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
     Object? qrCode = null,
+    Object? days = null,
     Object? transactionId = null,
     Object? totalPrice = null,
     Object? subtotal = null,
@@ -123,18 +126,22 @@ class _$CoachHistoryModelCopyWithImpl<$Res, $Val extends CoachHistoryModel>
           ? _value.schoolId
           : schoolId // ignore: cast_nullable_to_non_nullable
               as School,
-      startTime: null == startTime
+      startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
-              as String,
-      endTime: null == endTime
+              as String?,
+      endTime: freezed == endTime
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       qrCode: null == qrCode
           ? _value.qrCode
           : qrCode // ignore: cast_nullable_to_non_nullable
               as String,
+      days: null == days
+          ? _value.days
+          : days // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       transactionId: null == transactionId
           ? _value.transactionId
           : transactionId // ignore: cast_nullable_to_non_nullable
@@ -216,9 +223,10 @@ abstract class _$$CoachHistoryModelImplCopyWith<$Res>
       User userId,
       Coach coachId,
       School schoolId,
-      String startTime,
-      String endTime,
+      String? startTime,
+      String? endTime,
       String qrCode,
+      List<String> days,
       String transactionId,
       double totalPrice,
       double subtotal,
@@ -253,9 +261,10 @@ class __$$CoachHistoryModelImplCopyWithImpl<$Res>
     Object? userId = null,
     Object? coachId = null,
     Object? schoolId = null,
-    Object? startTime = null,
-    Object? endTime = null,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
     Object? qrCode = null,
+    Object? days = null,
     Object? transactionId = null,
     Object? totalPrice = null,
     Object? subtotal = null,
@@ -284,18 +293,22 @@ class __$$CoachHistoryModelImplCopyWithImpl<$Res>
           ? _value.schoolId
           : schoolId // ignore: cast_nullable_to_non_nullable
               as School,
-      startTime: null == startTime
+      startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
-              as String,
-      endTime: null == endTime
+              as String?,
+      endTime: freezed == endTime
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       qrCode: null == qrCode
           ? _value.qrCode
           : qrCode // ignore: cast_nullable_to_non_nullable
               as String,
+      days: null == days
+          ? _value._days
+          : days // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       transactionId: null == transactionId
           ? _value.transactionId
           : transactionId // ignore: cast_nullable_to_non_nullable
@@ -348,9 +361,10 @@ class _$CoachHistoryModelImpl implements _CoachHistoryModel {
       required this.userId,
       required this.coachId,
       required this.schoolId,
-      required this.startTime,
-      required this.endTime,
+      this.startTime,
+      this.endTime,
       required this.qrCode,
+      required final List<String> days,
       required this.transactionId,
       required this.totalPrice,
       required this.subtotal,
@@ -360,7 +374,8 @@ class _$CoachHistoryModelImpl implements _CoachHistoryModel {
       required this.createdAt,
       required this.updatedAt,
       required this.url,
-      required this.bookingDateTime});
+      required this.bookingDateTime})
+      : _days = days;
 
   factory _$CoachHistoryModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CoachHistoryModelImplFromJson(json);
@@ -375,11 +390,19 @@ class _$CoachHistoryModelImpl implements _CoachHistoryModel {
   @override
   final School schoolId;
   @override
-  final String startTime;
+  final String? startTime;
   @override
-  final String endTime;
+  final String? endTime;
   @override
   final String qrCode;
+  final List<String> _days;
+  @override
+  List<String> get days {
+    if (_days is EqualUnmodifiableListView) return _days;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_days);
+  }
+
   @override
   final String transactionId;
   @override
@@ -403,7 +426,7 @@ class _$CoachHistoryModelImpl implements _CoachHistoryModel {
 
   @override
   String toString() {
-    return 'CoachHistoryModel(id: $id, userId: $userId, coachId: $coachId, schoolId: $schoolId, startTime: $startTime, endTime: $endTime, qrCode: $qrCode, transactionId: $transactionId, totalPrice: $totalPrice, subtotal: $subtotal, gstAmount: $gstAmount, expirationDate: $expirationDate, payment: $payment, createdAt: $createdAt, updatedAt: $updatedAt, url: $url, bookingDateTime: $bookingDateTime)';
+    return 'CoachHistoryModel(id: $id, userId: $userId, coachId: $coachId, schoolId: $schoolId, startTime: $startTime, endTime: $endTime, qrCode: $qrCode, days: $days, transactionId: $transactionId, totalPrice: $totalPrice, subtotal: $subtotal, gstAmount: $gstAmount, expirationDate: $expirationDate, payment: $payment, createdAt: $createdAt, updatedAt: $updatedAt, url: $url, bookingDateTime: $bookingDateTime)';
   }
 
   @override
@@ -420,6 +443,7 @@ class _$CoachHistoryModelImpl implements _CoachHistoryModel {
                 other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
             (identical(other.qrCode, qrCode) || other.qrCode == qrCode) &&
+            const DeepCollectionEquality().equals(other._days, _days) &&
             (identical(other.transactionId, transactionId) ||
                 other.transactionId == transactionId) &&
             (identical(other.totalPrice, totalPrice) ||
@@ -451,6 +475,7 @@ class _$CoachHistoryModelImpl implements _CoachHistoryModel {
       startTime,
       endTime,
       qrCode,
+      const DeepCollectionEquality().hash(_days),
       transactionId,
       totalPrice,
       subtotal,
@@ -483,9 +508,10 @@ abstract class _CoachHistoryModel implements CoachHistoryModel {
       required final User userId,
       required final Coach coachId,
       required final School schoolId,
-      required final String startTime,
-      required final String endTime,
+      final String? startTime,
+      final String? endTime,
       required final String qrCode,
+      required final List<String> days,
       required final String transactionId,
       required final double totalPrice,
       required final double subtotal,
@@ -510,11 +536,13 @@ abstract class _CoachHistoryModel implements CoachHistoryModel {
   @override
   School get schoolId;
   @override
-  String get startTime;
+  String? get startTime;
   @override
-  String get endTime;
+  String? get endTime;
   @override
   String get qrCode;
+  @override
+  List<String> get days;
   @override
   String get transactionId;
   @override

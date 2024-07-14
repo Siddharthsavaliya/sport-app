@@ -286,7 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             addHorizontalSpacing(0.012),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                              children: [ 
                                 shimmerWidget(
                                   child: Container(
                                     height: 0.015.sh,

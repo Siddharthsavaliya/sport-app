@@ -26,6 +26,8 @@ _$CoachImpl _$$CoachImplFromJson(Map<String, dynamic> json) => _$CoachImpl(
       institutionId: json['institutionId'] as String?,
       description: json['description'] as String?,
       city: json['city'] as String?,
+      startTime: json['startTime'] as String?,
+      endTime: json['endTime'] as String?,
       state: json['state'] as String?,
       pincode: json['pincode'] as String?,
       country: json['country'] as String?,
@@ -35,6 +37,9 @@ _$CoachImpl _$$CoachImplFromJson(Map<String, dynamic> json) => _$CoachImpl(
               ?.map((e) => e as String)
               .toList() ??
           const [],
+      days:
+          (json['days'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const [],
       certificates: (json['certificates'] as List<dynamic>?)
               ?.map((e) => Certificate.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -84,12 +89,15 @@ Map<String, dynamic> _$$CoachImplToJson(_$CoachImpl instance) =>
       'institutionId': instance.institutionId,
       'description': instance.description,
       'city': instance.city,
+      'startTime': instance.startTime,
+      'endTime': instance.endTime,
       'state': instance.state,
       'pincode': instance.pincode,
       'country': instance.country,
       'phoneNumber': instance.phoneNumber,
       'gender': instance.gender,
       'sportsgrounds': instance.sportsgrounds,
+      'days': instance.days,
       'certificates': instance.certificates,
       'coachingSpecialties': instance.coachingSpecialties,
       'qualificationsAndCertifications':

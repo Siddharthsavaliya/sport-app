@@ -36,12 +36,15 @@ mixin _$Coach {
   String? get institutionId => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String? get city => throw _privateConstructorUsedError;
+  String? get startTime => throw _privateConstructorUsedError;
+  String? get endTime => throw _privateConstructorUsedError;
   String? get state => throw _privateConstructorUsedError;
   String? get pincode => throw _privateConstructorUsedError;
   String? get country => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
   List<String> get sportsgrounds => throw _privateConstructorUsedError;
+  List<String> get days => throw _privateConstructorUsedError;
   List<Certificate> get certificates => throw _privateConstructorUsedError;
   @JsonKey(name: 'coachingSpecialties')
   CoachingSpecialties? get coachingSpecialties =>
@@ -87,12 +90,15 @@ abstract class $CoachCopyWith<$Res> {
       String? institutionId,
       String? description,
       String? city,
+      String? startTime,
+      String? endTime,
       String? state,
       String? pincode,
       String? country,
       String? phoneNumber,
       String? gender,
       List<String> sportsgrounds,
+      List<String> days,
       List<Certificate> certificates,
       @JsonKey(name: 'coachingSpecialties')
       CoachingSpecialties? coachingSpecialties,
@@ -143,12 +149,15 @@ class _$CoachCopyWithImpl<$Res, $Val extends Coach>
     Object? institutionId = freezed,
     Object? description = freezed,
     Object? city = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
     Object? state = freezed,
     Object? pincode = freezed,
     Object? country = freezed,
     Object? phoneNumber = freezed,
     Object? gender = freezed,
     Object? sportsgrounds = null,
+    Object? days = null,
     Object? certificates = null,
     Object? coachingSpecialties = freezed,
     Object? qualificationsAndCertifications = freezed,
@@ -218,6 +227,14 @@ class _$CoachCopyWithImpl<$Res, $Val extends Coach>
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
+      startTime: freezed == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      endTime: freezed == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String?,
       state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
@@ -241,6 +258,10 @@ class _$CoachCopyWithImpl<$Res, $Val extends Coach>
       sportsgrounds: null == sportsgrounds
           ? _value.sportsgrounds
           : sportsgrounds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      days: null == days
+          ? _value.days
+          : days // ignore: cast_nullable_to_non_nullable
               as List<String>,
       certificates: null == certificates
           ? _value.certificates
@@ -377,12 +398,15 @@ abstract class _$$CoachImplCopyWith<$Res> implements $CoachCopyWith<$Res> {
       String? institutionId,
       String? description,
       String? city,
+      String? startTime,
+      String? endTime,
       String? state,
       String? pincode,
       String? country,
       String? phoneNumber,
       String? gender,
       List<String> sportsgrounds,
+      List<String> days,
       List<Certificate> certificates,
       @JsonKey(name: 'coachingSpecialties')
       CoachingSpecialties? coachingSpecialties,
@@ -437,12 +461,15 @@ class __$$CoachImplCopyWithImpl<$Res>
     Object? institutionId = freezed,
     Object? description = freezed,
     Object? city = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
     Object? state = freezed,
     Object? pincode = freezed,
     Object? country = freezed,
     Object? phoneNumber = freezed,
     Object? gender = freezed,
     Object? sportsgrounds = null,
+    Object? days = null,
     Object? certificates = null,
     Object? coachingSpecialties = freezed,
     Object? qualificationsAndCertifications = freezed,
@@ -512,6 +539,14 @@ class __$$CoachImplCopyWithImpl<$Res>
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
+      startTime: freezed == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      endTime: freezed == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String?,
       state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
@@ -535,6 +570,10 @@ class __$$CoachImplCopyWithImpl<$Res>
       sportsgrounds: null == sportsgrounds
           ? _value._sportsgrounds
           : sportsgrounds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      days: null == days
+          ? _value._days
+          : days // ignore: cast_nullable_to_non_nullable
               as List<String>,
       certificates: null == certificates
           ? _value._certificates
@@ -588,12 +627,15 @@ class _$CoachImpl implements _Coach {
       this.institutionId,
       this.description,
       this.city,
+      this.startTime,
+      this.endTime,
       this.state,
       this.pincode,
       this.country,
       this.phoneNumber,
       this.gender,
       final List<String> sportsgrounds = const [],
+      final List<String> days = const [],
       final List<Certificate> certificates = const [],
       @JsonKey(name: 'coachingSpecialties') this.coachingSpecialties,
       @JsonKey(name: 'qualificationsAndCertifications')
@@ -604,6 +646,7 @@ class _$CoachImpl implements _Coach {
       @JsonKey(name: 'ratesAndPricing') this.ratesAndPricing})
       : _schools = schools,
         _sportsgrounds = sportsgrounds,
+        _days = days,
         _certificates = certificates;
 
   factory _$CoachImpl.fromJson(Map<String, dynamic> json) =>
@@ -652,6 +695,10 @@ class _$CoachImpl implements _Coach {
   @override
   final String? city;
   @override
+  final String? startTime;
+  @override
+  final String? endTime;
+  @override
   final String? state;
   @override
   final String? pincode;
@@ -668,6 +715,15 @@ class _$CoachImpl implements _Coach {
     if (_sportsgrounds is EqualUnmodifiableListView) return _sportsgrounds;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_sportsgrounds);
+  }
+
+  final List<String> _days;
+  @override
+  @JsonKey()
+  List<String> get days {
+    if (_days is EqualUnmodifiableListView) return _days;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_days);
   }
 
   final List<Certificate> _certificates;
@@ -700,7 +756,7 @@ class _$CoachImpl implements _Coach {
 
   @override
   String toString() {
-    return 'Coach(id: $id, role: $role, firstname: $firstname, lastname: $lastname, nationality: $nationality, yearsOfExperience: $yearsOfExperience, email: $email, coachRating: $coachRating, schools: $schools, address1: $address1, coachSubscriptionprice: $coachSubscriptionprice, address2: $address2, institutionId: $institutionId, description: $description, city: $city, state: $state, pincode: $pincode, country: $country, phoneNumber: $phoneNumber, gender: $gender, sportsgrounds: $sportsgrounds, certificates: $certificates, coachingSpecialties: $coachingSpecialties, qualificationsAndCertifications: $qualificationsAndCertifications, biographyAndBackground: $biographyAndBackground, availabilityAndSchedule: $availabilityAndSchedule, locationAndServiceArea: $locationAndServiceArea, ratesAndPricing: $ratesAndPricing)';
+    return 'Coach(id: $id, role: $role, firstname: $firstname, lastname: $lastname, nationality: $nationality, yearsOfExperience: $yearsOfExperience, email: $email, coachRating: $coachRating, schools: $schools, address1: $address1, coachSubscriptionprice: $coachSubscriptionprice, address2: $address2, institutionId: $institutionId, description: $description, city: $city, startTime: $startTime, endTime: $endTime, state: $state, pincode: $pincode, country: $country, phoneNumber: $phoneNumber, gender: $gender, sportsgrounds: $sportsgrounds, days: $days, certificates: $certificates, coachingSpecialties: $coachingSpecialties, qualificationsAndCertifications: $qualificationsAndCertifications, biographyAndBackground: $biographyAndBackground, availabilityAndSchedule: $availabilityAndSchedule, locationAndServiceArea: $locationAndServiceArea, ratesAndPricing: $ratesAndPricing)';
   }
 
   @override
@@ -733,6 +789,9 @@ class _$CoachImpl implements _Coach {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.city, city) || other.city == city) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
             (identical(other.state, state) || other.state == state) &&
             (identical(other.pincode, pincode) || other.pincode == pincode) &&
             (identical(other.country, country) || other.country == country) &&
@@ -741,6 +800,7 @@ class _$CoachImpl implements _Coach {
             (identical(other.gender, gender) || other.gender == gender) &&
             const DeepCollectionEquality()
                 .equals(other._sportsgrounds, _sportsgrounds) &&
+            const DeepCollectionEquality().equals(other._days, _days) &&
             const DeepCollectionEquality()
                 .equals(other._certificates, _certificates) &&
             (identical(other.coachingSpecialties, coachingSpecialties) ||
@@ -779,12 +839,15 @@ class _$CoachImpl implements _Coach {
         institutionId,
         description,
         city,
+        startTime,
+        endTime,
         state,
         pincode,
         country,
         phoneNumber,
         gender,
         const DeepCollectionEquality().hash(_sportsgrounds),
+        const DeepCollectionEquality().hash(_days),
         const DeepCollectionEquality().hash(_certificates),
         coachingSpecialties,
         qualificationsAndCertifications,
@@ -825,12 +888,15 @@ abstract class _Coach implements Coach {
       final String? institutionId,
       final String? description,
       final String? city,
+      final String? startTime,
+      final String? endTime,
       final String? state,
       final String? pincode,
       final String? country,
       final String? phoneNumber,
       final String? gender,
       final List<String> sportsgrounds,
+      final List<String> days,
       final List<Certificate> certificates,
       @JsonKey(name: 'coachingSpecialties')
       final CoachingSpecialties? coachingSpecialties,
@@ -879,6 +945,10 @@ abstract class _Coach implements Coach {
   @override
   String? get city;
   @override
+  String? get startTime;
+  @override
+  String? get endTime;
+  @override
   String? get state;
   @override
   String? get pincode;
@@ -890,6 +960,8 @@ abstract class _Coach implements Coach {
   String? get gender;
   @override
   List<String> get sportsgrounds;
+  @override
+  List<String> get days;
   @override
   List<Certificate> get certificates;
   @override

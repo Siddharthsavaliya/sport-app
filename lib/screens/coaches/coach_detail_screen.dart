@@ -313,65 +313,46 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      Text(
-                                                        "Mon to Fri",
-                                                        style: AppStyle
-                                                            .normalText
-                                                            .copyWith(
-                                                          fontSize: 14.sp,
-                                                          fontWeight: FontWeight
-                                                              .w600, // Semi-bold text
-                                                          color:
-                                                              AppColors.black,
-                                                        ),
+                                                      Wrap(
+                                                        spacing: 1.3,
+                                                        children:
+                                                            state.coachDetail!
+                                                                .days
+                                                                .map((e) => Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          e,
+                                                                          style: AppStyle
+                                                                              .normalText
+                                                                              .copyWith(
+                                                                            fontSize:
+                                                                                14.sp,
+                                                                            fontWeight:
+                                                                                FontWeight.w600, // Semi-bold text
+                                                                            color:
+                                                                                AppColors.black,
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          ",",
+                                                                          style: AppStyle
+                                                                              .normalText
+                                                                              .copyWith(
+                                                                            fontSize:
+                                                                                14.sp,
+                                                                            fontWeight:
+                                                                                FontWeight.w600, // Semi-bold text
+                                                                            color:
+                                                                                AppColors.black,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ))
+                                                                .toList(),
                                                       ),
                                                       const SizedBox(height: 4),
                                                       Text(
-                                                        coachDetail
-                                                                .schools![index]
-                                                                .schoolSchedule!
-                                                                .weekdayfromtime ??
-                                                            "",
-                                                        style: TextStyle(
-                                                          fontSize: 12.sp,
-                                                          color: black,
-                                                          fontWeight: FontWeight
-                                                              .normal, // Normal weight text
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  VerticalDivider(
-                                                    color:
-                                                        grey.withOpacity(0.2),
-                                                    thickness: 1,
-                                                    width:
-                                                        24, // Adjust width to add some space between columns
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "Sat, Sun",
-                                                        style: AppStyle
-                                                            .normalText
-                                                            .copyWith(
-                                                          fontSize: 14.sp,
-                                                          fontWeight: FontWeight
-                                                              .w600, // Semi-bold text
-                                                          color:
-                                                              AppColors.black,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(height: 4),
-                                                      Text(
-                                                        coachDetail
-                                                                .schools![index]
-                                                                .schoolSchedule!
-                                                                .weekdaytotime ??
-                                                            "",
+                                                        "${coachDetail.startTime ?? ""} to ${coachDetail.endTime ?? ""}",
                                                         style: TextStyle(
                                                           fontSize: 12.sp,
                                                           color: black,
