@@ -10,12 +10,16 @@ _$BookingImpl _$$BookingImplFromJson(Map<String, dynamic> json) =>
     _$BookingImpl(
       id: json['_id'] as String,
       userId: json['userId'] as String?,
-      slotId: json['slotId'] as String?,
+      slotId:
+          (json['slotId'] as List<dynamic>?)?.map((e) => e as String).toList(),
       ground: GroundModel.fromJson(json['groundId'] as Map<String, dynamic>),
       date: json['date'] as String?,
       dayOfWeek: json['dayOfWeek'] as String?,
-      startTime: json['startTime'] as String?,
-      endTime: json['endTime'] as String?,
+      startTime: (json['startTime'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      endTime:
+          (json['endTime'] as List<dynamic>?)?.map((e) => e as String).toList(),
       totalCount: json['totalCount'] as int?,
       qrCode: json['qrCode'] as String,
       invoiceUrl: json['invoiceUrl'] as String,

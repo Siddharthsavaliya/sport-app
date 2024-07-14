@@ -108,7 +108,7 @@ class _BookingHistoryDetailScreenState
               ),
               10.height,
               Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(12),
                 decoration: boxDecorationDefault(),
                 width: context.width(),
                 child: Row(
@@ -125,15 +125,29 @@ class _BookingHistoryDetailScreenState
                           ],
                         ),
                         8.height,
-                        Row(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Time: ", style: secondaryTextStyle()),
-                            Text(
-                                "${widget.bookingHistory.startTime} to ${widget.bookingHistory.endTime}",
-                                style: boldTextStyle(size: 14)),
+                            for (int i = 0;
+                                i < widget.bookingHistory.startTime!.length;
+                                i++)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Row(
+                                  children: [
+                                    Text("Time ${i + 1}: ",
+                                        style: secondaryTextStyle()),
+                                    SizedBox(
+                                      width: 0.7.sw,
+                                      child: Text(
+                                          "${widget.bookingHistory.startTime![i]} to ${widget.bookingHistory.endTime![i]}",
+                                          style: boldTextStyle(size: 14)),
+                                    ),
+                                  ],
+                                ),
+                              ),
                           ],
                         ),
-                        8.height,
                         Row(
                           children: [
                             Text("Quantity: ", style: secondaryTextStyle()),
@@ -150,13 +164,6 @@ class _BookingHistoryDetailScreenState
                           ],
                         ),
                       ],
-                    ),
-                    SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: Image.memory(
-                        base64Decode(widget.bookingHistory.qrCode),
-                      ),
                     ),
                   ],
                 ),
@@ -221,6 +228,13 @@ class _BookingHistoryDetailScreenState
                                 "FREE",
                                 style: AppStyle.mediumText
                                     .copyWith(color: AppColors.green),
+                              ),
+                            ],
+                            if (!coach.isFree) ...[
+                              Text(
+                                "${(widget.bookingHistory.totalPrice! / widget.bookingHistory.users.where((element) => element.isFree == false).length)}",
+                                style: AppStyle.mediumText
+                                    .copyWith(color: AppColors.black),
                               ),
                             ]
                           ],
@@ -314,6 +328,21 @@ class _BookingHistoryDetailScreenState
                   ),
                 ],
               ),
+              // 8.height,
+              // SizedBox(
+              //   width: double.infinity,
+              //   child: AppButton(
+              //     shapeBorder: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(8),
+              //     ),
+              //     text: "Show QR",
+              //     color: AppColors.primaryColor,
+              //     textColor: AppColors.white,
+              //     onTap: () {
+              //       contentBox(context, widget.bookingHistory.qrCode);
+              //     },
+              //   ),
+              // ),
               50.height,
             ],
           ),
@@ -335,4 +364,54 @@ class _BookingHistoryDetailScreenState
       ],
     );
   }
+}
+
+Widget contentBox(BuildContext context, qr) {
+  return Container(
+    padding: const EdgeInsets.all(20.0),
+    decoration: BoxDecoration(
+      shape: BoxShape.rectangle,
+      color: AppColors.white,
+      borderRadius: BorderRadius.circular(20.0),
+    ),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Text(
+          "QR Code",
+          style: AppStyle.mediumBold
+              .copyWith(fontSize: 20.sp, color: AppColors.black),
+        ),
+        const SizedBox(height: 20.0),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            color: AppColors.lightBlueColor,
+          ),
+          padding: const EdgeInsets.all(10.0),
+          child: Image.memory(
+            base64Decode(qr),
+            width: 150.0,
+            height: 150.0,
+          ),
+        ),
+        addVerticalSpacing(0.02),
+        Align(
+          alignment: Alignment.center,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              "Close",
+              style: AppStyle.normalText.copyWith(
+                fontSize: 18.sp,
+                color: AppColors.black,
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }

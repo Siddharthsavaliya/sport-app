@@ -23,13 +23,13 @@ mixin _$BookingHistory {
   @JsonKey(name: "_id")
   String get id => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
-  String? get slotId => throw _privateConstructorUsedError;
+  List<String>? get slotId => throw _privateConstructorUsedError;
   @JsonKey(name: "groundId")
   GroundModel get ground => throw _privateConstructorUsedError;
   String? get date => throw _privateConstructorUsedError;
   String? get dayOfWeek => throw _privateConstructorUsedError;
-  String? get startTime => throw _privateConstructorUsedError;
-  String? get endTime => throw _privateConstructorUsedError;
+  List<String>? get startTime => throw _privateConstructorUsedError;
+  List<String>? get endTime => throw _privateConstructorUsedError;
   int? get totalCount => throw _privateConstructorUsedError;
   String get qrCode => throw _privateConstructorUsedError;
   String get invoiceUrl => throw _privateConstructorUsedError;
@@ -55,12 +55,12 @@ abstract class $BookingHistoryCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "_id") String id,
       String? userId,
-      String? slotId,
+      List<String>? slotId,
       @JsonKey(name: "groundId") GroundModel ground,
       String? date,
       String? dayOfWeek,
-      String? startTime,
-      String? endTime,
+      List<String>? startTime,
+      List<String>? endTime,
       int? totalCount,
       String qrCode,
       String invoiceUrl,
@@ -117,7 +117,7 @@ class _$BookingHistoryCopyWithImpl<$Res, $Val extends BookingHistory>
       slotId: freezed == slotId
           ? _value.slotId
           : slotId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as List<String>?,
       ground: null == ground
           ? _value.ground
           : ground // ignore: cast_nullable_to_non_nullable
@@ -133,11 +133,11 @@ class _$BookingHistoryCopyWithImpl<$Res, $Val extends BookingHistory>
       startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as List<String>?,
       endTime: freezed == endTime
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as List<String>?,
       totalCount: freezed == totalCount
           ? _value.totalCount
           : totalCount // ignore: cast_nullable_to_non_nullable
@@ -197,12 +197,12 @@ abstract class _$$BookingImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: "_id") String id,
       String? userId,
-      String? slotId,
+      List<String>? slotId,
       @JsonKey(name: "groundId") GroundModel ground,
       String? date,
       String? dayOfWeek,
-      String? startTime,
-      String? endTime,
+      List<String>? startTime,
+      List<String>? endTime,
       int? totalCount,
       String qrCode,
       String invoiceUrl,
@@ -256,9 +256,9 @@ class __$$BookingImplCopyWithImpl<$Res>
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
       slotId: freezed == slotId
-          ? _value.slotId
+          ? _value._slotId
           : slotId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as List<String>?,
       ground: null == ground
           ? _value.ground
           : ground // ignore: cast_nullable_to_non_nullable
@@ -272,13 +272,13 @@ class __$$BookingImplCopyWithImpl<$Res>
           : dayOfWeek // ignore: cast_nullable_to_non_nullable
               as String?,
       startTime: freezed == startTime
-          ? _value.startTime
+          ? _value._startTime
           : startTime // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as List<String>?,
       endTime: freezed == endTime
-          ? _value.endTime
+          ? _value._endTime
           : endTime // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as List<String>?,
       totalCount: freezed == totalCount
           ? _value.totalCount
           : totalCount // ignore: cast_nullable_to_non_nullable
@@ -325,12 +325,12 @@ class _$BookingImpl implements _Booking {
   const _$BookingImpl(
       {@JsonKey(name: "_id") required this.id,
       required this.userId,
-      required this.slotId,
+      required final List<String>? slotId,
       @JsonKey(name: "groundId") required this.ground,
       required this.date,
       required this.dayOfWeek,
-      required this.startTime,
-      required this.endTime,
+      required final List<String>? startTime,
+      required final List<String>? endTime,
       required this.totalCount,
       required this.qrCode,
       required this.invoiceUrl,
@@ -340,7 +340,10 @@ class _$BookingImpl implements _Booking {
       required this.subtotal,
       required this.status,
       required this.v})
-      : _users = users;
+      : _slotId = slotId,
+        _startTime = startTime,
+        _endTime = endTime,
+        _users = users;
 
   factory _$BookingImpl.fromJson(Map<String, dynamic> json) =>
       _$$BookingImplFromJson(json);
@@ -350,8 +353,16 @@ class _$BookingImpl implements _Booking {
   final String id;
   @override
   final String? userId;
+  final List<String>? _slotId;
   @override
-  final String? slotId;
+  List<String>? get slotId {
+    final value = _slotId;
+    if (value == null) return null;
+    if (_slotId is EqualUnmodifiableListView) return _slotId;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: "groundId")
   final GroundModel ground;
@@ -359,10 +370,26 @@ class _$BookingImpl implements _Booking {
   final String? date;
   @override
   final String? dayOfWeek;
+  final List<String>? _startTime;
   @override
-  final String? startTime;
+  List<String>? get startTime {
+    final value = _startTime;
+    if (value == null) return null;
+    if (_startTime is EqualUnmodifiableListView) return _startTime;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _endTime;
   @override
-  final String? endTime;
+  List<String>? get endTime {
+    final value = _endTime;
+    if (value == null) return null;
+    if (_endTime is EqualUnmodifiableListView) return _endTime;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final int? totalCount;
   @override
@@ -400,14 +427,14 @@ class _$BookingImpl implements _Booking {
             other is _$BookingImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.slotId, slotId) || other.slotId == slotId) &&
+            const DeepCollectionEquality().equals(other._slotId, _slotId) &&
             (identical(other.ground, ground) || other.ground == ground) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.dayOfWeek, dayOfWeek) ||
                 other.dayOfWeek == dayOfWeek) &&
-            (identical(other.startTime, startTime) ||
-                other.startTime == startTime) &&
-            (identical(other.endTime, endTime) || other.endTime == endTime) &&
+            const DeepCollectionEquality()
+                .equals(other._startTime, _startTime) &&
+            const DeepCollectionEquality().equals(other._endTime, _endTime) &&
             (identical(other.totalCount, totalCount) ||
                 other.totalCount == totalCount) &&
             (identical(other.qrCode, qrCode) || other.qrCode == qrCode) &&
@@ -430,12 +457,12 @@ class _$BookingImpl implements _Booking {
       runtimeType,
       id,
       userId,
-      slotId,
+      const DeepCollectionEquality().hash(_slotId),
       ground,
       date,
       dayOfWeek,
-      startTime,
-      endTime,
+      const DeepCollectionEquality().hash(_startTime),
+      const DeepCollectionEquality().hash(_endTime),
       totalCount,
       qrCode,
       invoiceUrl,
@@ -464,12 +491,12 @@ abstract class _Booking implements BookingHistory {
   const factory _Booking(
       {@JsonKey(name: "_id") required final String id,
       required final String? userId,
-      required final String? slotId,
+      required final List<String>? slotId,
       @JsonKey(name: "groundId") required final GroundModel ground,
       required final String? date,
       required final String? dayOfWeek,
-      required final String? startTime,
-      required final String? endTime,
+      required final List<String>? startTime,
+      required final List<String>? endTime,
       required final int? totalCount,
       required final String qrCode,
       required final String invoiceUrl,
@@ -488,7 +515,7 @@ abstract class _Booking implements BookingHistory {
   @override
   String? get userId;
   @override
-  String? get slotId;
+  List<String>? get slotId;
   @override
   @JsonKey(name: "groundId")
   GroundModel get ground;
@@ -497,9 +524,9 @@ abstract class _Booking implements BookingHistory {
   @override
   String? get dayOfWeek;
   @override
-  String? get startTime;
+  List<String>? get startTime;
   @override
-  String? get endTime;
+  List<String>? get endTime;
   @override
   int? get totalCount;
   @override

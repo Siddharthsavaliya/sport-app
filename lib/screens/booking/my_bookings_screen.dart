@@ -206,10 +206,14 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                 ),
               );
             } else if (state.status.isFailed) {
-              return const EmptyPlaceHolder(
+              return EmptyPlaceHolder(
                 title: "Opps",
                 subTitle: "Something went wrong",
                 imagePath: AppAssets.error,
+                buttonText: "Try Again",
+                onTap: () {
+                  onRefresh();
+                },
               );
             } else if (state.status.isInProgress) {
               return Padding(
