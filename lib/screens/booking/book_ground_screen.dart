@@ -28,7 +28,7 @@ class BookGroundScreen extends StatefulWidget {
   final DateTime? selectedHorizontalDate;
   final String? selectedSlot;
   final bool is24HourFormat;
-  final GroundSlotData? groundSlotData;
+  final List<GroundSlotData>? groundSlotData;
   final GroundBookingResponce groundBookingSummary;
   final GroundModel? groundData;
   final List<CoachListData>? coaches;
@@ -59,7 +59,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
     };
     var data = {
       "groundId": "${widget.groundData?.id}",
-      "slotIds": [widget.groundSlotData?.id],
+      "slotIds": widget.groundSlotData,
       "date": formatDate(widget.selectedHorizontalDate!),
       "totalCount": "${widget.coaches?.length}",
       "users": widget.coaches?.map((user) => user.toJson()).toList(),
@@ -116,7 +116,6 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
   }
 
   Future<void> _showMyDialog() async {
-    print("${widget.groundData?.id} : ${widget.groundSlotData?.id}");
     return showDialog<void>(
       context: context,
       barrierDismissible: true,

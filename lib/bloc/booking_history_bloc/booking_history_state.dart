@@ -10,11 +10,15 @@ class BookingHistoryState extends Equatable {
     this.faqList = const [],
     this.coachBookingHistory = const [],
     this.bookingHistory = const [],
+    this.users = const [],
+    this.groundSlotData = const [],
   });
   final String message;
   final String url;
   final bool isCancel;
   final Status status;
+  final List<GroundSlotData> groundSlotData;
+  final List<CoachListData> users;
   final List<FaqModel> faqList;
   final List<BookingHistory> bookingHistory;
   final List<CoachBookingHistoryModel> coachBookingHistory;
@@ -24,6 +28,8 @@ class BookingHistoryState extends Equatable {
     return [
       status,
       message,
+      groundSlotData,
+      users,
       url,
       faqList,
       bookingHistory,
@@ -40,9 +46,13 @@ class BookingHistoryState extends Equatable {
     List<CoachBookingHistoryModel>? coachBookingHistory,
     String? url,
     List<FaqModel>? faqList,
+    List<CoachListData>? users,
+    List<GroundSlotData>? groundSlotData,
   }) {
     return BookingHistoryState(
       message: message ?? this.message,
+      users: users ?? this.users,
+      groundSlotData: groundSlotData ?? this.groundSlotData,
       isCancel: isCancel ?? this.isCancel,
       status: status ?? this.status,
       url: url ?? this.url,

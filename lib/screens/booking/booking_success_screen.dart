@@ -248,9 +248,19 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                                             fontSize: 14.sp,
                                           ),
                                         ),
+                                        // addVerticalSpacing(0.02),
+                                        // Text(
+                                        //   "Slot Time",
+                                        //   style: AppStyle.mediumBold.copyWith(
+                                        //     color: AppColors.black
+                                        //         .withOpacity(0.7),
+                                        //     fontWeight: FontWeight.w400,
+                                        //     fontSize: 14.sp,
+                                        //   ),
+                                        // ),
                                         addVerticalSpacing(0.02),
                                         Text(
-                                          "Slot Time",
+                                          "Total Players",
                                           style: AppStyle.mediumBold.copyWith(
                                             color: AppColors.black
                                                 .withOpacity(0.7),
@@ -260,7 +270,7 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                                         ),
                                         addVerticalSpacing(0.02),
                                         Text(
-                                          "Total Slots",
+                                          "Total Hours",
                                           style: AppStyle.mediumBold.copyWith(
                                             color: AppColors.black
                                                 .withOpacity(0.7),
@@ -287,8 +297,7 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                                         ),
                                         addVerticalSpacing(0.02),
                                         Text(
-                                          groundBookingResponce!
-                                              .data!.totalPrice
+                                          "₹ ${groundBookingResponce!.data!.totalPrice}"
                                               .toString(),
                                           style: AppStyle.mediumBold.copyWith(
                                             color: AppColors.black,
@@ -305,9 +314,20 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                                             fontSize: 14.sp,
                                           ),
                                         ),
+                                        // addVerticalSpacing(0.02),
+                                        // SizedBox(
+                                        //   child: Text(
+                                        //     "${groundBookingResponce!.data!.date} ${groundBookingResponce!.data!.startTime} to ${groundBookingResponce!.data!.endTime}",
+                                        //     style: AppStyle.mediumBold.copyWith(
+                                        //       color: AppColors.black,
+                                        //       fontWeight: FontWeight.w600,
+                                        //       fontSize: 14.sp,
+                                        //     ),
+                                        //   ),
+                                        // ),
                                         addVerticalSpacing(0.02),
                                         Text(
-                                          "${groundBookingResponce!.data!.date} ${groundBookingResponce!.data!.startTime} to ${groundBookingResponce!.data!.endTime}",
+                                          "${groundBookingResponce!.data!.users!.length} Players",
                                           style: AppStyle.mediumBold.copyWith(
                                             color: AppColors.black,
                                             fontWeight: FontWeight.w600,
@@ -316,7 +336,7 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                                         ),
                                         addVerticalSpacing(0.02),
                                         Text(
-                                          "${groundBookingResponce!.data!.users!.length}",
+                                          "${groundBookingResponce!.data!.startTime!.length} H",
                                           style: AppStyle.mediumBold.copyWith(
                                             color: AppColors.black,
                                             fontWeight: FontWeight.w600,

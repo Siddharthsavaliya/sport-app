@@ -2,8 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/bloc/booking_history_bloc/booking_history_bloc.dart';
 import 'package:sport_app/model/ground_model/ground_model.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
@@ -60,6 +62,14 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
       showYesNoDialogue(
         context,
         onTap: () async {
+          List<CoachListData> coaches = [];
+          for (int i = 0; i < widget.quantity; i++) {
+            coaches.add(CoachListData(
+                firstName: firstNameControllers[i].text,
+                contact: "91${numberControllers[i].text}"));
+          }
+          BlocProvider.of<BookingHistoryBloc>(context).add(SetBookingDataEvent(
+              users: coaches, groundSlotData: widget.groundSlotData));
           Navigator.pop(context);
           Navigator.push(
               context,
@@ -117,7 +127,7 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
                     selectedSlot: widget.selectedSlot.validate(),
                     is24HourFormat: widget.is24HourFormat,
                     groundData: widget.groundData,
-                    groundSlotData: widget.groundSlotData,
+                    groundSlotData: [widget.groundSlotData!],
                     selectedHorizontalDate: widget.selectedHorizontalDate,
                     coaches: coaches,
                   ),

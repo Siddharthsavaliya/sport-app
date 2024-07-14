@@ -5,14 +5,18 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/bloc/booking_history_bloc/booking_history_bloc.dart';
+import 'package:sport_app/model/booking/ground_booking_response.dart';
 import 'package:sport_app/model/ground_model/ground_model.dart';
 import 'package:sport_app/res/api_constants.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/booking/available_slots_component.dart';
+import 'package:sport_app/screens/booking/book_ground_screen.dart';
 import 'package:sport_app/screens/booking/date_item.dart';
 import 'package:sport_app/screens/booking/date_picker_controller.dart';
 import 'package:sport_app/screens/booking/horizontal_date_picker.dart';
@@ -329,16 +333,103 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                       textColor: AppColors.white,
                       onTap: () async {
                         if (selectedSlot.isNotEmpty) {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) => CountSelectionBottomSheet(
-                              maxQty: selectedSlot[0].availableSlots!,
-                              groundData: widget.groundData,
-                              selectedSlot: selectedSlot[0],
-                              selectedHorizontalDate: selectedHorizontalDate,
-                              is24HourFormat: is24HourFormat,
-                            ),
-                          );
+                          if (widget.isSecond == false) {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) => CountSelectionBottomSheet(
+                                maxQty: selectedSlot[0].availableSlots!,
+                                groundData: widget.groundData,
+                                selectedSlot: selectedSlot[0],
+                                selectedHorizontalDate: selectedHorizontalDate,
+                                is24HourFormat: is24HourFormat,
+                              ),
+                            );
+                          } else {
+                            final token = await getKeyValue(key: "token");
+                            var headers = {
+                              'Content-Type': 'application/json',
+                              'Authorization': 'Bearer $token',
+                            };
+                            var data = {
+                              "groundId": "${widget.groundData?.id}",
+                              "slotIds": [
+                                widget.groundSlotData?.id,
+                                selectedSlot.first.id
+                              ],
+                              "date":
+                                  formatDate(widget.selectedHorizontalDate!),
+                              "totalCount":
+                                  "${BlocProvider.of<BookingHistoryBloc>(context).state.users.length}",
+                              "users":
+                                  BlocProvider.of<BookingHistoryBloc>(context)
+                                      .state
+                                      .users
+                                      .map((user) => user.toJson())
+                                      .toList(),
+                            };
+                            log(data);
+                            var dio = Dio();
+                            try {
+                              showProgressDialogue(context);
+                              var response = await dio.request(
+                                '${ApiConstants.baseUrl}${ApiConstants.getSummary}',
+                                options: Options(
+                                  method: 'POST',
+                                  headers: headers,
+                                ),
+                                data: jsonEncode(data),
+                              );
+                              log(response.data.toString());
+                              if (response.statusCode == 200) {
+                                Navigator.pop(context);
+                                GroundBookingResponce groundBookingResponce =
+                                    GroundBookingResponce.fromJson(
+                                        response.data);
+                                Navigator.pushReplacement(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => BookGroundScreen(
+                                      groundBookingSummary:
+                                          groundBookingResponce,
+                                      selectedSlot:
+                                          widget.selectedSlot.validate(),
+                                      is24HourFormat: true,
+                                      groundData: widget.groundData,
+                                      groundSlotData: [
+                                        widget.groundSlotData!,
+                                        selectedSlot.first
+                                      ],
+                                      selectedHorizontalDate:
+                                          widget.selectedHorizontalDate,
+                                      coaches:
+                                          BlocProvider.of<BookingHistoryBloc>(
+                                                  context)
+                                              .state
+                                              .users,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                Navigator.pop(context);
+                                showErrorDialogue(
+                                    context, "Something went wrong");
+                              }
+                            } on DioException catch (e) {
+                              print(e);
+                              Navigator.pop(context);
+                              if (e.response != null) {
+                                showErrorDialogue(
+                                    context, "Something went wrong");
+                              } else {
+                                showErrorDialogue(
+                                    context, "Something went wrong");
+                              }
+                            } catch (e) {
+                              print(e);
+                              Navigator.pop(context);
+                              showErrorDialogue(context, e.toString());
+                            }
+                          }
                         } else {
                           showScafoldMessage(
                               message: "Please select slot", context: context);
