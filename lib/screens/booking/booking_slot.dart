@@ -287,6 +287,10 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                               key: keyForTimeSlotWidget,
                               selectedSlots: selectedSlot,
                               isProvider: false,
+                              disableGroundSlotData: widget.isSecond!
+                                  ? [widget.groundSlotData!]
+                                  : [],
+                              isSecond: widget.isSecond ?? false,
                               availableSlots: tempGround,
                               groundSlotData: tempGround,
                               selectedDate: widget.selectedHorizontalDate ??

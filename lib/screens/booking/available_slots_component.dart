@@ -9,18 +9,22 @@ class AvailableSlotsComponent extends StatefulWidget {
   final List<GroundSlotData> availableSlots;
   final Function(List<GroundSlotData> selectedSlots) onChanged;
   final bool? isProvider;
+  final bool isSecond;
   final bool is24HourFormat;
   final DateTime? selectedDate;
   final List<GroundSlotData>? groundSlotData;
+  final List<GroundSlotData>? disableGroundSlotData;
 
   const AvailableSlotsComponent({
     this.selectedSlots,
+    this.isSecond = false,
     this.groundSlotData,
     required this.availableSlots,
     required this.onChanged,
     this.isProvider = true,
     this.is24HourFormat = false,
     this.selectedDate,
+    this.disableGroundSlotData,
     super.key,
   });
 
@@ -88,9 +92,16 @@ class _AvailableSlotsComponentState extends State<AvailableSlotsComponent> {
           //   return Offstage();
           // }
           isNotAvailable = (widget.selectedDate!.isToday &&
-                  finalDate.millisecondsSinceEpoch >
-                      now.millisecondsSinceEpoch ||
-              widget.availableSlots[index].availableSlots! <= 0);
+                      finalDate.millisecondsSinceEpoch >
+                          now.millisecondsSinceEpoch ||
+                  widget.availableSlots[index].availableSlots! <= 0) ||
+              (widget.disableGroundSlotData.validate().any((element) {
+                    if (element.startTime == value.startTime) {
+                      return true;
+                    }
+                    return false;
+                  }) &&
+                  widget.isSecond);
         }
 
         if (widget.selectedSlots.validate().isNotEmpty) {
