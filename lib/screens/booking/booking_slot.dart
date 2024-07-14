@@ -20,6 +20,7 @@ import 'package:sport_app/screens/booking/model/ground_slot_model.dart';
 import 'package:sport_app/screens/booking/quantity_builder.dart';
 import 'package:sport_app/screens/booking/slot_data.dart';
 import 'package:sport_app/utils/helper.dart';
+import 'package:sport_app/utils/status_dialog.dart';
 import 'package:sport_app/widget/qty_sheet.dart';
 
 class BookingSlotsComponent extends StatefulWidget {
@@ -31,9 +32,11 @@ class BookingSlotsComponent extends StatefulWidget {
   final DateTime? selectedHorizontalDate;
   final GroundSlotData? groundSlotData;
   final String? selectedSlot;
+  final int? players;
   const BookingSlotsComponent(
       {super.key,
       this.groundData,
+      this.players,
       this.showAppbar = false,
       this.onApplyClick,
       this.isSecond,
@@ -177,11 +180,13 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
   Widget build(BuildContext context) {
     List<String> temp = [];
     List<GroundSlotData> tempGround = [];
-    print(groundSlotResponse?.data!.length);
+    print(widget.selectedHorizontalDate);
 
     groundSlotResponse?.data?.forEach((element) {
       if (element.dayOfWeek?.toLowerCase() ==
-          selectedHorizontalDate.weekday.toWeekDay().toLowerCase()) {
+          (widget.selectedHorizontalDate != null
+              ? widget.selectedHorizontalDate!.weekday.toWeekDay().toLowerCase()
+              : selectedHorizontalDate.weekday.toWeekDay().toLowerCase())) {
         try {
           DateFormat inputFormat = DateFormat("hh:mm a");
 
@@ -280,6 +285,7 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                       16.height,
                       tempGround.isNotEmpty
                           ? AvailableSlotsComponent(
+                              players: widget.players,
                               is24HourFormat: is24HourFormat,
                               key: keyForTimeSlotWidget,
                               selectedSlots: selectedSlot,
@@ -294,6 +300,10 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                                   selectedHorizontalDate,
                               onChanged: (List<GroundSlotData> selectedSlots) {
                                 isSlotSelected = selectedSlots.isNotEmpty;
+                                if (selectedSlots.isNotEmpty) {
+                                  selectedSlot.clear();
+                                  setState(() {});
+                                }
                                 if (isSlotSelected && selectedSlot.isEmpty) {
                                   selectedSlot.add(selectedSlots.first);
                                 } else {
@@ -318,16 +328,21 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                       color: AppColors.primaryColor,
                       textColor: AppColors.white,
                       onTap: () async {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (context) => CountSelectionBottomSheet(
-                            maxQty: selectedSlot[0].availableSlots!,
-                            groundData: widget.groundData,
-                            selectedSlot: selectedSlot[0],
-                            selectedHorizontalDate: selectedHorizontalDate,
-                            is24HourFormat: is24HourFormat,
-                          ),
-                        );
+                        if (selectedSlot.isNotEmpty) {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) => CountSelectionBottomSheet(
+                              maxQty: selectedSlot[0].availableSlots!,
+                              groundData: widget.groundData,
+                              selectedSlot: selectedSlot[0],
+                              selectedHorizontalDate: selectedHorizontalDate,
+                              is24HourFormat: is24HourFormat,
+                            ),
+                          );
+                        } else {
+                          showScafoldMessage(
+                              message: "Please select slot", context: context);
+                        }
                       },
                     ).expand(),
                   ],

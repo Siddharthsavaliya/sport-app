@@ -39,29 +39,8 @@ class _SlotSelectionScreenState extends State<SlotSelectionScreen> {
 
   @override
   void initState() {
+    print(widget.selectedHorizontalDate);
     super.initState();
-    // getServiceDetail();
-    // DateTime.now().startOfDay
-    // DateTime.now().endOfDay
-    initializeDateFormatting('IN').then((_) {
-      DateTime now = DateTime.now();
-      DateTime maxBookingDate = now
-          .add(const Duration(days: 2)); // Calculate the maximum booking date
-
-      // Ensure the booking end is within the allowed range
-      DateTime bookingEnd = maxBookingDate;
-
-      // Ensure the booking start is within the allowed range
-      DateTime bookingStart = now;
-
-      mockBookingService = BookingService(
-        serviceName: 'Mock Service',
-        serviceDuration: 2,
-        bookingEnd: bookingEnd,
-        bookingStart: bookingStart,
-      );
-      setState(() {}); // Trigger a rebuild
-    });
   }
 
   Stream<dynamic>? getBookingStreamMock(
@@ -145,6 +124,7 @@ class _SlotSelectionScreenState extends State<SlotSelectionScreen> {
       body: Center(
           child: BookingSlotsComponent(
         groundData: widget.groundData,
+        players: widget.count,
         groundSlotData: widget.groundSlotData,
         showAppbar: true,
         selectedHorizontalDate: widget.selectedHorizontalDate,

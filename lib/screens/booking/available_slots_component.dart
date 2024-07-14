@@ -10,6 +10,7 @@ class AvailableSlotsComponent extends StatefulWidget {
   final Function(List<GroundSlotData> selectedSlots) onChanged;
   final bool? isProvider;
   final bool isSecond;
+  final int? players;
   final bool is24HourFormat;
   final DateTime? selectedDate;
   final List<GroundSlotData>? groundSlotData;
@@ -17,6 +18,7 @@ class AvailableSlotsComponent extends StatefulWidget {
 
   const AvailableSlotsComponent({
     this.selectedSlots,
+    this.players,
     this.isSecond = false,
     this.groundSlotData,
     required this.availableSlots,
@@ -62,6 +64,7 @@ class _AvailableSlotsComponentState extends State<AvailableSlotsComponent> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.players);
     return AnimatedWrap(
       spacing: 16,
       runSpacing: 16,
@@ -87,6 +90,9 @@ class _AvailableSlotsComponentState extends State<AvailableSlotsComponent> {
             value.startTime.validate().substring(3, 5).toInt(),
           ).subtract(1.minutes);
 
+          print(widget.availableSlots[index].availableSlots! >=
+              widget.players.validate());
+
           // if (widget.selectedDate!.isToday &&
           //     finalDate.millisecondsSinceEpoch > now.millisecondsSinceEpoch) {
           //   return Offstage();
@@ -101,7 +107,9 @@ class _AvailableSlotsComponentState extends State<AvailableSlotsComponent> {
                     }
                     return false;
                   }) &&
-                  widget.isSecond);
+                  widget.isSecond) ||
+              widget.availableSlots[index].availableSlots! <
+                  widget.players.validate();
         }
 
         if (widget.selectedSlots.validate().isNotEmpty) {
