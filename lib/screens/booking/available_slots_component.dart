@@ -94,7 +94,13 @@ class _AvailableSlotsComponentState extends State<AvailableSlotsComponent> {
         }
 
         if (widget.selectedSlots.validate().isNotEmpty) {
-          if (widget.selectedSlots.validate().first == value) {
+          if (widget.selectedSlots.validate().any((element) {
+            if (element.startTime == value.startTime) {
+              return true;
+            }
+            return false;
+          })) {
+            print(selectedIndex);
             selectedIndex = index;
           }
         }

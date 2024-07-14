@@ -66,6 +66,8 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
               CupertinoPageRoute(
                   builder: (context) => SlotSelectionScreen(
                         groundData: widget.groundData,
+                        count: widget.quantity,
+                        groundSlotData: widget.groundSlotData,
                         selectedHorizontalDate: widget.selectedHorizontalDate,
                         selectedSlot: widget.selectedSlot,
                         isSecond: true,

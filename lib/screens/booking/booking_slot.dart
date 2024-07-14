@@ -12,7 +12,6 @@ import 'package:sport_app/model/ground_model/ground_model.dart';
 import 'package:sport_app/res/api_constants.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
-import 'package:sport_app/screens/booking/add_coach_list_screen.dart';
 import 'package:sport_app/screens/booking/available_slots_component.dart';
 import 'package:sport_app/screens/booking/date_item.dart';
 import 'package:sport_app/screens/booking/date_picker_controller.dart';
@@ -30,6 +29,7 @@ class BookingSlotsComponent extends StatefulWidget {
   final VoidCallback? onApplyClick;
   final bool? isSecond;
   final DateTime? selectedHorizontalDate;
+  final GroundSlotData? groundSlotData;
   final String? selectedSlot;
   const BookingSlotsComponent(
       {super.key,
@@ -38,7 +38,8 @@ class BookingSlotsComponent extends StatefulWidget {
       this.onApplyClick,
       this.isSecond,
       this.selectedHorizontalDate,
-      this.selectedSlot});
+      this.selectedSlot,
+      this.groundSlotData});
 
   @override
   _BookingSlotsComponentState createState() => _BookingSlotsComponentState();
@@ -65,11 +66,14 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
   String? selectedDate;
   num finalQuantity = 1;
 
-  GroundSlotData? selectedSlot;
+  List<GroundSlotData> selectedSlot = [];
 
   @override
   void initState() {
     super.initState();
+    if (widget.groundSlotData != null) {
+      selectedSlot.add(widget.groundSlotData!);
+    }
     getGroundSlot();
   }
 
@@ -281,8 +285,7 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                           ? AvailableSlotsComponent(
                               is24HourFormat: is24HourFormat,
                               key: keyForTimeSlotWidget,
-                              selectedSlots:
-                                  selectedSlot != null ? [selectedSlot!] : [],
+                              selectedSlots: selectedSlot,
                               isProvider: false,
                               availableSlots: tempGround,
                               groundSlotData: tempGround,
@@ -290,9 +293,9 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                               onChanged: (List<GroundSlotData> selectedSlots) {
                                 isSlotSelected = selectedSlots.isNotEmpty;
                                 if (isSlotSelected) {
-                                  selectedSlot = selectedSlots.first;
+                                  selectedSlot.add(selectedSlots.first);
                                 } else {
-                                  selectedSlot = null;
+                                  selectedSlot = [];
                                 }
                                 setState(() {});
                               },
@@ -313,20 +316,16 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                       color: AppColors.primaryColor,
                       textColor: AppColors.white,
                       onTap: () async {
-                        if (selectedSlot != null) {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) => CountSelectionBottomSheet(
-                              maxQty: selectedSlot!.availableSlots!,
-                              groundData: widget.groundData,
-                              selectedSlot: selectedSlot,
-                              selectedHorizontalDate: selectedHorizontalDate,
-                              is24HourFormat: is24HourFormat,
-                            ),
-                          );
-                        } else {
-                          toast("Please Select Slot!");
-                        }
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => CountSelectionBottomSheet(
+                            maxQty: selectedSlot[0].availableSlots!,
+                            groundData: widget.groundData,
+                            selectedSlot: selectedSlot[0],
+                            selectedHorizontalDate: selectedHorizontalDate,
+                            is24HourFormat: is24HourFormat,
+                          ),
+                        );
                       },
                     ).expand(),
                   ],

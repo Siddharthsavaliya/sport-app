@@ -8,20 +8,24 @@ import 'package:sport_app/model/ground_model/ground_model.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/booking/booking_slot.dart';
+import 'package:sport_app/screens/booking/model/ground_slot_model.dart';
 import 'package:sport_app/screens/booking/service_detail_responce_model.dart';
 
 class SlotSelectionScreen extends StatefulWidget {
   final GroundModel? groundData;
   final bool? isSecond;
+  final int? count;
   final DateTime? selectedHorizontalDate;
   final String? selectedSlot;
-
+  final GroundSlotData? groundSlotData;
   const SlotSelectionScreen({
     super.key,
     this.groundData,
+    this.count,
     this.isSecond = false,
     this.selectedHorizontalDate,
     this.selectedSlot,
+    this.groundSlotData,
   });
 
   @override
@@ -141,6 +145,7 @@ class _SlotSelectionScreenState extends State<SlotSelectionScreen> {
       body: Center(
           child: BookingSlotsComponent(
         groundData: widget.groundData,
+        groundSlotData: widget.groundSlotData,
         showAppbar: true,
         selectedHorizontalDate: widget.selectedHorizontalDate,
         selectedSlot: widget.selectedSlot,
