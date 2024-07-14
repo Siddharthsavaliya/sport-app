@@ -52,8 +52,9 @@ void showScafoldMessage(
 Future<dynamic> showYesNoDialogue(
   BuildContext context, {
   required VoidCallback onTap,
+  VoidCallback? onTapNO,
   required String title,
-  required String subTitle,
+  String? subTitle,
 }) async {
   await showDialog<void>(
     context: context,
@@ -83,19 +84,21 @@ Future<dynamic> showYesNoDialogue(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Flexible(
-                    child: Text(
-                      subTitle,
-                      textAlign: TextAlign.center,
-                      style: AppStyle.mediumBold.copyWith(
-                          color: AppColors.fetchingLocationColor,
-                          fontSize: 15.5,
-                          fontWeight: FontWeight.w400),
+                  if (subTitle != null) ...[
+                    const SizedBox(
+                      height: 15,
                     ),
-                  ),
+                    Flexible(
+                      child: Text(
+                        subTitle,
+                        textAlign: TextAlign.center,
+                        style: AppStyle.mediumBold.copyWith(
+                            color: AppColors.fetchingLocationColor,
+                            fontSize: 15.5,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                  ],
                   const SizedBox(
                     height: 35,
                   ),
@@ -107,9 +110,10 @@ Future<dynamic> showYesNoDialogue(
                             child: AppButton(
                           isBorder: true,
                           text: "No",
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
+                          onTap: onTapNO ??
+                              () {
+                                Navigator.pop(context);
+                              },
                         )),
                         const SizedBox(
                           width: 15,

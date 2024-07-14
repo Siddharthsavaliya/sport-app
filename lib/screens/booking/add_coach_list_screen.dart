@@ -14,6 +14,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:sport_app/model/booking/ground_booking_response.dart';
 import 'package:sport_app/res/api_constants.dart';
+import 'package:sport_app/screens/booking/sloat_selection_screen.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/status_dialog.dart';
 
@@ -56,72 +57,90 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
 
   void submit() async {
     if (_formKey.currentState!.validate()) {
-      List<CoachListData> coaches = [];
-      for (int i = 0; i < widget.quantity; i++) {
-        coaches.add(CoachListData(
-            firstName: firstNameControllers[i].text,
-            contact: "91${numberControllers[i].text}"));
-      }
+      showYesNoDialogue(
+        context,
+        onTap: () async {
+          Navigator.pop(context);
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) => SlotSelectionScreen(
+                        groundData: widget.groundData,
+                        selectedHorizontalDate: widget.selectedHorizontalDate,
+                        selectedSlot: widget.selectedSlot,
+                        isSecond: true,
+                      )));
+        },
+        onTapNO: () async {
+          List<CoachListData> coaches = [];
+          for (int i = 0; i < widget.quantity; i++) {
+            coaches.add(CoachListData(
+                firstName: firstNameControllers[i].text,
+                contact: "91${numberControllers[i].text}"));
+          }
 
-      final token = await getKeyValue(key: "token");
-      var headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      };
-      var data = {
-        "groundId": "${widget.groundData?.id}",
-        "slotIds": [widget.groundSlotData?.id],
-        "date": formatDate(widget.selectedHorizontalDate!),
-        "totalCount": "${coaches.length}",
-        "users": coaches.map((user) => user.toJson()).toList(),
-      };
-      var dio = Dio();
-      try {
-        showProgressDialogue(context);
-        var response = await dio.request(
-          '${ApiConstants.baseUrl}${ApiConstants.getSummary}',
-          options: Options(
-            method: 'POST',
-            headers: headers,
-          ),
-          data: jsonEncode(data),
-        );
-        log(response.data.toString());
-        if (response.statusCode == 200) {
-          Navigator.pop(context);
-          GroundBookingResponce groundBookingResponce =
-              GroundBookingResponce.fromJson(response.data);
-          Navigator.pushReplacement(
-            context,
-            CupertinoPageRoute(
-              builder: (context) => BookGroundScreen(
-                groundBookingSummary: groundBookingResponce,
-                selectedSlot: widget.selectedSlot.validate(),
-                is24HourFormat: widget.is24HourFormat,
-                groundData: widget.groundData,
-                groundSlotData: widget.groundSlotData,
-                selectedHorizontalDate: widget.selectedHorizontalDate,
-                coaches: coaches,
+          final token = await getKeyValue(key: "token");
+          var headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          };
+          var data = {
+            "groundId": "${widget.groundData?.id}",
+            "slotIds": [widget.groundSlotData?.id],
+            "date": formatDate(widget.selectedHorizontalDate!),
+            "totalCount": "${coaches.length}",
+            "users": coaches.map((user) => user.toJson()).toList(),
+          };
+          var dio = Dio();
+          try {
+            showProgressDialogue(context);
+            var response = await dio.request(
+              '${ApiConstants.baseUrl}${ApiConstants.getSummary}',
+              options: Options(
+                method: 'POST',
+                headers: headers,
               ),
-            ),
-          );
-        } else {
-          Navigator.pop(context);
-          showErrorDialogue(context, "Something went wrong");
-        }
-      } on DioException catch (e) {
-        print(e);
-        Navigator.pop(context);
-        if (e.response != null) {
-          showErrorDialogue(context, "Something went wrong");
-        } else {
-          showErrorDialogue(context, "Something went wrong");
-        }
-      } catch (e) {
-        print(e);
-        Navigator.pop(context);
-        showErrorDialogue(context, e.toString());
-      }
+              data: jsonEncode(data),
+            );
+            log(response.data.toString());
+            if (response.statusCode == 200) {
+              Navigator.pop(context);
+              GroundBookingResponce groundBookingResponce =
+                  GroundBookingResponce.fromJson(response.data);
+              Navigator.pushReplacement(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => BookGroundScreen(
+                    groundBookingSummary: groundBookingResponce,
+                    selectedSlot: widget.selectedSlot.validate(),
+                    is24HourFormat: widget.is24HourFormat,
+                    groundData: widget.groundData,
+                    groundSlotData: widget.groundSlotData,
+                    selectedHorizontalDate: widget.selectedHorizontalDate,
+                    coaches: coaches,
+                  ),
+                ),
+              );
+            } else {
+              Navigator.pop(context);
+              showErrorDialogue(context, "Something went wrong");
+            }
+          } on DioException catch (e) {
+            print(e);
+            Navigator.pop(context);
+            if (e.response != null) {
+              showErrorDialogue(context, "Something went wrong");
+            } else {
+              showErrorDialogue(context, "Something went wrong");
+            }
+          } catch (e) {
+            print(e);
+            Navigator.pop(context);
+            showErrorDialogue(context, e.toString());
+          }
+        },
+        title: "Do want add one more hour ?",
+      );
     }
   }
 

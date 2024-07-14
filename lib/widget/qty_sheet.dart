@@ -11,8 +11,8 @@ import 'package:sport_app/widget/app_button.dart';
 
 import '../res/app_text_style.dart';
 
-class SizeSelectionBottomSheet extends StatefulWidget {
-  const SizeSelectionBottomSheet({
+class CountSelectionBottomSheet extends StatefulWidget {
+  const CountSelectionBottomSheet({
     super.key,
     required this.maxQty,
     required this.selectedHorizontalDate,
@@ -26,11 +26,11 @@ class SizeSelectionBottomSheet extends StatefulWidget {
   final DateTime selectedHorizontalDate;
   final bool is24HourFormat;
   @override
-  State<SizeSelectionBottomSheet> createState() =>
-      _SizeSelectionBottomSheetState();
+  State<CountSelectionBottomSheet> createState() =>
+      _CountSelectionBottomSheetState();
 }
 
-class _SizeSelectionBottomSheetState extends State<SizeSelectionBottomSheet> {
+class _CountSelectionBottomSheetState extends State<CountSelectionBottomSheet> {
   int selectedQty = 1;
   @override
   void initState() {

@@ -28,9 +28,17 @@ class BookingSlotsComponent extends StatefulWidget {
 
   final bool showAppbar;
   final VoidCallback? onApplyClick;
-
+  final bool? isSecond;
+  final DateTime? selectedHorizontalDate;
+  final String? selectedSlot;
   const BookingSlotsComponent(
-      {super.key, this.groundData, this.showAppbar = false, this.onApplyClick});
+      {super.key,
+      this.groundData,
+      this.showAppbar = false,
+      this.onApplyClick,
+      this.isSecond,
+      this.selectedHorizontalDate,
+      this.selectedSlot});
 
   @override
   _BookingSlotsComponentState createState() => _BookingSlotsComponentState();
@@ -222,9 +230,12 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                       16.height,
                       HorizontalDatePickerWidget(
                         height: 90,
-                        startDate: DateTime.now(),
-                        endDate: DateTime.now().add(const Duration(days: 6)),
-                        selectedDate: selectedHorizontalDate,
+                        startDate:
+                            widget.selectedHorizontalDate ?? DateTime.now(),
+                        endDate: widget.selectedHorizontalDate ??
+                            DateTime.now().add(const Duration(days: 6)),
+                        selectedDate: widget.selectedHorizontalDate ??
+                            selectedHorizontalDate,
                         widgetWidth: context.width(),
                         selectedColor: AppColors.primaryColor,
                         dateItemComponentList: const [
@@ -305,7 +316,7 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                         if (selectedSlot != null) {
                           showModalBottomSheet(
                             context: context,
-                            builder: (context) => SizeSelectionBottomSheet(
+                            builder: (context) => CountSelectionBottomSheet(
                               maxQty: selectedSlot!.availableSlots!,
                               groundData: widget.groundData,
                               selectedSlot: selectedSlot,
@@ -313,25 +324,6 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                               is24HourFormat: is24HourFormat,
                             ),
                           );
-                          // final quantity = await showQuantityGetterDialog(
-                          //     context, selectedSlot!.availableSlots ?? 0);
-                          // if (quantity != null) {
-                          //   Navigator.pushReplacement(
-                          //     context,
-                          //     CupertinoPageRoute(
-                          //       builder: (context) => AddCoachListScreen(
-                          //         quantity: quantity,
-                          // groundSlotData: selectedSlot,
-                          // groundData: widget.groundData,
-                          // selectedSlot:
-                          //     selectedSlot?.startTime.toString(),
-                          // selectedHorizontalDate:
-                          //     selectedHorizontalDate,
-                          // is24HourFormat: is24HourFormat,
-                          //       ),
-                          //     ),
-                          //   );
-                          // }
                         } else {
                           toast("Please Select Slot!");
                         }

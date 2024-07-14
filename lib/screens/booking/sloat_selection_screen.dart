@@ -12,10 +12,16 @@ import 'package:sport_app/screens/booking/service_detail_responce_model.dart';
 
 class SlotSelectionScreen extends StatefulWidget {
   final GroundModel? groundData;
+  final bool? isSecond;
+  final DateTime? selectedHorizontalDate;
+  final String? selectedSlot;
 
   const SlotSelectionScreen({
     super.key,
     this.groundData,
+    this.isSecond = false,
+    this.selectedHorizontalDate,
+    this.selectedSlot,
   });
 
   @override
@@ -133,29 +139,12 @@ class _SlotSelectionScreenState extends State<SlotSelectionScreen> {
         elevation: 0,
       ),
       body: Center(
-          child:
-              // BookingCalendar(
-              //   bookingService: mockBookingService!,
-              //   convertStreamResultToDateTimeRanges: convertStreamResultMock,
-              //   getBookingStream: getBookingStreamMock,
-              //   uploadBooking: uploadBookingMock,
-              //   pauseSlots: generatePauseSlots(),
-              //   pauseSlotText: 'LUNCH',
-              //   hideBreakTime: true,
-              //   loadingWidget: const Text('Fetching data...'),
-              //   uploadingWidget: const CircularProgressIndicator(),
-              //   locale: 'IN',
-              //   startingDayOfWeek: StartingDayOfWeek.monday,
-              //   wholeDayIsBookedWidget:
-              //       const Text('Sorry, for this day everything is booked'),
-              // )
-
-              BookingSlotsComponent(
+          child: BookingSlotsComponent(
         groundData: widget.groundData,
-
-        // data: serviceDetailResponse,
         showAppbar: true,
-        // scrollController: scrollController,
+        selectedHorizontalDate: widget.selectedHorizontalDate,
+        selectedSlot: widget.selectedSlot,
+        isSecond: widget.isSecond,
         onApplyClick: () {
           setState(() {});
         },
