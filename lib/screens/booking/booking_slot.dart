@@ -289,7 +289,8 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                               isProvider: false,
                               availableSlots: tempGround,
                               groundSlotData: tempGround,
-                              selectedDate: selectedHorizontalDate,
+                              selectedDate: widget.selectedHorizontalDate ??
+                                  selectedHorizontalDate,
                               onChanged: (List<GroundSlotData> selectedSlots) {
                                 isSlotSelected = selectedSlots.isNotEmpty;
                                 if (isSlotSelected) {
