@@ -31,6 +31,7 @@ mixin _$CoachBookingHistoryModel {
   int get totalPrice => throw _privateConstructorUsedError;
   num? get gstAmount => throw _privateConstructorUsedError;
   String? get startTime => throw _privateConstructorUsedError;
+  List<String>? get days => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
   String? get endTime => throw _privateConstructorUsedError;
   num? get subtotal => throw _privateConstructorUsedError;
@@ -58,6 +59,7 @@ abstract class $CoachBookingHistoryModelCopyWith<$Res> {
       int totalPrice,
       num? gstAmount,
       String? startTime,
+      List<String>? days,
       String? createdAt,
       String? endTime,
       num? subtotal,
@@ -90,6 +92,7 @@ class _$CoachBookingHistoryModelCopyWithImpl<$Res,
     Object? totalPrice = null,
     Object? gstAmount = freezed,
     Object? startTime = freezed,
+    Object? days = freezed,
     Object? createdAt = freezed,
     Object? endTime = freezed,
     Object? subtotal = freezed,
@@ -132,6 +135,10 @@ class _$CoachBookingHistoryModelCopyWithImpl<$Res,
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
               as String?,
+      days: freezed == days
+          ? _value.days
+          : days // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -186,6 +193,7 @@ abstract class _$$CoachBookingHistoryImplCopyWith<$Res>
       int totalPrice,
       num? gstAmount,
       String? startTime,
+      List<String>? days,
       String? createdAt,
       String? endTime,
       num? subtotal,
@@ -218,6 +226,7 @@ class __$$CoachBookingHistoryImplCopyWithImpl<$Res>
     Object? totalPrice = null,
     Object? gstAmount = freezed,
     Object? startTime = freezed,
+    Object? days = freezed,
     Object? createdAt = freezed,
     Object? endTime = freezed,
     Object? subtotal = freezed,
@@ -260,6 +269,10 @@ class __$$CoachBookingHistoryImplCopyWithImpl<$Res>
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
               as String?,
+      days: freezed == days
+          ? _value._days
+          : days // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -295,10 +308,12 @@ class _$CoachBookingHistoryImpl
       required this.totalPrice,
       required this.gstAmount,
       required this.startTime,
+      required final List<String>? days,
       required this.createdAt,
       required this.endTime,
       required this.subtotal,
-      required this.expirationDate});
+      required this.expirationDate})
+      : _days = days;
 
   factory _$CoachBookingHistoryImpl.fromJson(Map<String, dynamic> json) =>
       _$$CoachBookingHistoryImplFromJson(json);
@@ -322,6 +337,16 @@ class _$CoachBookingHistoryImpl
   final num? gstAmount;
   @override
   final String? startTime;
+  final List<String>? _days;
+  @override
+  List<String>? get days {
+    final value = _days;
+    if (value == null) return null;
+    if (_days is EqualUnmodifiableListView) return _days;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final String? createdAt;
   @override
@@ -333,7 +358,7 @@ class _$CoachBookingHistoryImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CoachBookingHistoryModel(id: $id, userId: $userId, coachId: $coachId, schoolId: $schoolId, qrCode: $qrCode, url: $url, totalPrice: $totalPrice, gstAmount: $gstAmount, startTime: $startTime, createdAt: $createdAt, endTime: $endTime, subtotal: $subtotal, expirationDate: $expirationDate)';
+    return 'CoachBookingHistoryModel(id: $id, userId: $userId, coachId: $coachId, schoolId: $schoolId, qrCode: $qrCode, url: $url, totalPrice: $totalPrice, gstAmount: $gstAmount, startTime: $startTime, days: $days, createdAt: $createdAt, endTime: $endTime, subtotal: $subtotal, expirationDate: $expirationDate)';
   }
 
   @override
@@ -350,6 +375,7 @@ class _$CoachBookingHistoryImpl
       ..add(DiagnosticsProperty('totalPrice', totalPrice))
       ..add(DiagnosticsProperty('gstAmount', gstAmount))
       ..add(DiagnosticsProperty('startTime', startTime))
+      ..add(DiagnosticsProperty('days', days))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('endTime', endTime))
       ..add(DiagnosticsProperty('subtotal', subtotal))
@@ -374,6 +400,7 @@ class _$CoachBookingHistoryImpl
                 other.gstAmount == gstAmount) &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
+            const DeepCollectionEquality().equals(other._days, _days) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
@@ -396,6 +423,7 @@ class _$CoachBookingHistoryImpl
       totalPrice,
       gstAmount,
       startTime,
+      const DeepCollectionEquality().hash(_days),
       createdAt,
       endTime,
       subtotal,
@@ -427,6 +455,7 @@ abstract class _CoachBookingHistory implements CoachBookingHistoryModel {
       required final int totalPrice,
       required final num? gstAmount,
       required final String? startTime,
+      required final List<String>? days,
       required final String? createdAt,
       required final String? endTime,
       required final num? subtotal,
@@ -454,6 +483,8 @@ abstract class _CoachBookingHistory implements CoachBookingHistoryModel {
   num? get gstAmount;
   @override
   String? get startTime;
+  @override
+  List<String>? get days;
   @override
   String? get createdAt;
   @override

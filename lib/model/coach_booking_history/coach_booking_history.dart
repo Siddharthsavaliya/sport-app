@@ -18,6 +18,7 @@ abstract class CoachBookingHistoryModel with _$CoachBookingHistoryModel {
     required int totalPrice,
     required num? gstAmount,
     required String? startTime,
+    required List<String>? days,
     required String? createdAt,
     required String? endTime,
     required num? subtotal,

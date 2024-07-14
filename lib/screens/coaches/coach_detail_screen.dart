@@ -315,40 +315,54 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
                                                     children: [
                                                       Wrap(
                                                         spacing: 1.3,
-                                                        children:
-                                                            state.coachDetail!
-                                                                .days
-                                                                .map((e) => Row(
-                                                                      children: [
-                                                                        Text(
-                                                                          e,
-                                                                          style: AppStyle
-                                                                              .normalText
-                                                                              .copyWith(
-                                                                            fontSize:
-                                                                                14.sp,
-                                                                            fontWeight:
-                                                                                FontWeight.w600, // Semi-bold text
-                                                                            color:
-                                                                                AppColors.black,
-                                                                          ),
-                                                                        ),
-                                                                        Text(
-                                                                          ",",
-                                                                          style: AppStyle
-                                                                              .normalText
-                                                                              .copyWith(
-                                                                            fontSize:
-                                                                                14.sp,
-                                                                            fontWeight:
-                                                                                FontWeight.w600, // Semi-bold text
-                                                                            color:
-                                                                                AppColors.black,
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ))
-                                                                .toList(),
+                                                        children: state
+                                                            .coachDetail!.days
+                                                            .asMap()
+                                                            .entries
+                                                            .map((entry) {
+                                                          int idx = entry.key;
+                                                          String day =
+                                                              entry.value;
+                                                          return Row(
+                                                            children: [
+                                                              Text(
+                                                                day,
+                                                                style: AppStyle
+                                                                    .normalText
+                                                                    .copyWith(
+                                                                  fontSize:
+                                                                      14.sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600, // Semi-bold text
+                                                                  color:
+                                                                      AppColors
+                                                                          .black,
+                                                                ),
+                                                              ),
+                                                              if (idx !=
+                                                                  state
+                                                                          .coachDetail!
+                                                                          .days
+                                                                          .length -
+                                                                      1) // Condition to not show comma on the last item
+                                                                Text(
+                                                                  ",",
+                                                                  style: AppStyle
+                                                                      .normalText
+                                                                      .copyWith(
+                                                                    fontSize:
+                                                                        14.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600, // Semi-bold text
+                                                                    color: AppColors
+                                                                        .black,
+                                                                  ),
+                                                                ),
+                                                            ],
+                                                          );
+                                                        }).toList(),
                                                       ),
                                                       const SizedBox(height: 4),
                                                       Text(

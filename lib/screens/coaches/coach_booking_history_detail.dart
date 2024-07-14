@@ -105,47 +105,163 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text("Date: ", style: secondaryTextStyle()),
-                            Text(
-                                formatDateTime(DateTime.parse(
-                                    widget.coachBookingHistory.createdAt!)),
-                                style: boldTextStyle(size: 14)),
-                          ],
-                        ),
-                        8.height,
-                        Row(
-                          children: [
-                            Text("Time: ", style: secondaryTextStyle()),
-                            Text(
-                                "${widget.coachBookingHistory.startTime} to ${widget.coachBookingHistory.endTime}",
-                                style: boldTextStyle(size: 14)),
-                          ],
-                        ),
-                        8.height,
-                        Row(
-                          children: [
-                            Text("Total Price: ", style: secondaryTextStyle()),
-                            Text('${widget.coachBookingHistory.totalPrice}',
-                                style: boldTextStyle(size: 14)),
-                          ],
-                        ),
-                      ],
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text("Date: ", style: secondaryTextStyle()),
+                              Text(
+                                  formatDateTime(DateTime.parse(
+                                      widget.coachBookingHistory.createdAt!)),
+                                  style: boldTextStyle(size: 14)),
+                            ],
+                          ),
+                          8.height,
+                          Row(
+                            children: [
+                              Text("Days: ", style: secondaryTextStyle()),
+                              Wrap(
+                                spacing: 1.3,
+                                children: widget.coachBookingHistory.days!
+                                    .asMap()
+                                    .entries
+                                    .map((entry) {
+                                  int idx = entry.key;
+                                  String day = entry.value;
+                                  return Row(
+                                    children: [
+                                      Text(
+                                        day,
+                                        style: AppStyle.normalText.copyWith(
+                                          fontSize: 14.sp,
+                                          fontWeight:
+                                              FontWeight.w600, // Semi-bold text
+                                          color: AppColors.black,
+                                        ),
+                                      ),
+                                      if (idx !=
+                                          widget.coachBookingHistory.days!
+                                                  .length -
+                                              1) // Condition to not show comma on the last item
+                                        Text(
+                                          ",",
+                                          style: AppStyle.normalText.copyWith(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight
+                                                .w600, // Semi-bold text
+                                            color: AppColors.black,
+                                          ),
+                                        ),
+                                    ],
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          ),
+                          8.height,
+                          Row(
+                            children: [
+                              Text("Time: ", style: secondaryTextStyle()),
+                              Text(
+                                  "${widget.coachBookingHistory.startTime} to ${widget.coachBookingHistory.endTime}",
+                                  style: boldTextStyle(size: 14)),
+                            ],
+                          ),
+                          8.height,
+                          Row(
+                            children: [
+                              Text("Total Price: ",
+                                  style: secondaryTextStyle()),
+                              Text('${widget.coachBookingHistory.totalPrice}',
+                                  style: boldTextStyle(size: 14)),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: Image.memory(
-                        base64Decode(widget.coachBookingHistory.qrCode),
+                    Expanded(
+                      flex: 1,
+                      child: SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: Image.memory(
+                          base64Decode(widget.coachBookingHistory.qrCode),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
+              16.height,
+              // Container(
+              //   padding: const EdgeInsets.all(16),
+              //   decoration: boxDecorationDefault(color: Colors.white),
+              //   width: context.width(),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Text(
+              //         "Schedule",
+              //         style: AppStyle.normalText.copyWith(
+              //           fontSize: 16.sp, // Increased font size
+              //           fontWeight: FontWeight.bold, // Bold text
+              //           color: AppColors.black,
+              //         ),
+              //       ),
+              //       const SizedBox(height: 8),
+              //       Row(
+              //         children: [
+              //           Column(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              // Wrap(
+              //   spacing: 1.3,
+              //   children: state.coachDetail!.days
+              //       .map((e) => Row(
+              //             children: [
+              //               Text(
+              //                 e,
+              //                 style: AppStyle.normalText.copyWith(
+              //                   fontSize: 14.sp,
+              //                   fontWeight: FontWeight
+              //                       .w600, // Semi-bold text
+              //                   color: AppColors.black,
+              //                 ),
+              //               ),
+              //               Text(
+              //                 ",",
+              //                 style: AppStyle.normalText.copyWith(
+              //                   fontSize: 14.sp,
+              //                   fontWeight: FontWeight
+              //                       .w600, // Semi-bold text
+              //                   color: AppColors.black,
+              //                 ),
+              //               ),
+              //             ],
+              //           ))
+              //       .toList(),
+              // ),
+              //               const SizedBox(height: 4),
+              //               Text(
+              //                 "${coachDetail.startTime ?? ""} to ${coachDetail.endTime ?? ""}",
+              //                 style: TextStyle(
+              //                   fontSize: 12.sp,
+              //                   color: black,
+              //                   fontWeight:
+              //                       FontWeight.normal, // Normal weight text
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
+
               16.height,
               addVerticalSpacing(0.01),
               Text(
