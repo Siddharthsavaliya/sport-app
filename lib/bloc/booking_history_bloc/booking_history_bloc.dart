@@ -69,9 +69,8 @@ class BookingHistoryBloc
   Future<void> _setBookingDataEvent(
       SetBookingDataEvent event, Emitter<BookingHistoryState> emit) async {
     if (event.groundSlotData != null) {
-      List<GroundSlotData> groundSlotData = List.from(state.groundSlotData);
-      groundSlotData.add(event.groundSlotData!);
-      emit(state.copyWith(groundSlotData: groundSlotData));
+      emit(state.copyWith(
+          groundSlotData: [event.groundSlotData!], status: Status.loaded));
     }
     if (event.users != null) {
       emit(state.copyWith(users: event.users));

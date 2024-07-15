@@ -457,31 +457,36 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                                                                       (context,
                                                                           state) {
                                                                     if (state
-                                                                        .status
-                                                                        .isInProgress) {
-                                                                      showProgressDialogue(
-                                                                          context);
-                                                                    } else if (state
-                                                                        .status
-                                                                        .isLoaded) {
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                      // showScafoldMessage(
-                                                                      //     message: state
-                                                                      //             .isRemove
-                                                                      //         ? "Ground removed successfully from your favorite list"
-                                                                      //         : "Ground added successfully in your favorite list",
-                                                                      //     context: context);
-                                                                    } else if (state
-                                                                        .status
-                                                                        .isFailed) {
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                      showScafoldMessage(
-                                                                          context:
-                                                                              context,
-                                                                          message:
-                                                                              state.message);
+                                                                            .isAdd ||
+                                                                        state
+                                                                            .isRemove) {
+                                                                      if (state
+                                                                          .status
+                                                                          .isInProgress) {
+                                                                        showProgressDialogue(
+                                                                            context);
+                                                                      } else if (state
+                                                                          .status
+                                                                          .isLoaded) {
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                        // showScafoldMessage(
+                                                                        //     message: state
+                                                                        //             .isRemove
+                                                                        //         ? "Ground removed successfully from your favorite list"
+                                                                        //         : "Ground added successfully in your favorite list",
+                                                                        //     context: context);
+                                                                      } else if (state
+                                                                          .status
+                                                                          .isFailed) {
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                        showScafoldMessage(
+                                                                            context:
+                                                                                context,
+                                                                            message:
+                                                                                state.message);
+                                                                      }
                                                                     }
                                                                   },
                                                                   builder: (context,
