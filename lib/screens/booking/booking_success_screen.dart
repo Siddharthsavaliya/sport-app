@@ -327,7 +327,11 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                                         // ),
                                         addVerticalSpacing(0.02),
                                         Text(
-                                          "${groundBookingResponce!.data!.users!.length} Players",
+                                          groundBookingResponce!
+                                                      .data!.users!.length >
+                                                  1
+                                              ? "${groundBookingResponce!.data!.users!.length} Players"
+                                              : "${groundBookingResponce!.data!.users!.length} Player",
                                           style: AppStyle.mediumBold.copyWith(
                                             color: AppColors.black,
                                             fontWeight: FontWeight.w600,

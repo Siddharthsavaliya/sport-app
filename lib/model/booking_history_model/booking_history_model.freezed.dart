@@ -333,7 +333,7 @@ class _$BookingImpl implements _Booking {
       required final List<String>? endTime,
       required this.totalCount,
       required this.qrCode,
-      required this.invoiceUrl,
+      this.invoiceUrl = "",
       required final List<User> users,
       required this.totalPrice,
       required this.gstAmount,
@@ -395,6 +395,7 @@ class _$BookingImpl implements _Booking {
   @override
   final String qrCode;
   @override
+  @JsonKey()
   final String invoiceUrl;
   final List<User> _users;
   @override
@@ -499,7 +500,7 @@ abstract class _Booking implements BookingHistory {
       required final List<String>? endTime,
       required final int? totalCount,
       required final String qrCode,
-      required final String invoiceUrl,
+      final String invoiceUrl,
       required final List<User> users,
       required final num? totalPrice,
       required final num? gstAmount,

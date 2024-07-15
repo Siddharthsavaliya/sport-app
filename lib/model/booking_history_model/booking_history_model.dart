@@ -17,7 +17,7 @@ class BookingHistory with _$BookingHistory {
     required List<String>? endTime,
     required int? totalCount,
     required String qrCode,
-    required String invoiceUrl,
+    @Default("") String invoiceUrl,
     required List<User> users,
     required num? totalPrice,
     required num? gstAmount,

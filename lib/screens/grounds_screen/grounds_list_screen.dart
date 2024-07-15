@@ -533,74 +533,6 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                                                             .start,
                                                     children: [
                                                       10.height,
-                                                      HorizontalList(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(0),
-                                                        itemCount:
-                                                            allSports.length,
-                                                        itemBuilder:
-                                                            (context, index) {
-                                                          if (index == 2) {
-                                                            return Container(
-                                                              decoration: boxDecorationWithShadow(
-                                                                  backgroundColor: context
-                                                                      .cardColor
-                                                                      .withOpacity(
-                                                                          0.9),
-                                                                  borderRadius:
-                                                                      radius(
-                                                                          20),
-                                                                  border: Border
-                                                                      .all()),
-                                                              child: Row(
-                                                                children: [
-                                                                  const Icon(
-                                                                    Icons.add,
-                                                                    size: 18,
-                                                                  ),
-                                                                  4.width,
-                                                                  const Text(
-                                                                      "3"),
-                                                                ],
-                                                              ).paddingSymmetric(
-                                                                  horizontal: 8,
-                                                                  vertical: 4),
-                                                            );
-                                                          }
-                                                          if (index >= 3) {
-                                                            return const Offstage();
-                                                          }
-
-                                                          return Container(
-                                                            decoration: boxDecorationWithShadow(
-                                                                backgroundColor:
-                                                                    context
-                                                                        .cardColor
-                                                                        .withOpacity(
-                                                                            0.9),
-                                                                borderRadius:
-                                                                    radius(20),
-                                                                border: Border
-                                                                    .all()),
-                                                            child: Row(
-                                                              children: [
-                                                                const Icon(
-                                                                  Icons
-                                                                      .sports_cricket,
-                                                                  size: 18,
-                                                                ),
-                                                                4.width,
-                                                                Text(allSports[
-                                                                    index]),
-                                                              ],
-                                                            ).paddingSymmetric(
-                                                                horizontal: 8,
-                                                                vertical: 4),
-                                                          );
-                                                        },
-                                                      ),
-                                                      13.height,
                                                       Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -611,6 +543,18 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                                                                 CrossAxisAlignment
                                                                     .start,
                                                             children: [
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        left:
+                                                                            4),
+                                                                child: Text(
+                                                                    "₹ ${state.groundsData[index].price} / Hour",
+                                                                    style:
+                                                                        boldTextStyle()),
+                                                              ),
+                                                              5.height,
                                                               Padding(
                                                                 padding:
                                                                     const EdgeInsets
