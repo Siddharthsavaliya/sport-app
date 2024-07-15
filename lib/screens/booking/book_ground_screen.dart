@@ -79,22 +79,23 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
       if (response.statusCode == 200) {
         Navigator.pop(context);
         log(json.encode(response.data).toString());
-        // GroundBookingResponce groundBookingResponce =
-        //     GroundBookingResponce.fromJson(response.data);
-        // Navigator.pushReplacement(
-        //     context,
-        //     CupertinoPageRoute(
-        //         builder: (context) => BookingSuccessScreen(
-        //               groundBookingResponce: groundBookingResponce,
-        //             )));
-        Navigator.push(
-            context,
-            CupertinoPageRoute(
-                builder: (context) => PaymentWebViewScreen(
-                      type: "ground",
-                      url: response.data["data"]["redirectUrl"],
-                      id: response.data["data"]["id"],
-                    )));
+
+        if (response.data["data"]["isFree"]) {
+          Navigator.pushReplacement(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) =>
+                      BookingSuccessScreen(id: response.data["data"]["id"])));
+        } else {
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) => PaymentWebViewScreen(
+                        type: "ground",
+                        url: response.data["data"]["redirectUrl"],
+                        id: response.data["data"]["id"],
+                      )));
+        }
       } else {
         Navigator.pop(context);
         showErrorDialogue(context, "Somthing went wrong");
