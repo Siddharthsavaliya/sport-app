@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/bloc/booking_history_bloc/booking_history_bloc.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/data/api_client.dart';
 import 'package:sport_app/model/booking/ground_booking_response.dart';
@@ -240,29 +241,39 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         buildSummaryRow(
-                            "Date:",
+                            "Date",
                             widget.selectedHorizontalDate != null
                                 ? DateFormat('dd MMM, yyyy')
                                     .format(widget.selectedHorizontalDate!)
                                 : ''),
                         8.height,
                         buildSummaryRow(
-                            "Time:",
-                            widget.is24HourFormat
-                                ? widget.selectedSlot
-                                    .validate()
-                                    .splitBefore(':00')
-                                : TimeOfDay(
-                                        hour: widget.selectedSlot
-                                            .validate()
-                                            .split(':')
-                                            .first
-                                            .toInt(),
-                                        minute: 00)
-                                    .format(context)),
+                            widget.groundSlotData!.length > 1
+                                ? "Slot Time 1"
+                                : "Slot Time",
+                            TimeOfDay(
+                                    hour: widget.groundSlotData![0].startTime
+                                        .validate()
+                                        .split(':')
+                                        .first
+                                        .toInt(),
+                                    minute: 00)
+                                .format(context)),
+                        if (widget.groundSlotData!.length > 1) ...[
+                          8.height,
+                          buildSummaryRow(
+                              "Slot Time 2",
+                              TimeOfDay(
+                                      hour: widget.groundSlotData![1].startTime
+                                          .validate()
+                                          .split(':')
+                                          .first
+                                          .toInt(),
+                                      minute: 00)
+                                  .format(context)),
+                        ],
                         8.height,
-                        buildSummaryRow(
-                            "Players:", '${widget.coaches?.length}'),
+                        buildSummaryRow("Players", '${widget.coaches?.length}'),
                       ],
                     ),
                   ),

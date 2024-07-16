@@ -22,8 +22,10 @@ class AppAssets {
   static const String sport1 = "assets/images/sport1.png";
   static const String locationIcon = "assets/images/location_icon.svg";
   static const String home = "assets/images/home.png";
+  static const String map1 = "assets/images/map.jpg";
   static const String dp = "assets/images/dp.png";
   static const String event1 = "assets/images/event1.png";
+  static const String map2 = "assets/images/map2.jpg";
   static const String light = "assets/images/light.svg";
   static const String help = "assets/images/help.jpg";
   static const String locationPinIcon = "assets/images/location_pin.svg";

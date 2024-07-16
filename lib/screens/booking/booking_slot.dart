@@ -263,27 +263,27 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                           setState(() {});
                         },
                       ),
-                      16.height,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text("Use 24-hour formate",
-                              style: secondaryTextStyle(size: 14)),
-                          16.width,
-                          Builder(builder: (context) {
-                            return Transform.scale(
-                              scale: 0.8,
-                              child: Switch.adaptive(
-                                value: is24HourFormat,
-                                onChanged: (value) {
-                                  is24HourFormat = !is24HourFormat;
-                                  setState(() {});
-                                },
-                              ),
-                            );
-                          })
-                        ],
-                      ),
+                      // 16.height,
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.end,
+                      //   children: [
+                      //     Text("Use 24-hour formate",
+                      //         style: secondaryTextStyle(size: 14)),
+                      //     16.width,
+                      //     Builder(builder: (context) {
+                      //       return Transform.scale(
+                      //         scale: 0.8,
+                      //         child: Switch.adaptive(
+                      //           value: is24HourFormat,
+                      //           onChanged: (value) {
+                      //             is24HourFormat = !is24HourFormat;
+                      //             setState(() {});
+                      //           },
+                      //         ),
+                      //       );
+                      //     })
+                      //   ],
+                      // ),
                       16.height,
                       Text("Available Slots", style: boldTextStyle(size: 14)),
                       16.height,
@@ -385,6 +385,8 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                                 GroundBookingResponce groundBookingResponce =
                                     GroundBookingResponce.fromJson(
                                         response.data);
+
+                                log(groundBookingResponce);
                                 Navigator.pushReplacement(
                                   context,
                                   CupertinoPageRoute(
@@ -393,14 +395,14 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                                           groundBookingResponce,
                                       selectedSlot:
                                           widget.selectedSlot.validate(),
-                                      is24HourFormat: true,
+                                      is24HourFormat: false,
                                       groundData: widget.groundData,
                                       groundSlotData: [
                                         widget.groundSlotData!,
                                         selectedSlot.first
                                       ],
                                       selectedHorizontalDate:
-                                          widget.selectedHorizontalDate,
+                                          selectedHorizontalDate,
                                       coaches:
                                           BlocProvider.of<BookingHistoryBloc>(
                                                   context)

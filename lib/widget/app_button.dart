@@ -13,11 +13,13 @@ class AppButton extends StatelessWidget {
       this.removeOpacity = false,
       this.radius,
       this.color,
+      this.textColor,
       this.textSize});
   final bool removeOpacity;
   final bool isBorder;
   final String text;
   final Color? color;
+  final Color? textColor;
   final double? radius;
   final double? textSize;
   final VoidCallback onTap;
@@ -42,7 +44,7 @@ class AppButton extends StatelessWidget {
           child: Text(
             text,
             style: AppStyle.mediumBold.copyWith(
-              color: isBorder ? AppColors.red : AppColors.white,
+              color: textColor ?? (isBorder ? AppColors.red : AppColors.white),
               fontSize: textSize ?? 16.sp,
               fontWeight: FontWeight.w600,
             ),

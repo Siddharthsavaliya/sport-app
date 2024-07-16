@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_strings.dart';
@@ -17,50 +17,65 @@ class LocationAccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Column(
+      body: Stack(
         children: [
-          addVerticalSpacing(0.11),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
-            child: Column(
-              children: [
-                SvgPicture.asset(AppAssets.locationImage),
-                addVerticalSpacing(0.025),
-                Text(
-                  AppStrings.niceToMeetText,
-                  style: AppStyle.mediumText,
-                ),
-                addVerticalSpacing(0.025),
-                AppButton(
-                  color: AppColors.lightBlueColor,
-                  text: AppStrings.yourLocationText,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => const LocationFetchingScreen(),
-                      ),
-                    );
-                  },
-                ),
-                addVerticalSpacing(0.013),
-                AppButton(
-                  color: AppColors.lightBlueColor,
-                  text: AppStrings.someOtherLocation,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => const LocationSearchScreen(),
-                      ),
-                    );
-                  },
-                ),
-              ],
+          // Background Google Map Image
+          Positioned.fill(
+            child: Image.asset(
+              AppAssets.map1, // replace with your image asset
+              fit: BoxFit.cover,
+            ),
+          ),
+
+          Positioned.fill(
+              child: Container(
+            color: AppColors.white.withOpacity(0.8),
+          )),
+
+          // Foreground Content
+          Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircleAvatar(
+                    radius: 60,
+                    backgroundImage: AssetImage(AppAssets.map2),
+                  ),
+                  addVerticalSpacing(0.04),
+                  AppButton(
+                    color: AppColors.primaryColor,
+                    text: AppStrings.yourLocationText,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => const LocationFetchingScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  addVerticalSpacing(0.013),
+                  AppButton(
+                    color: AppColors.primaryColor,
+                    text: AppStrings.someOtherLocation,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => const LocationSearchScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           )
         ],
