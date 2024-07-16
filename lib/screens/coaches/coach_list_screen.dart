@@ -530,7 +530,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 10,
-                  crossAxisSpacing: 29,
+                  crossAxisSpacing: 10,
                   childAspectRatio: 0.8,
                 ),
                 itemCount: 8,
@@ -582,14 +582,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
       }
     }
 
-    if (sportsgrounds.length > 2) {
-      skillsWidgets.add(
-        Text(
-          " and more...",
-          style: TextStyle(fontSize: 15.sp),
-        ),
-      );
-    }
+    if (sportsgrounds.length > 2) {}
 
     return skillsWidgets;
   }

@@ -18,7 +18,7 @@ class AppStrings {
   static const String searchYourLocality = "Search your Locality...";
   static const String locationExText = "eg. Goregaon East, Hub Mall";
   static const String verify = "Verify";
-  static const String someOtherLocation = "some other location";
+  static const String someOtherLocation = "Choose different location";
   static const String sendOtp = "Send OTP";
   static const String submit = "Submit";
   static const String resetPassword = "Reset Password";

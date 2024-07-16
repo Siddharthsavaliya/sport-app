@@ -37,18 +37,21 @@ class LocationAccessScreen extends StatelessWidget {
             color: AppColors.white.withOpacity(0.8),
           )),
 
+          const Center(
+            child: CircleAvatar(
+              radius: 60,
+              backgroundImage: AssetImage(AppAssets.map2),
+            ),
+          ),
           // Foreground Content
-          Center(
+          Positioned(
+            bottom: 35,
+            right: 0,
+            left: 0,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const CircleAvatar(
-                    radius: 60,
-                    backgroundImage: AssetImage(AppAssets.map2),
-                  ),
-                  addVerticalSpacing(0.04),
                   AppButton(
                     color: AppColors.primaryColor,
                     text: AppStrings.yourLocationText,

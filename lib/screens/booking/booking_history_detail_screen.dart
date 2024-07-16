@@ -135,7 +135,12 @@ class _BookingHistoryDetailScreenState
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Row(
                                   children: [
-                                    Text("Time ${i + 1}: ",
+                                    Text(
+                                        widget.bookingHistory.startTime!
+                                                    .length ==
+                                                1
+                                            ? "Time "
+                                            : "Time ${i + 1}: ",
                                         style: secondaryTextStyle()),
                                     SizedBox(
                                       width: 0.7.sw,
@@ -271,63 +276,67 @@ class _BookingHistoryDetailScreenState
                 ),
               ),
               addVerticalSpacing(0.02),
-              Row(children: [
-                Expanded(
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: AppButton(
-                      shapeBorder: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      text: "Download Invoice",
-                      color: AppColors.primaryColor,
-                      textColor: AppColors.white,
-                      onTap: () async {
-                        await downloadInvoice(
-                            context,
-                            widget.bookingHistory.invoiceUrl,
-                            widget.bookingHistory.id);
-                      },
-                    ),
-                  ),
-                ),
-                // if (widget.bookingHistory.isCancellationFlag) ...[
-                addHorizontalSpacing(0.015),
-                Expanded(
-                  child: BlocListener<BookingHistoryBloc, BookingHistoryState>(
-                    listener: (context, state) {
-                      if (state.status.isInProgress) {
-                        showProgressDialogue(context);
-                      } else if (state.status.isFailed) {
-                        Navigator.pop(context);
-                        showErrorDialogue(context, state.message);
-                      } else if (state.status.isLoaded) {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                        showScafoldMessage(
-                            context: context, message: state.message);
-                      }
-                    },
+              Row(
+                children: [
+                  Expanded(
                     child: SizedBox(
                       width: double.infinity,
                       child: AppButton(
                         shapeBorder: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        text: "Cancel Request",
+                        text: "Download Invoice",
                         color: AppColors.primaryColor,
                         textColor: AppColors.white,
-                        onTap: () {
-                          BlocProvider.of<BookingHistoryBloc>(context).add(
-                              CancelBookingEvent(widget.bookingHistory.id));
+                        onTap: () async {
+                          await downloadInvoice(
+                              context,
+                              widget.bookingHistory.invoiceUrl,
+                              widget.bookingHistory.id);
                         },
                       ),
                     ),
                   ),
-                ),
-              ]
-                  // ],
-                  ),
+                  if (!widget.bookingHistory.isCancellationFlag &&
+                      isBefore24Hours(widget.bookingHistory.date!,
+                          widget.bookingHistory.startTime!.last)) ...[
+                    addHorizontalSpacing(0.015),
+                    Expanded(
+                      child:
+                          BlocListener<BookingHistoryBloc, BookingHistoryState>(
+                        listener: (context, state) {
+                          if (state.status.isInProgress) {
+                            showProgressDialogue(context);
+                          } else if (state.status.isFailed) {
+                            Navigator.pop(context);
+                            showErrorDialogue(context, state.message);
+                          } else if (state.status.isLoaded) {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            showScafoldMessage(
+                                context: context, message: state.message);
+                          }
+                        },
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: AppButton(
+                            shapeBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            text: "Cancel Request",
+                            color: AppColors.primaryColor,
+                            textColor: AppColors.white,
+                            onTap: () {
+                              BlocProvider.of<BookingHistoryBloc>(context).add(
+                                  CancelBookingEvent(widget.bookingHistory.id));
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]
+                ],
+              ),
               // 8.height,
               // SizedBox(
               //   width: double.infinity,

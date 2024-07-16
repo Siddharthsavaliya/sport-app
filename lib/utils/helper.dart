@@ -222,6 +222,19 @@ Future<void> clearStorage() async {
   storage.secureDelete("name");
 }
 
+bool isBefore24Hours(String date, String time) {
+  // Parse the date and time strings into a DateTime object
+  DateFormat dateFormat = DateFormat("dd-MM-yyyy hh:mm a");
+  DateTime inputDateTime = dateFormat.parse("$date $time");
+  print(inputDateTime);
+  // Get the current time and calculate the time 24 hours ago
+  DateTime currentTime = DateTime.now();
+  DateTime twentyFourHoursAgo = currentTime.subtract(const Duration(hours: 24));
+
+  // Check if the input datetime is before 24 hours ago
+  return !inputDateTime.isBefore(twentyFourHoursAgo);
+}
+
 Future<void> downloadInvoice(context, String url, String fileName) async {
   try {
     showProgressDialogue(context);
