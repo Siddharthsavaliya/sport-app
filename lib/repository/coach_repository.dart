@@ -49,15 +49,15 @@ class CoachRepository {
 
   Future<ApiResult<List<coach_history_model.CoachHistoryModel>>>
       getOneCoachBookings() async {
-    // try {
+    try {
     final response = await apiClient.get(
       ApiConstants.getOneCoachBookings,
     );
     log(response.data.toString());
     return ApiResult.success(getCoachHistoryList(response.data!['data']));
-    // } catch (e) {
-    //   return getErrorMessage(e);
-    // }
+    } catch (e) {
+      return getErrorMessage(e);
+    }
   }
 }
 

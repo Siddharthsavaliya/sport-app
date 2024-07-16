@@ -5,10 +5,12 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/data/api_client.dart';
 import 'package:sport_app/model/booking/ground_booking_response.dart';
 import 'package:sport_app/model/ground_model/ground_model.dart';
@@ -49,7 +51,8 @@ class BookGroundScreen extends StatefulWidget {
 }
 
 class _BookingDetailScreenState extends State<BookGroundScreen> {
-  bool c3 = true;
+  bool c3 = false;
+  bool isWallet = false;
   Future<void> bookGroundSlot() async {
     showProgressDialogue(context);
     final token = await getKeyValue(key: "token");
@@ -60,6 +63,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
     var data = {
       "groundId": "${widget.groundData?.id}",
       "slotIds": widget.groundSlotData,
+      "wallet": isWallet,
       "date": formatDate(widget.selectedHorizontalDate!),
       "totalCount": "${widget.coaches?.length}",
       "users": widget.coaches?.map((user) => user.toJson()).toList(),
@@ -258,7 +262,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                                     .format(context)),
                         8.height,
                         buildSummaryRow(
-                            "Quantity:", '${widget.coaches?.length}'),
+                            "Players:", '${widget.coaches?.length}'),
                       ],
                     ),
                   ),
@@ -348,6 +352,29 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                           },
                         )
                       : const SizedBox.shrink(),
+                if (int.parse(
+                        BlocProvider.of<UserBloc>(context).state.balance ??
+                            "0") >
+                    0) ...[
+                  10.height,
+                  Text(
+                    "Sports Points",
+                    style: AppStyle.mediumText.copyWith(
+                        fontSize: 14.sp,
+                        color: AppColors.black,
+                        letterSpacing: 0.8),
+                  ),
+                  5.height,
+                  _checkBox(
+                    "You have 50 sports points",
+                    (v) {
+                      setState(() {
+                        isWallet = v!;
+                      });
+                    },
+                    isWallet,
+                  ),
+                ],
                 16.height,
                 Text(
                   "Payment summary",

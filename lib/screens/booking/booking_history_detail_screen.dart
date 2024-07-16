@@ -292,40 +292,42 @@ class _BookingHistoryDetailScreenState
                       ),
                     ),
                   ),
-                  addHorizontalSpacing(0.015),
-                  Expanded(
-                    child:
-                        BlocListener<BookingHistoryBloc, BookingHistoryState>(
-                      listener: (context, state) {
-                        if (state.status.isInProgress) {
-                          showProgressDialogue(context);
-                        } else if (state.status.isFailed) {
-                          Navigator.pop(context);
-                          showErrorDialogue(context, state.message);
-                        } else if (state.status.isLoaded) {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          showScafoldMessage(
-                              context: context, message: state.message);
-                        }
-                      },
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: AppButton(
-                          shapeBorder: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                  if (widget.bookingHistory.isCancellationFlag) ...[
+                    addHorizontalSpacing(0.015),
+                    Expanded(
+                      child:
+                          BlocListener<BookingHistoryBloc, BookingHistoryState>(
+                        listener: (context, state) {
+                          if (state.status.isInProgress) {
+                            showProgressDialogue(context);
+                          } else if (state.status.isFailed) {
+                            Navigator.pop(context);
+                            showErrorDialogue(context, state.message);
+                          } else if (state.status.isLoaded) {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            showScafoldMessage(
+                                context: context, message: state.message);
+                          }
+                        },
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: AppButton(
+                            shapeBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            text: "Cancel Request",
+                            color: AppColors.primaryColor,
+                            textColor: AppColors.white,
+                            onTap: () {
+                              BlocProvider.of<BookingHistoryBloc>(context).add(
+                                  CancelBookingEvent(widget.bookingHistory.id));
+                            },
                           ),
-                          text: "Cancel Request",
-                          color: AppColors.primaryColor,
-                          textColor: AppColors.white,
-                          onTap: () {
-                            BlocProvider.of<BookingHistoryBloc>(context).add(
-                                CancelBookingEvent(widget.bookingHistory.id));
-                          },
                         ),
                       ),
                     ),
-                  ),
+                  ]
                 ],
               ),
               // 8.height,

@@ -32,6 +32,7 @@ mixin _$BookingHistory {
   List<String>? get endTime => throw _privateConstructorUsedError;
   int? get totalCount => throw _privateConstructorUsedError;
   String get qrCode => throw _privateConstructorUsedError;
+  bool get isCancellationFlag => throw _privateConstructorUsedError;
   String get invoiceUrl => throw _privateConstructorUsedError;
   List<User> get users => throw _privateConstructorUsedError;
   num? get totalPrice => throw _privateConstructorUsedError;
@@ -63,6 +64,7 @@ abstract class $BookingHistoryCopyWith<$Res> {
       List<String>? endTime,
       int? totalCount,
       String qrCode,
+      bool isCancellationFlag,
       String invoiceUrl,
       List<User> users,
       num? totalPrice,
@@ -97,6 +99,7 @@ class _$BookingHistoryCopyWithImpl<$Res, $Val extends BookingHistory>
     Object? endTime = freezed,
     Object? totalCount = freezed,
     Object? qrCode = null,
+    Object? isCancellationFlag = null,
     Object? invoiceUrl = null,
     Object? users = null,
     Object? totalPrice = freezed,
@@ -146,6 +149,10 @@ class _$BookingHistoryCopyWithImpl<$Res, $Val extends BookingHistory>
           ? _value.qrCode
           : qrCode // ignore: cast_nullable_to_non_nullable
               as String,
+      isCancellationFlag: null == isCancellationFlag
+          ? _value.isCancellationFlag
+          : isCancellationFlag // ignore: cast_nullable_to_non_nullable
+              as bool,
       invoiceUrl: null == invoiceUrl
           ? _value.invoiceUrl
           : invoiceUrl // ignore: cast_nullable_to_non_nullable
@@ -205,6 +212,7 @@ abstract class _$$BookingImplCopyWith<$Res>
       List<String>? endTime,
       int? totalCount,
       String qrCode,
+      bool isCancellationFlag,
       String invoiceUrl,
       List<User> users,
       num? totalPrice,
@@ -238,6 +246,7 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? endTime = freezed,
     Object? totalCount = freezed,
     Object? qrCode = null,
+    Object? isCancellationFlag = null,
     Object? invoiceUrl = null,
     Object? users = null,
     Object? totalPrice = freezed,
@@ -287,6 +296,10 @@ class __$$BookingImplCopyWithImpl<$Res>
           ? _value.qrCode
           : qrCode // ignore: cast_nullable_to_non_nullable
               as String,
+      isCancellationFlag: null == isCancellationFlag
+          ? _value.isCancellationFlag
+          : isCancellationFlag // ignore: cast_nullable_to_non_nullable
+              as bool,
       invoiceUrl: null == invoiceUrl
           ? _value.invoiceUrl
           : invoiceUrl // ignore: cast_nullable_to_non_nullable
@@ -333,6 +346,7 @@ class _$BookingImpl implements _Booking {
       required final List<String>? endTime,
       required this.totalCount,
       required this.qrCode,
+      this.isCancellationFlag = true,
       this.invoiceUrl = "",
       required final List<User> users,
       required this.totalPrice,
@@ -396,6 +410,9 @@ class _$BookingImpl implements _Booking {
   final String qrCode;
   @override
   @JsonKey()
+  final bool isCancellationFlag;
+  @override
+  @JsonKey()
   final String invoiceUrl;
   final List<User> _users;
   @override
@@ -418,7 +435,7 @@ class _$BookingImpl implements _Booking {
 
   @override
   String toString() {
-    return 'BookingHistory(id: $id, userId: $userId, slotId: $slotId, ground: $ground, date: $date, dayOfWeek: $dayOfWeek, startTime: $startTime, endTime: $endTime, totalCount: $totalCount, qrCode: $qrCode, invoiceUrl: $invoiceUrl, users: $users, totalPrice: $totalPrice, gstAmount: $gstAmount, subtotal: $subtotal, status: $status, v: $v)';
+    return 'BookingHistory(id: $id, userId: $userId, slotId: $slotId, ground: $ground, date: $date, dayOfWeek: $dayOfWeek, startTime: $startTime, endTime: $endTime, totalCount: $totalCount, qrCode: $qrCode, isCancellationFlag: $isCancellationFlag, invoiceUrl: $invoiceUrl, users: $users, totalPrice: $totalPrice, gstAmount: $gstAmount, subtotal: $subtotal, status: $status, v: $v)';
   }
 
   @override
@@ -439,6 +456,8 @@ class _$BookingImpl implements _Booking {
             (identical(other.totalCount, totalCount) ||
                 other.totalCount == totalCount) &&
             (identical(other.qrCode, qrCode) || other.qrCode == qrCode) &&
+            (identical(other.isCancellationFlag, isCancellationFlag) ||
+                other.isCancellationFlag == isCancellationFlag) &&
             (identical(other.invoiceUrl, invoiceUrl) ||
                 other.invoiceUrl == invoiceUrl) &&
             const DeepCollectionEquality().equals(other._users, _users) &&
@@ -466,6 +485,7 @@ class _$BookingImpl implements _Booking {
       const DeepCollectionEquality().hash(_endTime),
       totalCount,
       qrCode,
+      isCancellationFlag,
       invoiceUrl,
       const DeepCollectionEquality().hash(_users),
       totalPrice,
@@ -500,6 +520,7 @@ abstract class _Booking implements BookingHistory {
       required final List<String>? endTime,
       required final int? totalCount,
       required final String qrCode,
+      final bool isCancellationFlag,
       final String invoiceUrl,
       required final List<User> users,
       required final num? totalPrice,
@@ -532,6 +553,8 @@ abstract class _Booking implements BookingHistory {
   int? get totalCount;
   @override
   String get qrCode;
+  @override
+  bool get isCancellationFlag;
   @override
   String get invoiceUrl;
   @override
