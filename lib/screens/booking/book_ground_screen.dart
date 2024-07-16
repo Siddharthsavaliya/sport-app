@@ -366,7 +366,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                   ),
                   5.height,
                   _checkBox(
-                    "You have 50 sports points",
+                    "You have ${BlocProvider.of<UserBloc>(context).state.balance} sports points",
                     (v) {
                       setState(() {
                         isWallet = v!;
