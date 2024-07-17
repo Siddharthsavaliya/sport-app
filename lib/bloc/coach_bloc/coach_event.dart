@@ -6,9 +6,10 @@ abstract class CoachEvent extends Equatable {
 }
 
 class GetCoachRequest extends CoachEvent {
-  GetCoachRequest({this.city, this.sport});
+  GetCoachRequest({this.city, this.sport, this.school});
   final String? sport;
   final String? city;
+  final String? school;
   @override
   List<Object> get props => [];
 }

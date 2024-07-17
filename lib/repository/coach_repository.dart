@@ -12,10 +12,15 @@ import 'package:sport_app/utils/helper.dart';
 class CoachRepository {
   ApiClient apiClient = ApiClient();
 
-  Future<ApiResult<List<Coach>>> getCoachs(String? sport, String? city) async {
+  Future<ApiResult<List<Coach>>> getCoachs(
+      String? sport, String? city, String? school) async {
     try {
-      final response = await apiClient.get("${ApiConstants.getAllCoach}/$city",
-          queryParameters: {"sportNames": sport});
+      final response = await apiClient.get(ApiConstants.getAllCoach,
+          queryParameters: {
+            "sportNames": sport,
+            "city": city,
+            "school": school
+          });
       return ApiResult.success(getCoachListFromResponse(response.data!));
     } catch (e) {
       return getErrorMessage(e);
@@ -50,11 +55,11 @@ class CoachRepository {
   Future<ApiResult<List<coach_history_model.CoachHistoryModel>>>
       getOneCoachBookings() async {
     try {
-    final response = await apiClient.get(
-      ApiConstants.getOneCoachBookings,
-    );
-    log(response.data.toString());
-    return ApiResult.success(getCoachHistoryList(response.data!['data']));
+      final response = await apiClient.get(
+        ApiConstants.getOneCoachBookings,
+      );
+      log(response.data.toString());
+      return ApiResult.success(getCoachHistoryList(response.data!['data']));
     } catch (e) {
       return getErrorMessage(e);
     }

@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/bloc/auth/sign_up_bloc/sign_up_bloc.dart';
 import 'package:sport_app/bloc/coach_bloc/coach_bloc.dart';
 import 'package:sport_app/bloc/coach_bloc/coach_event.dart';
 import 'package:sport_app/bloc/coach_bloc/coach_state.dart';
 import 'package:sport_app/model/coach_model/coach_model.dart';
+import 'package:sport_app/model/institution_model/institution_model.dart';
 import 'package:sport_app/model/sport/fetch_sport_model.dart';
 import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/api_constants.dart';
@@ -33,6 +35,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
   late TextEditingController _searchController;
   String? _selectedCity;
   String? _selectedSport;
+  String? _selectedSchool;
   bool isLoading = true;
   List<FetchSportResponse> sportList = [];
   void _showCitySportFilterBottomSheet(
@@ -60,8 +63,11 @@ class _CoachListScreenState extends State<CoachListScreen> {
         // State variables
         String citySearchQuery = '';
         String sportSearchQuery = '';
+        String schoolSearchQuery = '';
         List<String> filteredCities = cities;
         List<FetchSportResponse> filteredSports = sports;
+        List<Institution> filteredSchool =
+            BlocProvider.of<SignUpBloc>(context).state.institutionIds;
 
         return StatefulBuilder(
           builder: (context, setState) {
@@ -83,6 +89,20 @@ class _CoachListScreenState extends State<CoachListScreen> {
                 filteredSports = sports
                     .where((sport) =>
                         sport.name!.toLowerCase().contains(query.toLowerCase()))
+                    .toList();
+              });
+            }
+
+            // Function to handle sport search query changes
+            void updateSchoolSearchQuery(String query) {
+              setState(() {
+                schoolSearchQuery = query;
+                filteredSchool = BlocProvider.of<SignUpBloc>(context)
+                    .state
+                    .institutionIds
+                    .where((v) => v.institutionName
+                        .toLowerCase()
+                        .contains(query.toLowerCase()))
                     .toList();
               });
             }
@@ -241,7 +261,70 @@ class _CoachListScreenState extends State<CoachListScreen> {
                         )
                       ],
                     ),
+                    const Divider(),
+                    // Sport Section
+                    ExpansionTile(
+                      title: Text(
+                        'Schools',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.black,
+                        ),
+                      ),
+                      initiallyExpanded: false, // Start closed by default
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: TextField(
+                            onChanged: updateSportSearchQuery,
+                            decoration: InputDecoration(
+                              hintText: 'Search school',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                              prefixIcon: const Icon(Icons.search),
+                            ),
+                          ),
+                        ),
+                        addVerticalSpacing(0.01),
+                        SizedBox(
+                          height: 0.3.sh,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: filteredSchool.map((v) {
+                                return CheckboxListTile(
+                                  title: Row(
+                                    children: [
+                                      Text(
+                                        v.institutionName ?? "",
+                                        style: const TextStyle(
+                                            color: AppColors.black),
+                                      ),
+                                    ],
+                                  ),
+                                  value: _selectedSchool == v.institutionName,
+                                  onChanged: (checked) {
+                                    setState(() {
+                                      _selectedSchool =
+                                          checked! ? v.institutionName : null;
+                                    });
+                                  },
+                                  controlAffinity:
+                                      ListTileControlAffinity.trailing,
+                                  activeColor: AppColors.primaryColor,
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                     addVerticalSpacing(0.012),
+
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: AppButton.AppButton(
@@ -249,11 +332,14 @@ class _CoachListScreenState extends State<CoachListScreen> {
                         radius: 0,
                         text: "Apply Filters",
                         onTap: () {
-                          if (_selectedCity != null || _selectedSport != null) {
+                          if (_selectedCity != null ||
+                              _selectedSport != null ||
+                              _selectedSchool != null) {
                             BlocProvider.of<CoachBloc>(context)
                                 .add(GetCoachRequest(
                               city: _selectedCity,
                               sport: _selectedSport,
+                              school: _selectedSchool,
                             ));
                             Navigator.pop(context);
                           } else {

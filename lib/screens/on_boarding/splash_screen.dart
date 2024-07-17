@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/bloc/auth/sign_up_bloc/sign_up_bloc.dart';
 import 'package:sport_app/bloc/location_bloc/location_bloc.dart';
 import 'package:sport_app/coach_dashboard/coach_dashboard.dart';
 import 'package:sport_app/res/app_assets.dart';
@@ -23,6 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    BlocProvider.of<SignUpBloc>(context).add(GetInstitutionIds());
     checkIsLogged();
     super.initState();
   }
