@@ -160,7 +160,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       addVerticalSpacing(0.005),
                                       Text(
-                                        'Hi ${state.userModel!.userName}' ?? "",
+                                        'Hi ${state.userModel!.userName!.split(" ")[0]}' ??
+                                            "",
                                         style: AppStyle.mediumBold.copyWith(
                                             color: AppColors.black,
                                             fontSize: 12.sp,
@@ -286,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             addHorizontalSpacing(0.012),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [ 
+                              children: [
                                 shimmerWidget(
                                   child: Container(
                                     height: 0.015.sh,

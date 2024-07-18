@@ -12,7 +12,7 @@ class AuthRepository {
     required String phoneNumber,
     required String dob,
     required String iName,
-    required String iId,
+    String? iId,
     required String email,
   }) async {
     try {

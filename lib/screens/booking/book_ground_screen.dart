@@ -376,7 +376,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                         letterSpacing: 0.8),
                   ),
                   5.height,
-                  _checkBox(
+                  _customCheckBox(
                     "You have ${BlocProvider.of<UserBloc>(context).state.balance} sports points",
                     (v) {
                       setState(() {
@@ -414,7 +414,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                   ),
                 ),
                 10.height,
-                _checkBox(
+                _customCheckBox(
                   "I agree with refund policy",
                   (v) {
                     setState(() {
@@ -480,7 +480,8 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
   }
 }
 
-Widget _checkBox(String title, void Function(bool?)? onChanged, bool value) {
+Widget _customCheckBox(
+    String title, void Function(bool?)? onChanged, bool value) {
   return Container(
     width: double.infinity,
     decoration: boxDecorationDefault(color: Colors.white),
