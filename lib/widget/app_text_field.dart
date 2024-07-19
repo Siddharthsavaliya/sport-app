@@ -13,6 +13,7 @@ class AppTextfield extends StatefulWidget {
       this.height,
       this.radius,
       this.readOnly = false,
+      this.isSecure,
       this.error = false,
       this.isBlack = false,
       this.isPassword,
@@ -31,6 +32,7 @@ class AppTextfield extends StatefulWidget {
   final bool? isPassword;
   final bool error;
   final bool isBlack;
+  final bool? isSecure;
   final bool readOnly;
   final int? maxLength;
   final VoidCallback? onTap;
@@ -45,6 +47,7 @@ class _AppTextfieldState extends State<AppTextfield> {
   bool isShow = false;
   @override
   void initState() {
+    print(widget.isSecure);
     isShow = widget.isPassword ?? false;
     super.initState();
   }
@@ -74,7 +77,7 @@ class _AppTextfieldState extends State<AppTextfield> {
         onTap: widget.onTap,
         readOnly: widget.readOnly,
         validator: widget.validator,
-        obscureText: isShow,
+        obscureText: widget.isSecure ?? isShow,
         controller: widget.controller ?? TextEditingController(),
         cursorColor: widget.isBlack
             ? AppColors.gray

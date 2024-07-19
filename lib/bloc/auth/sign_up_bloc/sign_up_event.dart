@@ -14,11 +14,15 @@ class SignUpEventRequest extends SignUpEvent {
     required this.userName,
     required this.dob,
     required this.email,
+    required this.state,
     required this.iName,
+    required this.city,
     required this.institutionId,
   });
   final String userName;
   final String dob;
+  final String state;
+  final String city;
   final String email;
   final String password;
   final String phone;
@@ -26,8 +30,17 @@ class SignUpEventRequest extends SignUpEvent {
   final String institutionId;
 
   @override
-  List<Object> get props =>
-      [userName, dob, password, phone, iName, institutionId, email];
+  List<Object> get props => [
+        userName,
+        dob,
+        password,
+        phone,
+        iName,
+        institutionId,
+        email,
+        state,
+        state
+      ];
 }
 
 class SignUpEventVerifyRequest extends SignUpEvent {

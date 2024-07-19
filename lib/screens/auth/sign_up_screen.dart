@@ -32,6 +32,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController phoneNumber = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController institutionName = TextEditingController();
+  TextEditingController city = TextEditingController();
+  TextEditingController state = TextEditingController();
   TextEditingController institutionId = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -41,6 +43,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isInstitutionIdError = false;
   bool isInstitutionNameError = false;
   bool isPhoneError = false;
+  bool isCityError = false;
+  bool isStateError = false;
   bool c3 = false;
   bool isDobError = false;
   bool isEmailError = false;
@@ -247,104 +251,101 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           hint: AppStrings.dateOfBirthHint,
                         ),
                       ),
-                      if (!c3) ...[
-                        addVerticalSpacing(0.03),
-                        BlocBuilder<SignUpBloc, SignUpState>(
-                          builder: (context, state) {
-                            if (state.status.isLoaded) {
-                              InputBorder border = OutlineInputBorder(
+                      addVerticalSpacing(0.03),
+                      BlocBuilder<SignUpBloc, SignUpState>(
+                        builder: (context, state) {
+                          if (state.status.isLoaded || state.initial) {
+                            InputBorder border = OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: BorderSide(
+                                  color: isInstitutionIdError
+                                      ? AppColors.red
+                                      : AppColors.gray.withOpacity(0.4),
+                                  width: 2),
+                            );
+                            return Container(
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(25),
-                                borderSide: BorderSide(
-                                    color: isInstitutionIdError
-                                        ? AppColors.red
-                                        : AppColors.gray.withOpacity(0.4),
-                                    width: 2),
-                              );
-                              return Container(
-                                clipBehavior: Clip.hardEdge,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  color: AppColors.white.withOpacity(0.7),
+                                color: AppColors.white.withOpacity(0.7),
+                              ),
+                              child: DropdownButtonFormField<Institution>(
+                                validator: (v) {
+                                  if (v == null) {
+                                    isInstitutionIdError = true;
+                                  } else {
+                                    isInstitutionIdError = false;
+                                  }
+                                  setState(() {});
+                                  return null;
+                                },
+                                icon: Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: Icon(
+                                    Icons.arrow_drop_down_sharp,
+                                    color: AppColors.gray.withOpacity(0.8),
+                                    size: 25,
+                                  ),
                                 ),
-                                child: DropdownButtonFormField<Institution>(
-                                  validator: (v) {
-                                    if (v == null) {
-                                      isInstitutionIdError = true;
-                                    } else {
-                                      isInstitutionIdError = false;
-                                    }
-                                    setState(() {});
-                                    return null;
-                                  },
-                                  icon: Padding(
-                                    padding: const EdgeInsets.only(right: 10),
+                                hint: Center(
+                                  child: Text(
+                                    'Select Institution',
+                                    style: AppStyle.normalText.copyWith(
+                                      color: AppColors.gray.withOpacity(0.8),
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: 1.5,
+                                    ),
+                                  ),
+                                ),
+                                decoration: InputDecoration(
+                                  counterText: "",
+                                  isDense: true,
+                                  contentPadding: const EdgeInsets.only(
+                                      top: 15, bottom: 17),
+                                  prefixIcon: Padding(
+                                    padding: const EdgeInsets.only(bottom: 2),
                                     child: Icon(
-                                      Icons.arrow_drop_down_sharp,
+                                      Icons.person_outline_outlined,
                                       color: AppColors.gray.withOpacity(0.8),
                                       size: 25,
                                     ),
                                   ),
-                                  hint: Center(
-                                    child: Text(
-                                      'Select Institution',
-                                      style: AppStyle.normalText.copyWith(
-                                        color: AppColors.gray.withOpacity(0.8),
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w600,
-                                        letterSpacing: 1.5,
-                                      ),
-                                    ),
-                                  ),
-                                  decoration: InputDecoration(
-                                    counterText: "",
-                                    isDense: true,
-                                    contentPadding: const EdgeInsets.only(
-                                        top: 15, bottom: 17),
-                                    prefixIcon: Padding(
-                                      padding: const EdgeInsets.only(bottom: 2),
-                                      child: Icon(
-                                        Icons.person_outline_outlined,
-                                        color: AppColors.gray.withOpacity(0.8),
-                                        size: 25,
-                                      ),
-                                    ),
-                                    border: border,
-                                    focusedBorder: border,
-                                    enabledBorder: border,
-                                  ),
-                                  value: _selectedInstitution,
-                                  onChanged: (Institution? newValue) {
-                                    setState(() {
-                                      _selectedInstitution = newValue;
-                                    });
-                                  },
-                                  items:
-                                      state.institutionIds.map((institution) {
-                                    return DropdownMenuItem<Institution>(
-                                      value: institution,
-                                      child: SizedBox(
-                                        // color: Colors.amber,
-                                        width: context.width() * 0.65,
-                                        child: nb.Marquee(
-                                          child: Text(
-                                            institution.institutionName,
-                                            style: AppStyle.mediumBold.copyWith(
-                                                color: AppColors.gray,
-                                                letterSpacing: 1,
-                                                fontSize: 17.sp),
-                                          ),
+                                  border: border,
+                                  focusedBorder: border,
+                                  enabledBorder: border,
+                                ),
+                                value: _selectedInstitution,
+                                onChanged: (Institution? newValue) {
+                                  setState(() {
+                                    _selectedInstitution = newValue;
+                                  });
+                                },
+                                items: state.institutionIds.map((institution) {
+                                  return DropdownMenuItem<Institution>(
+                                    value: institution,
+                                    child: SizedBox(
+                                      // color: Colors.amber,
+                                      width: context.width() * 0.65,
+                                      child: nb.Marquee(
+                                        child: Text(
+                                          institution.institutionName,
+                                          style: AppStyle.mediumBold.copyWith(
+                                              color: AppColors.gray,
+                                              letterSpacing: 1,
+                                              fontSize: 17.sp),
                                         ),
                                       ),
-                                    );
-                                  }).toList(),
-                                ),
-                              );
-                            }
-                            return const SizedBox.shrink();
-                          },
-                        ),
-                      ],
-                      if (c3) ...[
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            );
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ),
+                      if (_selectedInstitution?.institutionName == "Other") ...[
                         addVerticalSpacing(0.03),
                         Container(
                           clipBehavior: Clip.hardEdge,
@@ -354,8 +355,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           child: AppTextfield(
                             controller: institutionName,
-                            isPassword: false,
-                            height: 55,
+                            isSecure: false,
                             error: isInstitutionNameError,
                             validator: (v) {
                               if (v!.isEmpty || v == "") {
@@ -366,22 +366,65 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               setState(() {});
                               return null;
                             },
+                            height: 55,
                             prefixIcon: Icons.school,
                             isRound: true,
                             hint: "Enter institution name",
                           ),
                         ),
+                        addVerticalSpacing(0.03),
+                        Container(
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: AppColors.white.withOpacity(0.7),
+                          ),
+                          child: AppTextfield(
+                            controller: city,
+                            isSecure: false,
+                            height: 55,
+                            error: isCityError,
+                            validator: (v) {
+                              if (v!.isEmpty || v == "") {
+                                isCityError = true;
+                              } else {
+                                isCityError = false;
+                              }
+                              setState(() {});
+                              return null;
+                            },
+                            prefixIcon: Icons.location_city,
+                            isRound: true,
+                            hint: "Enter city name",
+                          ),
+                        ),
+                        addVerticalSpacing(0.03),
+                        Container(
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: AppColors.white.withOpacity(0.7),
+                          ),
+                          child: AppTextfield(
+                            controller: state,
+                            isSecure: false,
+                            height: 55,
+                            error: isStateError,
+                            validator: (v) {
+                              if (v!.isEmpty || v == "") {
+                                isStateError = true;
+                              } else {
+                                isStateError = false;
+                              }
+                              setState(() {});
+                              return null;
+                            },
+                            prefixIcon: Icons.location_city,
+                            isRound: true,
+                            hint: "Enter state name",
+                          ),
+                        ),
                       ],
-                      addVerticalSpacing(0.03),
-                      _customCheckBox(
-                        "If your institution is not listed, please select check box",
-                        (v) {
-                          setState(() {
-                            c3 = v!;
-                          });
-                        },
-                        c3,
-                      ),
                       addVerticalSpacing(0.03),
                       Container(
                         clipBehavior: Clip.hardEdge,
@@ -473,15 +516,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 BlocProvider.of<SignUpBloc>(context).add(
                                     SignUpEventRequest(
                                         email: email.text,
-                                        iName: c3
+                                        city: city.text,
+                                        state: state.text,
+                                        iName: _selectedInstitution!
+                                                    .institutionId ==
+                                                "OTHER"
                                             ? institutionName.text
                                             : _selectedInstitution!
                                                 .institutionName
                                                 .validate(),
-                                        institutionId: c3
-                                            ? "OTHER"
-                                            : _selectedInstitution!
-                                                .institutionId,
+                                        institutionId:
+                                            _selectedInstitution!.institutionId,
                                         password: password.text,
                                         phone: phoneNumber.text,
                                         userName: username.text,

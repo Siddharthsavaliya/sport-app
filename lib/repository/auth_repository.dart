@@ -12,6 +12,8 @@ class AuthRepository {
     required String phoneNumber,
     required String dob,
     required String iName,
+    required String state,
+    required String city,
     String? iId,
     required String email,
   }) async {
@@ -23,6 +25,8 @@ class AuthRepository {
         "password": password,
         "DOB": dob,
         "email": email,
+        "state": state,
+        "city": city,
         "institutionName": iName,
         "institutionId": iId,
         "role": "user"

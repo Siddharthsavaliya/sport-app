@@ -40,7 +40,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           iName: event.iName,
           userName: event.userName,
           dob: event.dob,
-          email:event.email,
+          city: event.city,
+          state: event.state,
+          email: event.email,
           password: event.password,
           phoneNumber: event.phone);
       apiResult.when(
@@ -133,9 +135,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       final apiResult = await authRepository.getInstitution();
       apiResult.when(
         success: (data) {
+          List<Institution> institutionModels = List.from(data.data);
+          institutionModels.add(const Institution(
+              institutionId: "OTHER", institutionName: "Other"));
           emit(state.copyWith(
             status: Status.loaded,
-            institutionIds: data.data.validate(),
+            institutionIds: institutionModels,
           ));
         },
         failure: (error) {
