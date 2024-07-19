@@ -340,7 +340,7 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                                         ),
                                         addVerticalSpacing(0.02),
                                         Text(
-                                          "${groundBookingResponce!.data!.startTime!.length} H",
+                                          "${groundBookingResponce!.data!.startTime!.length} Hour",
                                           style: AppStyle.mediumBold.copyWith(
                                             color: AppColors.black,
                                             fontWeight: FontWeight.w600,

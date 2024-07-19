@@ -94,6 +94,8 @@ class _ComePlayScreenState extends State<ComePlayScreen> {
         child: Column(
           children: [
             addVerticalSpacing(0.013),
+            const AllBannersGroundComponent(),
+            addVerticalSpacing(0.013),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 0.029.sw),
               child: Column(
@@ -126,28 +128,36 @@ class _ComePlayScreenState extends State<ComePlayScreen> {
                                       name: data.name.validate()),
                                 ));
                           },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: 50,
-                                width: 50,
-                                child: loadNetworkImage(url: data.imageUrl!),
-                              ),
-                              addVerticalSpacing(0.01),
-                              SizedBox(
-                                width: 0.22.sw,
-                                child: Text(
-                                  data.name.validate(),
-                                  textAlign: TextAlign.center,
-                                  style: AppStyle.mediumBold.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 0.6,
-                                    fontSize: 12.sp,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(
+                                    color: AppColors.gray.withOpacity(0.5))),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                addVerticalSpacing(0.01),
+                                SizedBox(
+                                  height: 50,
+                                  width: 50,
+                                  child: loadNetworkImage(url: data.imageUrl!),
+                                ),
+                                addVerticalSpacing(0.01),
+                                SizedBox(
+                                  width: 0.22.sw,
+                                  child: Text(
+                                    data.name.validate(),
+                                    textAlign: TextAlign.center,
+                                    style: AppStyle.mediumBold.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: 0.6,
+                                      fontSize: 12.sp,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                                addVerticalSpacing(0.01),
+                              ],
+                            ),
                           ));
                     },
                   ),

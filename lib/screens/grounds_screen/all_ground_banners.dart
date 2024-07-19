@@ -38,7 +38,7 @@ class _AllBannersGroundComponentState extends State<AllBannersGroundComponent> {
               : CarouselSlider(
                   options: CarouselOptions(
                     onPageChanged: (index, reason) {},
-                    height: 0.2.sh,
+                    height: 0.15.sh,
                     animateToClosest: true,
                     autoPlayCurve: Curves.fastOutSlowIn,
                     autoPlayInterval: const Duration(seconds: 3),
