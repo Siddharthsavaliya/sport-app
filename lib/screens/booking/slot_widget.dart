@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/utils/helper.dart';
 
 class SlotWidget extends StatelessWidget {
   final bool isAvailable;
@@ -26,7 +27,7 @@ class SlotWidget extends StatelessWidget {
     required this.value,
     this.slotCount,
     this.totalCount,
-    this.activeColor = AppColors.primaryColor,
+    this.activeColor = const Color.fromARGB(255, 242, 183, 123),
     this.inActiveColor = Colors.grey,
     required this.onTap,
   });
@@ -64,40 +65,51 @@ class SlotWidget extends StatelessWidget {
             decoration: boxDecorationDefault(
               boxShadow: defaultBoxShadow(blurRadius: 0, spreadRadius: 0),
               border: Border.all(
-                  color: isNotAvailable ? Colors.grey : AppColors.primaryColor),
+                  color: isNotAvailable ? Colors.grey : AppColors.orange),
               color: isNotAvailable
                   ? Colors.grey.shade300
                   : _getBackgroundColor(context),
             ),
             padding: const EdgeInsets.all(12),
             child: Builder(builder: (context) {
-              return Text(
-                is24HourFormat
-                    ? value.splitBefore(':00')
-                    : TimeOfDay(
-                            hour: value.split(':').first.toInt(), minute: 00)
-                        .format(context),
-                style: primaryTextStyle(
-                  color: _getTextColor(),
-                ),
-              ).center();
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    is24HourFormat
+                        ? value.splitBefore(':00')
+                        : TimeOfDay(
+                                hour: value.split(':').first.toInt(),
+                                minute: 00)
+                            .format(context),
+                    style: primaryTextStyle(
+                      weight: FontWeight.w600,
+                      color: _getTextColor(),
+                    ),
+                  ).center(),
+                  addVerticalSpacing(0.01),
+                  Text(
+                    "$slotCount left",
+                  )
+                ],
+              );
             }),
           ).paddingOnly(top: 5, right: 5),
-          if (!isNotAvailable && slotCount != null)
-            Positioned(
-              right: 0,
-              child: Container(
-                height: 20.sp,
-                width: 20.sp,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: AppColors.primaryColor),
-                child: Text(
-                  slotCount.validate(),
-                  style: AppStyle.mediumBold
-                      .copyWith(color: AppColors.white, fontSize: 9.sp),
-                ).center(),
-              ),
-            ),
+          // if (!isNotAvailable && slotCount != null)
+          //   Positioned(
+          //     right: 0,
+          //     child: Container(
+          //       height: 20.sp,
+          //       width: 20.sp,
+          //       decoration: const BoxDecoration(
+          //           shape: BoxShape.circle, color: AppColors.orange),
+          //       child: Text(
+          //         slotCount.validate(),
+          //         style: AppStyle.mediumBold
+          //             .copyWith(color: AppColors.white, fontSize: 9.sp),
+          //       ).center(),
+          //     ),
+          //   ),
         ],
       ),
     );

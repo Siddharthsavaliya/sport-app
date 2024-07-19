@@ -364,7 +364,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                                         "Member",
                                         style: AppStyle.mediumText.copyWith(
                                             color: const Color.fromARGB(
-                                                    255, 53, 204, 66)
+                                                    255, 17, 118, 66)
                                                 .withOpacity(0.8)),
                                       ),
                                     ],
@@ -434,7 +434,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                 ),
                 10.height,
                 _customCheckBox(
-                  "I agree with refund policy",
+                  "I agree with terms and conditions",
                   (v) {
                     setState(() {
                       c3 = v!;
@@ -468,7 +468,8 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                             bookGroundSlot();
                           } else {
                             showScafoldMessage(
-                                message: "Please agree with policy",
+                                message:
+                                    "Please agree with Terms and Conditions",
                                 context: context);
                           }
                         },
