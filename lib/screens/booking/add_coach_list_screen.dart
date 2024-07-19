@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/bloc/booking_history_bloc/booking_history_bloc.dart';
+import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/model/ground_model/ground_model.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
@@ -52,8 +53,18 @@ class _AddCoachListScreenState extends State<AddCoachListScreen> {
     super.initState();
     // Initialize the controllers based on the quantity
     for (int i = 0; i < widget.quantity; i++) {
-      firstNameControllers.add(TextEditingController());
-      numberControllers.add(TextEditingController());
+      firstNameControllers.add(TextEditingController(
+          text: i == 0
+              ? BlocProvider.of<UserBloc>(context).state.userModel!.userName
+              : ""));
+      numberControllers.add(TextEditingController(
+          text: i == 0
+              ? BlocProvider.of<UserBloc>(context)
+                  .state
+                  .userModel!
+                  .phoneNumber!
+                  .substring(2)
+              : ""));
     }
   }
 

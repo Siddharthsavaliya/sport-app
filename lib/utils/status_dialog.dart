@@ -44,7 +44,7 @@ void showScafoldMessage(
         style: AppStyle.mediumBold.copyWith(color: Colors.white, fontSize: 14),
       ),
       duration:
-          const Duration(milliseconds: 1100), // Set the duration to 0.5 seconds
+          const Duration(milliseconds: 2500), // Set the duration to 0.5 seconds
     ),
   );
 }

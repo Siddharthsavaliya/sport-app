@@ -153,14 +153,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                         (context) => false);
                                   } else {
-                                    Navigator.push(
-                                        context,
-                                        CupertinoPageRoute(
-                                          builder: (context) => !state.isOtp
-                                              ? VerifyScreen(
-                                                  phoneNumber: phoneNumber.text)
-                                              : const AppBottomBar(),
-                                        ));
+                                    if (state.isOtp) {
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (context) =>
+                                                const AppBottomBar(),
+                                          ),
+                                          (context) => false);
+                                    } else {
+                                      Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                              builder: (context) =>
+                                                  VerifyScreen(
+                                                      phoneNumber:
+                                                          phoneNumber.text)));
+                                    }
                                   }
                                 } else if (state.status.isFailed) {
                                   Navigator.pop(context);

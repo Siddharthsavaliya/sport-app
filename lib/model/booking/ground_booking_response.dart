@@ -85,12 +85,14 @@ class User {
   String? firstName;
   String? phoneNumber;
   String? id;
+  String? dpUrl;
   Map<String, dynamic>? subscriptionPlan;
 
   User({
     this.firstName,
     this.phoneNumber,
     this.id,
+    this.dpUrl,
     this.subscriptionPlan,
   });
 
@@ -98,6 +100,7 @@ class User {
         firstName: json["firstName"],
         phoneNumber: json["phoneNumber"],
         subscriptionPlan: json["subscriptionPlan"],
+        dpUrl: json["dpUrl"],
         id: json["_id"],
       );
 }

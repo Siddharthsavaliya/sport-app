@@ -314,8 +314,19 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                                     Row(
                                       children: [
                                         CircleAvatar(
+                                          backgroundColor: AppColors.gray,
                                           child: ClipOval(
-                                            child: Image.asset(AppAssets.dp),
+                                            child: coach.dpUrl != null
+                                                ? Center(
+                                                    child: Image.network(
+                                                        coach.dpUrl!))
+                                                : const Center(
+                                                    child: Icon(
+                                                      Icons.person,
+                                                      color: AppColors.white,
+                                                    ),
+                                                  ),
+                                            // child: Image.asset(AppAssets.dp),
                                           ),
                                         ),
                                         addHorizontalSpacing(0.015),
@@ -344,9 +355,11 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                                     ),
                                     if (coach.subscriptionPlan != null) ...[
                                       Text(
-                                        "FREE",
-                                        style: AppStyle.mediumText
-                                            .copyWith(color: AppColors.green),
+                                        "Member",
+                                        style: AppStyle.mediumText.copyWith(
+                                            color: const Color.fromARGB(
+                                                    255, 53, 204, 66)
+                                                .withOpacity(0.8)),
                                       ),
                                     ],
                                     if (coach.subscriptionPlan == null) ...[
