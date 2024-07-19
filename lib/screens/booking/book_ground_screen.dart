@@ -313,20 +313,26 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                                   children: [
                                     Row(
                                       children: [
-                                        CircleAvatar(
-                                          backgroundColor: AppColors.gray,
-                                          child: ClipOval(
+                                        Center(
+                                          child: CircleAvatar(
+                                            backgroundColor: AppColors.gray,
                                             child: coach.dpUrl != null
                                                 ? Center(
-                                                    child: Image.network(
-                                                        coach.dpUrl!))
+                                                    child: ClipOval(
+                                                      child: CircleAvatar(
+                                                        radius: 70,
+                                                        backgroundImage:
+                                                            NetworkImage(
+                                                                coach.dpUrl!),
+                                                      ),
+                                                    ),
+                                                  )
                                                 : const Center(
                                                     child: Icon(
                                                       Icons.person,
                                                       color: AppColors.white,
                                                     ),
                                                   ),
-                                            // child: Image.asset(AppAssets.dp),
                                           ),
                                         ),
                                         addHorizontalSpacing(0.015),
