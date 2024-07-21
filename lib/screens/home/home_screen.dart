@@ -349,8 +349,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                  builder: (context) =>
-                                      const ComePlayScreen()));
+                                  builder: (context) => const ComePlayScreen(
+                                        isFromNavigator: true,
+                                      )));
                         }), // Adjust as needed
                       ),
                       StaggeredGridTile.count(

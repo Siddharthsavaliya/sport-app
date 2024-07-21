@@ -14,8 +14,8 @@ import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/shimmer_widget.dart';
 
 class ComePlayScreen extends StatefulWidget {
-  const ComePlayScreen({super.key});
-
+  const ComePlayScreen({super.key, this.isFromNavigator = false});
+  final bool isFromNavigator;
   @override
   State<ComePlayScreen> createState() => _ComePlayScreenState();
 }
@@ -81,7 +81,7 @@ class _ComePlayScreenState extends State<ComePlayScreen> {
           children: [
             addVerticalSpacing(0.013),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 0.029.sw),
+              padding: EdgeInsets.symmetric(horizontal: 0.029.sw, vertical: 0),
               child: DynamicHeightGridView(
                 physics: const NeverScrollableScrollPhysics(),
                 crossAxisCount: 3,
@@ -144,11 +144,15 @@ class _ComePlayScreenState extends State<ComePlayScreen> {
                 },
               ),
             ),
-            addVerticalSpacing(0.02),
+            if (widget.isFromNavigator) ...[
+              addVerticalSpacing(0.02),
+            ],
             AllBannersGroundComponent(
               height: 0.15.sh,
             ),
-            addVerticalSpacing(0.02),
+            if (widget.isFromNavigator) ...[
+              addVerticalSpacing(0.02),
+            ],
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 0.029.sw),
               child: DynamicHeightGridView(
