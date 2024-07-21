@@ -33,6 +33,7 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
   late final AnimationController controller;
   GroundBookingResponce? groundBookingResponce;
   bool isError = false;
+
   Future<void> getBookHistory() async {
     final token = await getKeyValue(key: "token");
     var headers = {
@@ -177,14 +178,6 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                             'assets/images/calender.png',
                           ),
                         ),
-                        // Container(
-                        //   padding: const EdgeInsets.all(10.0),
-                        //   child: Image.memory(
-                        //     base64Decode(widget.groundBookingResponce!.data!.qrCode!),
-                        //     width: 150.0,
-                        //     height: 150.0,
-                        //   ),
-                        // ),
                         25.height,
                         Container(
                           width: double.infinity,
@@ -194,18 +187,6 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                               width: 1,
                               color: AppColors.lightBlueColor,
                             ),
-                            // boxShadow: const [
-                            //   BoxShadow(
-                            //     color: Colors.black12,
-                            //     blurRadius: 8.0,
-                            //     offset: Offset(0, 2),
-                            //   ),
-                            // ],
-                            // gradient: const LinearGradient(
-                            //   colors: [Colors.white, AppColors.lightBlueColor],
-                            //   begin: Alignment.topLeft,
-                            //   end: Alignment.bottomRight,
-                            // ),
                           ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -248,16 +229,6 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                                             fontSize: 14.sp,
                                           ),
                                         ),
-                                        // addVerticalSpacing(0.02),
-                                        // Text(
-                                        //   "Slot Time",
-                                        //   style: AppStyle.mediumBold.copyWith(
-                                        //     color: AppColors.black
-                                        //         .withOpacity(0.7),
-                                        //     fontWeight: FontWeight.w400,
-                                        //     fontSize: 14.sp,
-                                        //   ),
-                                        // ),
                                         addVerticalSpacing(0.02),
                                         Text(
                                           "Total Players",
@@ -271,6 +242,16 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                                         addVerticalSpacing(0.02),
                                         Text(
                                           "Total Hours",
+                                          style: AppStyle.mediumBold.copyWith(
+                                            color: AppColors.black
+                                                .withOpacity(0.7),
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14.sp,
+                                          ),
+                                        ),
+                                        addVerticalSpacing(0.02),
+                                        Text(
+                                          "Time",
                                           style: AppStyle.mediumBold.copyWith(
                                             color: AppColors.black
                                                 .withOpacity(0.7),
@@ -307,24 +288,13 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                                         ),
                                         addVerticalSpacing(0.02),
                                         Text(
-                                          formatDateTime(DateTime.now()),
+                                          groundBookingResponce!.data!.date!,
                                           style: AppStyle.mediumBold.copyWith(
                                             color: AppColors.black,
                                             fontWeight: FontWeight.w600,
                                             fontSize: 14.sp,
                                           ),
                                         ),
-                                        // addVerticalSpacing(0.02),
-                                        // SizedBox(
-                                        //   child: Text(
-                                        //     "${groundBookingResponce!.data!.date} ${groundBookingResponce!.data!.startTime} to ${groundBookingResponce!.data!.endTime}",
-                                        //     style: AppStyle.mediumBold.copyWith(
-                                        //       color: AppColors.black,
-                                        //       fontWeight: FontWeight.w600,
-                                        //       fontSize: 14.sp,
-                                        //     ),
-                                        //   ),
-                                        // ),
                                         addVerticalSpacing(0.02),
                                         Text(
                                           groundBookingResponce!
@@ -340,11 +310,47 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                                         ),
                                         addVerticalSpacing(0.02),
                                         Text(
-                                          "${groundBookingResponce!.data!.startTime!.length} Hour",
+                                          "${groundBookingResponce!.data!.startTime!.length} hour",
                                           style: AppStyle.mediumBold.copyWith(
                                             color: AppColors.black,
                                             fontWeight: FontWeight.w600,
                                             fontSize: 14.sp,
+                                          ),
+                                        ),
+                                        addVerticalSpacing(0.012),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: List.generate(
+                                            groundBookingResponce!
+                                                .data!.startTime!.length,
+                                            (index) => Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  margin: const EdgeInsets.only(
+                                                      right: 8.0),
+                                                  width: 6,
+                                                  height: 6,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: AppColors
+                                                        .black, // Customize the color if needed
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "${groundBookingResponce!.data!.startTime![index]} to ${groundBookingResponce!.data!.endTime![index]}",
+                                                  style: AppStyle.mediumBold
+                                                      .copyWith(
+                                                    color: AppColors.black,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 14.sp,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -356,27 +362,6 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                           ),
                         ),
                         30.height,
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     // AppButton(
-                        //     //   shapeBorder: RoundedRectangleBorder(
-                        //     //     borderRadius: BorderRadius.circular(8),
-                        //     //   ),
-                        //     //   text: "Download Invoice",
-                        //     //   color: AppColors.primaryColor,
-                        //     //   textColor: AppColors.white,
-                        //     //   onTap: () async {
-                        //     //     await downloadInvoice(
-                        //     //         context,
-                        //     //         groundBookingResponce!.data!.invoiceUrl!,
-                        //     //         groundBookingResponce!.data!.id!);
-                        //     //   },
-                        //     // ),
-                        //     // addHorizontalSpacing(0.01),
-
-                        //   ],
-                        // ),
                         SizedBox(
                           width: double.infinity,
                           child: AppButton(

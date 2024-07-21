@@ -18,6 +18,8 @@ import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/coaches/coach_detail_screen.dart';
+import 'package:sport_app/screens/grounds_screen/all_ground_banners.dart';
+import 'package:sport_app/screens/grounds_screen/all_ground_component.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/status_dialog.dart';
 import 'package:sport_app/widget/empty_place_holder.dart';
@@ -435,179 +437,66 @@ class _CoachListScreenState extends State<CoachListScreen> {
         listener: (context, state) {},
         builder: (context, state) {
           if (state.status.isLoaded || state.isBooking) {
-            return state.coachsData!.isEmpty
-                ? const EmptyPlaceHolder(
-                    pending: 0.1,
-                    title: "No coach available as of now",
-                    subTitle: "Coming soon...",
-                    imagePath: AppAssets.error)
-                : RefreshIndicator(
-                    onRefresh: onRefresh,
-                    color: AppColors.black,
-                    child: Stack(
-                      children: [
-                        SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              DynamicHeightGridView(
-                                physics: const NeverScrollableScrollPhysics(),
-                                crossAxisCount: 2,
-                                itemCount: state.coachsData!.length,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 15,
-                                shrinkWrap: true,
-                                builder: (BuildContext context, int index) {
-                                  Coach data = state.coachsData![index];
-                                  print(data.sportsgrounds);
+            if (state.coachsData!.isEmpty) {
+              return const EmptyPlaceHolder(
+                pending: 0.1,
+                title: "No coach available as of now",
+                subTitle: "Coming soon...",
+                imagePath: AppAssets.error,
+              );
+            }
 
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          CupertinoPageRoute(
-                                            builder: (context) =>
-                                                CoachDetailScreen(
-                                              coachId: data.id.validate(),
-                                            ),
-                                          ));
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          border: Border.all(color: grey),
-                                          // borderRadius: BorderRadius.circular(12),
-                                          color: const Color.fromARGB(
-                                              255, 245, 245, 245),
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              color: Colors.grey,
-                                            )
-                                          ]),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Stack(
-                                            children: [
-                                              Container(
-                                                height: 120,
-                                                decoration: const BoxDecoration(
-                                                  color: AppColors.primaryColor,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  12),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  12)),
-                                                  image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: AssetImage(
-                                                        AppAssets.coach),
-                                                  ),
-                                                  // image: DecorationImage(
-                                                  //   fit: BoxFit.cover,
-                                                  //   image: NetworkImage(
-                                                  //       'https://s3-alpha-sig.figma.com/img/74e0/051a/982c92d4c5914b8cd1b01c34b3e2384a?Expires=1716768000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=K46rmD51p9YflN2cjJc9MfWQFF9ovLizg-9PLbuVPAJ8KeqQn0ZSzLXC6tAXt~U6C83GBDbrAyyqI2v8ePqJDTKn9xf3B0vPjDobXoEGuperF~KTciuUIg0XqAiP0PvpBViyn6gtYgIjiUIwbRXsZFeOc2GmoJcPOI~AwvbwL9Nu7dE33LP2IEv-O~YwncCFBZpNF-fHOoCl2lzxFJORAySe4bfC0skQzqq6jn-1eHc6W8i6ae1cctey9LH9FyPpQHjLNYHoKe1WbyNf1Dqt7G6o8B6YKvk8OdBQPcXf6GYjxpfvyFg6ZfFCto49ru1uoqcPX~-kjv86LjuWhlIVTg__'),
-                                                  // ),
-                                                ),
-                                              ),
-                                              // Align(
-                                              //   alignment: Alignment.topRight,
-                                              //   child: const Icon(
-                                              //     Icons.bookmark,
-                                              //     color: Colors.amber,
-                                              //     size: 18,
-                                              //   ).paddingAll(8),
-                                              // )
-                                            ],
-                                          ),
-                                          4.height,
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "Name: ",
-                                                style: TextStyle(
-                                                    fontSize: 15.sp,
-                                                    color: black),
-                                              ),
-                                              Flexible(
-                                                child: Text(
-                                                  "${data.firstname} ${data.lastname}",
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                      fontSize: 15.sp,
-                                                      color: black),
-                                                ),
-                                              ),
-                                            ],
-                                          ).paddingSymmetric(
-                                              horizontal: 10, vertical: 2),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "Skills: ",
-                                                style:
-                                                    TextStyle(fontSize: 15.sp),
-                                              ),
-                                              Flexible(
-                                                child: Wrap(
-                                                  alignment:
-                                                      WrapAlignment.start,
-                                                  children: _buildSkills(
-                                                      data.sportsgrounds),
-                                                ),
-                                              )
-                                            ],
-                                          ).paddingSymmetric(
-                                              horizontal: 10, vertical: 2),
-                                          const Divider(
-                                              color: grey, thickness: 1),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "Exp: ",
-                                                style:
-                                                    TextStyle(fontSize: 15.sp),
-                                              ),
-                                              Text(
-                                                "${data.yearsOfExperience.validate() > 11 ? "10+ Years" : "${data.yearsOfExperience}"} Years",
-                                                style:
-                                                    TextStyle(fontSize: 15.sp),
-                                              ).expand(),
-                                              const Icon(
-                                                Icons.star,
-                                                color: Colors.amber,
-                                                size: 16,
-                                              ),
-                                              Text(
-                                                data.coachRating ?? "0",
-                                                style:
-                                                    TextStyle(fontSize: 15.sp),
-                                              ),
-                                            ],
-                                          ).paddingSymmetric(
-                                            horizontal: 10,
-                                          ),
-                                          addVerticalSpacing(0.01)
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              82.height
-                            ],
-                          ).paddingSymmetric(horizontal: 10, vertical: 16),
+            List<Coach> coaches = state.coachsData!;
+            return RefreshIndicator(
+              onRefresh: onRefresh,
+              color: AppColors.black,
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        addVerticalSpacing(0.012),
+                        // Show first two coaches
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 0.029.sw),
+                          child: DynamicHeightGridView(
+                            physics: const NeverScrollableScrollPhysics(),
+                            crossAxisCount: 2,
+                            itemCount: 2,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 15,
+                            shrinkWrap: true,
+                            builder: (BuildContext context, int index) {
+                              return _buildCoachCard(coaches[index]);
+                            },
+                          ),
                         ),
+                        // Add your custom component here
+                        const AllBannersGroundComponent(),
+                        // Continue with the rest of the coaches
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 0.029.sw),
+                          child: DynamicHeightGridView(
+                            physics: const NeverScrollableScrollPhysics(),
+                            crossAxisCount: 2,
+                            itemCount: coaches.length - 2,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 15,
+                            shrinkWrap: true,
+                            builder: (BuildContext context, int index) {
+                              return _buildCoachCard(coaches[index + 2]);
+                            },
+                          ),
+                        ),
+                        82.height
                       ],
                     ),
-                  );
+                  ),
+                ],
+              ),
+            );
           }
+
           if (state.status.isInProgress) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -634,6 +523,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
               ),
             );
           }
+
           return EmptyPlaceHolder(
             title: "Oops",
             buttonText: "Try Again",
@@ -644,6 +534,105 @@ class _CoachListScreenState extends State<CoachListScreen> {
             imagePath: AppAssets.error,
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildCoachCard(Coach data) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => CoachDetailScreen(
+                coachId: data.id.validate(),
+              ),
+            ));
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: grey),
+            color: const Color.fromARGB(255, 245, 245, 245),
+            boxShadow: const [BoxShadow(color: Colors.grey)]),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: 120,
+                  decoration: const BoxDecoration(
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12)),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(AppAssets.coach),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            4.height,
+            Row(
+              children: [
+                Text(
+                  "Name: ",
+                  style: TextStyle(fontSize: 15.sp, color: black),
+                ),
+                Flexible(
+                  child: Text(
+                    "${data.firstname} ${data.lastname}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 15.sp, color: black),
+                  ),
+                ),
+              ],
+            ).paddingSymmetric(horizontal: 10, vertical: 2),
+            Row(
+              children: [
+                Text(
+                  "Skills: ",
+                  style: TextStyle(fontSize: 15.sp),
+                ),
+                Flexible(
+                  child: Wrap(
+                    alignment: WrapAlignment.start,
+                    children: _buildSkills(data.sportsgrounds),
+                  ),
+                )
+              ],
+            ).paddingSymmetric(horizontal: 10, vertical: 2),
+            const Divider(color: grey, thickness: 1),
+            Row(
+              children: [
+                Text(
+                  "Exp: ",
+                  style: TextStyle(fontSize: 15.sp),
+                ),
+                Text(
+                  "${data.yearsOfExperience.validate() > 11 ? "10+ Years" : "${data.yearsOfExperience}"} Years",
+                  style: TextStyle(fontSize: 15.sp),
+                ).expand(),
+                const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                  size: 16,
+                ),
+                Text(
+                  data.coachRating ?? "0",
+                  style: TextStyle(fontSize: 15.sp),
+                ),
+              ],
+            ).paddingSymmetric(
+              horizontal: 10,
+            ),
+            addVerticalSpacing(0.01)
+          ],
+        ),
       ),
     );
   }

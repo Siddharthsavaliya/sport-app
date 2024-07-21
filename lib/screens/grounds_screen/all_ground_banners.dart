@@ -14,8 +14,9 @@ import 'ground_detail_screen.dart';
 class AllBannersGroundComponent extends StatefulWidget {
   const AllBannersGroundComponent({
     super.key,
+    this.height,
   });
-
+  final double? height;
   @override
   State<AllBannersGroundComponent> createState() =>
       _AllBannersGroundComponentState();
@@ -38,7 +39,7 @@ class _AllBannersGroundComponentState extends State<AllBannersGroundComponent> {
               : CarouselSlider(
                   options: CarouselOptions(
                     onPageChanged: (index, reason) {},
-                    height: 0.15.sh,
+                    height: widget.height ?? 0.2.sh,
                     animateToClosest: true,
                     autoPlayCurve: Curves.fastOutSlowIn,
                     autoPlayInterval: const Duration(seconds: 3),
@@ -46,7 +47,8 @@ class _AllBannersGroundComponentState extends State<AllBannersGroundComponent> {
                     enlargeCenterPage: false,
                     initialPage: 0,
                     enableInfiniteScroll: true,
-                    pageSnapping: true,
+                    
+                    // pageSnapping: true,
                     viewportFraction: 1,
                   ),
                   items: state.allGroundsData.map((ground) {
