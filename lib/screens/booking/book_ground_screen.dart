@@ -19,11 +19,14 @@ import 'package:sport_app/payment_web_view_screen.dart';
 import 'package:sport_app/res/api_constants.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
+import 'package:sport_app/res/app_strings.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/res/constant_data.dart';
 import 'package:sport_app/screens/booking/booking_success_screen.dart';
 import 'package:sport_app/screens/booking/model/coach_list_model.dart';
 import 'package:sport_app/screens/booking/model/ground_slot_model.dart';
 import 'package:sport_app/screens/grounds_screen/ground_list_component.dart';
+import 'package:sport_app/screens/profile/htmls_view.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/status_dialog.dart';
 
@@ -396,14 +399,12 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                   ),
                   5.height,
                   _customCheckBox(
-                    "You have ${BlocProvider.of<UserBloc>(context).state.balance} sports points",
-                    (v) {
-                      setState(() {
-                        isWallet = v!;
-                      });
-                    },
-                    isWallet,
-                  ),
+                      "You have ${BlocProvider.of<UserBloc>(context).state.balance} sports points",
+                      (v) {
+                    setState(() {
+                      isWallet = v!;
+                    });
+                  }, isWallet, () {}),
                 ],
                 16.height,
                 Text(
@@ -434,14 +435,22 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                 ),
                 10.height,
                 _customCheckBox(
-                  "I agree with terms and conditions",
-                  (v) {
-                    setState(() {
-                      c3 = v!;
-                    });
-                  },
-                  c3,
-                ),
+                    "I agree with terms and conditions",
+                    (v) {
+                      setState(() {
+                        c3 = v!;
+                      });
+                    },
+                    c3,
+                    () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => const HtmlViewScreen(
+                                data: terms,
+                                title: AppStrings.termsAndConditions),
+                          ));
+                    }),
                 90.height,
               ],
             ),
@@ -500,8 +509,8 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
   }
 }
 
-Widget _customCheckBox(
-    String title, void Function(bool?)? onChanged, bool value) {
+Widget _customCheckBox(String title, void Function(bool?)? onChanged,
+    bool value, VoidCallback? onTap) {
   return Container(
     width: double.infinity,
     decoration: boxDecorationDefault(color: Colors.white),
@@ -520,12 +529,18 @@ Widget _customCheckBox(
               )),
           addHorizontalSpacing(0.015),
           Flexible(
-            child: Text(
-              title,
-              style: AppStyle.normalText.copyWith(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w400,
-                color: AppColors.darkTextColor,
+            child: GestureDetector(
+              onTap: onTap,
+              child: Text(
+                title,
+                style: AppStyle.normalText.copyWith(
+                  decoration: title == "I agree with terms and conditions"
+                      ? TextDecoration.underline
+                      : null,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.darkTextColor,
+                ),
               ),
             ),
           )
