@@ -471,8 +471,10 @@ class _CoachListScreenState extends State<CoachListScreen> {
                             },
                           ),
                         ),
+                        addVerticalSpacing(0.02),
                         // Add your custom component here
                         const AllBannersGroundComponent(),
+                        addVerticalSpacing(0.02),
                         // Continue with the rest of the coaches
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 0.029.sw),

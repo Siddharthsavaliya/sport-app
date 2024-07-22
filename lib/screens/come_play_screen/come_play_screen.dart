@@ -144,15 +144,11 @@ class _ComePlayScreenState extends State<ComePlayScreen> {
                 },
               ),
             ),
-            if (widget.isFromNavigator) ...[
-              addVerticalSpacing(0.02),
-            ],
+            addVerticalSpacing(0.02),
             AllBannersGroundComponent(
               height: 0.15.sh,
             ),
-            if (widget.isFromNavigator) ...[
-              addVerticalSpacing(0.02),
-            ],
+            addVerticalSpacing(0.02),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 0.029.sw),
               child: DynamicHeightGridView(
