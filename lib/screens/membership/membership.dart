@@ -1,5 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_app/bloc/membership_bloc/membership_bloc.dart';
@@ -21,6 +26,7 @@ class MembershipScreen extends StatefulWidget {
 }
 
 class _MembershipScreenState extends State<MembershipScreen> {
+  static const MethodChannel _channel = MethodChannel('easebuzz');
   @override
   void initState() {
     BlocProvider.of<MembershipBloc>(context).add(GetMembershipRequest());
@@ -60,6 +66,27 @@ class _MembershipScreenState extends State<MembershipScreen> {
                                     type: "membership",
                                     url: state.redirectUrl,
                                   )));
+
+                      //              String payMode = "test";
+                      // Object parameters = {
+                      //   "access_key": state.redirectUrl,
+                      //   "pay_mode": payMode
+                      // };
+                      // final paymentResponse = await _channel.invokeMethod(
+                      //     "payWithEasebuzz", parameters);
+                      // log(paymentResponse.toString());
+                      // if (paymentResponse["result"] == "payment_successfull") {
+                      //   BlocProvider.of<UserBloc>(context)
+                      //       .add(GetUserEventRequest());
+                      //   showScafoldMessage(
+                      //       message: "Membership purchase completed",
+                      //       context: context);
+                      // } else {
+                      //   showScafoldMessage(
+                      //     message: "Payment failed. Please try again.",
+                      //     context: context,
+                      //   );
+                      // }
                     } else if (state.status.isFailed) {
                       Navigator.pop(context);
                       showScafoldMessage(

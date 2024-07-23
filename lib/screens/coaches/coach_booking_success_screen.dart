@@ -210,8 +210,7 @@ class _BookingDetailScreenState extends State<CoachBookingSuccessScreen>
                                       ),
                                       addVerticalSpacing(0.02),
                                       Text(
-                                        state.coachBookingModel!.totalPrice
-                                            .toString(),
+                                        "₹ ${state.coachBookingModel!.totalPrice.toString()}",
                                         style: AppStyle.mediumBold.copyWith(
                                           color: AppColors.black,
                                           fontWeight: FontWeight.w600,

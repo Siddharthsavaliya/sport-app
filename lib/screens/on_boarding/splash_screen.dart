@@ -68,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: TweenAnimationBuilder<double>(
-          tween: Tween<double>(begin: 0.0, end: 1.0),
+          tween: Tween<double>(begin: 0.6, end: 1.0),
           duration: const Duration(seconds: 2),
           builder: (context, value, child) {
             return Transform.scale(

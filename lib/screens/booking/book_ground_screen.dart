@@ -373,7 +373,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                                     ],
                                     if (coach.subscriptionPlan == null) ...[
                                       Text(
-                                        "${(widget.groundBookingSummary.data!.totalPrice! / widget.groundBookingSummary.data!.users!.where((element) => element.subscriptionPlan == null).length)}",
+                                        "₹ ${(widget.groundBookingSummary.data!.totalPrice! / widget.groundBookingSummary.data!.users!.where((element) => element.subscriptionPlan == null).length)}",
                                         style: AppStyle.mediumText
                                             .copyWith(color: AppColors.black),
                                       ),
@@ -423,13 +423,13 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       buildSummaryRow("Subtotal:",
-                          '${widget.groundBookingSummary.data!.subtotal}'),
+                          '₹ ${widget.groundBookingSummary.data!.subtotal}'),
                       8.height,
                       buildSummaryRow("GST (18%):",
-                          '${widget.groundBookingSummary.data!.gst}'),
+                          '₹ ${widget.groundBookingSummary.data!.gst}'),
                       8.height,
                       buildSummaryRow("Total:",
-                          '${widget.groundBookingSummary.data!.totalPrice}'),
+                          '₹ ${widget.groundBookingSummary.data!.totalPrice}'),
                     ],
                   ),
                 ),

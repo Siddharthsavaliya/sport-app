@@ -237,7 +237,7 @@ class _BookingHistoryDetailScreenState
                             ],
                             if (!coach.isFree) ...[
                               Text(
-                                "${(widget.bookingHistory.totalPrice! / widget.bookingHistory.users.where((element) => element.isFree == false).length)}",
+                                "₹ ${(widget.bookingHistory.totalPrice! / widget.bookingHistory.users.where((element) => element.isFree == false).length)}",
                                 style: AppStyle.mediumText
                                     .copyWith(color: AppColors.black),
                               ),
@@ -367,7 +367,7 @@ class _BookingHistoryDetailScreenState
         Text(title,
             style: AppStyle.mediumText
                 .copyWith(fontSize: 14.sp, color: AppColors.black)),
-        Text(value,
+        Text("₹ $value",
             style: AppStyle.normalBold
                 .copyWith(fontSize: 14.sp, color: AppColors.black)),
       ],

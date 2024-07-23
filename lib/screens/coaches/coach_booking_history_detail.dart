@@ -170,15 +170,6 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
                                   style: boldTextStyle(size: 14)),
                             ],
                           ),
-                          8.height,
-                          Row(
-                            children: [
-                              Text("Total Price: ",
-                                  style: secondaryTextStyle()),
-                              Text('${widget.coachBookingHistory.totalPrice}',
-                                  style: boldTextStyle(size: 14)),
-                            ],
-                          ),
                         ],
                       ),
                     ),
@@ -329,7 +320,7 @@ class _CoachHistoryDetailScreenState extends State<CoachHistoryDetailScreen> {
         Text(title,
             style: AppStyle.mediumText
                 .copyWith(fontSize: 14.sp, color: AppColors.black)),
-        Text(value,
+        Text("₹ $value",
             style: AppStyle.normalBold
                 .copyWith(fontSize: 14.sp, color: AppColors.black)),
       ],
