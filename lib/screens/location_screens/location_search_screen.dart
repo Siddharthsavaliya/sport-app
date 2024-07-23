@@ -121,7 +121,7 @@ class _LocationSearchScreenState extends State<LocationSearchScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
                 child: AppButton(
-                  color: AppColors.lightBlueColor,
+                  color: AppColors.primaryColor,
                   text: AppStrings.yourLocationText,
                   onTap: () {
                     Navigator.push(

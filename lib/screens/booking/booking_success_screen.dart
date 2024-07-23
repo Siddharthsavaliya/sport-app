@@ -79,7 +79,7 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
-              color: AppColors.lightBlueColor,
+              color: AppColors.primaryColor,
             ),
             padding: const EdgeInsets.all(10.0),
             child: Image.memory(
@@ -185,7 +185,7 @@ class _BookingDetailScreenState extends State<BookingSuccessScreen>
                             borderRadius: BorderRadius.circular(6),
                             border: Border.all(
                               width: 1,
-                              color: AppColors.lightBlueColor,
+                              color: AppColors.primaryColor,
                             ),
                           ),
                           child: Padding(

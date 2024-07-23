@@ -395,7 +395,7 @@ Widget contentBox(BuildContext context, qr) {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
-            color: AppColors.lightBlueColor,
+            color: AppColors.primaryColor,
           ),
           padding: const EdgeInsets.all(10.0),
           child: Image.memory(
