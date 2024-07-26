@@ -592,10 +592,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontFamily: "ProzaLibre-Regular",
                                 letterSpacing: 1,
                                 fontWeight: FontWeight.w600)),
-                        const Tooltip(
+                        Tooltip(
                           triggerMode: TooltipTriggerMode.tap,
-                          message: "Info Text here",
-                          child: Icon(
+                          message: toltipText,
+                          child: const Icon(
                             Icons.info_outline,
                             color: AppColors.gray,
                             size: 15,

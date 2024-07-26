@@ -468,7 +468,7 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
                                                         //     .redirectUrl,
                                                         // id: state
                                                         //     .id)));
-                                                        String payMode = "test";
+                                                        String payMode = "production";
                                                         Object parameters = {
                                                           "access_key":
                                                               state.redirectUrl,

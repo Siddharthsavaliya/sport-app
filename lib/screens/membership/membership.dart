@@ -67,7 +67,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
                       //               url: state.redirectUrl,
                       //             )));
 
-                      String payMode = "test";
+                      String payMode = "production";
                       Object parameters = {
                         "access_key": state.redirectUrl,
                         "pay_mode": payMode

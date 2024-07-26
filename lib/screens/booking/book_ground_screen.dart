@@ -97,7 +97,7 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                   builder: (context) =>
                       BookingSuccessScreen(id: response.data["data"]["id"])));
         } else {
-          String payMode = "test";
+          String payMode = "production";
           Object parameters = {
             "access_key": response.data["data"]["response"],
             "pay_mode": payMode

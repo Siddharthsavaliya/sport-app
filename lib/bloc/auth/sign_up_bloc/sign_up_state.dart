@@ -8,6 +8,7 @@ class SignUpState extends Equatable {
     this.initial = false,
     this.status = Status.initial,
     this.institutionIds = const [],
+    this.cities = const [],
   });
   final String message;
   final Status status;
@@ -15,6 +16,7 @@ class SignUpState extends Equatable {
   final bool initial;
   final bool resendOtp;
   final List<Institution> institutionIds;
+  final List<dynamic> cities;
 
   @override
   List<Object?> get props {
@@ -22,6 +24,7 @@ class SignUpState extends Equatable {
       status,
       message,
       resendOtp,
+      cities,
       isVerifyOto,
       resendOtp,
       institutionIds,
@@ -32,6 +35,7 @@ class SignUpState extends Equatable {
     String? message,
     Status? status,
     List<Institution>? institutionIds,
+    List<dynamic>? cities,
     bool? isVerifyOto,
     bool? resendOtp,
     bool? initial,
@@ -39,6 +43,7 @@ class SignUpState extends Equatable {
     return SignUpState(
       message: message ?? this.message,
       status: status ?? this.status,
+      cities: cities ?? this.cities,
       resendOtp: resendOtp ?? this.resendOtp,
       isVerifyOto: isVerifyOto ?? this.isVerifyOto,
       initial: initial ?? this.initial,

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:sport_app/data/api_client.dart';
 import 'package:sport_app/model/api_result/api_result.dart';
 import 'package:sport_app/model/institution_model/institution_model.dart';
@@ -141,6 +143,18 @@ class AuthRepository {
         ApiConstants.getInstitutionIds,
       );
       return ApiResult.success(InstitutionResponse.fromJson(response.data));
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
+
+  Future<ApiResult<List<dynamic>>> getCity() async {
+    try {
+      final response = await apiClient.get(
+        ApiConstants.getCity,
+      );
+      log(response.data.toString());
+      return ApiResult.success(response.data['data']);
     } catch (e) {
       return getErrorMessage(e);
     }

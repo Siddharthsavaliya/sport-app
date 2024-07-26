@@ -49,24 +49,12 @@ class _CoachListScreenState extends State<CoachListScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
       ),
       builder: (context) {
-        // List of cities and sports (example)
-        List<String> cities = [
-          'Gokalpur',
-          'Surat',
-          'Hyderabad',
-          'Patna',
-          'Gaya',
-          'Muzaffarpur',
-          'Ahmedabad',
-          'Darbhanga',
-          'Munger'
-        ];
-
         // State variables
         String citySearchQuery = '';
         String sportSearchQuery = '';
         String schoolSearchQuery = '';
-        List<String> filteredCities = cities;
+        List<dynamic> filteredCities =
+            BlocProvider.of<SignUpBloc>(context).state.cities;
         List<FetchSportResponse> filteredSports = sports;
         List<Institution> filteredSchool =
             BlocProvider.of<SignUpBloc>(context).state.institutionIds;
@@ -77,7 +65,9 @@ class _CoachListScreenState extends State<CoachListScreen> {
             void updateCitySearchQuery(String query) {
               setState(() {
                 citySearchQuery = query;
-                filteredCities = cities
+                filteredCities = BlocProvider.of<SignUpBloc>(context)
+                    .state
+                    .cities
                     .where((city) =>
                         city.toLowerCase().contains(query.toLowerCase()))
                     .toList();

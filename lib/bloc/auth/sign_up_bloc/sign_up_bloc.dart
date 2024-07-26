@@ -133,15 +133,21 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     ));
     try {
       final apiResult = await authRepository.getInstitution();
+      final apiResult1 = await authRepository.getCity();
       apiResult.when(
         success: (data) {
-          List<Institution> institutionModels = List.from(data.data);
-          institutionModels.add(const Institution(
-              institutionId: "OTHER", institutionName: "Other"));
-          emit(state.copyWith(
-            status: Status.loaded,
-            institutionIds: institutionModels,
-          ));
+          apiResult1.when(success: (d) {
+            List<Institution> institutionModels = List.from(data.data);
+            institutionModels.add(const Institution(
+                institutionId: "OTHER", institutionName: "Other"));
+            emit(state.copyWith(
+              status: Status.loaded,
+              institutionIds: institutionModels,
+              cities: d
+            ));
+          }, failure: (m) {
+            emit(state.copyWith(status: Status.failed, message: m));
+          });
         },
         failure: (error) {
           emit(state.copyWith(status: Status.failed, message: error));
