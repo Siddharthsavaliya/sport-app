@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -56,6 +57,7 @@ class BookGroundScreen extends StatefulWidget {
 
 class _BookingDetailScreenState extends State<BookGroundScreen> {
   bool c3 = false;
+  static const MethodChannel _channel = MethodChannel('easebuzz');
   bool isWallet = false;
   Future<void> bookGroundSlot() async {
     showProgressDialogue(context);
@@ -95,14 +97,35 @@ class _BookingDetailScreenState extends State<BookGroundScreen> {
                   builder: (context) =>
                       BookingSuccessScreen(id: response.data["data"]["id"])));
         } else {
-          Navigator.push(
-              context,
-              CupertinoPageRoute(
-                  builder: (context) => PaymentWebViewScreen(
-                        type: "ground",
-                        url: response.data["data"]["redirectUrl"],
-                        id: response.data["data"]["id"],
-                      )));
+          String payMode = "test";
+          Object parameters = {
+            "access_key": response.data["data"]["response"],
+            "pay_mode": payMode
+          };
+          final paymentResponse =
+              await _channel.invokeMethod("payWithEasebuzz", parameters);
+          log(paymentResponse.toString());
+          if (paymentResponse["result"] == "payment_successfull") {
+            Navigator.pushReplacement(
+                context,
+                CupertinoPageRoute(
+                    builder: (context) =>
+                        BookingSuccessScreen(id: response.data["data"]["id"])));
+          } else {
+            showScafoldMessage(
+              message: "Payment failed. Please try again.",
+              context: context,
+            );
+          }
+
+          // Navigator.push(
+          //     context,
+          //     CupertinoPageRoute(
+          //         builder: (context) => PaymentWebViewScreen(
+          //               type: "ground",
+          //               url: response.data["data"]["redirectUrl"],
+          //               id: response.data["data"]["id"],
+          //             )));
         }
       } else {
         Navigator.pop(context);

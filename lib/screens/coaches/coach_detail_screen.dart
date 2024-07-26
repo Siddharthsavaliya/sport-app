@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,7 +36,7 @@ class CoachDetailScreen extends StatefulWidget {
 
 class _CoachDetailScreenState extends State<CoachDetailScreen> {
   Coach? coachData;
-
+  static const MethodChannel _channel = MethodChannel('easebuzz');
   @override
   void initState() {
     super.initState();
@@ -445,7 +448,8 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
                                               Center(
                                                 child: BlocListener<CoachBloc,
                                                     CoachState>(
-                                                  listener: (context, state) {
+                                                  listener:
+                                                      (context, state) async {
                                                     if (state.isBooking) {
                                                       if (state.status
                                                           .isInProgress) {
@@ -454,16 +458,53 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
                                                       } else if (state
                                                           .status.isLoaded) {
                                                         Navigator.pop(context);
-                                                        Navigator.push(
-                                                            context,
-                                                            CupertinoPageRoute(
-                                                                builder: (context) => PaymentWebViewScreen(
-                                                                    type:
-                                                                        "coach",
-                                                                    url: state
-                                                                        .redirectUrl,
-                                                                    id: state
-                                                                        .id)));
+                                                        // Navigator.push(
+                                                        //     context,
+                                                        //     CupertinoPageRoute(
+                                                        //         builder: (context) => PaymentWebViewScreen(
+                                                        //             type:
+                                                        //                 "coach",
+                                                        // url: state
+                                                        //     .redirectUrl,
+                                                        // id: state
+                                                        //     .id)));
+                                                        String payMode = "test";
+                                                        Object parameters = {
+                                                          "access_key":
+                                                              state.redirectUrl,
+                                                          "pay_mode": payMode
+                                                        };
+                                                        final paymentResponse =
+                                                            await _channel
+                                                                .invokeMethod(
+                                                                    "payWithEasebuzz",
+                                                                    parameters);
+                                                        log(paymentResponse
+                                                            .toString());
+                                                        if (paymentResponse[
+                                                                "result"] ==
+                                                            "payment_successfull") {
+                                                          BlocProvider.of<
+                                                                      CoachBloc>(
+                                                                  context)
+                                                              .add(
+                                                                  GetCoachSingleHistoryRequest(
+                                                                      state
+                                                                          .id));
+                                                          Navigator.pushReplacement(
+                                                              context,
+                                                              CupertinoPageRoute(
+                                                                  builder: (context) =>
+                                                                      CoachBookingSuccessScreen(
+                                                                          id: state
+                                                                              .id)));
+                                                        } else {
+                                                          showScafoldMessage(
+                                                            message:
+                                                                "Payment failed. Please try again.",
+                                                            context: context,
+                                                          );
+                                                        }
                                                       } else if (state
                                                           .status.isFailed) {
                                                         Navigator.pop(context);

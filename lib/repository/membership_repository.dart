@@ -27,7 +27,7 @@ class MembershipRepository {
       final response = await apiClient.post<Map<String, dynamic>>(
           ApiConstants.purchaseSubscription,
           data: {"planId": id});
-      return ApiResult.success(response.data!["redirectUrl"]);
+      return ApiResult.success(response.data!["response"]);
     } catch (e) {
       return getErrorMessage(e);
     }

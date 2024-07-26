@@ -255,13 +255,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     AppAssets.star1),
                                               ),
                                               addHorizontalSpacing(0.013),
-                                              Text(
-                                                "${state.balance}\nSports Points",
-                                                style: AppStyle.normalText
-                                                    .copyWith(
-                                                  color: AppColors.white,
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w500,
+                                              Flexible(
+                                                child: Text(
+                                                  "${state.balance} Sports Points",
+                                                  style: AppStyle.normalText
+                                                      .copyWith(
+                                                    color: AppColors.white,
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -352,7 +354,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   builder: (context) => const ComePlayScreen(
                                         isFromNavigator: true,
                                       )));
-                        }), // Adjust as needed
+                        }, "Whether creating a team or joining an ongoing match, booking slots has never been easier."), // Adjust as needed
                       ),
                       StaggeredGridTile.count(
                         crossAxisCellCount: 1,
@@ -364,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               CupertinoPageRoute(
                                   builder: (context) =>
                                       const CoachListScreen()));
-                        }), // Adjust as needed
+                        }, "Tailored training sessions to enhance your performance"), // Adjust as needed
                       ),
                       StaggeredGridTile.count(
                         crossAxisCellCount: 1,
@@ -376,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               CupertinoPageRoute(
                                   builder: (context) =>
                                       const MembershipScreen()));
-                        }), // Adjust as needed
+                        }, "View Plan Details. See what's included"), // Adjust as needed
                       ),
                       StaggeredGridTile.count(
                         crossAxisCellCount: 1,
@@ -388,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               CupertinoPageRoute(
                                   builder: (context) =>
                                       const ComePlayScreen()));
-                        }), // Adjust as needed
+                        }, "View Gallery. Explore Our Visual Showcase"), // Adjust as needed
                       ),
                     ],
                   ),
@@ -427,14 +429,32 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           addVerticalSpacing(0.008),
-                          Text(
-                            "Tournaments".toUpperCase(),
-                            style: AppStyle.normalText.copyWith(
-                                color: AppColors.black.withOpacity(0.8),
-                                fontSize: 20.sp,
-                                fontFamily: "ProzaLibre-Regular",
-                                letterSpacing: 1,
-                                fontWeight: FontWeight.w600),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Tournaments".toUpperCase(),
+                                style: AppStyle.normalText.copyWith(
+                                    color: AppColors.black.withOpacity(0.8),
+                                    fontSize: 20.sp,
+                                    fontFamily: "ProzaLibre-Regular",
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              const Tooltip(
+                                margin: EdgeInsets.symmetric(horizontal: 10),
+                                padding: EdgeInsetsDirectional.symmetric(
+                                    horizontal: 5),
+                                triggerMode: TooltipTriggerMode.tap,
+                                message:
+                                    "Users can seamlessly access a wide array of ongoing events and tournaments across various sports",
+                                child: Icon(
+                                  Icons.info_outline,
+                                  color: AppColors.gray,
+                                  size: 16,
+                                ),
+                              ),
+                            ],
                           ),
                           addVerticalSpacing(0.005),
                           SizedBox(
@@ -488,8 +508,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget buildImageCard(
-      int index, String asset, String text, VoidCallback? onTap) {
+  Widget buildImageCard(int index, String asset, String text,
+      VoidCallback? onTap, String toltipText) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -507,12 +527,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 0.02.sw),
                 child: Stack(
                   children: [
-                    const Positioned(
+                    Positioned(
                       top: 5,
                       child: Tooltip(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsetsDirectional.symmetric(
+                            horizontal: 5),
                         triggerMode: TooltipTriggerMode.tap,
-                        message: "Info Text here",
-                        child: Icon(
+                        message: toltipText,
+                        child: const Icon(
                           Icons.info_outline,
                           color: AppColors.gray,
                           size: 14,

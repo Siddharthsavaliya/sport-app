@@ -53,40 +53,40 @@ class _MembershipScreenState extends State<MembershipScreen> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
               child: BlocConsumer<MembershipBloc, MembershipState>(
-                listener: (context, state) {
+                listener: (context, state) async {
                   if (state.isPurchase) {
                     if (state.status.isInProgress) {
                       showProgressDialogue(context);
                     } else if (state.status.isLoaded) {
                       Navigator.pop(context);
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => PaymentWebViewScreen(
-                                    type: "membership",
-                                    url: state.redirectUrl,
-                                  )));
+                      // Navigator.push(
+                      //     context,
+                      //     CupertinoPageRoute(
+                      //         builder: (context) => PaymentWebViewScreen(
+                      //               type: "membership",
+                      //               url: state.redirectUrl,
+                      //             )));
 
-                      //              String payMode = "test";
-                      // Object parameters = {
-                      //   "access_key": state.redirectUrl,
-                      //   "pay_mode": payMode
-                      // };
-                      // final paymentResponse = await _channel.invokeMethod(
-                      //     "payWithEasebuzz", parameters);
-                      // log(paymentResponse.toString());
-                      // if (paymentResponse["result"] == "payment_successfull") {
-                      //   BlocProvider.of<UserBloc>(context)
-                      //       .add(GetUserEventRequest());
-                      //   showScafoldMessage(
-                      //       message: "Membership purchase completed",
-                      //       context: context);
-                      // } else {
-                      //   showScafoldMessage(
-                      //     message: "Payment failed. Please try again.",
-                      //     context: context,
-                      //   );
-                      // }
+                      String payMode = "test";
+                      Object parameters = {
+                        "access_key": state.redirectUrl,
+                        "pay_mode": payMode
+                      };
+                      final paymentResponse = await _channel.invokeMethod(
+                          "payWithEasebuzz", parameters);
+                      log(paymentResponse.toString());
+                      if (paymentResponse["result"] == "payment_successfull") {
+                        BlocProvider.of<UserBloc>(context)
+                            .add(GetUserEventRequest());
+                        showScafoldMessage(
+                            message: "Membership purchase completed",
+                            context: context);
+                      } else {
+                        showScafoldMessage(
+                          message: "Payment failed. Please try again.",
+                          context: context,
+                        );
+                      }
                     } else if (state.status.isFailed) {
                       Navigator.pop(context);
                       showScafoldMessage(

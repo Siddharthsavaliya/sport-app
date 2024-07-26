@@ -59,7 +59,7 @@ class CoachBloc extends Bloc<CoachEvent, CoachState> {
         success: (data) {
           emit(state.copyWith(
               status: Status.loaded,
-              redirectUrl: data["redirectUrl"],
+              redirectUrl: data["response"],
               id: data["id"]));
         },
         failure: (error) {

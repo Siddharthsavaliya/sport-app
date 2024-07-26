@@ -462,7 +462,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
                           child: DynamicHeightGridView(
                             physics: const NeverScrollableScrollPhysics(),
                             crossAxisCount: 2,
-                            itemCount: 2,
+                            itemCount: coaches.length > 2 ? 2 : coaches.length,
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 15,
                             shrinkWrap: true,

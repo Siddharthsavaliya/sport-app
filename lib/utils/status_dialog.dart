@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/widget/app_button.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 Future<dynamic> showProgressDialogue(BuildContext context) {
   return showDialog(
@@ -33,21 +34,35 @@ Future<dynamic> showProgressDialogue(BuildContext context) {
 void showScafoldMessage(
     {required String message,
     bool isError = false,
-    bool isDark = false,
     required BuildContext context}) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      // behavior: SnackBarBehavior.floating,
+  Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 4,
       backgroundColor: isError ? Colors.red : Colors.black,
-      content: Text(
-        message,
-        style: AppStyle.mediumBold.copyWith(color: Colors.white, fontSize: 14),
-      ),
-      duration:
-          const Duration(milliseconds: 2500), // Set the duration to 0.5 seconds
-    ),
-  );
+      textColor: Colors.white,
+      fontSize: 16.0);
 }
+
+// void showScafoldMessage(
+//     {required String message,
+//     bool isError = false,
+//     bool isDark = false,
+//     required BuildContext context}) {
+//   ScaffoldMessenger.of(context).showSnackBar(
+//     SnackBar(
+//       // behavior: SnackBarBehavior.floating,
+//       backgroundColor: isError ? Colors.red : Colors.black,
+//       content: Text(
+//         message,
+//         style: AppStyle.mediumBold.copyWith(color: Colors.white, fontSize: 14),
+//       ),
+//       duration:
+//           const Duration(milliseconds: 2500), // Set the duration to 0.5 seconds
+//     ),
+//   );
+// }
 
 Future<dynamic> showYesNoDialogue(
   BuildContext context, {
