@@ -41,12 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
           .add(const InitializeLocationEvent());
     }
     if (isLogged) {
-      if (BlocProvider.of<LocationBloc>(context).state.isFirst) {
-        BlocProvider.of<GroundBloc>(context).add(GetAllGroundRequest());
-        BlocProvider.of<LocationBloc>(context).add(
-          const GetLocationEvent(),
-        );
-      }
+      BlocProvider.of<GroundBloc>(context).add(GetAllGroundRequest());
     }
     Future.delayed(
       const Duration(seconds: 3),

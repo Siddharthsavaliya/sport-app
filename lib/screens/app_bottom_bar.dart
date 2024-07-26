@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sport_app/bloc/membership_bloc/membership_bloc.dart';
+import 'package:sport_app/bloc/location_bloc/location_bloc.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/bloc/wishlist_bloc/wishlist_bloc.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_strings.dart';
 import 'package:sport_app/res/app_text_style.dart';
-import 'package:sport_app/screens/booking/sloat_selection_screen.dart';
 import 'package:sport_app/screens/come_play_screen/come_play_screen.dart';
 import 'package:sport_app/screens/home/home_screen.dart';
 import 'package:sport_app/screens/profile/profile_screen.dart';
@@ -26,6 +25,11 @@ class _AppBottomBarState extends State<AppBottomBar> {
   void initState() {
     BlocProvider.of<UserBloc>(context).add(GetUserEventRequest());
     BlocProvider.of<WishlistBloc>(context).add(GetToWishlistRequest());
+    if (BlocProvider.of<LocationBloc>(context).state.isFirst) {
+      BlocProvider.of<LocationBloc>(context).add(
+        const GetLocationEvent(),
+      );
+    }
     super.initState();
   }
 
