@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/bloc/auth/sign_up_bloc/sign_up_bloc.dart';
 import 'package:sport_app/bloc/ground_bloc/ground_bloc.dart'; // assuming Ground is your model class
 import 'package:sport_app/bloc/wishlist_bloc/wishlist_bloc.dart';
 import 'package:sport_app/model/ground_model/ground_model.dart';
@@ -41,20 +42,11 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
       ),
       builder: (context) {
         // List of cities
-        List<String> cities = [
-          'Gokalpur',
-          'Surat',
-          'Hyderabad',
-          'Patna',
-          'Gaya',
-          'Muzaffarpur',
-          'Darbhanga',
-          'Munger'
-        ];
 
         // State variables
         String searchQuery = '';
-        List<String> filteredCities = cities;
+        List<dynamic> filteredCities =
+            BlocProvider.of<SignUpBloc>(context).state.cities;
         String? selectedCity;
 
         return StatefulBuilder(
@@ -63,7 +55,9 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
             void updateSearchQuery(String query) {
               setState(() {
                 searchQuery = query;
-                filteredCities = cities
+                filteredCities = BlocProvider.of<SignUpBloc>(context)
+                    .state
+                    .cities
                     .where((city) =>
                         city.toLowerCase().contains(query.toLowerCase()))
                     .toList();

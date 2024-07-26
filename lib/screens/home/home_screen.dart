@@ -385,11 +385,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisCellCount: 0.37,
                         child:
                             buildImageCard(3, AppAssets.camera, "Gallery", () {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) =>
-                                      const ComePlayScreen()));
+                          // Navigator.push(
+                          //     context,
+                          //     CupertinoPageRoute(
+                          //         builder: (context) =>
+                          //             const ComePlayScreen()));
+                          showScafoldMessage(
+                              message: "Coming soon!", context: context);
                         }, "View Gallery. Explore Our Visual Showcase"), // Adjust as needed
                       ),
                     ],
@@ -397,107 +399,112 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               addVerticalSpacing(0.02),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.symmetric(horizontal: 0.025.sw),
-                constraints: BoxConstraints(minHeight: 0.2.sh),
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: AppColors.gray.withOpacity(0.4),
-                        blurRadius: 5,
-                        spreadRadius: 1),
-                  ],
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      right: 0.03.sw,
-                      bottom: 0.01.sh,
-                      child: Image.asset(
-                        AppAssets.event,
-                        height: 0.13.sh,
+              GestureDetector(
+                onTap: () {
+                  showScafoldMessage(message: "Coming soon!", context: context);
+                },
+                child: Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(horizontal: 0.025.sw),
+                  constraints: BoxConstraints(minHeight: 0.2.sh),
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: AppColors.gray.withOpacity(0.4),
+                          blurRadius: 5,
+                          spreadRadius: 1),
+                    ],
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        right: 0.03.sw,
+                        bottom: 0.01.sh,
+                        child: Image.asset(
+                          AppAssets.event,
+                          height: 0.13.sh,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 0.028.sw, vertical: 4),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          addVerticalSpacing(0.008),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Tournaments".toUpperCase(),
-                                style: AppStyle.normalText.copyWith(
-                                    color: AppColors.black.withOpacity(0.8),
-                                    fontSize: 20.sp,
-                                    fontFamily: "ProzaLibre-Regular",
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              const Tooltip(
-                                margin: EdgeInsets.symmetric(horizontal: 10),
-                                padding: EdgeInsetsDirectional.symmetric(
-                                    horizontal: 5),
-                                triggerMode: TooltipTriggerMode.tap,
-                                message:
-                                    "Users can seamlessly access a wide array of ongoing events and tournaments across various sports",
-                                child: Icon(
-                                  Icons.info_outline,
-                                  color: AppColors.gray,
-                                  size: 16,
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 0.028.sw, vertical: 4),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            addVerticalSpacing(0.008),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Tournaments".toUpperCase(),
+                                  style: AppStyle.normalText.copyWith(
+                                      color: AppColors.black.withOpacity(0.8),
+                                      fontSize: 20.sp,
+                                      fontFamily: "ProzaLibre-Regular",
+                                      letterSpacing: 1,
+                                      fontWeight: FontWeight.w600),
                                 ),
-                              ),
-                            ],
-                          ),
-                          addVerticalSpacing(0.005),
-                          SizedBox(
-                            width: 0.6.sw,
-                            child: Text(
-                              "Users can seamlessly access a wide array of ongoing events and tournaments across various sports",
-                              style: AppStyle.normalText.copyWith(
-                                  color: AppColors.black.withOpacity(0.6),
-                                  fontSize: 10.sp,
-                                  height: 2,
-                                  letterSpacing: 0.8,
-                                  fontWeight: FontWeight.w300),
+                                const Tooltip(
+                                  margin: EdgeInsets.symmetric(horizontal: 10),
+                                  padding: EdgeInsetsDirectional.symmetric(
+                                      horizontal: 5),
+                                  triggerMode: TooltipTriggerMode.tap,
+                                  message:
+                                      "Users can seamlessly access a wide array of ongoing events and tournaments across various sports",
+                                  child: Icon(
+                                    Icons.info_outline,
+                                    color: AppColors.gray,
+                                    size: 16,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          // const Spacer(),
-                          addVerticalSpacing(0.04),
-                          Container(
-                            margin:
-                                EdgeInsets.only(bottom: 0.01.sh, left: 0.1.sw),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: const Color(0xffFFAC33),
-                                )),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 0.015.sw, vertical: 0.003.sh),
+                            addVerticalSpacing(0.005),
+                            SizedBox(
+                              width: 0.6.sw,
                               child: Text(
-                                "Play now",
+                                "Users can seamlessly access a wide array of ongoing events and tournaments across various sports",
                                 style: AppStyle.normalText.copyWith(
                                     color: AppColors.black.withOpacity(0.6),
                                     fontSize: 10.sp,
-                                    fontFamily: "Preah_Vihear",
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w600),
+                                    height: 2,
+                                    letterSpacing: 0.8,
+                                    fontWeight: FontWeight.w300),
                               ),
                             ),
-                          ),
-                          addVerticalSpacing(0.005),
-                        ],
+                            // const Spacer(),
+                            addVerticalSpacing(0.04),
+                            Container(
+                              margin: EdgeInsets.only(
+                                  bottom: 0.01.sh, left: 0.1.sw),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: const Color(0xffFFAC33),
+                                  )),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 0.015.sw, vertical: 0.003.sh),
+                                child: Text(
+                                  "Play now",
+                                  style: AppStyle.normalText.copyWith(
+                                      color: AppColors.black.withOpacity(0.6),
+                                      fontSize: 10.sp,
+                                      fontFamily: "Preah_Vihear",
+                                      letterSpacing: 1,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ),
+                            addVerticalSpacing(0.005),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               addVerticalSpacing(0.015),
