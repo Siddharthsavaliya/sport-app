@@ -593,6 +593,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 letterSpacing: 1,
                                 fontWeight: FontWeight.w600)),
                         Tooltip(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsetsDirectional.symmetric(
+                              horizontal: 5),
                           triggerMode: TooltipTriggerMode.tap,
                           message: toltipText,
                           child: const Icon(
