@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sport_app/bloc/ground_bloc/ground_bloc.dart';
 import 'package:sport_app/bloc/location_bloc/location_bloc.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/bloc/wishlist_bloc/wishlist_bloc.dart';
@@ -25,6 +26,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
   void initState() {
     BlocProvider.of<UserBloc>(context).add(GetUserEventRequest());
     BlocProvider.of<WishlistBloc>(context).add(GetToWishlistRequest());
+    BlocProvider.of<GroundBloc>(context).add(GetAllGroundRequest());
     if (BlocProvider.of<LocationBloc>(context).state.isFirst) {
       BlocProvider.of<LocationBloc>(context).add(
         const GetLocationEvent(),

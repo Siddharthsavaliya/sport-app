@@ -72,5 +72,7 @@
 	<string>for notification</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to your camera to take profile pictures.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need your location to provide personalized court recommendations and to improve our services.</string>
 </dict>
 </plist>

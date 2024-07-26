@@ -330,9 +330,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onTap: () {
                         showYesNoDialogue(
                           context,
-                          onTap: () async {},
+                          onTap: () async {
+                            BlocProvider.of<UserBloc>(context)
+                                .add(DeleteAccount());
+                          },
                           title: "Alert",
-                          subTitle: "Are you sure you want to logout ?",
+                          subTitle: "Are you sure you want to delete account ?",
                         );
                       },
                     ),

@@ -33,12 +33,12 @@ class UserRepository {
     }
   }
 
-  Future<ApiResult<String>> deleteAccount() async {
+  Future<ApiResult<bool>> deleteAccount() async {
     try {
-      final response = await apiClient.get<Map<String, dynamic>>(
-        ApiConstants.getUserWallet,
+      await apiClient.delete<Map<String, dynamic>>(
+        ApiConstants.deleteAccount,
       );
-      return ApiResult.success(response.data!["data"]);
+      return const ApiResult.success(true);
     } catch (e) {
       return getErrorMessage(e);
     }
