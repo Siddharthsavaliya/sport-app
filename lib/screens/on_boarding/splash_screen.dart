@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/bloc/auth/sign_up_bloc/sign_up_bloc.dart';
+import 'package:sport_app/bloc/ground_bloc/ground_bloc.dart';
 import 'package:sport_app/bloc/location_bloc/location_bloc.dart';
 import 'package:sport_app/coach_dashboard/coach_dashboard.dart';
 import 'package:sport_app/res/app_assets.dart';
@@ -38,6 +39,14 @@ class _SplashScreenState extends State<SplashScreen> {
     if (city != null) {
       BlocProvider.of<LocationBloc>(context)
           .add(const InitializeLocationEvent());
+    }
+    if (isLogged) {
+      if (BlocProvider.of<LocationBloc>(context).state.isFirst) {
+        BlocProvider.of<GroundBloc>(context).add(GetAllGroundRequest());
+        BlocProvider.of<LocationBloc>(context).add(
+          const GetLocationEvent(),
+        );
+      }
     }
     Future.delayed(
       const Duration(seconds: 3),

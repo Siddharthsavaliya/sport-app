@@ -29,11 +29,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    if (BlocProvider.of<LocationBloc>(context).state.isFirst) {
-      BlocProvider.of<LocationBloc>(context).add(
-        const GetLocationEvent(),
-      );
-    }
     super.initState();
   }
 

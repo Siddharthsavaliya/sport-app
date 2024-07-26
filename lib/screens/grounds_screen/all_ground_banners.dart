@@ -25,7 +25,6 @@ class AllBannersGroundComponent extends StatefulWidget {
 class _AllBannersGroundComponentState extends State<AllBannersGroundComponent> {
   @override
   void initState() {
-    BlocProvider.of<GroundBloc>(context).add(GetAllGroundRequest());
     super.initState();
   }
 
@@ -47,7 +46,7 @@ class _AllBannersGroundComponentState extends State<AllBannersGroundComponent> {
                     enlargeCenterPage: false,
                     initialPage: 0,
                     enableInfiniteScroll: true,
-                    
+
                     // pageSnapping: true,
                     viewportFraction: 1,
                   ),
