@@ -1,4 +1,4 @@
-package com.example.sport_app
+package com.itsmycourt.app
 
 import android.content.Intent
 import android.os.Bundle
