@@ -17,13 +17,17 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UpdateUserEventRequest>(
       (event, emit) => _updateUserRequest(event, emit),
     );
+    on<DeleteAccount>(
+      (event, emit) => _deleteUserRequest(event, emit),
+    );
   }
   final UserRepository userRepository = UserRepository();
   Future<void> _getUserRequest(
     GetUserEventRequest event,
     Emitter<UserState> emit,
   ) async {
-    emit(state.copyWith(status: Status.inProgress, isUpdate: false));
+    emit(state.copyWith(
+        status: Status.inProgress, isUpdate: false, isDelete: false));
     try {
       final apiResult = await userRepository.getUser();
       if (!event.isCoach) {
@@ -64,13 +68,37 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     UpdateUserEventRequest event,
     Emitter<UserState> emit,
   ) async {
-    emit(state.copyWith(status: Status.inProgress, isUpdate: true));
+    emit(state.copyWith(
+        status: Status.inProgress, isUpdate: true, isDelete: false));
     try {
       final apiResult =
           await userRepository.updateUser(userModel: event.userModel);
       apiResult.when(
         success: (data) {
           emit(state.copyWith(status: Status.loaded, userModel: data));
+        },
+        failure: (error) {
+          emit(state.copyWith(status: Status.failed, message: error));
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(status: Status.failed, message: e.toString()));
+    }
+  }
+
+  Future<void> _deleteUserRequest(
+    DeleteAccount event,
+    Emitter<UserState> emit,
+  ) async {
+    emit(state.copyWith(
+        status: Status.inProgress, isUpdate: false, isDelete: true));
+    try {
+      final apiResult = await userRepository.deleteAccount();
+      apiResult.when(
+        success: (data) {
+          emit(state.copyWith(
+            status: Status.loaded,
+          ));
         },
         failure: (error) {
           emit(state.copyWith(status: Status.failed, message: error));

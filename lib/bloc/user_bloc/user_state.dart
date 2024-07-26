@@ -6,11 +6,13 @@ class UserState extends Equatable {
     this.balance = "0",
     this.userModel,
     this.isUpdate = false,
+    this.isDelete = false,
     this.status = Status.initial,
   });
   final String message;
   final Status status;
   final bool isUpdate;
+  final bool isDelete;
   final String balance;
   final UserModel? userModel;
 
@@ -21,6 +23,7 @@ class UserState extends Equatable {
       balance,
       message,
       isUpdate,
+      isDelete,
       userModel,
     ];
   }
@@ -31,9 +34,11 @@ class UserState extends Equatable {
     Status? status,
     UserModel? userModel,
     bool? isUpdate,
+    bool? isDelete,
   }) {
     return UserState(
       message: message ?? this.message,
+      isDelete: isDelete ?? this.isDelete,
       balance: balance ?? this.balance,
       status: status ?? this.status,
       userModel: userModel ?? this.userModel,

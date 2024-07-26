@@ -33,6 +33,17 @@ class UserRepository {
     }
   }
 
+  Future<ApiResult<String>> deleteAccount() async {
+    try {
+      final response = await apiClient.get<Map<String, dynamic>>(
+        ApiConstants.getUserWallet,
+      );
+      return ApiResult.success(response.data!["data"]);
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
+
   Future<ApiResult<UserModel>> updateUser(
       {required UserModel userModel}) async {
     try {

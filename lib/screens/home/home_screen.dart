@@ -51,7 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     },
                     builder: (context, state) {
-                      if (state.status.isLoaded || state.isUpdate) {
+                      if (state.status.isLoaded ||
+                          state.isUpdate ||
+                          state.isDelete) {
                         return Column(
                           children: [
                             Padding(

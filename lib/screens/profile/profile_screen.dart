@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
+import 'package:sport_app/model/status.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_strings.dart';
@@ -174,10 +175,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: ClipOval(
                         child: CircleAvatar(
                           radius: 70,
-                          backgroundImage: state.userModel!.dpUrl != null
-                              ? NetworkImage(state.userModel!.dpUrl!)
-                                  as ImageProvider
-                              : const AssetImage(AppAssets.dp),
+                          backgroundImage: state.userModel == null
+                              ? const AssetImage(AppAssets.dp)
+                              : state.userModel!.dpUrl != null
+                                  ? NetworkImage(state.userModel!.dpUrl!)
+                                      as ImageProvider
+                                  : const AssetImage(AppAssets.dp),
                         ),
                       ),
                     );
@@ -275,7 +278,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 addVerticalSpacing(0.01),
                 SizedBox(
-                  width: 0.4.sw,
+                  width: double.infinity,
                   child: AppButton(
                     isBorder: true,
                     text: "Logout",
@@ -298,7 +301,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                   ),
                 ),
-                addVerticalSpacing(0.02)
+                addVerticalSpacing(0.02),
+                BlocListener<UserBloc, UserState>(
+                  listener: (context, state) async {
+                    if (state.status.isLoaded) {
+                      await deleteAll();
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => const SplashScreen(),
+                        ),
+                        (route) => false,
+                      );
+                    }
+                    if (state.status.isFailed) {
+                      Navigator.pop(context);
+                      showErrorDialogue(context, state.message);
+                    }
+                    if (state.status.isInProgress) {
+                      showProgressDialogue(context);
+                    }
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: AppButton(
+                      isBorder: true,
+                      text: "Delete Account",
+                      onTap: () {
+                        showYesNoDialogue(
+                          context,
+                          onTap: () async {},
+                          title: "Alert",
+                          subTitle: "Are you sure you want to logout ?",
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                addVerticalSpacing(0.025)
               ],
             ),
           ),

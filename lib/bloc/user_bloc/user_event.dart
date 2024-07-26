@@ -20,3 +20,10 @@ class UpdateUserEventRequest extends UserEvent {
   @override
   List<Object> get props => [userModel];
 }
+
+class DeleteAccount extends UserEvent {
+  DeleteAccount();
+
+  @override
+  List<Object> get props => [];
+}
