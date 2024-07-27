@@ -37,7 +37,6 @@ class _EditProfileState extends State<EditProfile> {
   bool isInstitutionIdError = false;
   bool isInstitutionNameError = false;
   bool isPhoneError = false;
-  bool isDobError = false;
   bool isEmailError = false;
 
   final _key = GlobalKey<FormState>();
@@ -240,16 +239,6 @@ class _EditProfileState extends State<EditProfile> {
                             selectDate(context);
                           },
                           readOnly: true,
-                          error: isDobError,
-                          validator: (v) {
-                            if (v!.isEmpty || v == "") {
-                              isDobError = true;
-                            } else {
-                              isDobError = false;
-                            }
-                            setState(() {});
-                            return null;
-                          },
                           controller: dob,
                           height: 55,
                           prefixIcon: Icons.calendar_month_outlined,
@@ -316,8 +305,7 @@ class _EditProfileState extends State<EditProfile> {
                           removeOpacity: true,
                           onTap: () {
                             if (_key.currentState!.validate()) {
-                              if (!isDobError &&
-                                  !isUserNameError &&
+                              if (!isUserNameError &&
                                   !isInstitutionIdError &&
                                   !isEmailError &&
                                   !isPhoneError) {
