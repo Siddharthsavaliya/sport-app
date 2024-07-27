@@ -46,7 +46,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isCityError = false;
   bool isStateError = false;
   bool c3 = false;
-  bool isDobError = false;
   bool isEmailError = false;
   bool isPasswordError = false;
   bool isConfirmPassError = false;
@@ -234,16 +233,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             selectDate(context);
                           },
                           readOnly: true,
-                          error: isDobError,
-                          validator: (v) {
-                            if (v!.isEmpty || v == "") {
-                              isDobError = true;
-                            } else {
-                              isDobError = false;
-                            }
-                            setState(() {});
-                            return null;
-                          },
                           controller: dob,
                           height: 55,
                           prefixIcon: Icons.calendar_month_outlined,
@@ -508,7 +497,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             onTap: () {
                               if (_formKey.currentState!.validate() &&
                                   (!isConfirmPassError &&
-                                      !isDobError &&
                                       !isPasswordError &&
                                       !isUserNameError &&
                                       !isEmailError &&

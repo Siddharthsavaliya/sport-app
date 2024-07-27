@@ -304,22 +304,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 addVerticalSpacing(0.02),
                 BlocListener<UserBloc, UserState>(
                   listener: (context, state) async {
-                    if (state.status.isLoaded) {
-                      await deleteAll();
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) => const SplashScreen(),
-                        ),
-                        (route) => false,
-                      );
-                    }
-                    if (state.status.isFailed) {
-                      Navigator.pop(context);
-                      showErrorDialogue(context, state.message);
-                    }
-                    if (state.status.isInProgress) {
-                      showProgressDialogue(context);
+                    if (state.isDelete) {
+                      if (state.status.isLoaded) {
+                        await deleteAll();
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => const SplashScreen(),
+                          ),
+                          (route) => false,
+                        );
+                      }
+                      if (state.status.isFailed) {
+                        Navigator.pop(context);
+                        showErrorDialogue(context, state.message);
+                      }
+                      if (state.status.isInProgress) {
+                        showProgressDialogue(context);
+                      }
                     }
                   },
                   child: SizedBox(

@@ -57,9 +57,9 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location when in the background.</string>
+	<string>App need your location permission to check your current location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open.</string>
+	<string>App need your location permission to check your current location</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>We need your permission to save files to your photo library.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
