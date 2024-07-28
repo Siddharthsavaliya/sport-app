@@ -63,7 +63,7 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>We need your permission to save files to your photo library.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need your permission to access your photo library.</string>
+	<string>We need your permission to access your photo library for profile image.</string>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
