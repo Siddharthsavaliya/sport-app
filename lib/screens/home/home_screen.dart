@@ -476,7 +476,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             addVerticalSpacing(0.04),
                             Container(
                               margin: EdgeInsets.only(
-                                  bottom: 0.01.sh, left: 0.1.sw),
+                                  bottom: 0.01.sh, left: 0.028.sw),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
                                   border: Border.all(
@@ -484,7 +484,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )),
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 0.015.sw, vertical: 0.003.sh),
+                                    horizontal: 0.02.sw, vertical: 0.004.sh),
                                 child: Text(
                                   "Play now",
                                   style: AppStyle.normalText.copyWith(
