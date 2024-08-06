@@ -159,4 +159,15 @@ class AuthRepository {
       return getErrorMessage(e);
     }
   }
+
+  Future<ApiResult<bool>> checkIsSuspended() async {
+    try {
+      final response = await apiClient.get(
+        ApiConstants.isSuspended,
+      );
+      return ApiResult.success(response.data['suspended']);
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/bloc/auth/sign_up_bloc/sign_up_bloc.dart';
 import 'package:sport_app/bloc/ground_bloc/ground_bloc.dart'; // assuming Ground is your model class
@@ -217,11 +218,14 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
         builder: (context, state) {
           if (state.status.isLoaded) {
             return state.groundsData.isEmpty
-                ? const EmptyPlaceHolder(
-                    pending: 0.1,
-                    title: "No ground available for football yet",
-                    subTitle: "Coming soon...",
-                    imagePath: AppAssets.error)
+                ? Center(
+                    child: Lottie.asset(AppAssets.coming),
+                  )
+                // ? const EmptyPlaceHolder(
+                //     pending: 0.1,
+                //     title: "No ground available for football yet",
+                //     subTitle: "Coming soon...",
+                //     imagePath: AppAssets.error)
                 : RefreshIndicator(
                     onRefresh: onRefresh,
                     color: AppColors.black,
@@ -544,7 +548,7 @@ class _GroundsListScreenState extends State<GroundsListScreen> {
                                                                         left:
                                                                             4),
                                                                 child: Text(
-                                                                    "₹ ${state.groundsData[index].price} / Hour",
+                                                                    "₹ ${state.groundsData[index].price} / Hour / Player",
                                                                     style:
                                                                         boldTextStyle()),
                                                               ),

@@ -4,12 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/bloc/auth/sign_up_bloc/sign_up_bloc.dart';
-import 'package:sport_app/bloc/ground_bloc/ground_bloc.dart';
 import 'package:sport_app/bloc/location_bloc/location_bloc.dart';
 import 'package:sport_app/coach_dashboard/coach_dashboard.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/screens/app_bottom_bar.dart';
-import 'package:sport_app/screens/location_screens/location_access_screen.dart';
 import 'package:sport_app/screens/on_boarding/on_boarding_screens.dart';
 import 'package:sport_app/utils/helper.dart';
 

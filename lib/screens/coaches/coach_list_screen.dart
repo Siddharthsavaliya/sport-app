@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/bloc/auth/sign_up_bloc/sign_up_bloc.dart';
 import 'package:sport_app/bloc/coach_bloc/coach_bloc.dart';
@@ -428,12 +429,15 @@ class _CoachListScreenState extends State<CoachListScreen> {
         builder: (context, state) {
           if (state.status.isLoaded || state.isBooking) {
             if (state.coachsData!.isEmpty) {
-              return const EmptyPlaceHolder(
-                pending: 0.1,
-                title: "No coach available as of now",
-                subTitle: "Coming soon...",
-                imagePath: AppAssets.error,
+              return Center(
+                child: Lottie.asset(AppAssets.coming),
               );
+              // return const EmptyPlaceHolder(
+              //   pending: 0.1,
+              //   title: "No coach available as of now",
+              //   subTitle: "Coming soon...",
+              //   imagePath: AppAssets.coming,
+              // );
             }
 
             List<Coach> coaches = state.coachsData!;

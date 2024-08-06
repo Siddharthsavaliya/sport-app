@@ -22,6 +22,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<GetInstitutionIds>(
       (event, emit) => _getInstitutionIds(event, emit),
     );
+    on<CheckIsSuspended>(
+      (event, emit) => _getCheckIsSuspendedIds(event, emit),
+    );
   }
   final AuthRepository authRepository = AuthRepository();
   Future<void> _singUpRequest(
@@ -121,6 +124,31 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     }
   }
 
+  Future<void> _getCheckIsSuspendedIds(
+    CheckIsSuspended event,
+    Emitter<SignUpState> emit,
+  ) async {
+    emit(state.copyWith(
+      status: Status.inProgress,
+    ));
+    try {
+      final apiResult = await authRepository.checkIsSuspended();
+      apiResult.when(
+        success: (data) {
+          emit(state.copyWith(
+            status: Status.loaded,
+            isSuspended: data,
+          ));
+        },
+        failure: (error) {
+          emit(state.copyWith(status: Status.failed, message: error));
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(status: Status.failed, message: e.toString()));
+    }
+  }
+
   Future<void> _getInstitutionIds(
     GetInstitutionIds event,
     Emitter<SignUpState> emit,
@@ -141,10 +169,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
             institutionModels.add(const Institution(
                 institutionId: "OTHER", institutionName: "Other"));
             emit(state.copyWith(
-              status: Status.loaded,
-              institutionIds: institutionModels,
-              cities: d
-            ));
+                status: Status.loaded,
+                institutionIds: institutionModels,
+                cities: d));
           }, failure: (m) {
             emit(state.copyWith(status: Status.failed, message: m));
           });

@@ -6,6 +6,7 @@ class SignUpState extends Equatable {
     this.isVerifyOto = false,
     this.resendOtp = false,
     this.initial = false,
+    this.isSuspended = false,
     this.status = Status.initial,
     this.institutionIds = const [],
     this.cities = const [],
@@ -14,6 +15,7 @@ class SignUpState extends Equatable {
   final Status status;
   final bool isVerifyOto;
   final bool initial;
+  final bool isSuspended;
   final bool resendOtp;
   final List<Institution> institutionIds;
   final List<dynamic> cities;
@@ -25,6 +27,7 @@ class SignUpState extends Equatable {
       message,
       resendOtp,
       cities,
+      isSuspended,
       isVerifyOto,
       resendOtp,
       institutionIds,
@@ -38,11 +41,13 @@ class SignUpState extends Equatable {
     List<dynamic>? cities,
     bool? isVerifyOto,
     bool? resendOtp,
+    bool? isSuspended,
     bool? initial,
   }) {
     return SignUpState(
       message: message ?? this.message,
       status: status ?? this.status,
+      isSuspended: isSuspended ?? this.isSuspended,
       cities: cities ?? this.cities,
       resendOtp: resendOtp ?? this.resendOtp,
       isVerifyOto: isVerifyOto ?? this.isVerifyOto,

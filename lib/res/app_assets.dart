@@ -69,6 +69,7 @@ class AppAssets {
   static const String king1 = "assets/images/king1.png";
   static const String dis = "assets/images/discount.png";
   static const String error = "assets/animation/error.json";
+  static const String coming = "assets/images/coming.json";
   static const String qrCode = "assets/images/qr_code.png";
   static const String payment = "assets/images/payment.png";
   static const String paymentSuccess = "assets/images/payment_success.png";

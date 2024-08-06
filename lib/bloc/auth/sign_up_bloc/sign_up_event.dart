@@ -71,3 +71,10 @@ class GetInstitutionIds extends SignUpEvent {
   @override
   List<Object> get props => [];
 }
+
+class CheckIsSuspended extends SignUpEvent {
+  CheckIsSuspended();
+
+  @override
+  List<Object> get props => [];
+}

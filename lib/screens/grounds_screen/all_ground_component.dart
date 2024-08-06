@@ -241,59 +241,13 @@ class _AllGroundComponentState extends State<AllGroundComponent> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      10.height,
-                                      HorizontalList(
-                                        padding: const EdgeInsets.all(0),
-                                        itemCount: allSports.length,
-                                        itemBuilder: (context, index) {
-                                          if (index == 2) {
-                                            return Container(
-                                              decoration:
-                                                  boxDecorationWithShadow(
-                                                      backgroundColor: context
-                                                          .cardColor
-                                                          .withOpacity(0.9),
-                                                      borderRadius: radius(20),
-                                                      border: Border.all()),
-                                              child: Row(
-                                                children: [
-                                                  const Icon(
-                                                    Icons.add,
-                                                    size: 18,
-                                                  ),
-                                                  4.width,
-                                                  const Text("3"),
-                                                ],
-                                              ).paddingSymmetric(
-                                                  horizontal: 8, vertical: 4),
-                                            );
-                                          }
-                                          if (index >= 3) {
-                                            return const Offstage();
-                                          }
-
-                                          return Container(
-                                            decoration: boxDecorationWithShadow(
-                                                backgroundColor: context
-                                                    .cardColor
-                                                    .withOpacity(0.9),
-                                                borderRadius: radius(20),
-                                                border: Border.all()),
-                                            child: Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.sports_cricket,
-                                                  size: 18,
-                                                ),
-                                                4.width,
-                                                Text(allSports[index]),
-                                              ],
-                                            ).paddingSymmetric(
-                                                horizontal: 8, vertical: 4),
-                                          );
-                                        },
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 4),
+                                        child: Text(
+                                            "₹ ${ground.price} / Hour / Player",
+                                            style: boldTextStyle()),
                                       ),
-                                      12.height,
+                                      10.height,
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
