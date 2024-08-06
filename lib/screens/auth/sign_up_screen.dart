@@ -501,24 +501,50 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       !isUserNameError &&
                                       !isEmailError &&
                                       !isPhoneError)) {
-                                BlocProvider.of<SignUpBloc>(context).add(
-                                    SignUpEventRequest(
-                                        email: email.text,
-                                        city: city.text,
-                                        state: state.text,
-                                        iName: _selectedInstitution!
-                                                    .institutionId ==
-                                                "OTHER"
-                                            ? institutionName.text
-                                            : _selectedInstitution!
-                                                .institutionName
-                                                .validate(),
-                                        institutionId:
-                                            _selectedInstitution!.institutionId,
-                                        password: password.text,
-                                        phone: phoneNumber.text,
-                                        userName: username.text,
-                                        dob: dob.text));
+                                if (_selectedInstitution!.institutionId ==
+                                    "OTHER") {
+                                  if (!isInstitutionNameError &&
+                                      !isCityError &&
+                                      !isStateError) {
+                                    BlocProvider.of<SignUpBloc>(context).add(
+                                        SignUpEventRequest(
+                                            email: email.text,
+                                            city: city.text,
+                                            state: state.text,
+                                            iName: _selectedInstitution!
+                                                        .institutionId ==
+                                                    "OTHER"
+                                                ? institutionName.text
+                                                : _selectedInstitution!
+                                                    .institutionName
+                                                    .validate(),
+                                            institutionId: _selectedInstitution!
+                                                .institutionId,
+                                            password: password.text,
+                                            phone: phoneNumber.text,
+                                            userName: username.text,
+                                            dob: dob.text));
+                                  }
+                                } else {
+                                  BlocProvider.of<SignUpBloc>(context).add(
+                                      SignUpEventRequest(
+                                          email: email.text,
+                                          city: city.text,
+                                          state: state.text,
+                                          iName: _selectedInstitution!
+                                                      .institutionId ==
+                                                  "OTHER"
+                                              ? institutionName.text
+                                              : _selectedInstitution!
+                                                  .institutionName
+                                                  .validate(),
+                                          institutionId: _selectedInstitution!
+                                              .institutionId,
+                                          password: password.text,
+                                          phone: phoneNumber.text,
+                                          userName: username.text,
+                                          dob: dob.text));
+                                }
                               }
                             },
                           ),
