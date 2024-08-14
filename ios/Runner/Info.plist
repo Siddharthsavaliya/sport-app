@@ -57,9 +57,9 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>App needs location access to provide continuous location-based services.</string>
+	<string>App would like to access your location to provide continuous location-based services.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>App needs location access to provide location-based services while you are using the app.</string>
+	<string>App would like to access your location to provide location-based services.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>We need your permission to save files to your photo library.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
