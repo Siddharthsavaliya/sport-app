@@ -96,6 +96,7 @@ String privacyPolicy = '''<!DOCTYPE html>
 <ul>
     <li><strong>Personal Information:</strong> When you register on our app or make a booking, we may collect personal information such as your name, email address, phone number, and payment information. This information is necessary to process your bookings and provide you with our services.</li>
     <li><strong>Usage Information:</strong> We may collect information about how you use our app, including the facilities you book, frequency of bookings, and other usage data. This information helps us improve our services and provide a better user experience.</li>
+    <li><strong>Location Data:</strong> We may request access to your device’s location services to provide enhanced features, such as finding nearby sports grounds and events tailored to your geographic area. Your location data will only be collected when you actively grant permission.</li>
 </ul>
 
 <h3>Information Sharing and Disclosure:</h3>
@@ -107,6 +108,9 @@ String privacyPolicy = '''<!DOCTYPE html>
 
 <h3>Data Security:</h3>
 <p>We implement reasonable security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is entirely secure, and we cannot guarantee absolute security.</p>
+
+<h3>User Control on Location Sharing:</h3>
+<p>You have full control over your location data. You can enable or disable location services at any time through your device's settings.</p>
 
 <h3>Third-Party Links:</h3>
 <p>Our app may contain links to third-party websites or services that are not owned or controlled by "ITS MY COURT". We are not responsible for the privacy practices or content of such third parties. We encourage you to review the privacy policies of those third parties before providing any personal information.</p>

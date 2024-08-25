@@ -58,7 +58,7 @@ class AppStrings {
   static const String help = "Help & Support";
   static const String faq = "FAQ's";
   static const String termsAndConditions = "Terms & Conditions";
-  static const String privacyPolicy = "Privacy Policy";
+  static const String   privacyPolicy = "Privacy Policy";
   static const String paymentMethod = "My Payment Methods";
   static const String security = "Security";
   static const String securitySub = "Change your password";
