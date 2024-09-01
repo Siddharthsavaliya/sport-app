@@ -32,11 +32,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Emitter<SignUpState> emit,
   ) async {
     emit(state.copyWith(
-      status: Status.inProgress,
-      initial: true,
-      isVerifyOto: false,
-      resendOtp: false,
-    ));
+        status: Status.inProgress,
+        initial: true,
+        isVerifyOto: false,
+        resendOtp: false,
+        isSuspended: false));
     try {
       final apiResult = await authRepository.signUp(
           iId: event.institutionId,
@@ -69,11 +69,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Emitter<SignUpState> emit,
   ) async {
     emit(state.copyWith(
-      status: Status.inProgress,
-      initial: false,
-      isVerifyOto: false,
-      resendOtp: true,
-    ));
+        status: Status.inProgress,
+        initial: false,
+        isVerifyOto: false,
+        resendOtp: true,
+        isSuspended: false));
     try {
       final apiResult =
           await authRepository.resendOtp(phoneNumber: event.phone);
@@ -98,11 +98,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Emitter<SignUpState> emit,
   ) async {
     emit(state.copyWith(
-      status: Status.inProgress,
-      initial: false,
-      resendOtp: false,
-      isVerifyOto: true,
-    ));
+        status: Status.inProgress,
+        initial: false,
+        resendOtp: false,
+        isVerifyOto: true,
+        isSuspended: false));
     try {
       final apiResult = await authRepository.signUpOtpVerify(
         otp: event.otp,
@@ -129,8 +129,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Emitter<SignUpState> emit,
   ) async {
     emit(state.copyWith(
-      status: Status.inProgress,
-    ));
+        status: Status.inProgress,
+        initial: false,
+        resendOtp: false,
+        isVerifyOto: false,
+        isSuspended: true));
     try {
       final apiResult = await authRepository.checkIsSuspended();
       apiResult.when(
@@ -154,11 +157,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Emitter<SignUpState> emit,
   ) async {
     emit(state.copyWith(
-      status: Status.inProgress,
-      initial: false,
-      resendOtp: false,
-      isVerifyOto: true,
-    ));
+        status: Status.inProgress,
+        initial: false,
+        resendOtp: false,
+        isVerifyOto: true,
+        isSuspended: false));
     try {
       final apiResult = await authRepository.getInstitution();
       final apiResult1 = await authRepository.getCity();

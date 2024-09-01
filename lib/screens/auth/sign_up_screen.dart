@@ -83,10 +83,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
         );
       },
     );
-    if (picked != null && picked != DateTime.now()) {
-      setState(() {
-        dob.text = DateFormat('dd/MM/yyyy').format(picked);
-      });
+
+    if (picked != null) {
+      final DateTime currentDate = DateTime.now();
+      final DateTime minDate =
+          DateTime(currentDate.year - 3, currentDate.month, currentDate.day);
+
+      if (picked.isAfter(minDate)) {
+        showErrorDialogue(context, "Invalid date");
+      } else {
+        setState(() {
+          dob.text = DateFormat('dd/MM/yyyy').format(picked);
+        });
+      }
     }
   }
 
