@@ -89,7 +89,9 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Plan",
+                                        state.purchase[index].subscriptionPlan!
+                                                .planName ??
+                                            "Plan",
                                         style: AppStyle.normalText.copyWith(
                                           color:
                                               AppColors.black.withOpacity(0.8),
@@ -120,6 +122,17 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                           addVerticalSpacing(0.005),
                                           Text(
                                             "Purchased on",
+                                            style: AppStyle.normalText.copyWith(
+                                              color: AppColors.black
+                                                  .withOpacity(0.8),
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 13.sp,
+                                              letterSpacing: 0.5,
+                                            ),
+                                          ),
+                                          addVerticalSpacing(0.005),
+                                          Text(
+                                            "Hours Left",
                                             style: AppStyle.normalText.copyWith(
                                               color: AppColors.black
                                                   .withOpacity(0.8),
@@ -182,6 +195,28 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                               fontWeight: FontWeight.w600,
                                               fontSize: 13.sp,
                                               letterSpacing: 0.1,
+                                            ),
+                                          ),
+                                          addVerticalSpacing(0.008),
+                                          Text(
+                                            "${state.purchase[index].subscriptiontime ?? 0}",
+                                            style: AppStyle.normalText.copyWith(
+                                              color: isPlanExpired(
+                                                          state
+                                                              .purchase[index]
+                                                              .subscriptionPlan!
+                                                              .planType,
+                                                          state.purchase[index]
+                                                              .purchaseDate!) ||
+                                                      state.purchase[index]
+                                                              .subscriptiontime! <
+                                                          1
+                                                  ? Colors.red
+                                                  : const Color.fromARGB(
+                                                      255, 44, 188, 56),
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 15.sp,
+                                              letterSpacing: 0.5,
                                             ),
                                           ),
                                         ],

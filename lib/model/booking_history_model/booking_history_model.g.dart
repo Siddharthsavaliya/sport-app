@@ -20,7 +20,7 @@ _$BookingImpl _$$BookingImplFromJson(Map<String, dynamic> json) =>
           .toList(),
       endTime:
           (json['endTime'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      totalCount: json['totalCount'] as int?,
+      totalCount: (json['totalCount'] as num?)?.toInt(),
       qrCode: json['qrCode'] as String,
       isCancellationFlag: json['isCancellationFlag'] as bool? ?? true,
       invoiceUrl: json['invoiceUrl'] as String? ?? "",
@@ -31,7 +31,7 @@ _$BookingImpl _$$BookingImplFromJson(Map<String, dynamic> json) =>
       gstAmount: json['gstAmount'] as num?,
       subtotal: json['subtotal'] as num?,
       status: json['status'] as String?,
-      v: json['v'] as int?,
+      v: (json['v'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$BookingImplToJson(_$BookingImpl instance) =>

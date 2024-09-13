@@ -30,6 +30,7 @@ class AppAssets {
   static const String help = "assets/images/help.jpg";
   static const String locationPinIcon = "assets/images/location_pin.svg";
   static const String king = "assets/images/king.png";
+  static const String membership = "assets/images/membership.png";
   static const String locationImage = "assets/images/location_image.svg";
   static const String id = "assets/images/id.png";
   static const String gallery1 = "assets/images/gallery1.png";

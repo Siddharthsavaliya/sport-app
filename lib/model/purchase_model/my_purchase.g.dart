@@ -17,7 +17,9 @@ _$MyPurchaseImpl _$$MyPurchaseImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['purchaseDate'] as String),
       user: json['user'] as String?,
+      isActive: json['isActive'] as String?,
       invoiceUrl: json['invoiceUrl'] as String?,
+      subscriptiontime: json['subscriptiontime'] as num?,
     );
 
 Map<String, dynamic> _$$MyPurchaseImplToJson(_$MyPurchaseImpl instance) =>
@@ -26,5 +28,7 @@ Map<String, dynamic> _$$MyPurchaseImplToJson(_$MyPurchaseImpl instance) =>
       'subscriptionPlan': instance.subscriptionPlan,
       'purchaseDate': instance.purchaseDate?.toIso8601String(),
       'user': instance.user,
+      'isActive': instance.isActive,
       'invoiceUrl': instance.invoiceUrl,
+      'subscriptiontime': instance.subscriptiontime,
     };

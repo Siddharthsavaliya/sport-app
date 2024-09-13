@@ -12,7 +12,9 @@ abstract class MyPurchase with _$MyPurchase {
     Membership? subscriptionPlan,
     DateTime? purchaseDate,
     String? user,
+    String? isActive,
     String? invoiceUrl,
+    num? subscriptiontime,
   }) = _MyPurchase;
 
   factory MyPurchase.fromJson(Map<String, dynamic> json) =>

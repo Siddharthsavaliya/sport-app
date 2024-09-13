@@ -28,7 +28,7 @@ _$GroundModelImpl _$$GroundModelImplFromJson(Map<String, dynamic> json) =>
       recommended: json['recommended'] as bool?,
       slots:
           (json['slots'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      v: json['__v'] as int?,
+      v: (json['__v'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$GroundModelImplToJson(_$GroundModelImpl instance) =>

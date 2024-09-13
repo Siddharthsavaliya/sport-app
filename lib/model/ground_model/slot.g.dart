@@ -7,7 +7,7 @@ part of 'slot.dart';
 // **************************************************************************
 
 _$SlotImpl _$$SlotImplFromJson(Map<String, dynamic> json) => _$SlotImpl(
-      dayofweek: json['dayofweek'] as int?,
+      dayofweek: (json['dayofweek'] as num?)?.toInt(),
       starttime: json['starttime'] as String?,
       endtime: json['endtime'] as String?,
       booked: json['booked'] as bool?,

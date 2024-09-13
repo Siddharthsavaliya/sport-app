@@ -39,7 +39,6 @@ class _AllBannersGroundComponentState extends State<AllBannersGroundComponent> {
                   options: CarouselOptions(
                     onPageChanged: (index, reason) {},
                     height: widget.height ?? 0.2.sh,
-                    animateToClosest: true,
                     autoPlayCurve: Curves.fastOutSlowIn,
                     autoPlayInterval: const Duration(seconds: 3),
                     autoPlay: true,
@@ -81,7 +80,6 @@ class _AllBannersGroundComponentState extends State<AllBannersGroundComponent> {
                 options: CarouselOptions(
                   onPageChanged: (index, reason) {},
                   height: 0.2.sh,
-                  animateToClosest: true,
                   autoPlayCurve: Curves.fastOutSlowIn,
                   autoPlayInterval: const Duration(seconds: 3),
                   autoPlay: true,

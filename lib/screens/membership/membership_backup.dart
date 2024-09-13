@@ -5,7 +5,6 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_app/bloc/membership_bloc/membership_bloc.dart';
@@ -40,7 +39,16 @@ class _MembershipScreenState extends State<MembershipScreen> {
       body: Container(
           width: double.infinity,
           height: 1.sh,
-          decoration: const BoxDecoration(color: Color(0xffEEEED4)),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 255, 122, 118),
+                AppColors.primaryRedColor,
+              ], // Change colors as per your choice
+            ),
+          ),
           child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
@@ -91,55 +99,50 @@ class _MembershipScreenState extends State<MembershipScreen> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        addVerticalSpacing(0.07),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: const CircleAvatar(
-                              radius: 18,
-                              backgroundColor: AppColors.white,
-                              child: Center(
-                                child: Icon(
-                                  Icons.close_rounded,
-                                  color: AppColors.black,
-                                  size: 18,
+                        addVerticalSpacing(0.1),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Membership\nPlans",
+                              style: AppStyle.normalBold.copyWith(
+                                fontSize: 32.sp,
+                                color: AppColors.white,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 0.01.sh),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const CircleAvatar(
+                                  radius: 18,
+                                  backgroundColor: AppColors.white,
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.close_rounded,
+                                      color: AppColors.black,
+                                      size: 18,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                            )
+                          ],
+                        ),
+                        Text(
+                          "Select a Membership Option",
+                          style: AppStyle.mediumBold.copyWith(
+                            fontSize: 20.sp,
+                            letterSpacing: 1,
+                            // fontFamily: "Lobster",
+                            color: AppColors.white,
                           ),
                         ),
-                        addVerticalSpacing(0.015),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: const Color(0xff97B690),
-                              borderRadius: BorderRadius.circular(5)),
-                          height: 48,
-                          child: Center(
-                            child: Text(
-                              "MEMBERSHIP PLANS",
-                              style: AppStyle.normalText.copyWith(
-                                color: AppColors.black,
-                                fontSize: 15.sp,
-                                letterSpacing: 0.8,
-                              ),
-                            ),
-                          ),
-                        ),
-                        addVerticalSpacing(0.015),
-                        Center(
-                          child: Text(
-                            "Select a Membership Option".toUpperCase(),
-                            style: AppStyle.normalText.copyWith(
-                              fontSize: 15.sp,
-                              letterSpacing: 1,
-                              // fontFamily: "Lobster",
-                              color: AppColors.black,
-                            ),
-                          ),
-                        ),
+                        addVerticalSpacing(0.018),
+                        const AnimatedTextWidget(),
                         addVerticalSpacing(0.025),
                         ListView.builder(
                           padding: const EdgeInsets.all(0),
@@ -246,12 +249,8 @@ class _MembershipScreenState extends State<MembershipScreen> {
       width: double.infinity,
       margin: EdgeInsets.only(bottom: 0.025.sh),
       decoration: BoxDecoration(
-        border: Border.all(
-          color: const Color(0xff97B690),
-          width: 2,
-        ),
         borderRadius: BorderRadius.circular(15),
-        color: const Color(0xff97B690).withOpacity(0.5),
+        color: AppColors.white.withOpacity(0.5),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 0.02.sw, vertical: 10),
@@ -261,88 +260,61 @@ class _MembershipScreenState extends State<MembershipScreen> {
             Row(
               children: [
                 Container(
-                  width: 0.055.sh,
-                  height: 0.15.sw,
+                  width: 0.1.sh,
+                  height: 0.2.sw,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xffF0F0F0),
+                    color: Colors.white,
                   ),
                   child: Center(
                     child: Image.asset(
-                      AppAssets.membership,
-                      height: 0.035.sh,
+                      AppAssets.king,
+                      height: 0.07.sh,
                     ),
                   ),
                 ),
                 addHorizontalSpacing(0.015),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  name,
-                                  style: AppStyle.mediumBold.copyWith(
-                                    fontSize: 15.sp,
-                                    letterSpacing: 1,
-                                    color: AppColors.black,
-                                  ),
-                                  // overflow: TextOverflow.ellipsis,
-                                ),
-                                Text(
-                                  "Membership",
-                                  style: AppStyle.mediumBold.copyWith(
-                                    fontSize: 15.sp,
-                                    letterSpacing: 0.8,
-                                    color: AppColors.white,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                          ),
-                          addHorizontalSpacing(0.06),
-                          Container(
-                            width: 1,
-                            height: 32,
-                            color: const Color(0xffE8E8E8),
-                          ),
-                          addHorizontalSpacing(0.02),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                plan == "1 Months" ? "1 Month" : plan,
-                                style: AppStyle.mediumBold.copyWith(
-                                  fontSize: 15.sp,
-                                  letterSpacing: 1,
-                                  color: AppColors.black,
-                                ),
-                              ),
-                              addVerticalSpacing(0.001),
-                              Text(
-                                "Inc. $time Hrs\nPlaytime",
-                                textAlign: TextAlign.center,
-                                style: AppStyle.normalText.copyWith(
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: 1,
-                                  color: AppColors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "$name\nMembership",
+                      style: AppStyle.mediumBold.copyWith(
+                        height: 0,
+                        fontSize: 20.sp,
+                        letterSpacing: 0.8,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.white,
                       ),
-                    ],
-                  ),
+                    ),
+                    addVerticalSpacing(0.004),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: const Color.fromARGB(255, 252, 96, 91),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 0.03.sw, vertical: 2),
+                        child: Text(
+                          "$plan / $time Hours",
+                          style: AppStyle.mediumBold.copyWith(
+                            height: 0,
+                            fontSize: 14.sp,
+                            letterSpacing: 0.5,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.white,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ],
+            ),
+            addVerticalSpacing(0.008),
+            Divider(
+              color: AppColors.white.withOpacity(0.9),
             ),
             addVerticalSpacing(0.008),
             Padding(
@@ -350,57 +322,60 @@ class _MembershipScreenState extends State<MembershipScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.11.sw),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "INR. $crossPrice",
-                          style: AppStyle.mediumBold.copyWith(
-                            height: 0,
-                            decoration: TextDecoration.lineThrough,
-                            fontSize: 13.sp,
-                            letterSpacing: 1,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.black,
-                          ),
-                          overflow: TextOverflow.ellipsis,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "₹$crossPrice",
+                        style: AppStyle.mediumBold.copyWith(
+                          height: 0,
+                          decoration: TextDecoration.lineThrough,
+                          fontSize: 25.sp,
+                          // fontFamily: "Lobster",
+                          letterSpacing: 1,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.white,
                         ),
-                        Text(
-                          "INR. $price",
-                          style: AppStyle.mediumBold.copyWith(
-                            height: 0,
-                            fontSize: 15.sp,
-                            letterSpacing: 1,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.black,
-                          ),
+                      ),
+                      Text(
+                        "₹$price",
+                        style: AppStyle.mediumBold.copyWith(
+                          height: 0,
+                          fontSize: 32.sp,
+                          // fontFamily: "Lobster",
+                          letterSpacing: 1,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.white,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   Container(
-                    height: 30,
+                    height: 50,
+                    width: 0.3.sw,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color(0xff97B690)),
+                      borderRadius: BorderRadius.circular(68),
+                      gradient: const LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        colors: [
+                          Color.fromARGB(255, 252, 96, 91),
+                          AppColors.primaryRedColor,
+                        ], // Change colors as per your choice
+                      ),
+                    ),
                     child: GestureDetector(
                       onTap: () {
                         BlocProvider.of<MembershipBloc>(context)
                             .add(PurchaseMembershipRequest(id));
                       },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
-                        child: Center(
-                          child: Text(
-                            "BUY NOW",
-                            style: AppStyle.normalBold.copyWith(
-                              color: AppColors.white,
-                              letterSpacing: 1,
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.normal,
-                            ),
+                      child: Center(
+                        child: Text(
+                          "BUY NOW",
+                          style: AppStyle.normalBold.copyWith(
+                            color: AppColors.white,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.normal,
                           ),
                         ),
                       ),
@@ -415,7 +390,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
                 "*Applicable Taxes May Apply",
                 style: AppStyle.normalBold.copyWith(
                   color: Colors.black.withOpacity(0.8),
-                  fontSize: 8.sp,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.normal,
                 ),
               ),

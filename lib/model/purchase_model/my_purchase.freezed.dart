@@ -25,7 +25,9 @@ mixin _$MyPurchase {
   Membership? get subscriptionPlan => throw _privateConstructorUsedError;
   DateTime? get purchaseDate => throw _privateConstructorUsedError;
   String? get user => throw _privateConstructorUsedError;
+  String? get isActive => throw _privateConstructorUsedError;
   String? get invoiceUrl => throw _privateConstructorUsedError;
+  num? get subscriptiontime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,7 +46,9 @@ abstract class $MyPurchaseCopyWith<$Res> {
       Membership? subscriptionPlan,
       DateTime? purchaseDate,
       String? user,
-      String? invoiceUrl});
+      String? isActive,
+      String? invoiceUrl,
+      num? subscriptiontime});
 
   $MembershipCopyWith<$Res>? get subscriptionPlan;
 }
@@ -66,7 +70,9 @@ class _$MyPurchaseCopyWithImpl<$Res, $Val extends MyPurchase>
     Object? subscriptionPlan = freezed,
     Object? purchaseDate = freezed,
     Object? user = freezed,
+    Object? isActive = freezed,
     Object? invoiceUrl = freezed,
+    Object? subscriptiontime = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -85,10 +91,18 @@ class _$MyPurchaseCopyWithImpl<$Res, $Val extends MyPurchase>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as String?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as String?,
       invoiceUrl: freezed == invoiceUrl
           ? _value.invoiceUrl
           : invoiceUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      subscriptiontime: freezed == subscriptiontime
+          ? _value.subscriptiontime
+          : subscriptiontime // ignore: cast_nullable_to_non_nullable
+              as num?,
     ) as $Val);
   }
 
@@ -118,7 +132,9 @@ abstract class _$$MyPurchaseImplCopyWith<$Res>
       Membership? subscriptionPlan,
       DateTime? purchaseDate,
       String? user,
-      String? invoiceUrl});
+      String? isActive,
+      String? invoiceUrl,
+      num? subscriptiontime});
 
   @override
   $MembershipCopyWith<$Res>? get subscriptionPlan;
@@ -139,7 +155,9 @@ class __$$MyPurchaseImplCopyWithImpl<$Res>
     Object? subscriptionPlan = freezed,
     Object? purchaseDate = freezed,
     Object? user = freezed,
+    Object? isActive = freezed,
     Object? invoiceUrl = freezed,
+    Object? subscriptiontime = freezed,
   }) {
     return _then(_$MyPurchaseImpl(
       id: freezed == id
@@ -158,10 +176,18 @@ class __$$MyPurchaseImplCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as String?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as String?,
       invoiceUrl: freezed == invoiceUrl
           ? _value.invoiceUrl
           : invoiceUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      subscriptiontime: freezed == subscriptiontime
+          ? _value.subscriptiontime
+          : subscriptiontime // ignore: cast_nullable_to_non_nullable
+              as num?,
     ));
   }
 }
@@ -174,7 +200,9 @@ class _$MyPurchaseImpl implements _MyPurchase {
       this.subscriptionPlan,
       this.purchaseDate,
       this.user,
-      this.invoiceUrl});
+      this.isActive,
+      this.invoiceUrl,
+      this.subscriptiontime});
 
   factory _$MyPurchaseImpl.fromJson(Map<String, dynamic> json) =>
       _$$MyPurchaseImplFromJson(json);
@@ -189,11 +217,15 @@ class _$MyPurchaseImpl implements _MyPurchase {
   @override
   final String? user;
   @override
+  final String? isActive;
+  @override
   final String? invoiceUrl;
+  @override
+  final num? subscriptiontime;
 
   @override
   String toString() {
-    return 'MyPurchase(id: $id, subscriptionPlan: $subscriptionPlan, purchaseDate: $purchaseDate, user: $user, invoiceUrl: $invoiceUrl)';
+    return 'MyPurchase(id: $id, subscriptionPlan: $subscriptionPlan, purchaseDate: $purchaseDate, user: $user, isActive: $isActive, invoiceUrl: $invoiceUrl, subscriptiontime: $subscriptiontime)';
   }
 
   @override
@@ -207,14 +239,18 @@ class _$MyPurchaseImpl implements _MyPurchase {
             (identical(other.purchaseDate, purchaseDate) ||
                 other.purchaseDate == purchaseDate) &&
             (identical(other.user, user) || other.user == user) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
             (identical(other.invoiceUrl, invoiceUrl) ||
-                other.invoiceUrl == invoiceUrl));
+                other.invoiceUrl == invoiceUrl) &&
+            (identical(other.subscriptiontime, subscriptiontime) ||
+                other.subscriptiontime == subscriptiontime));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, subscriptionPlan, purchaseDate, user, invoiceUrl);
+  int get hashCode => Object.hash(runtimeType, id, subscriptionPlan,
+      purchaseDate, user, isActive, invoiceUrl, subscriptiontime);
 
   @JsonKey(ignore: true)
   @override
@@ -236,7 +272,9 @@ abstract class _MyPurchase implements MyPurchase {
       final Membership? subscriptionPlan,
       final DateTime? purchaseDate,
       final String? user,
-      final String? invoiceUrl}) = _$MyPurchaseImpl;
+      final String? isActive,
+      final String? invoiceUrl,
+      final num? subscriptiontime}) = _$MyPurchaseImpl;
 
   factory _MyPurchase.fromJson(Map<String, dynamic> json) =
       _$MyPurchaseImpl.fromJson;
@@ -251,7 +289,11 @@ abstract class _MyPurchase implements MyPurchase {
   @override
   String? get user;
   @override
+  String? get isActive;
+  @override
   String? get invoiceUrl;
+  @override
+  num? get subscriptiontime;
   @override
   @JsonKey(ignore: true)
   _$$MyPurchaseImplCopyWith<_$MyPurchaseImpl> get copyWith =>

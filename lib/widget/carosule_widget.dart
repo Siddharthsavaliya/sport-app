@@ -34,7 +34,6 @@ class _BannerWidgetState extends State<BannerWidget> {
           });
         },
         height: 0.2.sh,
-        animateToClosest: true,
         autoPlayCurve: Curves.fastOutSlowIn,
         autoPlayInterval: const Duration(seconds: 3),
         autoPlay: true,

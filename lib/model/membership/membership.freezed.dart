@@ -25,6 +25,7 @@ mixin _$Membership {
   String? get id => throw _privateConstructorUsedError;
   String? get planName => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
+  double? get time => throw _privateConstructorUsedError;
   double get actualPrice => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,6 +45,7 @@ abstract class $MembershipCopyWith<$Res> {
       @JsonKey(name: '_id') String? id,
       String? planName,
       double price,
+      double? time,
       double actualPrice});
 }
 
@@ -64,6 +66,7 @@ class _$MembershipCopyWithImpl<$Res, $Val extends Membership>
     Object? id = freezed,
     Object? planName = freezed,
     Object? price = null,
+    Object? time = freezed,
     Object? actualPrice = null,
   }) {
     return _then(_value.copyWith(
@@ -83,6 +86,10 @@ class _$MembershipCopyWithImpl<$Res, $Val extends Membership>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      time: freezed == time
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as double?,
       actualPrice: null == actualPrice
           ? _value.actualPrice
           : actualPrice // ignore: cast_nullable_to_non_nullable
@@ -104,6 +111,7 @@ abstract class _$$MembershipImplCopyWith<$Res>
       @JsonKey(name: '_id') String? id,
       String? planName,
       double price,
+      double? time,
       double actualPrice});
 }
 
@@ -122,6 +130,7 @@ class __$$MembershipImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? planName = freezed,
     Object? price = null,
+    Object? time = freezed,
     Object? actualPrice = null,
   }) {
     return _then(_$MembershipImpl(
@@ -141,6 +150,10 @@ class __$$MembershipImplCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      time: freezed == time
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as double?,
       actualPrice: null == actualPrice
           ? _value.actualPrice
           : actualPrice // ignore: cast_nullable_to_non_nullable
@@ -157,6 +170,7 @@ class _$MembershipImpl implements _Membership {
       @JsonKey(name: '_id') this.id,
       this.planName,
       required this.price,
+      this.time = 0,
       required this.actualPrice});
 
   factory _$MembershipImpl.fromJson(Map<String, dynamic> json) =>
@@ -172,11 +186,14 @@ class _$MembershipImpl implements _Membership {
   @override
   final double price;
   @override
+  @JsonKey()
+  final double? time;
+  @override
   final double actualPrice;
 
   @override
   String toString() {
-    return 'Membership(planType: $planType, id: $id, planName: $planName, price: $price, actualPrice: $actualPrice)';
+    return 'Membership(planType: $planType, id: $id, planName: $planName, price: $price, time: $time, actualPrice: $actualPrice)';
   }
 
   @override
@@ -190,14 +207,15 @@ class _$MembershipImpl implements _Membership {
             (identical(other.planName, planName) ||
                 other.planName == planName) &&
             (identical(other.price, price) || other.price == price) &&
+            (identical(other.time, time) || other.time == time) &&
             (identical(other.actualPrice, actualPrice) ||
                 other.actualPrice == actualPrice));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, planType, id, planName, price, actualPrice);
+  int get hashCode => Object.hash(
+      runtimeType, planType, id, planName, price, time, actualPrice);
 
   @JsonKey(ignore: true)
   @override
@@ -219,6 +237,7 @@ abstract class _Membership implements Membership {
       @JsonKey(name: '_id') final String? id,
       final String? planName,
       required final double price,
+      final double? time,
       required final double actualPrice}) = _$MembershipImpl;
 
   factory _Membership.fromJson(Map<String, dynamic> json) =
@@ -233,6 +252,8 @@ abstract class _Membership implements Membership {
   String? get planName;
   @override
   double get price;
+  @override
+  double? get time;
   @override
   double get actualPrice;
   @override

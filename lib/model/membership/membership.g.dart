@@ -12,6 +12,7 @@ _$MembershipImpl _$$MembershipImplFromJson(Map<String, dynamic> json) =>
       id: json['_id'] as String?,
       planName: json['planName'] as String?,
       price: (json['price'] as num).toDouble(),
+      time: (json['time'] as num?)?.toDouble() ?? 0,
       actualPrice: (json['actualPrice'] as num).toDouble(),
     );
 
@@ -21,5 +22,6 @@ Map<String, dynamic> _$$MembershipImplToJson(_$MembershipImpl instance) =>
       '_id': instance.id,
       'planName': instance.planName,
       'price': instance.price,
+      'time': instance.time,
       'actualPrice': instance.actualPrice,
     };

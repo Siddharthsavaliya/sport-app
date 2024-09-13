@@ -15,7 +15,7 @@ _$CoachBookingHistoryImpl _$$CoachBookingHistoryImplFromJson(
       schoolId: School.fromJson(json['schoolId'] as Map<String, dynamic>),
       qrCode: json['qrCode'] as String,
       url: json['url'] as String,
-      totalPrice: json['totalPrice'] as int,
+      totalPrice: (json['totalPrice'] as num).toInt(),
       gstAmount: json['gstAmount'] as num?,
       startTime: json['startTime'] as String?,
       days: (json['days'] as List<dynamic>?)?.map((e) => e as String).toList(),

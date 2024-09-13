@@ -67,7 +67,6 @@ class _SportsSliderComponentState extends State<SportsSliderComponent> {
           });
         },
         height: 140,
-        animateToClosest: true,
         autoPlayCurve: Curves.fastOutSlowIn,
         autoPlayInterval: const Duration(seconds: 3),
         autoPlay: true,

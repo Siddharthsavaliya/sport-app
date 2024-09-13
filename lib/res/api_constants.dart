@@ -1,6 +1,7 @@
 class ApiConstants {
-  static const String baseUrl = "https://api.itsmycourt.com/api";
-  // "https://cg8gkks.srv-01.purezzatechnologies.com/api";
+  static const String baseUrl =
+      //  "https://api.itsmycourt.com/api";
+      "https://cg8gkks.srv-01.purezzatechnologies.com/api";
   // static const String baseUrl = "http://localhost:8800/api";
   static const String signUp = "/signup";
   static const String signUpOtpVerify = "/signup/verify-otp";
@@ -36,6 +37,7 @@ class ApiConstants {
   static const String getSummary = "/booking/getBookingDetails";
   static const String getSlot = "/booking/slots/";
   static const String coachBookSlot = "/booking/book-coach-slot/";
+  static const String remainingHour = "/history/remaining-time";
   static const String getSingleCoachBookSlot =
       "/booking/getSingleCoachBookingHistory/";
   static const String getOneCoachBookings = "/booking/getOneCoachBookings/";

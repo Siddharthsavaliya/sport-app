@@ -41,7 +41,6 @@ class _AllGroundComponentState extends State<AllGroundComponent> {
                   options: CarouselOptions(
                     onPageChanged: (index, reason) {},
                     height: 0.29.sh,
-                    animateToClosest: true,
                     autoPlayCurve: Curves.fastOutSlowIn,
                     autoPlayInterval: const Duration(seconds: 3),
                     autoPlay: true,
@@ -359,7 +358,6 @@ class _AllGroundComponentState extends State<AllGroundComponent> {
                 options: CarouselOptions(
                   onPageChanged: (index, reason) {},
                   height: 0.25.sh,
-                  animateToClosest: true,
                   autoPlayCurve: Curves.fastOutSlowIn,
                   autoPlayInterval: const Duration(seconds: 3),
                   autoPlay: true,

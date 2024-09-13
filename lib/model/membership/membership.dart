@@ -10,6 +10,7 @@ abstract class Membership with _$Membership {
     @JsonKey(name: '_id') String? id,
     String? planName,
     required double price,
+    @Default(0) double? time,
     required double actualPrice,
   }) = _Membership;
   factory Membership.fromJson(Map<String, dynamic> json) =>
@@ -25,4 +26,3 @@ List<Membership> buildPlanListFromResponse(
       )
       .toList();
 }
-

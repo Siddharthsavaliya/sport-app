@@ -12,7 +12,7 @@ _$CoachImpl _$$CoachImplFromJson(Map<String, dynamic> json) => _$CoachImpl(
       firstname: json['firstname'] as String?,
       lastname: json['lastname'] as String?,
       nationality: json['nationality'] as String?,
-      yearsOfExperience: json['yearsOfExperience'] as int?,
+      yearsOfExperience: (json['yearsOfExperience'] as num?)?.toInt(),
       email: json['email'] as String?,
       coachRating: json['coachRating'] as String? ?? "0",
       schools: (json['schools'] as List<dynamic>?)
@@ -233,8 +233,8 @@ Map<String, dynamic> _$$PaymentInformationImplToJson(
 
 _$GroupPricingImpl _$$GroupPricingImplFromJson(Map<String, dynamic> json) =>
     _$GroupPricingImpl(
-      groupSize: json['groupSize'] as int,
-      rate: json['rate'] as int,
+      groupSize: (json['groupSize'] as num).toInt(),
+      rate: (json['rate'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$GroupPricingImplToJson(_$GroupPricingImpl instance) =>
