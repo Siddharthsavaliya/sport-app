@@ -1192,19 +1192,12 @@ Match _$MatchFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Match {
-  @JsonKey(name: '_id')
+  @JsonKey(name: 'matchId')
   String get id => throw _privateConstructorUsedError;
-  String get tournament => throw _privateConstructorUsedError;
-  TeamReference get teamA => throw _privateConstructorUsedError;
-  TeamReference get teamB => throw _privateConstructorUsedError;
-  DateTime get date => throw _privateConstructorUsedError;
-  String get time => throw _privateConstructorUsedError;
-  String get status => throw _privateConstructorUsedError;
+  List<TeamReference> get teams => throw _privateConstructorUsedError;
   @JsonKey(name: "score")
-  Map<String, dynamic> get score => throw _privateConstructorUsedError;
-  String get tossWinner => throw _privateConstructorUsedError;
-  @JsonKey(name: '__v')
-  int get version => throw _privateConstructorUsedError;
+  Map<String, int> get score => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1217,19 +1210,10 @@ abstract class $MatchCopyWith<$Res> {
       _$MatchCopyWithImpl<$Res, Match>;
   @useResult
   $Res call(
-      {@JsonKey(name: '_id') String id,
-      String tournament,
-      TeamReference teamA,
-      TeamReference teamB,
-      DateTime date,
-      String time,
-      String status,
-      @JsonKey(name: "score") Map<String, dynamic> score,
-      String tossWinner,
-      @JsonKey(name: '__v') int version});
-
-  $TeamReferenceCopyWith<$Res> get teamA;
-  $TeamReferenceCopyWith<$Res> get teamB;
+      {@JsonKey(name: 'matchId') String id,
+      List<TeamReference> teams,
+      @JsonKey(name: "score") Map<String, int> score,
+      String status});
 }
 
 /// @nodoc
@@ -1246,74 +1230,28 @@ class _$MatchCopyWithImpl<$Res, $Val extends Match>
   @override
   $Res call({
     Object? id = null,
-    Object? tournament = null,
-    Object? teamA = null,
-    Object? teamB = null,
-    Object? date = null,
-    Object? time = null,
-    Object? status = null,
+    Object? teams = null,
     Object? score = null,
-    Object? tossWinner = null,
-    Object? version = null,
+    Object? status = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      tournament: null == tournament
-          ? _value.tournament
-          : tournament // ignore: cast_nullable_to_non_nullable
-              as String,
-      teamA: null == teamA
-          ? _value.teamA
-          : teamA // ignore: cast_nullable_to_non_nullable
-              as TeamReference,
-      teamB: null == teamB
-          ? _value.teamB
-          : teamB // ignore: cast_nullable_to_non_nullable
-              as TeamReference,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as String,
+      teams: null == teams
+          ? _value.teams
+          : teams // ignore: cast_nullable_to_non_nullable
+              as List<TeamReference>,
+      score: null == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as Map<String, int>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
-      score: null == score
-          ? _value.score
-          : score // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
-      tossWinner: null == tossWinner
-          ? _value.tossWinner
-          : tossWinner // ignore: cast_nullable_to_non_nullable
-              as String,
-      version: null == version
-          ? _value.version
-          : version // ignore: cast_nullable_to_non_nullable
-              as int,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $TeamReferenceCopyWith<$Res> get teamA {
-    return $TeamReferenceCopyWith<$Res>(_value.teamA, (value) {
-      return _then(_value.copyWith(teamA: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $TeamReferenceCopyWith<$Res> get teamB {
-    return $TeamReferenceCopyWith<$Res>(_value.teamB, (value) {
-      return _then(_value.copyWith(teamB: value) as $Val);
-    });
   }
 }
 
@@ -1325,21 +1263,10 @@ abstract class _$$MatchImplCopyWith<$Res> implements $MatchCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: '_id') String id,
-      String tournament,
-      TeamReference teamA,
-      TeamReference teamB,
-      DateTime date,
-      String time,
-      String status,
-      @JsonKey(name: "score") Map<String, dynamic> score,
-      String tossWinner,
-      @JsonKey(name: '__v') int version});
-
-  @override
-  $TeamReferenceCopyWith<$Res> get teamA;
-  @override
-  $TeamReferenceCopyWith<$Res> get teamB;
+      {@JsonKey(name: 'matchId') String id,
+      List<TeamReference> teams,
+      @JsonKey(name: "score") Map<String, int> score,
+      String status});
 }
 
 /// @nodoc
@@ -1354,57 +1281,27 @@ class __$$MatchImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? tournament = null,
-    Object? teamA = null,
-    Object? teamB = null,
-    Object? date = null,
-    Object? time = null,
-    Object? status = null,
+    Object? teams = null,
     Object? score = null,
-    Object? tossWinner = null,
-    Object? version = null,
+    Object? status = null,
   }) {
     return _then(_$MatchImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      tournament: null == tournament
-          ? _value.tournament
-          : tournament // ignore: cast_nullable_to_non_nullable
-              as String,
-      teamA: null == teamA
-          ? _value.teamA
-          : teamA // ignore: cast_nullable_to_non_nullable
-              as TeamReference,
-      teamB: null == teamB
-          ? _value.teamB
-          : teamB // ignore: cast_nullable_to_non_nullable
-              as TeamReference,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as String,
+      teams: null == teams
+          ? _value._teams
+          : teams // ignore: cast_nullable_to_non_nullable
+              as List<TeamReference>,
+      score: null == score
+          ? _value._score
+          : score // ignore: cast_nullable_to_non_nullable
+              as Map<String, int>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
-      score: null == score
-          ? _value._score
-          : score // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
-      tossWinner: null == tossWinner
-          ? _value.tossWinner
-          : tossWinner // ignore: cast_nullable_to_non_nullable
-              as String,
-      version: null == version
-          ? _value.version
-          : version // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
@@ -1413,54 +1310,42 @@ class __$$MatchImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MatchImpl implements _Match {
   const _$MatchImpl(
-      {@JsonKey(name: '_id') required this.id,
-      required this.tournament,
-      required this.teamA,
-      required this.teamB,
-      required this.date,
-      required this.time,
-      required this.status,
-      @JsonKey(name: "score") required final Map<String, dynamic> score,
-      required this.tossWinner,
-      @JsonKey(name: '__v') required this.version})
-      : _score = score;
+      {@JsonKey(name: 'matchId') required this.id,
+      required final List<TeamReference> teams,
+      @JsonKey(name: "score") required final Map<String, int> score,
+      required this.status})
+      : _teams = teams,
+        _score = score;
 
   factory _$MatchImpl.fromJson(Map<String, dynamic> json) =>
       _$$MatchImplFromJson(json);
 
   @override
-  @JsonKey(name: '_id')
+  @JsonKey(name: 'matchId')
   final String id;
+  final List<TeamReference> _teams;
   @override
-  final String tournament;
-  @override
-  final TeamReference teamA;
-  @override
-  final TeamReference teamB;
-  @override
-  final DateTime date;
-  @override
-  final String time;
-  @override
-  final String status;
-  final Map<String, dynamic> _score;
+  List<TeamReference> get teams {
+    if (_teams is EqualUnmodifiableListView) return _teams;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_teams);
+  }
+
+  final Map<String, int> _score;
   @override
   @JsonKey(name: "score")
-  Map<String, dynamic> get score {
+  Map<String, int> get score {
     if (_score is EqualUnmodifiableMapView) return _score;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_score);
   }
 
   @override
-  final String tossWinner;
-  @override
-  @JsonKey(name: '__v')
-  final int version;
+  final String status;
 
   @override
   String toString() {
-    return 'Match(id: $id, tournament: $tournament, teamA: $teamA, teamB: $teamB, date: $date, time: $time, status: $status, score: $score, tossWinner: $tossWinner, version: $version)';
+    return 'Match(id: $id, teams: $teams, score: $score, status: $status)';
   }
 
   @override
@@ -1469,17 +1354,9 @@ class _$MatchImpl implements _Match {
         (other.runtimeType == runtimeType &&
             other is _$MatchImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.tournament, tournament) ||
-                other.tournament == tournament) &&
-            (identical(other.teamA, teamA) || other.teamA == teamA) &&
-            (identical(other.teamB, teamB) || other.teamB == teamB) &&
-            (identical(other.date, date) || other.date == date) &&
-            (identical(other.time, time) || other.time == time) &&
-            (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality().equals(other._teams, _teams) &&
             const DeepCollectionEquality().equals(other._score, _score) &&
-            (identical(other.tossWinner, tossWinner) ||
-                other.tossWinner == tossWinner) &&
-            (identical(other.version, version) || other.version == version));
+            (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(ignore: true)
@@ -1487,15 +1364,9 @@ class _$MatchImpl implements _Match {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      tournament,
-      teamA,
-      teamB,
-      date,
-      time,
-      status,
+      const DeepCollectionEquality().hash(_teams),
       const DeepCollectionEquality().hash(_score),
-      tossWinner,
-      version);
+      status);
 
   @JsonKey(ignore: true)
   @override
@@ -1513,42 +1384,23 @@ class _$MatchImpl implements _Match {
 
 abstract class _Match implements Match {
   const factory _Match(
-      {@JsonKey(name: '_id') required final String id,
-      required final String tournament,
-      required final TeamReference teamA,
-      required final TeamReference teamB,
-      required final DateTime date,
-      required final String time,
-      required final String status,
-      @JsonKey(name: "score") required final Map<String, dynamic> score,
-      required final String tossWinner,
-      @JsonKey(name: '__v') required final int version}) = _$MatchImpl;
+      {@JsonKey(name: 'matchId') required final String id,
+      required final List<TeamReference> teams,
+      @JsonKey(name: "score") required final Map<String, int> score,
+      required final String status}) = _$MatchImpl;
 
   factory _Match.fromJson(Map<String, dynamic> json) = _$MatchImpl.fromJson;
 
   @override
-  @JsonKey(name: '_id')
+  @JsonKey(name: 'matchId')
   String get id;
   @override
-  String get tournament;
-  @override
-  TeamReference get teamA;
-  @override
-  TeamReference get teamB;
-  @override
-  DateTime get date;
-  @override
-  String get time;
-  @override
-  String get status;
+  List<TeamReference> get teams;
   @override
   @JsonKey(name: "score")
-  Map<String, dynamic> get score;
+  Map<String, int> get score;
   @override
-  String get tossWinner;
-  @override
-  @JsonKey(name: '__v')
-  int get version;
+  String get status;
   @override
   @JsonKey(ignore: true)
   _$$MatchImplCopyWith<_$MatchImpl> get copyWith =>
@@ -1561,7 +1413,7 @@ TeamReference _$TeamReferenceFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TeamReference {
-  @JsonKey(name: '_id')
+  @JsonKey(name: 'id')
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
@@ -1577,7 +1429,7 @@ abstract class $TeamReferenceCopyWith<$Res> {
           TeamReference value, $Res Function(TeamReference) then) =
       _$TeamReferenceCopyWithImpl<$Res, TeamReference>;
   @useResult
-  $Res call({@JsonKey(name: '_id') String id, String name});
+  $Res call({@JsonKey(name: 'id') String id, String name});
 }
 
 /// @nodoc
@@ -1617,7 +1469,7 @@ abstract class _$$TeamReferenceImplCopyWith<$Res>
       __$$TeamReferenceImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: '_id') String id, String name});
+  $Res call({@JsonKey(name: 'id') String id, String name});
 }
 
 /// @nodoc
@@ -1651,13 +1503,13 @@ class __$$TeamReferenceImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TeamReferenceImpl implements _TeamReference {
   const _$TeamReferenceImpl(
-      {@JsonKey(name: '_id') required this.id, required this.name});
+      {@JsonKey(name: 'id') required this.id, required this.name});
 
   factory _$TeamReferenceImpl.fromJson(Map<String, dynamic> json) =>
       _$$TeamReferenceImplFromJson(json);
 
   @override
-  @JsonKey(name: '_id')
+  @JsonKey(name: 'id')
   final String id;
   @override
   final String name;
@@ -1696,385 +1548,19 @@ class _$TeamReferenceImpl implements _TeamReference {
 
 abstract class _TeamReference implements TeamReference {
   const factory _TeamReference(
-      {@JsonKey(name: '_id') required final String id,
+      {@JsonKey(name: 'id') required final String id,
       required final String name}) = _$TeamReferenceImpl;
 
   factory _TeamReference.fromJson(Map<String, dynamic> json) =
       _$TeamReferenceImpl.fromJson;
 
   @override
-  @JsonKey(name: '_id')
+  @JsonKey(name: 'id')
   String get id;
   @override
   String get name;
   @override
   @JsonKey(ignore: true)
   _$$TeamReferenceImplCopyWith<_$TeamReferenceImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-MatchScore _$MatchScoreFromJson(Map<String, dynamic> json) {
-  return _MatchScore.fromJson(json);
-}
-
-/// @nodoc
-mixin _$MatchScore {
-  @JsonKey(name: '66ea8d36c27c6be554fa4fd8')
-  ScoreDetail get teamAScore => throw _privateConstructorUsedError;
-  @JsonKey(name: '66ea91a4d2791e7f240d28f5')
-  ScoreDetail get teamBScore => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $MatchScoreCopyWith<MatchScore> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $MatchScoreCopyWith<$Res> {
-  factory $MatchScoreCopyWith(
-          MatchScore value, $Res Function(MatchScore) then) =
-      _$MatchScoreCopyWithImpl<$Res, MatchScore>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: '66ea8d36c27c6be554fa4fd8') ScoreDetail teamAScore,
-      @JsonKey(name: '66ea91a4d2791e7f240d28f5') ScoreDetail teamBScore});
-
-  $ScoreDetailCopyWith<$Res> get teamAScore;
-  $ScoreDetailCopyWith<$Res> get teamBScore;
-}
-
-/// @nodoc
-class _$MatchScoreCopyWithImpl<$Res, $Val extends MatchScore>
-    implements $MatchScoreCopyWith<$Res> {
-  _$MatchScoreCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? teamAScore = null,
-    Object? teamBScore = null,
-  }) {
-    return _then(_value.copyWith(
-      teamAScore: null == teamAScore
-          ? _value.teamAScore
-          : teamAScore // ignore: cast_nullable_to_non_nullable
-              as ScoreDetail,
-      teamBScore: null == teamBScore
-          ? _value.teamBScore
-          : teamBScore // ignore: cast_nullable_to_non_nullable
-              as ScoreDetail,
-    ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ScoreDetailCopyWith<$Res> get teamAScore {
-    return $ScoreDetailCopyWith<$Res>(_value.teamAScore, (value) {
-      return _then(_value.copyWith(teamAScore: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ScoreDetailCopyWith<$Res> get teamBScore {
-    return $ScoreDetailCopyWith<$Res>(_value.teamBScore, (value) {
-      return _then(_value.copyWith(teamBScore: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$MatchScoreImplCopyWith<$Res>
-    implements $MatchScoreCopyWith<$Res> {
-  factory _$$MatchScoreImplCopyWith(
-          _$MatchScoreImpl value, $Res Function(_$MatchScoreImpl) then) =
-      __$$MatchScoreImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: '66ea8d36c27c6be554fa4fd8') ScoreDetail teamAScore,
-      @JsonKey(name: '66ea91a4d2791e7f240d28f5') ScoreDetail teamBScore});
-
-  @override
-  $ScoreDetailCopyWith<$Res> get teamAScore;
-  @override
-  $ScoreDetailCopyWith<$Res> get teamBScore;
-}
-
-/// @nodoc
-class __$$MatchScoreImplCopyWithImpl<$Res>
-    extends _$MatchScoreCopyWithImpl<$Res, _$MatchScoreImpl>
-    implements _$$MatchScoreImplCopyWith<$Res> {
-  __$$MatchScoreImplCopyWithImpl(
-      _$MatchScoreImpl _value, $Res Function(_$MatchScoreImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? teamAScore = null,
-    Object? teamBScore = null,
-  }) {
-    return _then(_$MatchScoreImpl(
-      teamAScore: null == teamAScore
-          ? _value.teamAScore
-          : teamAScore // ignore: cast_nullable_to_non_nullable
-              as ScoreDetail,
-      teamBScore: null == teamBScore
-          ? _value.teamBScore
-          : teamBScore // ignore: cast_nullable_to_non_nullable
-              as ScoreDetail,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$MatchScoreImpl implements _MatchScore {
-  const _$MatchScoreImpl(
-      {@JsonKey(name: '66ea8d36c27c6be554fa4fd8') required this.teamAScore,
-      @JsonKey(name: '66ea91a4d2791e7f240d28f5') required this.teamBScore});
-
-  factory _$MatchScoreImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MatchScoreImplFromJson(json);
-
-  @override
-  @JsonKey(name: '66ea8d36c27c6be554fa4fd8')
-  final ScoreDetail teamAScore;
-  @override
-  @JsonKey(name: '66ea91a4d2791e7f240d28f5')
-  final ScoreDetail teamBScore;
-
-  @override
-  String toString() {
-    return 'MatchScore(teamAScore: $teamAScore, teamBScore: $teamBScore)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$MatchScoreImpl &&
-            (identical(other.teamAScore, teamAScore) ||
-                other.teamAScore == teamAScore) &&
-            (identical(other.teamBScore, teamBScore) ||
-                other.teamBScore == teamBScore));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, teamAScore, teamBScore);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$MatchScoreImplCopyWith<_$MatchScoreImpl> get copyWith =>
-      __$$MatchScoreImplCopyWithImpl<_$MatchScoreImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$MatchScoreImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _MatchScore implements MatchScore {
-  const factory _MatchScore(
-      {@JsonKey(name: '66ea8d36c27c6be554fa4fd8')
-      required final ScoreDetail teamAScore,
-      @JsonKey(name: '66ea91a4d2791e7f240d28f5')
-      required final ScoreDetail teamBScore}) = _$MatchScoreImpl;
-
-  factory _MatchScore.fromJson(Map<String, dynamic> json) =
-      _$MatchScoreImpl.fromJson;
-
-  @override
-  @JsonKey(name: '66ea8d36c27c6be554fa4fd8')
-  ScoreDetail get teamAScore;
-  @override
-  @JsonKey(name: '66ea91a4d2791e7f240d28f5')
-  ScoreDetail get teamBScore;
-  @override
-  @JsonKey(ignore: true)
-  _$$MatchScoreImplCopyWith<_$MatchScoreImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-ScoreDetail _$ScoreDetailFromJson(Map<String, dynamic> json) {
-  return _ScoreDetail.fromJson(json);
-}
-
-/// @nodoc
-mixin _$ScoreDetail {
-  int get runs => throw _privateConstructorUsedError;
-  int get wickets => throw _privateConstructorUsedError;
-  int get overs => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $ScoreDetailCopyWith<ScoreDetail> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ScoreDetailCopyWith<$Res> {
-  factory $ScoreDetailCopyWith(
-          ScoreDetail value, $Res Function(ScoreDetail) then) =
-      _$ScoreDetailCopyWithImpl<$Res, ScoreDetail>;
-  @useResult
-  $Res call({int runs, int wickets, int overs});
-}
-
-/// @nodoc
-class _$ScoreDetailCopyWithImpl<$Res, $Val extends ScoreDetail>
-    implements $ScoreDetailCopyWith<$Res> {
-  _$ScoreDetailCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? runs = null,
-    Object? wickets = null,
-    Object? overs = null,
-  }) {
-    return _then(_value.copyWith(
-      runs: null == runs
-          ? _value.runs
-          : runs // ignore: cast_nullable_to_non_nullable
-              as int,
-      wickets: null == wickets
-          ? _value.wickets
-          : wickets // ignore: cast_nullable_to_non_nullable
-              as int,
-      overs: null == overs
-          ? _value.overs
-          : overs // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$ScoreDetailImplCopyWith<$Res>
-    implements $ScoreDetailCopyWith<$Res> {
-  factory _$$ScoreDetailImplCopyWith(
-          _$ScoreDetailImpl value, $Res Function(_$ScoreDetailImpl) then) =
-      __$$ScoreDetailImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int runs, int wickets, int overs});
-}
-
-/// @nodoc
-class __$$ScoreDetailImplCopyWithImpl<$Res>
-    extends _$ScoreDetailCopyWithImpl<$Res, _$ScoreDetailImpl>
-    implements _$$ScoreDetailImplCopyWith<$Res> {
-  __$$ScoreDetailImplCopyWithImpl(
-      _$ScoreDetailImpl _value, $Res Function(_$ScoreDetailImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? runs = null,
-    Object? wickets = null,
-    Object? overs = null,
-  }) {
-    return _then(_$ScoreDetailImpl(
-      runs: null == runs
-          ? _value.runs
-          : runs // ignore: cast_nullable_to_non_nullable
-              as int,
-      wickets: null == wickets
-          ? _value.wickets
-          : wickets // ignore: cast_nullable_to_non_nullable
-              as int,
-      overs: null == overs
-          ? _value.overs
-          : overs // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$ScoreDetailImpl implements _ScoreDetail {
-  const _$ScoreDetailImpl(
-      {required this.runs, required this.wickets, required this.overs});
-
-  factory _$ScoreDetailImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ScoreDetailImplFromJson(json);
-
-  @override
-  final int runs;
-  @override
-  final int wickets;
-  @override
-  final int overs;
-
-  @override
-  String toString() {
-    return 'ScoreDetail(runs: $runs, wickets: $wickets, overs: $overs)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ScoreDetailImpl &&
-            (identical(other.runs, runs) || other.runs == runs) &&
-            (identical(other.wickets, wickets) || other.wickets == wickets) &&
-            (identical(other.overs, overs) || other.overs == overs));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, runs, wickets, overs);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ScoreDetailImplCopyWith<_$ScoreDetailImpl> get copyWith =>
-      __$$ScoreDetailImplCopyWithImpl<_$ScoreDetailImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ScoreDetailImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _ScoreDetail implements ScoreDetail {
-  const factory _ScoreDetail(
-      {required final int runs,
-      required final int wickets,
-      required final int overs}) = _$ScoreDetailImpl;
-
-  factory _ScoreDetail.fromJson(Map<String, dynamic> json) =
-      _$ScoreDetailImpl.fromJson;
-
-  @override
-  int get runs;
-  @override
-  int get wickets;
-  @override
-  int get overs;
-  @override
-  @JsonKey(ignore: true)
-  _$$ScoreDetailImplCopyWith<_$ScoreDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

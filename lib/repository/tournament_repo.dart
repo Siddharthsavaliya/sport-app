@@ -16,4 +16,15 @@ class TournamentRepository {
       return getErrorMessage(e);
     }
   }
+
+  Future<ApiResult<List<Match>>> getMatches(String id) async {
+    try {
+      final response = await apiClient.get(
+        "${ApiConstants.matches}$id",
+      );
+      return ApiResult.success(buildMatchListFromResponse(response.data!));
+    } catch (e) {
+      return getErrorMessage(e);
+    }
+  }
 }

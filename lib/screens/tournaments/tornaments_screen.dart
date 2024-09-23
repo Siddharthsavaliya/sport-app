@@ -79,7 +79,7 @@ class _EventListState extends State<EventList> {
   Widget build(BuildContext context) {
     return BlocBuilder<TournamentBloc, TournamentState>(
       builder: (context, state) {
-        if (state.status.isLoaded) {
+        if (state.status.isLoaded || state.isMatch) {
           return ListView.builder(
             itemCount: state.tournamentList.length,
             itemBuilder: (context, index) {
@@ -118,7 +118,9 @@ class EventCard extends StatelessWidget {
         Navigator.push(
             context,
             CupertinoPageRoute(
-              builder: (context) => const EventDetailsPage(),
+              builder: (context) => EventDetailsPage(
+                tournament: event,
+              ),
             ));
       },
       child: Card(

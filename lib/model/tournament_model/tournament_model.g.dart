@@ -104,68 +104,30 @@ Map<String, dynamic> _$$PlayerImplToJson(_$PlayerImpl instance) =>
     };
 
 _$MatchImpl _$$MatchImplFromJson(Map<String, dynamic> json) => _$MatchImpl(
-      id: json['_id'] as String,
-      tournament: json['tournament'] as String,
-      teamA: TeamReference.fromJson(json['teamA'] as Map<String, dynamic>),
-      teamB: TeamReference.fromJson(json['teamB'] as Map<String, dynamic>),
-      date: DateTime.parse(json['date'] as String),
-      time: json['time'] as String,
+      id: json['matchId'] as String,
+      teams: (json['teams'] as List<dynamic>)
+          .map((e) => TeamReference.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      score: Map<String, int>.from(json['score'] as Map),
       status: json['status'] as String,
-      score: json['score'] as Map<String, dynamic>,
-      tossWinner: json['tossWinner'] as String,
-      version: (json['__v'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$MatchImplToJson(_$MatchImpl instance) =>
     <String, dynamic>{
-      '_id': instance.id,
-      'tournament': instance.tournament,
-      'teamA': instance.teamA,
-      'teamB': instance.teamB,
-      'date': instance.date.toIso8601String(),
-      'time': instance.time,
-      'status': instance.status,
+      'matchId': instance.id,
+      'teams': instance.teams,
       'score': instance.score,
-      'tossWinner': instance.tossWinner,
-      '__v': instance.version,
+      'status': instance.status,
     };
 
 _$TeamReferenceImpl _$$TeamReferenceImplFromJson(Map<String, dynamic> json) =>
     _$TeamReferenceImpl(
-      id: json['_id'] as String,
+      id: json['id'] as String,
       name: json['name'] as String,
     );
 
 Map<String, dynamic> _$$TeamReferenceImplToJson(_$TeamReferenceImpl instance) =>
     <String, dynamic>{
-      '_id': instance.id,
+      'id': instance.id,
       'name': instance.name,
-    };
-
-_$MatchScoreImpl _$$MatchScoreImplFromJson(Map<String, dynamic> json) =>
-    _$MatchScoreImpl(
-      teamAScore: ScoreDetail.fromJson(
-          json['66ea8d36c27c6be554fa4fd8'] as Map<String, dynamic>),
-      teamBScore: ScoreDetail.fromJson(
-          json['66ea91a4d2791e7f240d28f5'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$$MatchScoreImplToJson(_$MatchScoreImpl instance) =>
-    <String, dynamic>{
-      '66ea8d36c27c6be554fa4fd8': instance.teamAScore,
-      '66ea91a4d2791e7f240d28f5': instance.teamBScore,
-    };
-
-_$ScoreDetailImpl _$$ScoreDetailImplFromJson(Map<String, dynamic> json) =>
-    _$ScoreDetailImpl(
-      runs: (json['runs'] as num).toInt(),
-      wickets: (json['wickets'] as num).toInt(),
-      overs: (json['overs'] as num).toInt(),
-    );
-
-Map<String, dynamic> _$$ScoreDetailImplToJson(_$ScoreDetailImpl instance) =>
-    <String, dynamic>{
-      'runs': instance.runs,
-      'wickets': instance.wickets,
-      'overs': instance.overs,
     };

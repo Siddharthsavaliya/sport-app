@@ -12,15 +12,16 @@ class TournamentBloc extends Bloc<TournamentEvent, TournamentState> {
     on<GetTournamentRequest>(
       (event, emit) => _getRequest(event, emit),
     );
+    on<GetMatchesRequest>(
+      (event, emit) => _getMatchesRequest(event, emit),
+    );
   }
   final TournamentRepository tournamentRepository = TournamentRepository();
   Future<void> _getRequest(
     GetTournamentRequest event,
     Emitter<TournamentState> emit,
   ) async {
-    emit(state.copyWith(
-      status: Status.inProgress,
-    ));
+    emit(state.copyWith(status: Status.inProgress, isMatch: false));
     try {
       final apiResult = await tournamentRepository.getTournament(event.type);
       apiResult.when(
@@ -28,6 +29,29 @@ class TournamentBloc extends Bloc<TournamentEvent, TournamentState> {
           emit(state.copyWith(
             status: Status.loaded,
             tournamentList: data,
+          ));
+        },
+        failure: (error) {
+          emit(state.copyWith(status: Status.failed, message: error));
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(status: Status.failed, message: e.toString()));
+    }
+  }
+
+  Future<void> _getMatchesRequest(
+    GetMatchesRequest event,
+    Emitter<TournamentState> emit,
+  ) async {
+    emit(state.copyWith(status: Status.inProgress, isMatch: true));
+    try {
+      final apiResult = await tournamentRepository.getMatches(event.id);
+      apiResult.when(
+        success: (data) {
+          emit(state.copyWith(
+            status: Status.loaded,
+            matchList: data,
           ));
         },
         failure: (error) {

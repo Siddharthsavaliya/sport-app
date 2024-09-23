@@ -13,3 +13,10 @@ class GetTournamentRequest extends TournamentEvent {
   @override
   List<Object> get props => [];
 }
+
+class GetMatchesRequest extends TournamentEvent {
+  GetMatchesRequest(this.id);
+  final String id;
+  @override
+  List<Object> get props => [];
+}
