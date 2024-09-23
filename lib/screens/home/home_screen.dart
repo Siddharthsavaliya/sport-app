@@ -18,6 +18,7 @@ import 'package:sport_app/screens/grounds_screen/all_ground_banners.dart';
 import 'package:sport_app/screens/location_screens/location_access_screen.dart';
 import 'package:sport_app/screens/membership/membership.dart';
 import 'package:sport_app/screens/on_boarding/splash_screen.dart';
+import 'package:sport_app/screens/tournaments/tornaments_screen.dart';
 import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/utils/status_dialog.dart';
 import 'package:sport_app/widget/shimmer_widget.dart';
@@ -417,8 +418,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 addVerticalSpacing(0.02),
                 GestureDetector(
                   onTap: () {
-                    showScafoldMessage(
-                        message: "Coming soon!", context: context);
+                    // showScafoldMessage(
+                    //     message: "Coming soon!", context: context);
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => const TournamentScreen(),
+                        ));
                   },
                   child: Container(
                     width: double.infinity,
