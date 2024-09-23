@@ -1,9 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sport_app/bloc/tournament_bloc/tournament_bloc.dart';
+import 'package:sport_app/model/status.dart';
+import 'package:sport_app/model/tournament_model/tournament_model.dart';
+import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
 import 'package:sport_app/screens/tournaments/event_detail_screen.dart';
+import 'package:sport_app/utils/helper.dart';
+import 'package:sport_app/widget/empty_place_holder.dart';
 
 class TournamentScreen extends StatelessWidget {
   const TournamentScreen({super.key});
@@ -34,11 +41,17 @@ class TournamentScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
-            EventList(events: pastEvents),
-            EventList(events: liveEvents),
-            EventList(events: upcomingEvents),
+            EventList(
+              type: "past",
+            ),
+            EventList(
+              type: "live",
+            ),
+            EventList(
+              type: "upcoming",
+            ),
           ],
         ),
       ),
@@ -46,24 +59,55 @@ class TournamentScreen extends StatelessWidget {
   }
 }
 
-class EventList extends StatelessWidget {
-  final List<Event> events;
+class EventList extends StatefulWidget {
+  final String type;
+  const EventList({super.key, required this.type});
 
-  const EventList({super.key, required this.events});
+  @override
+  State<EventList> createState() => _EventListState();
+}
+
+class _EventListState extends State<EventList> {
+  @override
+  void initState() {
+    BlocProvider.of<TournamentBloc>(context)
+        .add(GetTournamentRequest(widget.type));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: events.length,
-      itemBuilder: (context, index) {
-        return EventCard(event: events[index]);
+    return BlocBuilder<TournamentBloc, TournamentState>(
+      builder: (context, state) {
+        if (state.status.isLoaded) {
+          return ListView.builder(
+            itemCount: state.tournamentList.length,
+            itemBuilder: (context, index) {
+              return EventCard(event: state.tournamentList[index]);
+            },
+          );
+        }
+        if (state.status.isInProgress) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppColors.primaryColor,
+            ),
+          );
+        }
+        if (state.status.isFailed) {
+          return const EmptyPlaceHolder(
+              title: "Opps",
+              subTitle: "Something wen wrong",
+              imagePath: AppAssets.error);
+        }
+        return SizedBox.fromSize();
       },
     );
   }
 }
 
 class EventCard extends StatelessWidget {
-  final Event event;
+  final Tournament event;
 
   const EventCard({super.key, required this.event});
 
@@ -93,22 +137,9 @@ class EventCard extends StatelessWidget {
                       color: Colors.grey,
                       borderRadius:
                           BorderRadius.vertical(top: Radius.circular(5))),
-                  child: Image.asset(
-                    'assets/images/ground.png',
+                  child: Image.network(
+                    event.image,
                     fit: BoxFit.fill,
-                  ),
-                ),
-                Positioned(
-                  right: 10,
-                  top: 10,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    color: Colors.black.withOpacity(0.7),
-                    child: Text(
-                      event.status,
-                      style: const TextStyle(color: Colors.white),
-                    ),
                   ),
                 ),
               ],
@@ -119,14 +150,15 @@ class EventCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    event.title,
+                    event.name,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   const SizedBox(height: 5),
-                  Text('Date: ${event.dateRange}'),
+                  Text(
+                      'Date: ${formatDDMMYYYDate(event.startDate)} to ${formatDDMMYYYDate(event.endDate)}'),
                   const SizedBox(height: 5),
-                  Text('Location: ${event.location}'),
+                  Text('Location: ${event.groundAddress.city}'),
                 ],
               ),
             ),

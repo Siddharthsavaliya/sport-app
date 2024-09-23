@@ -30,6 +30,12 @@ addHorizontalSpacing(double width) {
   );
 }
 
+String formatDDMMYYYDate(DateTime date) {
+  // DateTime dateTime = DateTime.parse(dateString);
+  String formattedDate = DateFormat('dd MMM, yyyy').format(date);
+  return formattedDate;
+}
+
 Future<void> launchUrls(context, String url) async {
   if (!await launchUrl(Uri.parse(url), mode: LaunchMode.platformDefault)) {
     showErrorDialogue(context, "Somthing failed to launch");

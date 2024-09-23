@@ -13,6 +13,7 @@ import 'package:sport_app/bloc/common_bloc/common_bloc.dart';
 import 'package:sport_app/bloc/ground_bloc/ground_bloc.dart';
 import 'package:sport_app/bloc/location_bloc/location_bloc.dart';
 import 'package:sport_app/bloc/membership_bloc/membership_bloc.dart';
+import 'package:sport_app/bloc/tournament_bloc/tournament_bloc.dart';
 import 'package:sport_app/bloc/user_bloc/user_bloc.dart';
 import 'package:sport_app/bloc/wishlist_bloc/wishlist_bloc.dart';
 import 'package:sport_app/firebase_options.dart';
@@ -78,10 +79,13 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => BookingHistoryBloc(),
         ),
+        BlocProvider(
+          create: (context) => TournamentBloc(),
+        ),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: "IT'S MY COURT",
+          title: "ITS MY COURT",
           theme: ThemeData(
             splashColor: Colors.transparent,
             scaffoldBackgroundColor: AppColors.white,

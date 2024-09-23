@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
+import 'package:sport_app/screens/tournaments/player_detail.dart';
 import 'package:sport_app/utils/helper.dart';
 
 class EventDetailsPage extends StatelessWidget {
@@ -111,7 +112,7 @@ class MatchListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const matchCount =
-        0; // Replace this with actual logic to determine match count
+        3; // Replace this with actual logic to determine match count
 
     if (matchCount == 0) {
       // Handle the empty list case
@@ -291,34 +292,45 @@ class SportScoreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      margin: const EdgeInsets.all(10),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Team A vs Team B',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+    return GestureDetector(
+      onTap: () {
+        // Navigate to the PlayerListPage when the card is tapped
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlayerListPage(matchStatus: matchStatus),
+          ),
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        margin: const EdgeInsets.all(10),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Team A vs Team B',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            const Text('Match Date: 25 Sep 2024'),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Icon(sportIcon, color: AppColors.primaryColor),
-                const SizedBox(width: 8),
-                Text(score),
-              ],
-            ),
-          ],
+              const SizedBox(height: 8),
+              const Text('Match Date: 25 Sep 2024'),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Icon(sportIcon, color: AppColors.primaryColor),
+                  const SizedBox(width: 8),
+                  Text(score),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
