@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:sport_app/bloc/tournament_bloc/tournament_bloc.dart';
 import 'package:sport_app/model/status.dart';
 import 'package:sport_app/model/tournament_model/tournament_model.dart';
+import 'package:sport_app/model/tournament_detail_model/tournament_detail_model.dart';
 import 'package:sport_app/res/app_assets.dart';
 import 'package:sport_app/res/app_colors.dart';
 import 'package:sport_app/res/app_text_style.dart';
@@ -12,7 +14,6 @@ import 'package:sport_app/utils/helper.dart';
 import 'package:sport_app/widget/empty_place_holder.dart';
 
 class EventDetailsPage extends StatelessWidget {
-  final String selectedSport = 'Basketball'; // Example selected sport
   final Tournament tournament;
   const EventDetailsPage({super.key, required this.tournament});
 
@@ -21,6 +22,7 @@ class EventDetailsPage extends StatelessWidget {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        backgroundColor: Colors.grey.shade100,
         appBar: AppBar(
           title: Text(
             'Matches',
@@ -53,10 +55,18 @@ class EventDetailsPage extends StatelessWidget {
               color: Colors.black,
               child: Row(
                 children: [
-                  Image.network(
-                    tournament.image, // Event logo
+                  Container(
+                    clipBehavior: Clip.hardEdge,
                     height: 60,
                     width: 60,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: AppColors.gray,
+                    ),
+                    child: Image.network(
+                      tournament.image, // Event logo
+                      fit: BoxFit.fill,
+                    ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -93,16 +103,16 @@ class EventDetailsPage extends StatelessWidget {
               child: TabBarView(
                 children: [
                   MatchListView(
-                    selectedSport: selectedSport,
+                    selectedSport: tournament.sport,
                     matchStatus: 'Live',
                     id: tournament.id,
                   ),
                   MatchListView(
-                      selectedSport: selectedSport,
+                      selectedSport: tournament.sport,
                       matchStatus: 'Upcoming',
                       id: tournament.id),
                   MatchListView(
-                      selectedSport: selectedSport,
+                      selectedSport: tournament.sport,
                       matchStatus: 'Past',
                       id: tournament.id),
                 ],
@@ -132,7 +142,8 @@ class MatchListView extends StatefulWidget {
 class _MatchListViewState extends State<MatchListView> {
   @override
   void initState() {
-    BlocProvider.of<TournamentBloc>(context).add(GetMatchesRequest(widget.id));
+    BlocProvider.of<TournamentBloc>(context)
+        .add(GetMatchesRequest(widget.id, widget.matchStatus.toLowerCase()));
     super.initState();
   }
 
@@ -143,8 +154,8 @@ class _MatchListViewState extends State<MatchListView> {
 
     return BlocBuilder<TournamentBloc, TournamentState>(
       builder: (context, state) {
-        if (state.status.isLoaded) {
-          return state.matchList.isEmpty
+        if (state.status.isLoaded && state.isMatch || state.isTeam) {
+          return state.tournamentDetailModel!.matches.isEmpty
               ? Padding(
                   padding: EdgeInsets.symmetric(horizontal: 0.01.sw),
                   child: Column(
@@ -168,29 +179,37 @@ class _MatchListViewState extends State<MatchListView> {
                   ),
                 )
               : ListView.builder(
-                  itemCount: matchCount, // Example data count
+                  itemCount: state.tournamentDetailModel!.matches
+                      .length, // Example data count
                   itemBuilder: (context, index) {
                     // Add conditions for each sport type
                     switch (widget.selectedSport) {
                       case 'Cricket':
                         return CricketScoreCard(
-                            matchStatus: widget.matchStatus);
+                            match: state.tournamentDetailModel!.matches[index]);
                       case 'Football':
                         return FootballScoreCard(
+                            match: state.tournamentDetailModel!.matches[index],
                             matchStatus: widget.matchStatus);
                       case 'Volley Ball':
                         return VolleyBallScoreCard(
+                            match: state.tournamentDetailModel!.matches[index],
                             matchStatus: widget.matchStatus);
                       case 'Basketball':
                         return BasketballScoreCard(
+                            match: state.tournamentDetailModel!.matches[index],
                             matchStatus: widget.matchStatus);
                       case 'Tennis':
-                        return TennisScoreCard(matchStatus: widget.matchStatus);
+                        return TennisScoreCard(
+                            match: state.tournamentDetailModel!.matches[index],
+                            matchStatus: widget.matchStatus);
                       case 'Badminton':
                         return BadmintonScoreCard(
+                            match: state.tournamentDetailModel!.matches[index],
                             matchStatus: widget.matchStatus);
                       default:
                         return DefaultScoreCard(
+                            match: state.tournamentDetailModel!.matches[index],
                             matchStatus: widget.matchStatus);
                     }
                   },
@@ -217,16 +236,149 @@ class _MatchListViewState extends State<MatchListView> {
 
 // Cricket Score Card
 class CricketScoreCard extends StatelessWidget {
-  final String matchStatus;
+  final Match match;
 
-  const CricketScoreCard({super.key, required this.matchStatus});
+  const CricketScoreCard({super.key, required this.match});
 
   @override
   Widget build(BuildContext context) {
-    return SportScoreCard(
-      matchStatus: matchStatus,
-      sportIcon: Icons.sports_cricket,
-      score: '120/8 in 20 Overs',
+    final teamA = match.teams[0].name;
+    final teamB = match.teams[1].name;
+    final matchDate = DateFormat('dd MMM yyyy').format(match.date!);
+    final matchTime = match.time; // Assuming time is available in match.time
+    final isUpcoming = match.calculatedStatus == "upcoming";
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlayerListPage(
+              id: match.matchId!,
+            ),
+          ),
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        elevation: 5,
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Match Teams Row (with overflow handling)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (!isUpcoming) ...[
+                    Expanded(
+                      child: Text(
+                        '$teamA vs $teamB',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.black87,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1, // To ensure no overflow issues
+                      ),
+                    ),
+                  ],
+                  if (isUpcoming) ...[
+                    Expanded(
+                      child: Text(
+                        '$teamA\nvs\n$teamB',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+                  ]
+                ],
+              ),
+              SizedBox(height: isUpcoming ? 12 : 8),
+
+              // Match Date and Time (for upcoming matches)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Match Date: $matchDate',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  if (isUpcoming)
+                    Text(
+                      'Time: $matchTime',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                      ),
+                    ),
+                ],
+              ),
+              if (!isUpcoming) ...[
+                const SizedBox(height: 12),
+
+                // Display Team A Score
+                Text(
+                  '$teamA: ${match.score[0]["runs"]}/${match.score[0]["wickets"]} (${match.score[0]["overs"]} Ov)',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 8),
+
+                // Display Team B Score
+                Text(
+                  '$teamB: ${match.score[1]["runs"]}/${match.score[1]["wickets"]} (${match.score[1]["overs"]} Ov)',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 12),
+
+                // Display Toss Winner
+                if (match.tossWinner != null)
+                  Text(
+                    'Toss won by: ${match.tossWinner}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black54,
+                    ),
+                  ),
+                if (match.winner != null) ...[
+                  const SizedBox(height: 10),
+
+                  // Ongoing Match Indicator
+                  Text(
+                    match.winner ?? "",
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
+                  ),
+                ]
+              ]
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -234,15 +386,15 @@ class CricketScoreCard extends StatelessWidget {
 // Football Score Card
 class FootballScoreCard extends StatelessWidget {
   final String matchStatus;
-
-  const FootballScoreCard({super.key, required this.matchStatus});
-
+  final Match match;
+  const FootballScoreCard(
+      {super.key, required this.matchStatus, required this.match});
   @override
   Widget build(BuildContext context) {
     return SportScoreCard(
-      matchStatus: matchStatus,
       sportIcon: Icons.sports_soccer,
       score: '2 - 1',
+      match: match,
     );
   }
 }
@@ -251,14 +403,15 @@ class FootballScoreCard extends StatelessWidget {
 class VolleyBallScoreCard extends StatelessWidget {
   final String matchStatus;
 
-  const VolleyBallScoreCard({super.key, required this.matchStatus});
-
+  const VolleyBallScoreCard(
+      {super.key, required this.matchStatus, required this.match});
+  final Match match;
   @override
   Widget build(BuildContext context) {
     return SportScoreCard(
-      matchStatus: matchStatus,
       sportIcon: Icons.sports_volleyball,
       score: '3 Sets - 1 Set',
+      match: match,
     );
   }
 }
@@ -266,15 +419,15 @@ class VolleyBallScoreCard extends StatelessWidget {
 // Basketball Score Card
 class BasketballScoreCard extends StatelessWidget {
   final String matchStatus;
-
-  const BasketballScoreCard({super.key, required this.matchStatus});
-
+  final Match match;
+  const BasketballScoreCard(
+      {super.key, required this.matchStatus, required this.match});
   @override
   Widget build(BuildContext context) {
     return SportScoreCard(
-      matchStatus: matchStatus,
       sportIcon: Icons.sports_basketball,
       score: '89 - 78',
+      match: match,
     );
   }
 }
@@ -282,15 +435,16 @@ class BasketballScoreCard extends StatelessWidget {
 // Tennis Score Card
 class TennisScoreCard extends StatelessWidget {
   final String matchStatus;
-
-  const TennisScoreCard({super.key, required this.matchStatus});
+  final Match match;
+  const TennisScoreCard(
+      {super.key, required this.matchStatus, required this.match});
 
   @override
   Widget build(BuildContext context) {
     return SportScoreCard(
-      matchStatus: matchStatus,
       sportIcon: Icons.sports_tennis,
       score: '3 Sets - 2 Sets',
+      match: match,
     );
   }
 }
@@ -298,15 +452,16 @@ class TennisScoreCard extends StatelessWidget {
 // Badminton Score Card
 class BadmintonScoreCard extends StatelessWidget {
   final String matchStatus;
-
-  const BadmintonScoreCard({super.key, required this.matchStatus});
+  final Match match;
+  const BadmintonScoreCard(
+      {super.key, required this.matchStatus, required this.match});
 
   @override
   Widget build(BuildContext context) {
     return SportScoreCard(
-      matchStatus: matchStatus,
       sportIcon: Icons.branding_watermark,
       score: '2 Games - 1 Game',
+      match: match,
     );
   }
 }
@@ -314,41 +469,43 @@ class BadmintonScoreCard extends StatelessWidget {
 // Default Score Card
 class DefaultScoreCard extends StatelessWidget {
   final String matchStatus;
-
-  const DefaultScoreCard({super.key, required this.matchStatus});
+  final Match match;
+  const DefaultScoreCard(
+      {super.key, required this.matchStatus, required this.match});
 
   @override
   Widget build(BuildContext context) {
     return SportScoreCard(
-      matchStatus: matchStatus,
       sportIcon: Icons.sports,
       score: 'Match Score',
+      match: match,
     );
   }
 }
 
 // Common Widget for All Sports Score Cards
 class SportScoreCard extends StatelessWidget {
-  final String matchStatus;
   final IconData sportIcon;
   final String score;
-
+  final Match match;
   const SportScoreCard({
     super.key,
-    required this.matchStatus,
     required this.sportIcon,
     required this.score,
+    required this.match,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigate to the PlayerListPage when the card is tapped
+        // // Navigate to the PlayerListPage when the card is tapped
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PlayerListPage(matchStatus: matchStatus),
+            builder: (context) => PlayerListPage(
+              id: match.matchId!,
+            ),
           ),
         );
       },

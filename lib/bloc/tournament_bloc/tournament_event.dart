@@ -14,9 +14,17 @@ class GetTournamentRequest extends TournamentEvent {
   List<Object> get props => [];
 }
 
-class GetMatchesRequest extends TournamentEvent {
-  GetMatchesRequest(this.id);
+class GetTeamRequest extends TournamentEvent {
+  GetTeamRequest(this.id);
   final String id;
+  @override
+  List<Object> get props => [];
+}
+
+class GetMatchesRequest extends TournamentEvent {
+  GetMatchesRequest(this.id, this.type);
+  final String id;
+  final String type;
   @override
   List<Object> get props => [];
 }

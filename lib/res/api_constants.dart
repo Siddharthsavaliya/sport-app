@@ -20,7 +20,8 @@ class ApiConstants {
   static const String updateUser = "/update";
   static const String subscription = "/subscription/getPlan";
   static const String tournament = "/tournament";
-  static const String matches = "/tournament/scores/";
+  static const String matches = "/tournament/";
+  static const String teams = "/tournament/match/teams/";
   static const String addWishlist = "/wishlist/add";
   static const String getWishlist = "/wishlist/mywishlist";
   static const String myPurchases = "/history/mypurchases";

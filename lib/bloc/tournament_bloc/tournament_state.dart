@@ -4,23 +4,29 @@ class TournamentState extends Equatable {
   const TournamentState({
     this.message = " ",
     this.tournamentList = const [],
-    this.matchList = const [],
+    this.teamList = const [],
+    this.tournamentDetailModel,
     this.status = Status.initial,
     this.isMatch = false,
+    this.isTeam = false,
   });
   final String message;
   final Status status;
   final bool isMatch;
+  final bool isTeam;
   final List<Tournament> tournamentList;
-  final List<Match> matchList;
+  final List<Team> teamList;
+  final TournamentDetailModel? tournamentDetailModel;
 
   @override
   List<Object?> get props {
     return [
       status,
       message,
+      isTeam,
       isMatch,
-      matchList,
+      teamList,
+      tournamentDetailModel,
       tournamentList,
     ];
   }
@@ -29,13 +35,18 @@ class TournamentState extends Equatable {
     String? message,
     Status? status,
     List<Tournament>? tournamentList,
-    List<Match>? matchList,
+    TournamentDetailModel? tournamentDetailModel,
     bool? isMatch,
+    bool? isTeam,
+    List<Team>? teamList,
   }) {
     return TournamentState(
       message: message ?? this.message,
+      isTeam: isTeam ?? this.isTeam,
       status: status ?? this.status,
-      matchList: matchList ?? this.matchList,
+      teamList: teamList ?? this.teamList,
+      tournamentDetailModel:
+          tournamentDetailModel ?? this.tournamentDetailModel,
       isMatch: isMatch ?? this.isMatch,
       tournamentList: tournamentList ?? this.tournamentList,
     );

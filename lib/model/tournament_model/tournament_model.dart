@@ -41,74 +41,12 @@ class GroundAddress with _$GroundAddress {
       _$GroundAddressFromJson(json);
 }
 
-@freezed
-class Team with _$Team {
-  const factory Team({
-    @JsonKey(name: '_id') required String id,
-    required String name,
-    required String tournament,
-    required List<Player> players,
-    @JsonKey(name: '__v') required int version,
-  }) = _Team;
-
-  factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
-}
-
-@freezed
-class Player with _$Player {
-  const factory Player({
-    @JsonKey(name: '_id') required String id,
-    required String image,
-    required String name,
-    required String phoneNumber,
-    required String email,
-    required int age,
-    required String gender,
-    required String note,
-  }) = _Player;
-
-  factory Player.fromJson(Map<String, dynamic> json) => _$PlayerFromJson(json);
-}
-
-@freezed
-class Match with _$Match {
-  const factory Match({
-    @JsonKey(name: 'matchId') required String id,
-    required List<TeamReference> teams,
-    @JsonKey(name: "score") required Map<String, int> score,
-    required String status,
-  }) = _Match;
-
-  factory Match.fromJson(Map<String, dynamic> json) => _$MatchFromJson(json);
-}
-
-@freezed
-class TeamReference with _$TeamReference {
-  const factory TeamReference({
-    @JsonKey(name: 'id') required String id,
-    required String name,
-  }) = _TeamReference;
-
-  factory TeamReference.fromJson(Map<String, dynamic> json) =>
-      _$TeamReferenceFromJson(json);
-}
-
 List<Tournament> buildTournamentListFromResponse(
   List<dynamic> response,
 ) {
   return (response)
       .map(
         (json) => Tournament.fromJson(json as Map<String, dynamic>),
-      )
-      .toList();
-}
-
-List<Match> buildMatchListFromResponse(
-  List<dynamic> response,
-) {
-  return (response)
-      .map(
-        (json) => Match.fromJson(json as Map<String, dynamic>),
       )
       .toList();
 }

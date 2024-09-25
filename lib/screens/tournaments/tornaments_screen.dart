@@ -79,7 +79,7 @@ class _EventListState extends State<EventList> {
   Widget build(BuildContext context) {
     return BlocBuilder<TournamentBloc, TournamentState>(
       builder: (context, state) {
-        if (state.status.isLoaded || state.isMatch) {
+        if (state.status.isLoaded || state.isMatch || state.isTeam) {
           return ListView.builder(
             itemCount: state.tournamentList.length,
             itemBuilder: (context, index) {
