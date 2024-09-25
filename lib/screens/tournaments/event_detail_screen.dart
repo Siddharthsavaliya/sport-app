@@ -385,33 +385,302 @@ class CricketScoreCard extends StatelessWidget {
 
 // Football Score Card
 class FootballScoreCard extends StatelessWidget {
-  final String matchStatus;
   final Match match;
+  final String matchStatus;
   const FootballScoreCard(
-      {super.key, required this.matchStatus, required this.match});
+      {super.key, required this.match, required this.matchStatus});
+
   @override
   Widget build(BuildContext context) {
-    return SportScoreCard(
-      sportIcon: Icons.sports_soccer,
-      score: '2 - 1',
-      match: match,
+    final teamA = match.teams[0].name;
+    final teamB = match.teams[1].name;
+    final matchDate = DateFormat('dd MMM yyyy').format(match.date!);
+    final matchTime = match.time;
+    final isLive = matchStatus.toLowerCase() == "live";
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlayerListPage(id: match.matchId!),
+          ),
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 5,
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Match Teams
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      '$teamA vs $teamB',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black87,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                  if (isLive)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Text(
+                        'LIVE',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 8),
+
+              // Match Date and Time
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Match Date: $matchDate',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  if (isLive)
+                    Text(
+                      'Time: $matchTime',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 12),
+
+              // Display Score
+              if (isLive) ...[
+                Text(
+                  '$teamA: ${match.score[0]["goals"]} goals',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  '$teamB: ${match.score[1]["goals"]} goals',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+              ],
+
+              if (match.tossWinner != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  'Toss won by: ${match.tossWinner}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black54,
+                  ),
+                ),
+              ],
+              // Winner (if available)
+              if (match.winner != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  'Winner: ${match.winner}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green,
+                  ),
+                ),
+              ]
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
 
 // VolleyBall Score Card
 class VolleyBallScoreCard extends StatelessWidget {
+  final Match match;
   final String matchStatus;
 
-  const VolleyBallScoreCard(
-      {super.key, required this.matchStatus, required this.match});
-  final Match match;
+  const VolleyBallScoreCard({
+    super.key,
+    required this.matchStatus,
+    required this.match,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return SportScoreCard(
-      sportIcon: Icons.sports_volleyball,
-      score: '3 Sets - 1 Set',
-      match: match,
+    final teamA = match.teams[0].name;
+    final teamB = match.teams[1].name;
+    final matchDate = DateFormat('dd MMM yyyy').format(match.date!);
+    final matchTime = match.time;
+    final isLive = matchStatus.toLowerCase() == "live";
+
+    // Extracting set scores
+    final setScores = match.score.map((set) {
+      final teamAPoints = set["teams"][0]["point"];
+      final teamBPoints = set["teams"][1]["point"];
+      return '${set["set"]}: $teamA $teamAPoints - $teamB $teamBPoints';
+    }).toList();
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlayerListPage(id: match.matchId!),
+          ),
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 5,
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Match Teams and Live Badge
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      '$teamA vs $teamB',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black87,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                  if (isLive)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Text(
+                        'LIVE',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 8),
+
+              // Match Date and Time
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Match Date: $matchDate',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  if (!isLive)
+                    Text(
+                      'Time: $matchTime',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 12),
+
+              // Display Set Scores
+              if (isLive) ...[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: setScores.map((setScore) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: Text(
+                        setScore,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+
+              const SizedBox(height: 12),
+
+              // Toss Winner (if available)
+              if (match.tossWinner != null)
+                Text(
+                  'Toss won by: ${match.tossWinner}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black54,
+                  ),
+                ),
+              if (match.winner != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  '${match.winner}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green,
+                  ),
+                ),
+              ]
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
