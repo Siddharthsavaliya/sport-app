@@ -29,7 +29,7 @@ class TournamentDetailModel with _$TournamentDetailModel {
 class GroundAddress with _$GroundAddress {
   const factory GroundAddress({
     required String address1,
-    required String address2,
+    @Default("") String? address2,
     required String city,
     required String state,
     required String pincode,

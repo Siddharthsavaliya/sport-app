@@ -52,7 +52,7 @@ Map<String, dynamic> _$$TournamentDetailModelImplToJson(
 _$GroundAddressImpl _$$GroundAddressImplFromJson(Map<String, dynamic> json) =>
     _$GroundAddressImpl(
       address1: json['address1'] as String,
-      address2: json['address2'] as String,
+      address2: json['address2'] as String? ?? "",
       city: json['city'] as String,
       state: json['state'] as String,
       pincode: json['pincode'] as String,

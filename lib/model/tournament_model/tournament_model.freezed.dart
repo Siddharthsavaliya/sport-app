@@ -30,6 +30,7 @@ mixin _$Tournament {
   DateTime get startDate => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
   String get sport => throw _privateConstructorUsedError;
+  String? get logo => throw _privateConstructorUsedError;
   int get playersPerTeam => throw _privateConstructorUsedError;
   GroundAddress get groundAddress => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
@@ -56,6 +57,7 @@ abstract class $TournamentCopyWith<$Res> {
       DateTime startDate,
       DateTime endDate,
       String sport,
+      String? logo,
       int playersPerTeam,
       GroundAddress groundAddress,
       String status});
@@ -85,6 +87,7 @@ class _$TournamentCopyWithImpl<$Res, $Val extends Tournament>
     Object? startDate = null,
     Object? endDate = null,
     Object? sport = null,
+    Object? logo = freezed,
     Object? playersPerTeam = null,
     Object? groundAddress = null,
     Object? status = null,
@@ -126,6 +129,10 @@ class _$TournamentCopyWithImpl<$Res, $Val extends Tournament>
           ? _value.sport
           : sport // ignore: cast_nullable_to_non_nullable
               as String,
+      logo: freezed == logo
+          ? _value.logo
+          : logo // ignore: cast_nullable_to_non_nullable
+              as String?,
       playersPerTeam: null == playersPerTeam
           ? _value.playersPerTeam
           : playersPerTeam // ignore: cast_nullable_to_non_nullable
@@ -168,6 +175,7 @@ abstract class _$$TournamentImplCopyWith<$Res>
       DateTime startDate,
       DateTime endDate,
       String sport,
+      String? logo,
       int playersPerTeam,
       GroundAddress groundAddress,
       String status});
@@ -196,6 +204,7 @@ class __$$TournamentImplCopyWithImpl<$Res>
     Object? startDate = null,
     Object? endDate = null,
     Object? sport = null,
+    Object? logo = freezed,
     Object? playersPerTeam = null,
     Object? groundAddress = null,
     Object? status = null,
@@ -237,6 +246,10 @@ class __$$TournamentImplCopyWithImpl<$Res>
           ? _value.sport
           : sport // ignore: cast_nullable_to_non_nullable
               as String,
+      logo: freezed == logo
+          ? _value.logo
+          : logo // ignore: cast_nullable_to_non_nullable
+              as String?,
       playersPerTeam: null == playersPerTeam
           ? _value.playersPerTeam
           : playersPerTeam // ignore: cast_nullable_to_non_nullable
@@ -266,6 +279,7 @@ class _$TournamentImpl implements _Tournament {
       required this.startDate,
       required this.endDate,
       required this.sport,
+      this.logo,
       required this.playersPerTeam,
       required this.groundAddress,
       required this.status});
@@ -293,6 +307,8 @@ class _$TournamentImpl implements _Tournament {
   @override
   final String sport;
   @override
+  final String? logo;
+  @override
   final int playersPerTeam;
   @override
   final GroundAddress groundAddress;
@@ -301,7 +317,7 @@ class _$TournamentImpl implements _Tournament {
 
   @override
   String toString() {
-    return 'Tournament(id: $id, name: $name, image: $image, shortDescription: $shortDescription, longDescription: $longDescription, numberOfTeams: $numberOfTeams, startDate: $startDate, endDate: $endDate, sport: $sport, playersPerTeam: $playersPerTeam, groundAddress: $groundAddress, status: $status)';
+    return 'Tournament(id: $id, name: $name, image: $image, shortDescription: $shortDescription, longDescription: $longDescription, numberOfTeams: $numberOfTeams, startDate: $startDate, endDate: $endDate, sport: $sport, logo: $logo, playersPerTeam: $playersPerTeam, groundAddress: $groundAddress, status: $status)';
   }
 
   @override
@@ -322,6 +338,7 @@ class _$TournamentImpl implements _Tournament {
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
             (identical(other.sport, sport) || other.sport == sport) &&
+            (identical(other.logo, logo) || other.logo == logo) &&
             (identical(other.playersPerTeam, playersPerTeam) ||
                 other.playersPerTeam == playersPerTeam) &&
             (identical(other.groundAddress, groundAddress) ||
@@ -342,6 +359,7 @@ class _$TournamentImpl implements _Tournament {
       startDate,
       endDate,
       sport,
+      logo,
       playersPerTeam,
       groundAddress,
       status);
@@ -371,6 +389,7 @@ abstract class _Tournament implements Tournament {
       required final DateTime startDate,
       required final DateTime endDate,
       required final String sport,
+      final String? logo,
       required final int playersPerTeam,
       required final GroundAddress groundAddress,
       required final String status}) = _$TournamentImpl;
@@ -398,6 +417,8 @@ abstract class _Tournament implements Tournament {
   @override
   String get sport;
   @override
+  String? get logo;
+  @override
   int get playersPerTeam;
   @override
   GroundAddress get groundAddress;
@@ -422,6 +443,7 @@ mixin _$GroundAddress {
   String? get city => throw _privateConstructorUsedError;
   String? get state => throw _privateConstructorUsedError;
   String? get pincode => throw _privateConstructorUsedError;
+  String? get googleMapLink => throw _privateConstructorUsedError;
   String? get country => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -443,6 +465,7 @@ abstract class $GroundAddressCopyWith<$Res> {
       String? city,
       String? state,
       String? pincode,
+      String? googleMapLink,
       String? country});
 }
 
@@ -465,6 +488,7 @@ class _$GroundAddressCopyWithImpl<$Res, $Val extends GroundAddress>
     Object? city = freezed,
     Object? state = freezed,
     Object? pincode = freezed,
+    Object? googleMapLink = freezed,
     Object? country = freezed,
   }) {
     return _then(_value.copyWith(
@@ -492,6 +516,10 @@ class _$GroundAddressCopyWithImpl<$Res, $Val extends GroundAddress>
           ? _value.pincode
           : pincode // ignore: cast_nullable_to_non_nullable
               as String?,
+      googleMapLink: freezed == googleMapLink
+          ? _value.googleMapLink
+          : googleMapLink // ignore: cast_nullable_to_non_nullable
+              as String?,
       country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
@@ -515,6 +543,7 @@ abstract class _$$GroundAddressImplCopyWith<$Res>
       String? city,
       String? state,
       String? pincode,
+      String? googleMapLink,
       String? country});
 }
 
@@ -535,6 +564,7 @@ class __$$GroundAddressImplCopyWithImpl<$Res>
     Object? city = freezed,
     Object? state = freezed,
     Object? pincode = freezed,
+    Object? googleMapLink = freezed,
     Object? country = freezed,
   }) {
     return _then(_$GroundAddressImpl(
@@ -562,6 +592,10 @@ class __$$GroundAddressImplCopyWithImpl<$Res>
           ? _value.pincode
           : pincode // ignore: cast_nullable_to_non_nullable
               as String?,
+      googleMapLink: freezed == googleMapLink
+          ? _value.googleMapLink
+          : googleMapLink // ignore: cast_nullable_to_non_nullable
+              as String?,
       country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
@@ -580,6 +614,7 @@ class _$GroundAddressImpl implements _GroundAddress {
       this.city,
       this.state,
       this.pincode,
+      this.googleMapLink,
       this.country});
 
   factory _$GroundAddressImpl.fromJson(Map<String, dynamic> json) =>
@@ -599,11 +634,13 @@ class _$GroundAddressImpl implements _GroundAddress {
   @override
   final String? pincode;
   @override
+  final String? googleMapLink;
+  @override
   final String? country;
 
   @override
   String toString() {
-    return 'GroundAddress(id: $id, address1: $address1, address2: $address2, city: $city, state: $state, pincode: $pincode, country: $country)';
+    return 'GroundAddress(id: $id, address1: $address1, address2: $address2, city: $city, state: $state, pincode: $pincode, googleMapLink: $googleMapLink, country: $country)';
   }
 
   @override
@@ -619,13 +656,15 @@ class _$GroundAddressImpl implements _GroundAddress {
             (identical(other.city, city) || other.city == city) &&
             (identical(other.state, state) || other.state == state) &&
             (identical(other.pincode, pincode) || other.pincode == pincode) &&
+            (identical(other.googleMapLink, googleMapLink) ||
+                other.googleMapLink == googleMapLink) &&
             (identical(other.country, country) || other.country == country));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, address1, address2, city, state, pincode, country);
+  int get hashCode => Object.hash(runtimeType, id, address1, address2, city,
+      state, pincode, googleMapLink, country);
 
   @JsonKey(ignore: true)
   @override
@@ -649,6 +688,7 @@ abstract class _GroundAddress implements GroundAddress {
       final String? city,
       final String? state,
       final String? pincode,
+      final String? googleMapLink,
       final String? country}) = _$GroundAddressImpl;
 
   factory _GroundAddress.fromJson(Map<String, dynamic> json) =
@@ -667,6 +707,8 @@ abstract class _GroundAddress implements GroundAddress {
   String? get state;
   @override
   String? get pincode;
+  @override
+  String? get googleMapLink;
   @override
   String? get country;
   @override

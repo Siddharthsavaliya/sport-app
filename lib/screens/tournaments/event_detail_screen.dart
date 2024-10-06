@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/bloc/tournament_bloc/tournament_bloc.dart';
 import 'package:sport_app/model/status.dart';
 import 'package:sport_app/model/tournament_model/tournament_model.dart';
@@ -15,7 +18,10 @@ import 'package:sport_app/widget/empty_place_holder.dart';
 
 class EventDetailsPage extends StatelessWidget {
   final Tournament tournament;
-  const EventDetailsPage({super.key, required this.tournament});
+  final String status;
+
+  const EventDetailsPage(
+      {super.key, required this.tournament, required this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +46,8 @@ class EventDetailsPage extends StatelessWidget {
               letterSpacing: 0.8,
             ),
             indicatorColor: Colors.white,
+            indicatorWeight: 4.0, // Thicker indicator
+            unselectedLabelColor: Colors.white70,
             tabs: const [
               Tab(text: 'Live'),
               Tab(text: 'Upcoming'),
@@ -49,23 +57,43 @@ class EventDetailsPage extends StatelessWidget {
         ),
         body: Column(
           children: [
-            // Event details section
+            // Event details section with enhanced UI
             Container(
               padding: const EdgeInsets.all(16),
-              color: Colors.black,
+              decoration: BoxDecoration(
+                color: Colors.black87,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
               child: Row(
                 children: [
                   Container(
                     clipBehavior: Clip.hardEdge,
-                    height: 60,
-                    width: 60,
+                    height: 70,
+                    width: 70,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.4),
+                          blurRadius: 6,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                       color: AppColors.gray,
                     ),
                     child: Image.network(
-                      tournament.image, // Event logo
-                      fit: BoxFit.fill,
+                      tournament.logo ?? tournament.image,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -77,19 +105,35 @@ class EventDetailsPage extends StatelessWidget {
                           tournament.name,
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
-                        addVerticalSpacing(0.005),
+                        const SizedBox(height: 6),
                         Text(
                           "${formatDDMMYYYDate(tournament.startDate)} to ${formatDDMMYYYDate(tournament.endDate)}",
                           style: const TextStyle(
                             color: Colors.grey,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
+                        ),
+                        const SizedBox(height: 6),
+                        Row(
+                          children: [
+                            const Icon(Icons.sports_soccer,
+                                size: 18, color: Colors.white70),
+                            const SizedBox(width: 4),
+                            Text(
+                              tournament.sport,
+                              style: const TextStyle(
+                                color: Colors.white70,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -98,24 +142,30 @@ class EventDetailsPage extends StatelessWidget {
               ),
             ),
 
-            // Tab bar and view
+            // Tab bar view with match details
             Expanded(
-              child: TabBarView(
-                children: [
-                  MatchListView(
-                    selectedSport: tournament.sport,
-                    matchStatus: 'Live',
-                    id: tournament.id,
-                  ),
-                  MatchListView(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+                child: TabBarView(
+                  children: [
+                    MatchListView(
+                      selectedSport: tournament.sport,
+                      matchStatus: 'Live',
+                      id: tournament.id,
+                    ),
+                    MatchListView(
                       selectedSport: tournament.sport,
                       matchStatus: 'Upcoming',
-                      id: tournament.id),
-                  MatchListView(
+                      id: tournament.id,
+                    ),
+                    MatchListView(
                       selectedSport: tournament.sport,
                       matchStatus: 'Past',
-                      id: tournament.id),
-                ],
+                      id: tournament.id,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -186,9 +236,18 @@ class _MatchListViewState extends State<MatchListView> {
                     switch (widget.selectedSport) {
                       case 'Cricket':
                         return CricketScoreCard(
+                            type: widget.matchStatus,
                             match: state.tournamentDetailModel!.matches[index]);
                       case 'Football':
                         return FootballScoreCard(
+                            match: state.tournamentDetailModel!.matches[index],
+                            matchStatus: widget.matchStatus);
+                      case 'Hockey':
+                        return HockeyScoreCard(
+                            match: state.tournamentDetailModel!.matches[index],
+                            matchStatus: widget.matchStatus);
+                      case 'Horse Riding':
+                        return HoursRidingCard(
                             match: state.tournamentDetailModel!.matches[index],
                             matchStatus: widget.matchStatus);
                       case 'Volley Ball':
@@ -199,8 +258,8 @@ class _MatchListViewState extends State<MatchListView> {
                         return BasketballScoreCard(
                             match: state.tournamentDetailModel!.matches[index],
                             matchStatus: widget.matchStatus);
-                      case 'Tennis':
-                        return TennisScoreCard(
+                      case 'Table Tennis':
+                        return TableTennisScoreCard(
                             match: state.tournamentDetailModel!.matches[index],
                             matchStatus: widget.matchStatus);
                       case 'Badminton':
@@ -237,16 +296,17 @@ class _MatchListViewState extends State<MatchListView> {
 // Cricket Score Card
 class CricketScoreCard extends StatelessWidget {
   final Match match;
+  final String type;
 
-  const CricketScoreCard({super.key, required this.match});
+  const CricketScoreCard({super.key, required this.match, required this.type});
 
   @override
   Widget build(BuildContext context) {
-    final teamA = match.teams[0].name;
-    final teamB = match.teams[1].name;
+    final teamA = capitalizeFirstLetter(match.teams[0].name);
+    final teamB = capitalizeFirstLetter(match.teams[1].name);
     final matchDate = DateFormat('dd MMM yyyy').format(match.date!);
     final matchTime = match.time; // Assuming time is available in match.time
-    final isUpcoming = match.calculatedStatus == "upcoming";
+    final isUpcoming = type.toLowerCase() == 'upcoming';
 
     return GestureDetector(
       onTap: () {
@@ -261,7 +321,7 @@ class CricketScoreCard extends StatelessWidget {
       },
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
         ),
         elevation: 5,
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -291,8 +351,8 @@ class CricketScoreCard extends StatelessWidget {
                   if (isUpcoming) ...[
                     Expanded(
                       child: Text(
-                        '$teamA\nvs\n$teamB',
-                        textAlign: TextAlign.center,
+                        '$teamA vs $teamB',
+                        textAlign: TextAlign.left,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -326,12 +386,12 @@ class CricketScoreCard extends StatelessWidget {
                     ),
                 ],
               ),
-              if (!isUpcoming) ...[
+              if (!isUpcoming && match.score.isNotEmpty) ...[
                 const SizedBox(height: 12),
 
                 // Display Team A Score
                 Text(
-                  '$teamA: ${match.score[0]["runs"]}/${match.score[0]["wickets"]} (${match.score[0]["overs"]} Ov)',
+                  '${getShortTeamName(teamA)}: ${match.score[0]["runs"]}/${match.score[0]["wickets"]} (${match.score[0]["overs"]} Ov)',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -342,7 +402,7 @@ class CricketScoreCard extends StatelessWidget {
 
                 // Display Team B Score
                 Text(
-                  '$teamB: ${match.score[1]["runs"]}/${match.score[1]["wickets"]} (${match.score[1]["overs"]} Ov)',
+                  '${getShortTeamName(teamB)}: ${match.score[1]["runs"]}/${match.score[1]["wickets"]} (${match.score[1]["overs"]} Ov)',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -424,7 +484,7 @@ class FootballScoreCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      '$teamA vs $teamB',
+                      '${capitalizeFirstLetter(teamA)} vs ${capitalizeFirstLetter(teamB)}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -465,22 +525,21 @@ class FootballScoreCard extends StatelessWidget {
                       color: Colors.black54,
                     ),
                   ),
-                  if (isLive)
-                    Text(
-                      'Time: $matchTime',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black54,
-                      ),
+                  Text(
+                    'Time: $matchTime',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
                     ),
+                  ),
                 ],
               ),
               const SizedBox(height: 12),
 
               // Display Score
-              if (isLive) ...[
+              if (isLive || matchStatus.toLowerCase() == "past") ...[
                 Text(
-                  '$teamA: ${match.score[0]["goals"]} goals',
+                  '${capitalizeFirstLetter(teamA)}: ${match.score[0]["goals"]} goals',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -489,7 +548,7 @@ class FootballScoreCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '$teamB: ${match.score[1]["goals"]} goals',
+                  '${capitalizeFirstLetter(teamB)}: ${match.score[1]["goals"]} goals',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -542,8 +601,8 @@ class VolleyBallScoreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final teamA = match.teams[0].name;
-    final teamB = match.teams[1].name;
+    final teamA = capitalizeFirstLetter(match.teams[0].name);
+    final teamB = capitalizeFirstLetter(match.teams[1].name);
     final matchDate = DateFormat('dd MMM yyyy').format(match.date!);
     final matchTime = match.time;
     final isLive = matchStatus.toLowerCase() == "live";
@@ -552,7 +611,7 @@ class VolleyBallScoreCard extends StatelessWidget {
     final setScores = match.score.map((set) {
       final teamAPoints = set["teams"][0]["point"];
       final teamBPoints = set["teams"][1]["point"];
-      return '${set["set"]}: $teamA $teamAPoints - $teamB $teamBPoints';
+      return '${capitalizeFirstLetter(set["set"]).substring(0, set["set"].length - 1)} ${capitalizeFirstLetter(set["set"]).substring(3)}: $teamA $teamAPoints - $teamB $teamBPoints';
     }).toList();
 
     return GestureDetector(
@@ -635,7 +694,7 @@ class VolleyBallScoreCard extends StatelessWidget {
               const SizedBox(height: 12),
 
               // Display Set Scores
-              if (isLive) ...[
+              if (isLive || matchStatus.toLowerCase() == "past") ...[
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: setScores.map((setScore) {
@@ -677,6 +736,218 @@ class VolleyBallScoreCard extends StatelessWidget {
                   ),
                 ),
               ]
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class HockeyScoreCard extends StatelessWidget {
+  final Match match; // Make sure to define your Match model accordingly.
+  final String matchStatus;
+
+  const HockeyScoreCard({
+    super.key,
+    required this.matchStatus,
+    required this.match,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final teamA = capitalizeFirstLetter(match.teams[0].name);
+    final teamB = capitalizeFirstLetter(match.teams[1].name);
+    final matchTime = match.time?.trim(); // Trim to remove any extra spaces.
+    final isLive = matchStatus.toLowerCase() == "live";
+
+    // Extracting scores with error handling
+    final teamAScore = match.score.firstWhere(
+        (score) => score["team"].toLowerCase() == teamA.toLowerCase(),
+        orElse: () => {"goals": 0} // Default score if not found
+        )["goals"];
+
+    final teamBScore = match.score.firstWhere(
+        (score) => score["team"].toLowerCase() == teamB.toLowerCase(),
+        orElse: () => {"goals": 0} // Default score if not found
+        )["goals"];
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlayerListPage(
+                id: match
+                    .matchId!), // Assuming PlayerListPage takes a match ID.
+          ),
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 5,
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Match Teams and Live Badge
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      '$teamA vs $teamB',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black87,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                  if (isLive)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Text(
+                        'LIVE',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 8),
+
+              // Match Date and Time
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Match Date: ${formatDDMMYYYDate(match.date!)}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  if (!isLive)
+                    Text(
+                      'Time: $matchTime',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 12),
+
+              // Display Score
+              Row(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        getShortTeamName(teamA),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      Text(
+                        getShortTeamName(teamB),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 4), // Space between rows
+                  const Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        ':',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      Text(
+                        ':',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      SizedBox(width: 8), // Space between colon and score
+                    ],
+                  ),
+                  const SizedBox(width: 4), // Space between rows
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        '$teamAScore',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      Text(
+                        '$teamBScore',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(width: 8), // Space between colon and score
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+
+              // Toss Winner (if available)
+              if (match.tossWinner != null)
+                Text(
+                  'Toss won by: ${capitalizeFirstLetter(match.tossWinner ?? "")}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black54,
+                  ),
+                ),
+              if (match.winner != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  'Winner: ${capitalizeFirstLetter(match.winner ?? "")}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green,
+                  ),
+                ),
+              ],
             ],
           ),
         ),
@@ -805,6 +1076,384 @@ class SportScoreCard extends StatelessWidget {
                   Text(score),
                 ],
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class HoursRidingCard extends StatelessWidget {
+  final Match match; // Assume Match is your model for riding data.
+  final String matchStatus;
+
+  const HoursRidingCard({
+    super.key,
+    required this.matchStatus,
+    required this.match,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final teamA = capitalizeFirstLetter(match.teams[0].name); // Rider A
+    final teamB = capitalizeFirstLetter(match.teams[1].name); // Rider B
+    final matchTime = match.time?.trim(); // Trim to remove any extra spaces.
+    final isLive = matchStatus.toLowerCase() == "live";
+
+    // Extracting scores (riding hours) with error handling
+    final teamARidingHours = match.score.firstWhere(
+        (score) => score["team"].toLowerCase() == teamA.toLowerCase(),
+        orElse: () => {"points": 0, "time": 0} // Default if not found
+        )["points"];
+
+    final teamBRidingHours = match.score.firstWhere(
+        (score) => score["team"].toLowerCase() == teamB.toLowerCase(),
+        orElse: () => {"points": 0, "time": 0} // Default if not found
+        )["points"];
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlayerListPage(
+                id: match.matchId!), // Navigate to a details page.
+          ),
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 5,
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Rider Names and Live Badge
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      '$teamA vs $teamB',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black87,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                  if (isLive)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Text(
+                        'LIVE',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 8),
+
+              // Match Date and Time
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Riding Date: ${formatDDMMYYYDate(match.date!)}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  if (!isLive)
+                    Text(
+                      'Time: $matchTime',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 12),
+
+              // Display Riding Hours
+              Row(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        getShortTeamName(teamA),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      Text(
+                        getShortTeamName(teamB),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 4), // Space between rows
+                  const Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        ':',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      Text(
+                        ':',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      SizedBox(width: 8), // Space between colon and score
+                    ],
+                  ),
+                  const SizedBox(width: 4), // Space between rows
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        '$teamARidingHours',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      Text(
+                        '$teamBRidingHours',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(width: 8), // Space between colon and score
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+
+              // Toss Winner (if available)
+              if (match.tossWinner != null)
+                Text(
+                  'Rider start: ${capitalizeFirstLetter(match.tossWinner ?? "")}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black54,
+                  ),
+                ),
+              if (match.winner != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  'Winner: ${capitalizeFirstLetter(match.winner ?? "")}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green,
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TableTennisScoreCard extends StatelessWidget {
+  final Match match; // Match model for table tennis
+  final String matchStatus;
+
+  const TableTennisScoreCard({
+    super.key,
+    required this.matchStatus,
+    required this.match,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final playerA = capitalizeFirstLetter(match.teams[0].name);
+    final playerB = capitalizeFirstLetter(match.teams[1].name);
+    final matchTime = match.time?.trim(); // Trim to remove any extra spaces.
+    final isLive = matchStatus.toLowerCase() == "live";
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlayerListPage(id: match.matchId!),
+          ),
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 5,
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Match Players and Live Badge
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      '$playerA vs $playerB',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black87,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                  if (isLive)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Text(
+                        'LIVE',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 8),
+
+              // Match Date and Time
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Match Date: ${formatDDMMYYYDate(match.date!)}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  if (!isLive)
+                    Text(
+                      'Time: $matchTime',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 12),
+
+              // Display Scores for Each Set
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (var i = 0; i < match.score.length; i++)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Set ${i + 1}', // Display "Set 1", "Set 2", etc.
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Text(
+                            '${match.score[i]['teams'][0]['team']} : ${match.score[i]['teams'][0]['point']}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Text(
+                            '${match.score[i]['teams'][1]['team']} : ${match.score[i]['teams'][1]['point']}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 12),
+
+              // Toss Winner and Final Winner (if available)
+              if (match.tossWinner != null)
+                Text(
+                  'Toss won by: ${capitalizeFirstLetter(match.tossWinner ?? "")}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black54,
+                  ),
+                ),
+              if (match.winner != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  'Winner: ${capitalizeFirstLetter(match.winner ?? "")}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green,
+                  ),
+                ),
+              ],
             ],
           ),
         ),

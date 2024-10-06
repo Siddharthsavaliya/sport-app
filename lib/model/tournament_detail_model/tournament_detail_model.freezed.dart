@@ -474,7 +474,7 @@ GroundAddress _$GroundAddressFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$GroundAddress {
   String get address1 => throw _privateConstructorUsedError;
-  String get address2 => throw _privateConstructorUsedError;
+  String? get address2 => throw _privateConstructorUsedError;
   String get city => throw _privateConstructorUsedError;
   String get state => throw _privateConstructorUsedError;
   String get pincode => throw _privateConstructorUsedError;
@@ -494,7 +494,7 @@ abstract class $GroundAddressCopyWith<$Res> {
   @useResult
   $Res call(
       {String address1,
-      String address2,
+      String? address2,
       String city,
       String state,
       String pincode,
@@ -515,7 +515,7 @@ class _$GroundAddressCopyWithImpl<$Res, $Val extends GroundAddress>
   @override
   $Res call({
     Object? address1 = null,
-    Object? address2 = null,
+    Object? address2 = freezed,
     Object? city = null,
     Object? state = null,
     Object? pincode = null,
@@ -526,10 +526,10 @@ class _$GroundAddressCopyWithImpl<$Res, $Val extends GroundAddress>
           ? _value.address1
           : address1 // ignore: cast_nullable_to_non_nullable
               as String,
-      address2: null == address2
+      address2: freezed == address2
           ? _value.address2
           : address2 // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       city: null == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
@@ -560,7 +560,7 @@ abstract class _$$GroundAddressImplCopyWith<$Res>
   @useResult
   $Res call(
       {String address1,
-      String address2,
+      String? address2,
       String city,
       String state,
       String pincode,
@@ -579,7 +579,7 @@ class __$$GroundAddressImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? address1 = null,
-    Object? address2 = null,
+    Object? address2 = freezed,
     Object? city = null,
     Object? state = null,
     Object? pincode = null,
@@ -590,10 +590,10 @@ class __$$GroundAddressImplCopyWithImpl<$Res>
           ? _value.address1
           : address1 // ignore: cast_nullable_to_non_nullable
               as String,
-      address2: null == address2
+      address2: freezed == address2
           ? _value.address2
           : address2 // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       city: null == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
@@ -619,7 +619,7 @@ class __$$GroundAddressImplCopyWithImpl<$Res>
 class _$GroundAddressImpl implements _GroundAddress {
   const _$GroundAddressImpl(
       {required this.address1,
-      required this.address2,
+      this.address2 = "",
       required this.city,
       required this.state,
       required this.pincode,
@@ -631,7 +631,8 @@ class _$GroundAddressImpl implements _GroundAddress {
   @override
   final String address1;
   @override
-  final String address2;
+  @JsonKey()
+  final String? address2;
   @override
   final String city;
   @override
@@ -683,7 +684,7 @@ class _$GroundAddressImpl implements _GroundAddress {
 abstract class _GroundAddress implements GroundAddress {
   const factory _GroundAddress(
       {required final String address1,
-      required final String address2,
+      final String? address2,
       required final String city,
       required final String state,
       required final String pincode,
@@ -695,7 +696,7 @@ abstract class _GroundAddress implements GroundAddress {
   @override
   String get address1;
   @override
-  String get address2;
+  String? get address2;
   @override
   String get city;
   @override

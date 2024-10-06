@@ -30,6 +30,18 @@ addHorizontalSpacing(double width) {
   );
 }
 
+String getShortTeamName(String teamName) {
+  if (teamName.isEmpty) return teamName;
+  return teamName.split(' ').map((word) => word[0].toUpperCase()).join('');
+}
+
+String capitalizeFirstLetter(String name) {
+  if (name.isEmpty) return name;
+  return name.split(' ').map((word) {
+    return word[0].toUpperCase() + word.substring(1).toLowerCase();
+  }).join(' ');
+}
+
 String formatDDMMYYYDate(DateTime date) {
   // DateTime dateTime = DateTime.parse(dateString);
   String formattedDate = DateFormat('dd MMM, yyyy').format(date);

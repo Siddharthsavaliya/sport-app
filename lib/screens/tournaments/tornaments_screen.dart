@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sport_app/bloc/tournament_bloc/tournament_bloc.dart';
 import 'package:sport_app/model/status.dart';
 import 'package:sport_app/model/tournament_model/tournament_model.dart';
@@ -20,6 +21,7 @@ class TournamentScreen extends StatelessWidget {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        backgroundColor: Colors.grey.shade100,
         appBar: AppBar(
           backgroundColor: AppColors.primaryColor,
           title: Text(
@@ -80,12 +82,20 @@ class _EventListState extends State<EventList> {
     return BlocBuilder<TournamentBloc, TournamentState>(
       builder: (context, state) {
         if (state.status.isLoaded || state.isMatch || state.isTeam) {
-          return ListView.builder(
-            itemCount: state.tournamentList.length,
-            itemBuilder: (context, index) {
-              return EventCard(event: state.tournamentList[index]);
-            },
-          );
+          return state.tournamentList.isEmpty
+              ? Padding(
+                  padding: EdgeInsets.only(bottom: 0.1.sh),
+                  child: Lottie.asset(AppAssets.coming),
+                )
+              : ListView.builder(
+                  itemCount: state.tournamentList.length,
+                  itemBuilder: (context, index) {
+                    return EventCard(
+                      event: state.tournamentList[index],
+                      status: widget.type,
+                    );
+                  },
+                );
         }
         if (state.status.isInProgress) {
           return const Center(
@@ -108,59 +118,165 @@ class _EventListState extends State<EventList> {
 
 class EventCard extends StatelessWidget {
   final Tournament event;
+  final String status;
 
-  const EventCard({super.key, required this.event});
+  const EventCard({super.key, required this.event, required this.status});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            CupertinoPageRoute(
-              builder: (context) => EventDetailsPage(
-                tournament: event,
-              ),
-            ));
+        if (status.toLowerCase() != "upcoming") {
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => EventDetailsPage(
+                  status: status,
+                  tournament: event,
+                ),
+              ));
+        }
       },
       child: Card(
-        margin: const EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        elevation: 6,
+        shadowColor: Colors.black38,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Event Image with Gradient Overlay
             Stack(
               children: [
-                // Replace with your event image or other background
                 Container(
                   clipBehavior: Clip.hardEdge,
-                  height: 150,
+                  height: 180,
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(5))),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(12)),
+                  ),
                   child: Image.network(
                     event.image,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.transparent, Colors.black54],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
+            // Event Details Section
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Event Name
                   Text(
                     event.name,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.black87,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 8),
+                  // Event Dates
                   Text(
-                      'Date: ${formatDDMMYYYDate(event.startDate)} to ${formatDDMMYYYDate(event.endDate)}'),
-                  const SizedBox(height: 5),
-                  Text('Location: ${event.groundAddress.city}'),
+                    'Date: ${formatDDMMYYYDate(event.startDate)} - ${formatDDMMYYYDate(event.endDate)}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  // Address Header
+                  const Text(
+                    'Location:',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  // Address Information
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (event.groundAddress.address1 != null)
+                        Text(
+                          event.groundAddress.address1 ?? "",
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      const SizedBox(height: 4),
+                      if (event.groundAddress.city != null &&
+                          event.groundAddress.state != null)
+                        Text(
+                          '${event.groundAddress.city}, ${event.groundAddress.state}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      const SizedBox(height: 4),
+                      if (event.groundAddress.pincode != null)
+                        Text(
+                          'Pincode: ${event.groundAddress.pincode}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      const SizedBox(height: 12),
+                      // Google Maps Link
+                      if (event.groundAddress.googleMapLink != null)
+                        GestureDetector(
+                          onTap: () {
+                            // Add logic to open Google Maps link
+                            print(
+                                "Opening Google Maps Link: ${event.groundAddress.googleMapLink}");
+                          },
+                          child: const Row(
+                            children: [
+                              Icon(
+                                Icons.location_city,
+                                color: AppColors.primaryColor,
+                              ),
+                              SizedBox(width: 4),
+                              Text(
+                                'View on Google Maps',
+                                style: TextStyle(
+                                  color: AppColors.primaryColor,
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
                 ],
               ),
             ),

@@ -16,6 +16,7 @@ class Tournament with _$Tournament {
     required DateTime startDate,
     required DateTime endDate,
     required String sport,
+    String? logo,
     required int playersPerTeam,
     required GroundAddress groundAddress,
     required String status,
@@ -34,6 +35,7 @@ class GroundAddress with _$GroundAddress {
     String? city,
     String? state,
     String? pincode,
+    String? googleMapLink,
     String? country,
   }) = _GroundAddress;
 
