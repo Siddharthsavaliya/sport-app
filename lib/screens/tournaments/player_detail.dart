@@ -175,21 +175,21 @@ class _PlayerListPageState extends State<PlayerListPage> {
                                             ),
                                           ),
                                           SizedBox(height: 4.h),
-                                          Text(
-                                            'Phone: ${player.phoneNumber ?? "N/A"}',
-                                            style: AppStyle.normalText.copyWith(
-                                              color: AppColors.black,
-                                              fontSize: 14.sp,
-                                            ),
-                                          ),
-                                          SizedBox(height: 4.h),
-                                          Text(
-                                            'Email: ${player.email ?? "N/A"}',
-                                            style: AppStyle.normalText.copyWith(
-                                              color: AppColors.black,
-                                              fontSize: 14.sp,
-                                            ),
-                                          ),
+                                          // Text(
+                                          //   'Phone: ${player.phoneNumber ?? "N/A"}',
+                                          //   style: AppStyle.normalText.copyWith(
+                                          //     color: AppColors.black,
+                                          //     fontSize: 14.sp,
+                                          //   ),
+                                          // ),
+                                          // SizedBox(height: 4.h),
+                                          // Text(
+                                          //   'Email: ${player.email ?? "N/A"}',
+                                          //   style: AppStyle.normalText.copyWith(
+                                          //     color: AppColors.black,
+                                          //     fontSize: 14.sp,
+                                          //   ),
+                                          // ),
                                         ],
                                       ),
                                     ),
