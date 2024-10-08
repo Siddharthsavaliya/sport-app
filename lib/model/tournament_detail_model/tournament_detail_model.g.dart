@@ -89,6 +89,7 @@ _$MatchImpl _$$MatchImplFromJson(Map<String, dynamic> json) => _$MatchImpl(
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
       time: json['time'] as String?,
+      matchtype: json['matchtype'] as String?,
       teams: (json['teams'] as List<dynamic>?)
               ?.map((e) => MatchTeam.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -108,6 +109,7 @@ Map<String, dynamic> _$$MatchImplToJson(_$MatchImpl instance) =>
       'matchId': instance.matchId,
       'date': instance.date?.toIso8601String(),
       'time': instance.time,
+      'matchtype': instance.matchtype,
       'teams': instance.teams,
       'score': instance.score,
       'status': instance.status,

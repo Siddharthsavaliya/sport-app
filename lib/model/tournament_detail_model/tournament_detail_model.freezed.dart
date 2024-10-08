@@ -894,6 +894,7 @@ mixin _$Match {
   String? get matchId => throw _privateConstructorUsedError;
   DateTime? get date => throw _privateConstructorUsedError;
   String? get time => throw _privateConstructorUsedError;
+  String? get matchtype => throw _privateConstructorUsedError;
   List<MatchTeam> get teams => throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get score => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
@@ -915,6 +916,7 @@ abstract class $MatchCopyWith<$Res> {
       {String? matchId,
       DateTime? date,
       String? time,
+      String? matchtype,
       List<MatchTeam> teams,
       List<Map<String, dynamic>> score,
       String? status,
@@ -939,6 +941,7 @@ class _$MatchCopyWithImpl<$Res, $Val extends Match>
     Object? matchId = freezed,
     Object? date = freezed,
     Object? time = freezed,
+    Object? matchtype = freezed,
     Object? teams = null,
     Object? score = null,
     Object? status = freezed,
@@ -958,6 +961,10 @@ class _$MatchCopyWithImpl<$Res, $Val extends Match>
       time: freezed == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
+              as String?,
+      matchtype: freezed == matchtype
+          ? _value.matchtype
+          : matchtype // ignore: cast_nullable_to_non_nullable
               as String?,
       teams: null == teams
           ? _value.teams
@@ -998,6 +1005,7 @@ abstract class _$$MatchImplCopyWith<$Res> implements $MatchCopyWith<$Res> {
       {String? matchId,
       DateTime? date,
       String? time,
+      String? matchtype,
       List<MatchTeam> teams,
       List<Map<String, dynamic>> score,
       String? status,
@@ -1020,6 +1028,7 @@ class __$$MatchImplCopyWithImpl<$Res>
     Object? matchId = freezed,
     Object? date = freezed,
     Object? time = freezed,
+    Object? matchtype = freezed,
     Object? teams = null,
     Object? score = null,
     Object? status = freezed,
@@ -1039,6 +1048,10 @@ class __$$MatchImplCopyWithImpl<$Res>
       time: freezed == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
+              as String?,
+      matchtype: freezed == matchtype
+          ? _value.matchtype
+          : matchtype // ignore: cast_nullable_to_non_nullable
               as String?,
       teams: null == teams
           ? _value._teams
@@ -1075,6 +1088,7 @@ class _$MatchImpl implements _Match {
       {this.matchId,
       this.date,
       this.time,
+      this.matchtype,
       final List<MatchTeam> teams = const [],
       final List<Map<String, dynamic>> score = const [],
       this.status,
@@ -1093,6 +1107,8 @@ class _$MatchImpl implements _Match {
   final DateTime? date;
   @override
   final String? time;
+  @override
+  final String? matchtype;
   final List<MatchTeam> _teams;
   @override
   @JsonKey()
@@ -1122,7 +1138,7 @@ class _$MatchImpl implements _Match {
 
   @override
   String toString() {
-    return 'Match(matchId: $matchId, date: $date, time: $time, teams: $teams, score: $score, status: $status, calculatedStatus: $calculatedStatus, tossWinner: $tossWinner, winner: $winner)';
+    return 'Match(matchId: $matchId, date: $date, time: $time, matchtype: $matchtype, teams: $teams, score: $score, status: $status, calculatedStatus: $calculatedStatus, tossWinner: $tossWinner, winner: $winner)';
   }
 
   @override
@@ -1133,6 +1149,8 @@ class _$MatchImpl implements _Match {
             (identical(other.matchId, matchId) || other.matchId == matchId) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.time, time) || other.time == time) &&
+            (identical(other.matchtype, matchtype) ||
+                other.matchtype == matchtype) &&
             const DeepCollectionEquality().equals(other._teams, _teams) &&
             const DeepCollectionEquality().equals(other._score, _score) &&
             (identical(other.status, status) || other.status == status) &&
@@ -1150,6 +1168,7 @@ class _$MatchImpl implements _Match {
       matchId,
       date,
       time,
+      matchtype,
       const DeepCollectionEquality().hash(_teams),
       const DeepCollectionEquality().hash(_score),
       status,
@@ -1176,6 +1195,7 @@ abstract class _Match implements Match {
       {final String? matchId,
       final DateTime? date,
       final String? time,
+      final String? matchtype,
       final List<MatchTeam> teams,
       final List<Map<String, dynamic>> score,
       final String? status,
@@ -1191,6 +1211,8 @@ abstract class _Match implements Match {
   DateTime? get date;
   @override
   String? get time;
+  @override
+  String? get matchtype;
   @override
   List<MatchTeam> get teams;
   @override

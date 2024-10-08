@@ -57,6 +57,7 @@ class Match with _$Match {
     String? matchId,
     DateTime? date,
     String? time,
+    String? matchtype,
     @Default([]) List<MatchTeam> teams,
     @Default([]) List<Map<String, dynamic>> score,
     String? status,

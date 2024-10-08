@@ -26,7 +26,7 @@ class EventDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: status.toLowerCase() == "past" ? 1 : 3,
       child: Scaffold(
         backgroundColor: Colors.grey.shade100,
         appBar: AppBar(
@@ -48,10 +48,15 @@ class EventDetailsPage extends StatelessWidget {
             indicatorColor: Colors.white,
             indicatorWeight: 4.0, // Thicker indicator
             unselectedLabelColor: Colors.white70,
-            tabs: const [
-              Tab(text: 'Live'),
-              Tab(text: 'Upcoming'),
-              Tab(text: 'Past'),
+            tabs: [
+              if (status.toLowerCase() != "past" &&
+                  status.toLowerCase() != "upcoming") ...[
+                const Tab(text: 'Live'),
+              ],
+              if (status.toLowerCase() != "past") ...[
+                const Tab(text: 'Upcoming'),
+              ],
+              const Tab(text: 'Past'),
             ],
           ),
         ),
@@ -149,16 +154,21 @@ class EventDetailsPage extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
                 child: TabBarView(
                   children: [
-                    MatchListView(
-                      selectedSport: tournament.sport,
-                      matchStatus: 'Live',
-                      id: tournament.id,
-                    ),
-                    MatchListView(
-                      selectedSport: tournament.sport,
-                      matchStatus: 'Upcoming',
-                      id: tournament.id,
-                    ),
+                    if (status.toLowerCase() != "past" &&
+                        status.toLowerCase() != "upcoming") ...[
+                      MatchListView(
+                        selectedSport: tournament.sport,
+                        matchStatus: 'Live',
+                        id: tournament.id,
+                      ),
+                    ],
+                    if (status.toLowerCase() != "past") ...[
+                      MatchListView(
+                        selectedSport: tournament.sport,
+                        matchStatus: 'Upcoming',
+                        id: tournament.id,
+                      ),
+                    ],
                     MatchListView(
                       selectedSport: tournament.sport,
                       matchStatus: 'Past',
@@ -330,6 +340,19 @@ class CricketScoreCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (match.matchtype != null) ...[
+                Text(
+                  match.matchtype ?? "",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Colors.grey.shade400,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                addVerticalSpacing(0.01)
+              ],
               // Match Teams Row (with overflow handling)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -479,6 +502,19 @@ class FootballScoreCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Match Teams
+              if (match.matchtype != null) ...[
+                Text(
+                  match.matchtype ?? "",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Colors.grey.shade400,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                addVerticalSpacing(0.01)
+              ],
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -537,7 +573,8 @@ class FootballScoreCard extends StatelessWidget {
               const SizedBox(height: 12),
 
               // Display Score
-              if (isLive || matchStatus.toLowerCase() == "past") ...[
+              if ((isLive || matchStatus.toLowerCase() == "past") &&
+                  match.score.isNotEmpty) ...[
                 Text(
                   '${capitalizeFirstLetter(teamA)}: ${match.score[0]["goals"]} goals',
                   style: const TextStyle(
